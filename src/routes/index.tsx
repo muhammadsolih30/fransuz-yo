@@ -71,9 +71,9 @@ function AboutCanada() {
       {/* HERO */}
       <section className="relative overflow-hidden maple-pattern text-primary-foreground">
         <div className="absolute inset-0 opacity-30 pointer-events-none">
-          <Leaf className="absolute top-10 left-[10%] h-20 w-20 animate-float" style={{ color: "var(--maple)" }} fill="currentColor" />
-          <Leaf className="absolute top-32 right-[12%] h-14 w-14 animate-float" style={{ color: "white", animationDelay: "1.2s" }} fill="currentColor" />
-          <Leaf className="absolute bottom-16 left-[20%] h-10 w-10 animate-float" style={{ color: "var(--maple)", animationDelay: "2.4s" }} fill="currentColor" />
+          <Leaf className="absolute top-10 left-[10%] h-20 w-20 animate-float text-maple" fill="currentColor" />
+          <Leaf className="absolute top-32 right-[12%] h-14 w-14 animate-float text-white anim-delay-1200" fill="currentColor" />
+          <Leaf className="absolute bottom-16 left-[20%] h-10 w-10 animate-float text-maple anim-delay-2400" fill="currentColor" />
         </div>
         <div className="relative max-w-7xl mx-auto px-5 sm:px-8 py-24 md:py-36 text-center">
           <Reveal>
@@ -84,7 +84,7 @@ function AboutCanada() {
           <Reveal delay={120}>
             <h1 className="mt-6 text-4xl md:text-6xl font-bold leading-tight max-w-4xl mx-auto">
               Fransuz tili orqali Kanadaga<br />
-              <span style={{ color: "var(--maple)" }}>doimiy yashovchi</span> bo'ling
+              <span className="text-maple">doimiy yashovchi</span> bo'ling
             </h1>
           </Reveal>
           <Reveal delay={220}>
@@ -115,7 +115,7 @@ function AboutCanada() {
           {reasons.map((r, i) => (
             <Reveal key={r.title} delay={i * 120}>
               <div className="group h-full rounded-3xl bg-card border border-border p-8 shadow-card hover:-translate-y-1 hover:shadow-elegant transition-all">
-                <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary-glow text-primary-foreground mb-5">
+                <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br from-primary to-primary-glow text-primary-foreground mb-5">
                   <r.icon className="h-6 w-6" />
                 </div>
                 <h3 className="text-xl font-semibold">{r.title}</h3>
@@ -127,7 +127,7 @@ function AboutCanada() {
       </section>
 
       {/* BENEFITS */}
-      <section className="bg-gradient-to-b from-accent/40 to-background py-20 md:py-28">
+      <section className="bg-linear-to-b from-accent/40 to-background py-20 md:py-28">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <Reveal>
             <h2 className="text-3xl md:text-4xl font-bold text-center">Doimiy Yashovchi Maqomi Sizga Nima Beradi?</h2>
@@ -161,7 +161,7 @@ function AboutCanada() {
                 <span className="font-semibold text-primary whitespace-nowrap">{c.price}</span>
               </div>
             ))}
-            <div className="flex items-center justify-between gap-4 px-6 py-6 bg-gradient-to-r from-primary to-primary-glow text-primary-foreground">
+            <div className="flex items-center justify-between gap-4 px-6 py-6 bg-linear-to-r from-primary to-primary-glow text-primary-foreground">
               <span className="font-semibold">JAMI (xizmat haqi bilan)</span>
               <span className="text-xl font-bold">~$7,000–$8,000</span>
             </div>
@@ -184,7 +184,7 @@ function AboutCanada() {
                 </div>
                 <p className="mt-3 text-muted-foreground">Kamida B2 darajasi — TCF Canada sertifikati</p>
                 <div className="mt-5 h-2 rounded-full bg-secondary overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-primary to-primary-glow" style={{ width: "85%" }} />
+                  <div className="h-full bg-linear-to-r from-primary to-primary-glow w-85p" />
                 </div>
                 <p className="text-xs text-muted-foreground mt-2">B2 darajasi</p>
               </div>
@@ -197,7 +197,7 @@ function AboutCanada() {
                 </div>
                 <p className="mt-3 text-muted-foreground">Qo'shimcha ustunlik beradi — yuqori ball</p>
                 <div className="mt-5 h-2 rounded-full bg-secondary overflow-hidden">
-                  <div className="h-full bg-maple" style={{ width: "45%" }} />
+                  <div className="h-full bg-maple w-45p" />
                 </div>
                 <p className="text-xs text-muted-foreground mt-2">Tavsiya etiladi</p>
               </div>
@@ -238,7 +238,7 @@ function AboutCanada() {
       </section>
 
       {/* TIMELINE */}
-      <section className="bg-gradient-to-b from-background to-accent/40 py-20 md:py-28">
+      <section className="bg-linear-to-b from-background to-accent/40 py-20 md:py-28">
         <div className="max-w-5xl mx-auto px-5 sm:px-8">
           <Reveal>
             <h2 className="text-3xl md:text-4xl font-bold text-center">Jarayon Qancha Vaqt Oladi?</h2>
@@ -249,7 +249,7 @@ function AboutCanada() {
               {timeline.map((s, i) => (
                 <Reveal key={s.t} delay={i * 100}>
                   <div className={`relative flex items-start gap-6 md:gap-0 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}>
-                    <div className="absolute left-6 md:left-1/2 -translate-x-1/2 mt-2 h-5 w-5 rounded-full bg-gradient-to-br from-primary to-maple ring-4 ring-background z-10" />
+                    <div className="absolute left-6 md:left-1/2 -translate-x-1/2 mt-2 h-5 w-5 rounded-full bg-linear-to-br from-primary to-maple ring-4 ring-background z-10" />
                     <div className="ml-16 md:ml-0 md:w-1/2 md:px-10">
                       <div className="rounded-2xl bg-card border border-border p-6 shadow-card">
                         <div className="text-xs font-semibold text-maple uppercase tracking-wider">Bosqich {i + 1}</div>

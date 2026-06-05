@@ -42,7 +42,7 @@ function Kurslar() {
           <Reveal delay={120}>
             <h1 className="mt-6 text-4xl md:text-6xl font-bold leading-tight max-w-4xl mx-auto">
               TCF Canada Imtihoniga<br />
-              <span style={{ color: "var(--maple)" }}>Professional Tayyorgarlik</span>
+              <span className="text-maple">Professional Tayyorgarlik</span>
             </h1>
           </Reveal>
           <Reveal delay={220}>
@@ -79,7 +79,7 @@ function Kurslar() {
       </section>
 
       {/* PRICING */}
-      <section className="bg-gradient-to-b from-accent/40 to-background py-20 md:py-28">
+      <section className="bg-linear-to-b from-accent/40 to-background py-20 md:py-28">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <Reveal>
             <h2 className="text-3xl md:text-4xl font-bold text-center">Kurs Turlari</h2>
@@ -90,7 +90,7 @@ function Kurslar() {
               <Reveal key={c.title} delay={i * 100}>
                 <div className={`relative h-full rounded-3xl border p-7 transition-all hover:-translate-y-2 ${
                   c.popular
-                    ? "bg-gradient-to-br from-primary to-primary-glow text-primary-foreground border-primary shadow-elegant"
+                    ? "bg-linear-to-br from-primary to-primary-glow text-primary-foreground border-primary shadow-elegant"
                     : "bg-card border-border shadow-card hover:shadow-elegant"
                 }`}>
                   {c.popular && (
@@ -172,8 +172,8 @@ function Kurslar() {
         <div className="mt-10 flex flex-wrap gap-4 justify-center">
           {["DELF", "DALF", "CEFR", "TCF Canada"].map((b, i) => (
             <Reveal key={b} delay={i * 80}>
-              <span className={`inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold shadow-card ${
-                b === "TCF Canada" ? "bg-gradient-to-r from-primary to-maple text-primary-foreground" : "bg-card border border-border"
+                <span className={`inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold shadow-card ${
+                b === "TCF Canada" ? "bg-linear-to-r from-primary to-maple text-primary-foreground" : "bg-card border border-border"
               }`}>
                 <Award className="h-4 w-4" /> {b}
               </span>

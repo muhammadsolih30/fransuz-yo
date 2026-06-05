@@ -90,7 +90,7 @@ function Boglanish() {
           <p className="mt-2 text-muted-foreground">Iltimos, arizani yuborishdan oldin barcha shartlarni diqqat bilan o'qib chiqing.</p>
         </Reveal>
         <Reveal delay={120}>
-          <div className="mt-8 rounded-3xl bg-card border border-border shadow-card max-h-[420px] overflow-y-auto">
+          <div className="mt-8 rounded-3xl bg-card border border-border shadow-card max-h-105 overflow-y-auto">
             <ol className="divide-y divide-border">
               {terms.map(([title, body], i) => (
                 <li key={title} className="px-6 py-5 flex gap-4">
@@ -113,7 +113,7 @@ function Boglanish() {
               type="checkbox"
               checked={agreed}
               onChange={(e) => setAgreed(e.target.checked)}
-              className="mt-1 h-5 w-5 accent-[var(--primary)]"
+              className="mt-1 h-5 w-5 accent-primary"
             />
             <span className="font-medium">Barcha shartlarni o'qib chiqdim va roziman</span>
           </label>
@@ -199,7 +199,7 @@ function Boglanish() {
                               type="checkbox"
                               checked={checked}
                               onChange={() => toggleCourse(c.id)}
-                              className="h-4 w-4 accent-[var(--primary)]"
+                              className="h-4 w-4 accent-primary"
                             />
                             <span className="text-sm">{c.label}</span>
                           </label>
@@ -210,7 +210,7 @@ function Boglanish() {
 
                   <button
                     type="submit"
-                    className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary to-primary-glow text-primary-foreground py-3.5 font-semibold hover:opacity-95 transition shadow-card disabled:cursor-not-allowed"
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-linear-to-r from-primary to-primary-glow text-primary-foreground py-3.5 font-semibold hover:opacity-95 transition shadow-card disabled:cursor-not-allowed"
                   >
                     YUBORISH <Send className="h-4 w-4" />
                   </button>
@@ -240,7 +240,7 @@ function Boglanish() {
                 rel="noreferrer"
                 className="block rounded-2xl bg-card border border-border p-6 text-center hover:-translate-y-1 hover:border-primary/40 hover:shadow-card transition-all"
               >
-                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-glow text-primary-foreground">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-primary to-primary-glow text-primary-foreground">
                   <c.Icon className="h-5 w-5" />
                 </div>
                 <div className="mt-3 text-sm font-semibold">{c.label}</div>
