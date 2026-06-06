@@ -21,12 +21,12 @@ export function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-black/90 backdrop-blur-xl border-b border-white/5" : ""
+        scrolled ? "bg-white/90 backdrop-blur-xl border-b border-gray-200" : ""
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link to="/" className="no-underline flex items-center gap-0.5">
-          <span className="font-['Syne'] font-black text-xl text-white">FRANCE</span>
+          <span className="font-['Syne'] font-black text-xl text-gray-900">FRANCE</span>
           <span className="font-['Syne'] font-black text-xl text-[#E8192C]">TCF</span>
         </Link>
 
@@ -35,7 +35,7 @@ export function Navbar() {
             <Link
               key={l.to}
               to={l.to}
-              className="no-underline text-white/50 hover:text-white text-sm transition-colors"
+              className="no-underline text-gray-600 hover:text-gray-900 text-sm transition-colors"
             >
               {l.label}
             </Link>
@@ -57,7 +57,13 @@ export function Navbar() {
           </Link>
         </div>
 
-        <button className="md:hidden flex flex-col gap-1.5 p-1" onClick={() => setOpen(!open)}>
+        <button
+          type="button"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          className="md:hidden flex flex-col gap-1.5 p-1"
+          onClick={() => setOpen(!open)}
+        >
           <span
             className={`block w-6 h-px bg-white transition-all ${open ? "rotate-45 translate-y-1.5" : ""}`}
           />
@@ -69,13 +75,13 @@ export function Navbar() {
       </div>
 
       {open && (
-        <div className="md:hidden bg-black border-t border-white/5 px-6 py-6 flex flex-col gap-5">
+        <div className="md:hidden bg-white border-t border-gray-200 px-6 py-6 flex flex-col gap-5">
           {links.map((l) => (
             <Link
               key={l.to}
               to={l.to}
               onClick={() => setOpen(false)}
-              className="no-underline text-white/60 hover:text-white text-sm transition-colors"
+              className="no-underline text-gray-600 hover:text-gray-900 text-sm transition-colors"
             >
               {l.label}
             </Link>

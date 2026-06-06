@@ -5,38 +5,27 @@ export const Route = createFileRoute("/boglanish")({
   head: () => ({
     meta: [
       { title: "Bog'lanish — France TCF O'quv Markazi" },
-      {
-        name: "description",
-        content: "France TCF O'quv markazi bilan bog'laning. Bepul konsultatsiya oling.",
-      },
+      { name: "description", content: "France TCF O'quv markazi bilan bog'laning." },
     ],
   }),
   component: BoglanishPage,
 });
 
-type FormData = {
-  ism: string;
-  telefon: string;
-  format: string;
-  daraja: string;
-  xabar: string;
-};
-
 const formats = [
-  { value: "offline", label: "Offline guruh", emoji: "🏫" },
-  { value: "online", label: "Online guruh", emoji: "💻" },
-  { value: "mini", label: "Mini-guruh", emoji: "👥" },
-  { value: "individual", label: "Individual", emoji: "🎯" },
-  { value: "bilmayman", label: "Bilmayman, maslahat kerak", emoji: "❓" },
+  { v: "offline", l: "🏫 Offline guruh" },
+  { v: "online", l: "💻 Online guruh" },
+  { v: "mini", l: "👥 Mini-guruh" },
+  { v: "individual", l: "🎯 Individual" },
+  { v: "bilmayman", l: "❓ Bilmayman" },
 ];
 
 const darajalar = [
-  { value: "nol", label: "0 dan boshlayman" },
-  { value: "a1", label: "A1 — Boshlang'ich" },
-  { value: "a2", label: "A2 — Elementary" },
-  { value: "b1", label: "B1 — Intermediate" },
-  { value: "b2", label: "B2 — Upper Intermediate" },
-  { value: "bilmayman", label: "Bilmayman" },
+  { v: "nol", l: "0 dan boshlayman" },
+  { v: "a1", l: "A1 — Boshlang'ich" },
+  { v: "a2", l: "A2 — Elementary" },
+  { v: "b1", l: "B1 — Intermediate" },
+  { v: "b2", l: "B2 — Upper Intermediate" },
+  { v: "bilmayman", l: "Bilmayman" },
 ];
 
 const contacts = [
@@ -45,7 +34,7 @@ const contacts = [
     title: "Telefon",
     value: "+998 77 220 08 09",
     href: "tel:+998772200809",
-    sub: "Du–Shan, 9:00–20:00",
+    sub: "Du–Shan 9:00–20:00",
   },
   {
     icon: "✈️",
@@ -59,281 +48,223 @@ const contacts = [
     title: "Email",
     value: "muhammadsolih08091011@gmail.com",
     href: "mailto:muhammadsolih08091011@gmail.com",
-    sub: "24 soat ichida javob",
+    sub: "24 soat ichida",
   },
   {
     icon: "📍",
     title: "Manzil",
     value: "Oybek metro, Farmatsevtika instituti ichida",
-    href: "https://maps.google.com/?q=Oybek+metro+Tashkent",
-    sub: "Toshkent, O'zbekiston",
+    href: "#",
+    sub: "Toshkent",
   },
 ];
 
 const socials = [
-  { label: "Telegram kanal", href: "https://t.me/Canadali", icon: "✈️" },
-  { label: "Instagram", href: "https://instagram.com/kanadalik_uzbek", icon: "📸" },
-  { label: "YouTube", href: "https://youtube.com/@canadAli", icon: "▶️" },
-  { label: "Shaxsiy Telegram", href: "https://t.me/Mr_Ali_Canada", icon: "👤" },
+  { l: "Telegram kanal", href: "https://t.me/Canadali" },
+  { l: "Instagram", href: "https://instagram.com/kanadalik_uzbek" },
+  { l: "YouTube", href: "https://youtube.com/@canadAli" },
+  { l: "Alimardon (shaxsiy)", href: "https://t.me/Mr_Ali_Canada" },
 ];
 
 function BoglanishPage() {
-  const [form, setForm] = useState<FormData>({
-    ism: "",
-    telefon: "",
-    format: "",
-    daraja: "",
-    xabar: "",
-  });
+  const [form, setForm] = useState({ ism: "", telefon: "", format: "", daraja: "", xabar: "" });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
-  ) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleFormatSelect = (value: string) => {
-    setForm((prev) => ({ ...prev, format: value }));
-  };
-
-  const handleSubmit = async (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     if (!form.ism || !form.telefon) return;
     setLoading(true);
-
-    // Telegram bot orqali yuborish (keyinroq bot token qo'shiladi)
-    const message = `
-🆕 Yangi ariza — France TCF
-
-👤 Ism: ${form.ism}
-📞 Telefon: ${form.telefon}
-📚 Format: ${form.format || "Ko'rsatilmagan"}
-🎯 Daraja: ${form.daraja || "Ko'rsatilmagan"}
-💬 Xabar: ${form.xabar || "Yo'q"}
-    `.trim();
-
+    const msg = `🆕 Yangi ariza — France TCF\n\n👤 ${form.ism}\n📞 ${form.telefon}\n📚 ${form.format || "—"}\n🎯 ${form.daraja || "—"}\n💬 ${form.xabar || "—"}`;
     try {
-      // Bot token va chat ID ni keyinroq qo'shing
-      const BOT_TOKEN = "YOUR_BOT_TOKEN";
-      const CHAT_ID = "YOUR_CHAT_ID";
-
-      await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      await fetch(`https://api.telegram.org/botYOUR_BOT_TOKEN/sendMessage`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chat_id: CHAT_ID, text: message }),
+        body: JSON.stringify({ chat_id: "YOUR_CHAT_ID", text: msg }),
       });
     } catch {
-      // Bot sozlanmagan bo'lsa ham forma ishlaydi
+      // Handle error silently
     }
-
     setTimeout(() => {
       setLoading(false);
       setSent(true);
-    }, 1000);
+    }, 800);
   };
 
   return (
-    <div className="pt-24">
+    <div className="bg-black text-white">
       {/* HERO */}
-      <section className="py-16 relative overflow-hidden">
-        <div className="absolute -top-40 -right-20 w-125 h-125 rounded-full bg-[#E8192C] opacity-8 blur-[100px] pointer-events-none" />
-        <div className="max-w-6xl mx-auto px-6">
-          <span className="text-[#E8192C] text-xs font-medium tracking-widest uppercase">
+      <section className="relative min-h-[50vh] flex flex-col justify-end pb-20 overflow-hidden">
+        <div className="absolute inset-0">
+          <div
+            className="absolute top-0 left-0 w-[600px] h-[400px] rounded-full opacity-12"
+            style={{ background: "radial-gradient(ellipse, #E8192C 0%, transparent 70%)" }}
+          />
+          <div
+            className="absolute inset-0 opacity-[0.03]"
+            style={{
+              backgroundImage:
+                "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)",
+              backgroundSize: "80px 80px",
+            }}
+          />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 pt-36">
+          <p className="text-[#E8192C] text-xs font-medium tracking-[0.2em] uppercase mb-4">
             Bog'lanish
-          </span>
-          <h1 className="font-['Syne'] font-black text-4xl md:text-6xl mt-3 mb-5 leading-tight">
-            Bepul maslahat
+          </p>
+          <h1
+            className="font-['Syne'] font-black leading-none mb-6"
+            style={{ fontSize: "clamp(3rem, 8vw, 6rem)" }}
+          >
+            Bepul
             <br />
-            <span className="text-[#E8192C]">oling</span>
+            <span className="text-[#E8192C]">maslahat</span>
           </h1>
-          <p className="text-white/55 text-lg max-w-xl leading-relaxed">
-            Qaysi format siz uchun mos ekanini birgalikda aniqlaymiz. Hech qanday majburiyat yo'q.
+          <p className="text-white/40 text-lg max-w-lg">
+            Qaysi format siz uchun mos — birgalikda aniqlaymiz.
           </p>
         </div>
       </section>
 
-      <section className="pb-20">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
+      {/* FORMA + KONTAKT */}
+      <section className="py-20 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-px bg-white/5">
             {/* FORMA */}
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-3 bg-black p-10">
               {sent ? (
-                <div className="bg-[#12121A] border border-green-500/25 rounded-2xl p-12 text-center">
-                  <div className="text-5xl mb-4">🎉</div>
-                  <h3 className="font-['Syne'] font-bold text-2xl mb-3">
-                    Arizangiz qabul qilindi!
-                  </h3>
-                  <p className="text-white/55 text-sm leading-relaxed mb-8">
-                    Tez orada siz bilan bog'lanamiz. Telegram orqali ham murojaat qilishingiz
-                    mumkin.
-                  </p>
+                <div className="h-full flex flex-col items-center justify-center text-center py-20">
+                  <div className="font-['Syne'] font-black text-8xl text-[#E8192C] mb-4">✓</div>
+                  <h3 className="font-['Syne'] font-black text-3xl mb-3">Qabul qilindi!</h3>
+                  <p className="text-white/40 text-sm mb-8">Tez orada siz bilan bog'lanamiz.</p>
                   <a
                     href="https://t.me/Fransuz_lingua"
                     target="_blank"
-                    rel="noreferrer noopener"
-                    className="inline-flex bg-[#E8192C] hover:bg-[#c4111f] text-white font-medium px-6 py-3 rounded-lg transition-all no-underline text-sm"
+                    rel="noreferrer"
+                    className="no-underline bg-[#E8192C] hover:bg-[#c4111f] text-white font-medium px-8 py-4 rounded-xl text-sm transition-all"
                   >
                     Telegramda yozish →
                   </a>
                 </div>
               ) : (
-                <div className="bg-[#12121A] border border-white/5 rounded-2xl p-8">
-                  <h2 className="font-['Syne'] font-bold text-xl mb-8">Ariza qoldiring</h2>
+                <>
+                  <h2 className="font-['Syne'] font-black text-3xl mb-10">Ariza qoldiring</h2>
 
-                  {/* Ism */}
-                  <div className="mb-5">
-                    <label className="block text-white/50 text-xs font-medium mb-2 uppercase tracking-wider">
+                  <div className="mb-6">
+                    <label className="block text-white/25 text-xs tracking-widest uppercase mb-3">
                       Ismingiz *
                     </label>
                     <input
                       type="text"
-                      name="ism"
-                      value={form.ism}
-                      onChange={handleChange}
                       placeholder="Ism Familiya"
-                      className="w-full bg-[#0A0A0F] border border-white/10 focus:border-[#E8192C]/50 rounded-xl px-4 py-3.5 text-white text-sm outline-none transition-colors placeholder:text-white/25"
+                      value={form.ism}
+                      onChange={(e) => setForm((p) => ({ ...p, ism: e.target.value }))}
+                      className="w-full bg-transparent border-b border-white/10 focus:border-[#E8192C] pb-3 text-white text-base outline-none transition-colors placeholder:text-white/15"
                     />
                   </div>
 
-                  {/* Telefon */}
-                  <div className="mb-5">
-                    <label className="block text-white/50 text-xs font-medium mb-2 uppercase tracking-wider">
-                      Telefon raqam *
+                  <div className="mb-6">
+                    <label className="block text-white/25 text-xs tracking-widest uppercase mb-3">
+                      Telefon *
                     </label>
                     <input
                       type="tel"
-                      name="telefon"
-                      value={form.telefon}
-                      onChange={handleChange}
                       placeholder="+998 90 000 00 00"
-                      className="w-full bg-[#0A0A0F] border border-white/10 focus:border-[#E8192C]/50 rounded-xl px-4 py-3.5 text-white text-sm outline-none transition-colors placeholder:text-white/25"
+                      value={form.telefon}
+                      onChange={(e) => setForm((p) => ({ ...p, telefon: e.target.value }))}
+                      className="w-full bg-transparent border-b border-white/10 focus:border-[#E8192C] pb-3 text-white text-base outline-none transition-colors placeholder:text-white/15"
                     />
                   </div>
 
-                  {/* Format */}
-                  <div className="mb-5">
-                    <label className="block text-white/50 text-xs font-medium mb-3 uppercase tracking-wider">
-                      Qaysi format qiziqtiradi?
+                  <div className="mb-6">
+                    <label className="block text-white/25 text-xs tracking-widest uppercase mb-3">
+                      Format
                     </label>
                     <div className="grid grid-cols-2 gap-2">
                       {formats.map((f) => (
                         <button
-                          key={f.value}
+                          key={f.v}
                           type="button"
-                          onClick={() => handleFormatSelect(f.value)}
-                          className={`flex items-center gap-2 px-4 py-3 rounded-xl text-sm text-left transition-all ${
-                            form.format === f.value
-                              ? "bg-[#E8192C]/15 border border-[#E8192C]/40 text-white"
-                              : "bg-[#0A0A0F] border border-white/8 text-white/55 hover:border-white/20"
+                          onClick={() => setForm((p) => ({ ...p, format: f.v }))}
+                          className={`text-left px-4 py-3 text-sm border transition-all ${
+                            form.format === f.v
+                              ? "border-[#E8192C] text-white bg-[#E8192C]/5"
+                              : "border-white/8 text-white/40 hover:border-white/20 hover:text-white/70"
                           }`}
                         >
-                          <span>{f.emoji}</span>
-                          <span>{f.label}</span>
+                          {f.l}
                         </button>
                       ))}
                     </div>
                   </div>
 
-                  {/* Daraja */}
-                  <div className="mb-5">
-                    <label
-                      htmlFor="daraja"
-                      className="block text-white/50 text-xs font-medium mb-2 uppercase tracking-wider"
-                    >
-                      Hozirgi fransuz tili darajangiz
+                  <div className="mb-6">
+                    <label className="block text-white/25 text-xs tracking-widest uppercase mb-3">
+                      Hozirgi daraja
                     </label>
                     <select
-                      id="daraja"
-                      name="daraja"
                       value={form.daraja}
-                      onChange={handleChange}
-                      className="w-full bg-[#0A0A0F] border border-white/10 focus:border-[#E8192C]/50 rounded-xl px-4 py-3.5 text-white text-sm outline-none transition-colors appearance-none cursor-pointer"
+                      onChange={(e) => setForm((p) => ({ ...p, daraja: e.target.value }))}
+                      className="w-full bg-transparent border-b border-white/10 focus:border-[#E8192C] pb-3 text-white text-sm outline-none transition-colors appearance-none cursor-pointer"
                     >
-                      <option value="">Tanlang...</option>
+                      <option value="" className="bg-black">
+                        Tanlang...
+                      </option>
                       {darajalar.map((d) => (
-                        <option key={d.value} value={d.value}>
-                          {d.label}
+                        <option key={d.v} value={d.v} className="bg-black">
+                          {d.l}
                         </option>
                       ))}
                     </select>
                   </div>
 
-                  {/* Xabar */}
-                  <div className="mb-7">
-                    <label className="block text-white/50 text-xs font-medium mb-2 uppercase tracking-wider">
-                      Qo'shimcha savol yoki xabar
+                  <div className="mb-10">
+                    <label className="block text-white/25 text-xs tracking-widest uppercase mb-3">
+                      Savol / xabar
                     </label>
                     <textarea
-                      name="xabar"
-                      value={form.xabar}
-                      onChange={handleChange}
                       placeholder="Savolingizni yozing..."
-                      rows={4}
-                      className="w-full bg-[#0A0A0F] border border-white/10 focus:border-[#E8192C]/50 rounded-xl px-4 py-3.5 text-white text-sm outline-none transition-colors placeholder:text-white/25 resize-none"
+                      rows={3}
+                      value={form.xabar}
+                      onChange={(e) => setForm((p) => ({ ...p, xabar: e.target.value }))}
+                      className="w-full bg-transparent border-b border-white/10 focus:border-[#E8192C] pb-3 text-white text-sm outline-none transition-colors placeholder:text-white/15 resize-none"
                     />
                   </div>
 
                   <button
                     onClick={handleSubmit}
                     disabled={loading || !form.ism || !form.telefon}
-                    className="w-full bg-[#E8192C] hover:bg-[#c4111f] disabled:opacity-40 disabled:cursor-not-allowed text-white font-medium py-4 rounded-xl transition-all text-sm"
+                    className="w-full bg-[#E8192C] hover:bg-[#c4111f] disabled:opacity-30 disabled:cursor-not-allowed text-white font-semibold py-5 text-sm transition-all hover:scale-[1.01] active:scale-[0.99]"
                   >
-                    {loading ? (
-                      <span className="flex items-center justify-center gap-2">
-                        <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                          />
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                          />
-                        </svg>
-                        Yuborilmoqda...
-                      </span>
-                    ) : (
-                      "Ariza yuborish →"
-                    )}
+                    {loading ? "Yuborilmoqda..." : "Ariza yuborish →"}
                   </button>
-
-                  <p className="text-white/25 text-xs text-center mt-4">
-                    Ma'lumotlaringiz faqat siz bilan bog'lanish uchun ishlatiladi
-                  </p>
-                </div>
+                </>
               )}
             </div>
 
-            {/* ALOQA MA'LUMOTLARI */}
-            <div className="lg:col-span-2 flex flex-col gap-5">
-              {/* Kontaktlar */}
-              <div className="bg-[#12121A] border border-white/5 rounded-2xl p-6">
-                <h3 className="font-['Syne'] font-semibold text-base mb-5">Aloqa ma'lumotlari</h3>
-                <div className="flex flex-col gap-4">
+            {/* KONTAKT */}
+            <div className="lg:col-span-2 bg-black">
+              {/* Aloqa */}
+              <div className="p-10 border-b border-white/5">
+                <h3 className="font-['Syne'] font-bold text-lg mb-8 text-white/60">Aloqa</h3>
+                <div className="flex flex-col gap-6">
                   {contacts.map((c) => (
                     <a
                       key={c.title}
                       href={c.href}
                       target={c.href.startsWith("http") ? "_blank" : undefined}
-                      rel="noreferrer noopener"
-                      className="flex items-start gap-4 group no-underline"
+                      rel="noreferrer"
+                      className="no-underline flex items-start gap-4 group"
                     >
-                      <div className="w-10 h-10 rounded-xl bg-[#E8192C]/10 border border-[#E8192C]/20 flex items-center justify-center text-lg shrink-0 group-hover:bg-[#E8192C]/20 transition-colors">
+                      <div className="w-10 h-10 border border-white/8 group-hover:border-[#E8192C]/50 flex items-center justify-center text-base flex-shrink-0 transition-colors">
                         {c.icon}
                       </div>
                       <div>
-                        <div className="text-white/40 text-xs mb-0.5">{c.title}</div>
-                        <div className="text-white text-sm font-medium group-hover:text-[#E8192C] transition-colors break-all">
+                        <div className="text-white/25 text-xs mb-0.5">{c.title}</div>
+                        <div className="text-white/70 group-hover:text-white text-sm transition-colors break-all">
                           {c.value}
                         </div>
-                        <div className="text-white/30 text-xs mt-0.5">{c.sub}</div>
+                        <div className="text-white/20 text-xs mt-0.5">{c.sub}</div>
                       </div>
                     </a>
                   ))}
@@ -341,47 +272,25 @@ function BoglanishPage() {
               </div>
 
               {/* Ijtimoiy tarmoqlar */}
-              <div className="bg-[#12121A] border border-white/5 rounded-2xl p-6">
-                <h3 className="font-['Syne'] font-semibold text-base mb-5">Ijtimoiy tarmoqlar</h3>
-                <div className="flex flex-col gap-3">
+              <div className="p-10">
+                <h3 className="font-['Syne'] font-bold text-lg mb-6 text-white/60">
+                  Ijtimoiy tarmoqlar
+                </h3>
+                <div className="flex flex-col gap-1">
                   {socials.map((s) => (
                     <a
-                      key={s.label}
+                      key={s.l}
                       href={s.href}
                       target="_blank"
-                      rel="noreferrer noopener"
-                      className="flex items-center justify-between px-4 py-3 bg-[#0A0A0F] border border-white/5 hover:border-white/15 rounded-xl transition-all group no-underline"
+                      rel="noreferrer"
+                      className="no-underline flex items-center justify-between px-4 py-3 border-b border-white/5 text-white/40 hover:text-white transition-colors group"
                     >
-                      <div className="flex items-center gap-3">
-                        <span>{s.icon}</span>
-                        <span className="text-white/65 group-hover:text-white text-sm transition-colors">
-                          {s.label}
-                        </span>
-                      </div>
-                      <span className="text-white/25 group-hover:text-white/60 text-sm transition-colors">
+                      <span className="text-sm">{s.l}</span>
+                      <span className="text-[#E8192C] opacity-0 group-hover:opacity-100 transition-opacity">
                         →
                       </span>
                     </a>
                   ))}
-                </div>
-              </div>
-
-              {/* Xarita placeholder */}
-              <div className="bg-[#12121A] border border-white/5 rounded-2xl overflow-hidden">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.5!2d69.2832!3d41.2995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDE3JzU4LjIiTiA2OcKwMTcnMDIuMyJF!5e0!3m2!1suz!2suz!4v1234567890"
-                  width="100%"
-                  height="200"
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="France TCF manzili"
-                  className="grayscale opacity-70 border-0"
-                />
-                <div className="px-5 py-4">
-                  <p className="text-white/60 text-xs">
-                    📍 Oybek metro, Farmatsevtika instituti ichida
-                  </p>
                 </div>
               </div>
             </div>

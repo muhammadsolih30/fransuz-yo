@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { Hero } from "../components/Hero";
+import { Stats } from "../components/Stats";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -94,42 +96,26 @@ const steps = [
 
 export default function HomePage() {
   return (
-    <div className="bg-black text-white">
+    <div className="bg-white text-gray-900">
       {/* ═══ HERO ═══ */}
       <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
         {/* Gradient orqa fon */}
         <div className="absolute inset-0">
-          <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full opacity-20"
-            style={{ background: "radial-gradient(ellipse, #E8192C 0%, transparent 70%)" }}
-          />
-          <div
-            className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full opacity-10"
-            style={{ background: "radial-gradient(ellipse, #003DA5 0%, transparent 70%)" }}
-          />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-225 h-150 rounded-full opacity-20 hero-red-glow" />
+          <div className="absolute bottom-0 right-0 w-125 h-125 rounded-full opacity-10 hero-blue-glow" />
           {/* Grid pattern */}
-          <div
-            className="absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage:
-                "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)",
-              backgroundSize: "80px 80px",
-            }}
-          />
+          <div className="absolute inset-0 opacity-[0.04] hero-grid-pattern" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20">
           <div className="max-w-4xl">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 border border-white/10 bg-white/5 backdrop-blur px-4 py-2 rounded-full text-xs text-white/70 mb-8">
+            <div className="inline-flex items-center gap-2 border border-gray-300 bg-gray-50 backdrop-blur px-4 py-2 rounded-full text-xs text-gray-600 mb-8">
               <span className="w-2 h-2 rounded-full bg-[#E8192C] animate-pulse" />
               2025 — 30,000 kvota tasdiqlangan • Kanada hukumati ma'lumoti
             </div>
 
-            <h1
-              className="font-['Syne'] font-black leading-[1.0] tracking-tight mb-8"
-              style={{ fontSize: "clamp(3rem, 8vw, 7rem)" }}
-            >
+            <h1 className="font-['Syne'] font-black leading-none tracking-tight mb-8 hero-title-size">
               Fransuz tili
               <br />
               orqali
@@ -137,7 +123,7 @@ export default function HomePage() {
               <span className="text-[#E8192C]">Kanadaga.</span>
             </h1>
 
-            <p className="text-white/50 text-xl leading-relaxed mb-10 max-w-xl">
+            <p className="text-gray-500 text-xl leading-relaxed mb-10 max-w-xl">
               TCF Canada imtihoniga professional tayyorgarlik. Offline, online, mini-guruh va
               individual darslar.
             </p>
@@ -151,7 +137,7 @@ export default function HomePage() {
               </Link>
               <Link
                 to="/kurslar"
-                className="no-underline border border-white/20 hover:border-white/50 text-white font-medium px-8 py-4 rounded-xl text-sm transition-all"
+                className="no-underline border border-gray-300 hover:border-gray-500 text-gray-900 font-medium px-8 py-4 rounded-xl text-sm transition-all"
               >
                 Kurslar haqida
               </Link>
@@ -161,24 +147,24 @@ export default function HomePage() {
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30">
-          <div className="w-px h-12 bg-white animate-pulse" />
+          <div className="w-px h-12 bg-gray-400 animate-pulse" />
           <span className="text-xs tracking-widest uppercase">Scroll</span>
         </div>
       </section>
 
       {/* ═══ STATS ═══ */}
-      <section className="border-y border-white/5 py-16">
+      <section className="border-y border-gray-200 py-16">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-gray-100">
             {stats.map((s) => (
               <div
                 key={s.label}
-                className="bg-black px-10 py-10 text-center hover:bg-white/[0.03] transition-colors"
+                className="bg-white px-10 py-10 text-center hover:bg-gray-50 transition-colors border border-gray-200"
               >
                 <div className="font-['Syne'] font-black text-5xl text-[#E8192C] mb-2">
                   <CountUp target={s.num} suffix={s.suffix} />
                 </div>
-                <div className="text-white/40 text-sm tracking-wider uppercase">{s.label}</div>
+                <div className="text-gray-500 text-sm tracking-wider uppercase">{s.label}</div>
               </div>
             ))}
           </div>
@@ -201,23 +187,23 @@ export default function HomePage() {
             </div>
             <Link
               to="/kurslar"
-              className="no-underline text-white/50 hover:text-white text-sm transition-colors self-start md:self-auto"
+              className="no-underline text-gray-500 hover:text-gray-900 text-sm transition-colors self-start md:self-auto"
             >
               Barcha kurslar →
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-gray-100">
             {features.map((f, i) => (
               <div
                 key={f.title}
-                className={`bg-black p-10 hover:bg-white/[0.03] transition-all group ${i === 1 ? "md:border-t-2 md:border-[#E8192C]" : ""}`}
+                className={`bg-white p-10 hover:bg-gray-50 transition-all group border border-gray-200 ${i === 1 ? "md:border-t-2 md:border-[#E8192C]" : ""}`}
               >
                 <div className="text-4xl mb-6">{f.icon}</div>
                 <h3 className="font-['Syne'] font-bold text-xl mb-3 group-hover:text-[#E8192C] transition-colors">
                   {f.title}
                 </h3>
-                <p className="text-white/40 text-sm leading-relaxed">{f.desc}</p>
+                <p className="text-gray-500 text-sm leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>
@@ -225,7 +211,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══ 1 OYLIK NATIJA ═══ */}
-      <section className="py-28 border-y border-white/5">
+      <section className="py-28 border-y border-gray-200">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <div>
@@ -237,7 +223,7 @@ export default function HomePage() {
                 <br />
                 B1 → <span className="text-[#E8192C]">C2</span>
               </h2>
-              <p className="text-white/50 text-base leading-relaxed mb-10">
+              <p className="text-gray-500 text-base leading-relaxed mb-10">
                 O'quvchimiz Dilnura Saidbekova — faqat 1 oy o'qib, TCF Canada imtihonida C2 darajaga
                 erishdi.
               </p>
@@ -260,7 +246,7 @@ export default function HomePage() {
               </div>
               <Link
                 to="/natijalar"
-                className="no-underline inline-flex items-center gap-2 text-white border-b border-white/30 hover:border-white pb-1 text-sm transition-all"
+                className="no-underline inline-flex items-center gap-2 text-gray-900 border-b border-gray-300 hover:border-gray-900 pb-1 text-sm transition-all"
               >
                 Barcha natijalar →
               </Link>
@@ -268,21 +254,21 @@ export default function HomePage() {
 
             {/* Sertifikat karta */}
             <div className="relative">
-              <div className="bg-white/[0.03] border border-white/8 rounded-3xl p-10 text-center">
+              <div className="bg-gray-50 border border-gray-300 rounded-3xl p-10 text-center">
                 <div className="inline-flex items-center gap-2 bg-[#E8192C]/10 border border-[#E8192C]/20 px-4 py-1.5 rounded-full text-[#E8192C] text-xs mb-8">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#E8192C] animate-pulse" />1 oylik
                   natija
                 </div>
                 <div className="font-['Syne'] font-black text-8xl text-[#E8192C] mb-2">C2</div>
-                <div className="text-white/40 text-sm mb-8">TCF Canada • April 2026</div>
-                <div className="text-white/60 text-sm italic border-t border-white/5 pt-6">
+                <div className="text-gray-500 text-sm mb-8">TCF Canada • April 2026</div>
+                <div className="text-gray-600 text-sm italic border-t border-gray-200 pt-6">
                   "Finally 🎉 Alhamdulillah. Rahmat ustoz!"
                 </div>
-                <div className="text-white/30 text-xs mt-2">— Dilnura Saidbekova</div>
+                <div className="text-gray-400 text-xs mt-2">— Dilnura Saidbekova</div>
               </div>
               {/* Decoration */}
               <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full border border-[#E8192C]/20 opacity-50" />
-              <div className="absolute -bottom-4 -left-4 w-16 h-16 rounded-full border border-white/10 opacity-50" />
+              <div className="absolute -bottom-4 -left-4 w-16 h-16 rounded-full border border-gray-300 opacity-50" />
             </div>
           </div>
         </div>
@@ -300,10 +286,14 @@ export default function HomePage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-px bg-white/5">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-px bg-gray-100">
             {steps.map((s, i) => (
-              <div key={s.n} className="bg-black p-8 hover:bg-white/[0.03] transition-colors group">
-                <div className="font-['Syne'] font-black text-5xl text-white/8 mb-6 group-hover:text-[#E8192C]/20 transition-colors">
+              <div
+                key={s.n}
+                className="bg-white p-8 hover:bg-gray-50 transition-colors group border border-gray-200"
+              >
+                <div className="font-['Syne'] font-black text-5xl text-gray-100 mb-6 group-hover:text-[#E8192C]/10 transition-colors">
+                  {" "}
                   {s.n}
                 </div>
                 <h3 className="font-['Syne'] font-bold text-base mb-2">{s.t}</h3>
@@ -376,7 +366,7 @@ export default function HomePage() {
                     <span className="font-['Syne'] font-semibold text-sm text-white/80 group-open:text-white transition-colors">
                       {f.q}
                     </span>
-                    <span className="text-[#E8192C] text-xl flex-shrink-0 group-open:rotate-45 transition-transform duration-300">
+                    <span className="text-[#E8192C] text-xl shrink-0 group-open:rotate-45 transition-transform duration-300">
                       +
                     </span>
                   </summary>
@@ -392,13 +382,7 @@ export default function HomePage() {
       <section className="py-28 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6">
           <div className="relative rounded-3xl overflow-hidden border border-white/8 p-16 text-center">
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(ellipse at center, rgba(232,25,44,0.15) 0%, transparent 70%)",
-              }}
-            />
+            <div className="absolute inset-0 cta-radial" />
             <div className="relative z-10">
               <h2 className="font-['Syne'] font-black text-5xl md:text-7xl leading-none mb-6">
                 Tayyor

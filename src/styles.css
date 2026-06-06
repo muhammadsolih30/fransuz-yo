@@ -1,38 +1,89 @@
 @import "tailwindcss";
 
 @layer base {
-    :root {
-        --red: #e8192c;
-        --blue: #003da5;
-        --gold: #d4af37;
-    }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
+  html {
+    scroll-behavior: smooth;
+  }
 
-    html {
-        scroll-behavior: smooth;
-    }
+  body {
+    font-family: "DM Sans", sans-serif;
+    background: #ffffff;
+    color: #1f2937;
+    -webkit-font-smoothing: antialiased;
+  }
 
-    body {
-        font-family: "DM Sans", sans-serif;
-        background: #0a0a0f;
-        color: #ffffff;
-    }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: "Syne", sans-serif;
+  }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5 {
-        font-family: "Syne", sans-serif;
-    }
+  details summary::-webkit-details-marker {
+    display: none;
+  }
 }
 
-.bg-grid-pattern {
-    background-image: linear-gradient(rgba(255, 255, 255, 1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 1) 1px, transparent 1px);
-    background-size: 60px 60px;
+@layer utilities {
+  .section-padding {
+    @apply py-20 md:py-28 px-6;
+  }
+
+  .section-max-width {
+    @apply max-w-7xl mx-auto;
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl font-black tracking-tight mb-4;
+  }
+
+  .section-subtitle {
+    @apply text-gray-600 text-lg max-w-2xl mb-12;
+  }
+
+  .card-base {
+    @apply bg-white border border-gray-200 rounded-2xl p-8 transition-all duration-300;
+  }
+
+  .card-hover {
+    @apply hover:shadow-lg hover:border-gray-300;
+  }
+
+  .btn-primary {
+    @apply bg-[#E8192C] hover:bg-[#c4111f] text-white font-semibold px-8 py-4 rounded-xl text-sm transition-all hover:scale-105 active:scale-95 no-underline;
+  }
+
+  .btn-secondary {
+    @apply border border-gray-300 hover:border-gray-500 text-gray-900 font-medium px-8 py-4 rounded-xl text-sm transition-all no-underline;
+  }
+
+  .grid-col-auto {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  .feature-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .stat-card {
+    @apply text-center p-6 md:p-8;
+  }
+
+  .stat-number {
+    @apply font-black text-3xl md:text-4xl text-[#E8192C] mb-2;
+  }
+
+  .stat-label {
+    @apply text-gray-600 text-sm font-medium;
+  }
 }
