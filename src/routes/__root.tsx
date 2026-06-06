@@ -1,15 +1,6 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {
-  Outlet,
-  Link,
-  createRootRouteWithContext,
-  useRouter,
-  HeadContent,
-  Scripts,
-} from "@tanstack/react-router";
+import { Outlet, Link, createRootRouteWithContext } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
-import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
@@ -38,7 +29,6 @@ function NotFoundComponent() {
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
-  const router = useRouter();
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
@@ -54,10 +44,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
-            onClick={() => {
-              router.invalidate();
-              reset();
-            }}
+            onClick={() => reset()}
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
             Try again
@@ -74,62 +61,20 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "FransuzTili Canada — Kanadaga immigratsiya uchun fransuz tili" },
-      { name: "description", content: "TCF Canada imtihoniga professional tayyorgarlik va Kanadaga immigratsiya bo'yicha to'liq qo'llanma o'zbek tilida." },
-      { property: "og:title", content: "FransuzTili Canada — Kanadaga immigratsiya uchun fransuz tili" },
-      { property: "og:description", content: "TCF Canada imtihoniga professional tayyorgarlik va Kanadaga immigratsiya bo'yicha to'liq qo'llanma o'zbek tilida." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "FransuzTili Canada — Kanadaga immigratsiya uchun fransuz tili" },
-      { name: "twitter:description", content: "TCF Canada imtihoniga professional tayyorgarlik va Kanadaga immigratsiya bo'yicha to'liq qo'llanma o'zbek tilida." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b374f61f-b295-48af-a340-4a3834ad5034/id-preview-1dad9c9a--e1da3c30-ec56-4af7-81ca-34c36321c656.lovable.app-1780685870772.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b374f61f-b295-48af-a340-4a3834ad5034/id-preview-1dad9c9a--e1da3c30-ec56-4af7-81ca-34c36321c656.lovable.app-1780685870772.png" },
-    ],
-    links: [
-      { rel: "stylesheet", href: appCss },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap",
-      },
-    ],
-  }),
-  shellComponent: RootShell,
+export const Route = createRootRouteWithContext()({
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
 
-function RootShell({ children }: { children: ReactNode }) {
-  return (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  );
-}
-
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
-
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <Navbar />
       <main className="pt-16">
         <Outlet />
       </main>
       <Footer />
-    </QueryClientProvider>
+    </>
   );
 }
