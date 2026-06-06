@@ -1,282 +1,393 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Send, CheckCircle2, MessageCircle, Instagram, Youtube, Globe } from "lucide-react";
-import { Reveal } from "@/components/Reveal";
 
 export const Route = createFileRoute("/boglanish")({
   head: () => ({
     meta: [
-      { title: "Bog'lanish — Ro'yxatdan o'tish" },
-      { name: "description", content: "Kurs shartlarini o'qing va ro'yxatdan o'ting. Bizning aloqa kanallarimiz: Telegram, Instagram, YouTube." },
-      { property: "og:title", content: "Bog'lanish — FransuzTili Canada" },
-      { property: "og:description", content: "Ro'yxatdan o'ting va fransuz tilini o'rganishni boshlang." },
+      { title: "Bog'lanish — France TCF O'quv Markazi" },
+      {
+        name: "description",
+        content: "France TCF O'quv markazi bilan bog'laning. Bepul konsultatsiya oling.",
+      },
     ],
   }),
-  component: Boglanish,
+  component: BoglanishPage,
 });
 
-const terms = [
-  ["Kurs to'lovi", "To'lov kurs boshlanishidan oldin to'liq yoki kelishilgan tartibda amalga oshiriladi."],
-  ["Dars jadvali", "Kurs boshlanishidan oldin jadval e'lon qilinadi va o'zgartirilishi mumkin."],
-  ["Qatnashish", "Muntazam qatnashish majburiy. Sababsiz qoldirilgan darslar qayta o'tilmaydi."],
-  ["Uy vazifalari", "Barcha uy vazifalari belgilangan muddatda topshirilishi shart."],
-  ["To'lov qaytarish", "Kurs boshlanganidan keyin to'lov qaytarilmaydi."],
-  ["Xulq-atvor", "O'qituvchi va guruhdoshlarga hurmat bilan munosabatda bo'lish majburiy."],
-  ["Online darslar", "Zoom yoki Google Meet orqali olib boriladigan darslarda kamera yoqilgan holda qatnashish tavsiya etiladi."],
-  ["Sertifikat", "Kursni muvaffaqiyatli tugatgan o'quvchilarga markaz sertifikati beriladi."],
-  ["Ma'lumotlar maxfiyligi", "Siz taqdim etgan shaxsiy ma'lumotlar faqat markaz ichki maqsadlari uchun ishlatiladi."],
-  ["Immigratsiya maslahat xizmati", "Markaz immigratsiya haqida umumiy ma'lumot va yo'nalish beradi. Hujjat rasmiylashtirishni amalga oshirmaydi."],
+type FormData = {
+  ism: string;
+  telefon: string;
+  format: string;
+  daraja: string;
+  xabar: string;
+};
+
+const formats = [
+  { value: "offline", label: "Offline guruh", emoji: "🏫" },
+  { value: "online", label: "Online guruh", emoji: "💻" },
+  { value: "mini", label: "Mini-guruh", emoji: "👥" },
+  { value: "individual", label: "Individual", emoji: "🎯" },
+  { value: "bilmayman", label: "Bilmayman, maslahat kerak", emoji: "❓" },
 ];
 
-const courseOptions = [
-  { id: "offline", label: "Offline guruh — 700,000 so'm" },
-  { id: "online", label: "Online guruh — 490,000 so'm" },
-  { id: "mini", label: "Mini-guruh — 900,000 so'm" },
-  { id: "individual", label: "Individual — 1,200,000 so'm" },
+const darajalar = [
+  { value: "nol", label: "0 dan boshlayman" },
+  { value: "a1", label: "A1 — Boshlang'ich" },
+  { value: "a2", label: "A2 — Elementary" },
+  { value: "b1", label: "B1 — Intermediate" },
+  { value: "b2", label: "B2 — Upper Intermediate" },
+  { value: "bilmayman", label: "Bilmayman" },
 ];
 
-const phoneRegex = /^\+998\d{9}$/;
+const contacts = [
+  {
+    icon: "📞",
+    title: "Telefon",
+    value: "+998 77 220 08 09",
+    href: "tel:+998772200809",
+    sub: "Du–Shan, 9:00–20:00",
+  },
+  {
+    icon: "✈️",
+    title: "Telegram",
+    value: "@Fransuz_lingua",
+    href: "https://t.me/Fransuz_lingua",
+    sub: "Tezkor javob",
+  },
+  {
+    icon: "📧",
+    title: "Email",
+    value: "muhammadsolih08091011@gmail.com",
+    href: "mailto:muhammadsolih08091011@gmail.com",
+    sub: "24 soat ichida javob",
+  },
+  {
+    icon: "📍",
+    title: "Manzil",
+    value: "Oybek metro, Farmatsevtika instituti ichida",
+    href: "https://maps.google.com/?q=Oybek+metro+Tashkent",
+    sub: "Toshkent, O'zbekiston",
+  },
+];
 
-function Boglanish() {
-  const [agreed, setAgreed] = useState(false);
-  const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
-    phone: "+998",
-    phone2: "",
-    courses: [] as string[],
+const socials = [
+  { label: "Telegram kanal", href: "https://t.me/Canadali", icon: "✈️" },
+  { label: "Instagram", href: "https://instagram.com/kanadalik_uzbek", icon: "📸" },
+  { label: "YouTube", href: "https://youtube.com/@canadAli", icon: "▶️" },
+  { label: "Shaxsiy Telegram", href: "https://t.me/Mr_Ali_Canada", icon: "👤" },
+];
+
+function BoglanishPage() {
+  const [form, setForm] = useState<FormData>({
+    ism: "",
+    telefon: "",
+    format: "",
+    daraja: "",
+    xabar: "",
   });
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [submitted, setSubmitted] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const toggleCourse = (id: string) => {
-    setForm((f) => ({
-      ...f,
-      courses: f.courses.includes(id) ? f.courses.filter((c) => c !== id) : [...f.courses, id],
-    }));
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+  ) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const handleFormatSelect = (value: string) => {
+    setForm((prev) => ({ ...prev, format: value }));
+  };
+
+  const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
-    const errs: Record<string, string> = {};
-    if (!form.firstName.trim()) errs.firstName = "Ism kiritilishi shart";
-    if (!form.lastName.trim()) errs.lastName = "Familiya kiritilishi shart";
-    if (!phoneRegex.test(form.phone)) errs.phone = "Format: +998XXXXXXXXX";
-    if (form.phone2 && !phoneRegex.test(form.phone2)) errs.phone2 = "Format: +998XXXXXXXXX";
-    setErrors(errs);
-    if (Object.keys(errs).length === 0) setSubmitted(true);
+    if (!form.ism || !form.telefon) return;
+    setLoading(true);
+
+    // Telegram bot orqali yuborish (keyinroq bot token qo'shiladi)
+    const message = `
+🆕 Yangi ariza — France TCF
+
+👤 Ism: ${form.ism}
+📞 Telefon: ${form.telefon}
+📚 Format: ${form.format || "Ko'rsatilmagan"}
+🎯 Daraja: ${form.daraja || "Ko'rsatilmagan"}
+💬 Xabar: ${form.xabar || "Yo'q"}
+    `.trim();
+
+    try {
+      // Bot token va chat ID ni keyinroq qo'shing
+      const BOT_TOKEN = "YOUR_BOT_TOKEN";
+      const CHAT_ID = "YOUR_CHAT_ID";
+
+      await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: CHAT_ID, text: message }),
+      });
+    } catch {
+      // Bot sozlanmagan bo'lsa ham forma ishlaydi
+    }
+
+    setTimeout(() => {
+      setLoading(false);
+      setSent(true);
+    }, 1000);
   };
 
   return (
-    <div>
+    <div className="pt-24">
       {/* HERO */}
-      <section className="relative overflow-hidden maple-pattern text-primary-foreground">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-20 md:py-24 text-center">
-          <Reveal>
-            <h1 className="text-4xl md:text-5xl font-bold leading-tight">Bog'lanish va Ro'yxatdan o'tish</h1>
-          </Reveal>
-          <Reveal delay={120}>
-            <p className="mt-4 text-lg text-white/85 max-w-2xl mx-auto">
-              Shartlarni o'qib chiqing va arizangizni yuboring — tez orada siz bilan bog'lanamiz.
-            </p>
-          </Reveal>
+      <section className="py-16 relative overflow-hidden">
+        <div className="absolute -top-40 -right-20 w-125 h-125 rounded-full bg-[#E8192C] opacity-8 blur-[100px] pointer-events-none" />
+        <div className="max-w-6xl mx-auto px-6">
+          <span className="text-[#E8192C] text-xs font-medium tracking-widest uppercase">
+            Bog'lanish
+          </span>
+          <h1 className="font-['Syne'] font-black text-4xl md:text-6xl mt-3 mb-5 leading-tight">
+            Bepul maslahat
+            <br />
+            <span className="text-[#E8192C]">oling</span>
+          </h1>
+          <p className="text-white/55 text-lg max-w-xl leading-relaxed">
+            Qaysi format siz uchun mos ekanini birgalikda aniqlaymiz. Hech qanday majburiyat yo'q.
+          </p>
         </div>
       </section>
 
-      {/* TERMS */}
-      <section className="max-w-4xl mx-auto px-5 sm:px-8 py-16 md:py-20">
-        <Reveal>
-          <h2 className="text-2xl md:text-3xl font-bold">Kurs Shartlari va Qoidalari</h2>
-          <p className="mt-2 text-muted-foreground">Iltimos, arizani yuborishdan oldin barcha shartlarni diqqat bilan o'qib chiqing.</p>
-        </Reveal>
-        <Reveal delay={120}>
-          <div className="mt-8 rounded-3xl bg-card border border-border shadow-card max-h-105 overflow-y-auto">
-            <ol className="divide-y divide-border">
-              {terms.map(([title, body], i) => (
-                <li key={title} className="px-6 py-5 flex gap-4">
-                  <span className="shrink-0 inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary text-sm font-semibold">
-                    {i + 1}
-                  </span>
-                  <div>
-                    <h3 className="font-semibold">{title}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">{body}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </Reveal>
+      <section className="pb-20">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
+            {/* FORMA */}
+            <div className="lg:col-span-3">
+              {sent ? (
+                <div className="bg-[#12121A] border border-green-500/25 rounded-2xl p-12 text-center">
+                  <div className="text-5xl mb-4">🎉</div>
+                  <h3 className="font-['Syne'] font-bold text-2xl mb-3">
+                    Arizangiz qabul qilindi!
+                  </h3>
+                  <p className="text-white/55 text-sm leading-relaxed mb-8">
+                    Tez orada siz bilan bog'lanamiz. Telegram orqali ham murojaat qilishingiz
+                    mumkin.
+                  </p>
+                  <a
+                    href="https://t.me/Fransuz_lingua"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="inline-flex bg-[#E8192C] hover:bg-[#c4111f] text-white font-medium px-6 py-3 rounded-lg transition-all no-underline text-sm"
+                  >
+                    Telegramda yozish →
+                  </a>
+                </div>
+              ) : (
+                <div className="bg-[#12121A] border border-white/5 rounded-2xl p-8">
+                  <h2 className="font-['Syne'] font-bold text-xl mb-8">Ariza qoldiring</h2>
 
-        <Reveal delay={200}>
-          <label className="mt-6 flex items-start gap-3 rounded-2xl border border-border bg-card p-5 cursor-pointer hover:border-primary/40 transition">
-            <input
-              type="checkbox"
-              checked={agreed}
-              onChange={(e) => setAgreed(e.target.checked)}
-              className="mt-1 h-5 w-5 accent-primary"
-            />
-            <span className="font-medium">Barcha shartlarni o'qib chiqdim va roziman</span>
-          </label>
-        </Reveal>
-      </section>
-
-      {/* FORM */}
-      <section className="max-w-3xl mx-auto px-5 sm:px-8 pb-20">
-        <Reveal>
-          <div className={`rounded-3xl bg-card border border-border shadow-elegant p-8 md:p-10 transition-all ${!agreed ? "opacity-60" : ""}`}>
-            <h2 className="text-2xl md:text-3xl font-bold">Ro'yxatdan o'tish</h2>
-            <p className="mt-2 text-muted-foreground text-sm">
-              {agreed ? "Ma'lumotlaringizni kiriting." : "Avval yuqoridagi shartlarni qabul qiling."}
-            </p>
-
-            {submitted ? (
-              <div className="mt-8 rounded-2xl bg-primary/5 border border-primary/20 p-8 text-center animate-fade-up">
-                <CheckCircle2 className="h-14 w-14 text-primary mx-auto" />
-                <h3 className="mt-4 text-xl font-bold">Arizangiz qabul qilindi! 🎉</h3>
-                <p className="mt-2 text-muted-foreground">Tez orada siz bilan bog'lanamiz, {form.firstName}.</p>
-              </div>
-            ) : (
-              <form onSubmit={onSubmit} className="mt-8 space-y-5">
-                <fieldset disabled={!agreed} className="space-y-5">
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <Field label="Ism *" error={errors.firstName}>
-                      <input
-                        type="text"
-                        value={form.firstName}
-                        onChange={(e) => setForm({ ...form, firstName: e.target.value })}
-                        maxLength={50}
-                        className="input"
-                        placeholder="Ismingiz"
-                      />
-                    </Field>
-                    <Field label="Familiya *" error={errors.lastName}>
-                      <input
-                        type="text"
-                        value={form.lastName}
-                        onChange={(e) => setForm({ ...form, lastName: e.target.value })}
-                        maxLength={50}
-                        className="input"
-                        placeholder="Familiyangiz"
-                      />
-                    </Field>
+                  {/* Ism */}
+                  <div className="mb-5">
+                    <label className="block text-white/50 text-xs font-medium mb-2 uppercase tracking-wider">
+                      Ismingiz *
+                    </label>
+                    <input
+                      type="text"
+                      name="ism"
+                      value={form.ism}
+                      onChange={handleChange}
+                      placeholder="Ism Familiya"
+                      className="w-full bg-[#0A0A0F] border border-white/10 focus:border-[#E8192C]/50 rounded-xl px-4 py-3.5 text-white text-sm outline-none transition-colors placeholder:text-white/25"
+                    />
                   </div>
 
-                  <Field label="Asosiy telefon raqami *" error={errors.phone}>
+                  {/* Telefon */}
+                  <div className="mb-5">
+                    <label className="block text-white/50 text-xs font-medium mb-2 uppercase tracking-wider">
+                      Telefon raqam *
+                    </label>
                     <input
                       type="tel"
-                      value={form.phone}
-                      onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                      maxLength={13}
-                      className="input"
-                      placeholder="+998901234567"
+                      name="telefon"
+                      value={form.telefon}
+                      onChange={handleChange}
+                      placeholder="+998 90 000 00 00"
+                      className="w-full bg-[#0A0A0F] border border-white/10 focus:border-[#E8192C]/50 rounded-xl px-4 py-3.5 text-white text-sm outline-none transition-colors placeholder:text-white/25"
                     />
-                  </Field>
+                  </div>
 
-                  <Field label="Qo'shimcha telefon raqami (ixtiyoriy)" error={errors.phone2}>
-                    <input
-                      type="tel"
-                      value={form.phone2}
-                      onChange={(e) => setForm({ ...form, phone2: e.target.value })}
-                      maxLength={13}
-                      className="input"
-                      placeholder="+998..."
-                    />
-                  </Field>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Qaysi kurs qiziqtiradi?</label>
-                    <div className="grid sm:grid-cols-2 gap-2">
-                      {courseOptions.map((c) => {
-                        const checked = form.courses.includes(c.id);
-                        return (
-                          <label
-                            key={c.id}
-                            className={`flex items-center gap-3 rounded-xl border p-3 cursor-pointer transition ${
-                              checked ? "border-primary bg-primary/5" : "border-border hover:border-primary/40"
-                            }`}
-                          >
-                            <input
-                              type="checkbox"
-                              checked={checked}
-                              onChange={() => toggleCourse(c.id)}
-                              className="h-4 w-4 accent-primary"
-                            />
-                            <span className="text-sm">{c.label}</span>
-                          </label>
-                        );
-                      })}
+                  {/* Format */}
+                  <div className="mb-5">
+                    <label className="block text-white/50 text-xs font-medium mb-3 uppercase tracking-wider">
+                      Qaysi format qiziqtiradi?
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {formats.map((f) => (
+                        <button
+                          key={f.value}
+                          type="button"
+                          onClick={() => handleFormatSelect(f.value)}
+                          className={`flex items-center gap-2 px-4 py-3 rounded-xl text-sm text-left transition-all ${
+                            form.format === f.value
+                              ? "bg-[#E8192C]/15 border border-[#E8192C]/40 text-white"
+                              : "bg-[#0A0A0F] border border-white/8 text-white/55 hover:border-white/20"
+                          }`}
+                        >
+                          <span>{f.emoji}</span>
+                          <span>{f.label}</span>
+                        </button>
+                      ))}
                     </div>
                   </div>
 
-                  <button
-                    type="submit"
-                    className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-linear-to-r from-primary to-primary-glow text-primary-foreground py-3.5 font-semibold hover:opacity-95 transition shadow-card disabled:cursor-not-allowed"
-                  >
-                    YUBORISH <Send className="h-4 w-4" />
-                  </button>
-                </fieldset>
-              </form>
-            )}
-          </div>
-        </Reveal>
-      </section>
+                  {/* Daraja */}
+                  <div className="mb-5">
+                    <label
+                      htmlFor="daraja"
+                      className="block text-white/50 text-xs font-medium mb-2 uppercase tracking-wider"
+                    >
+                      Hozirgi fransuz tili darajangiz
+                    </label>
+                    <select
+                      id="daraja"
+                      name="daraja"
+                      value={form.daraja}
+                      onChange={handleChange}
+                      className="w-full bg-[#0A0A0F] border border-white/10 focus:border-[#E8192C]/50 rounded-xl px-4 py-3.5 text-white text-sm outline-none transition-colors appearance-none cursor-pointer"
+                    >
+                      <option value="">Tanlang...</option>
+                      {darajalar.map((d) => (
+                        <option key={d.value} value={d.value}>
+                          {d.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-      {/* CONTACT */}
-      <section className="max-w-5xl mx-auto px-5 sm:px-8 pb-24">
-        <Reveal>
-          <h2 className="text-2xl md:text-3xl font-bold text-center">Bizning aloqa kanallari</h2>
-        </Reveal>
-        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 mt-10">
-          {[
-            { Icon: MessageCircle, label: "Telegram", value: "@Canadali", href: "https://t.me/Canadali" },
-            { Icon: Instagram, label: "Instagram", value: "@kanadalik_uzbek", href: "https://instagram.com/kanadalik_uzbek" },
-            { Icon: Youtube, label: "YouTube", value: "@canadAli", href: "https://youtube.com/@canadAli" },
-            { Icon: Globe, label: "Website", value: "canadali.net", href: "https://www.canadali.net" },
-          ].map((c, i) => (
-            <Reveal key={c.label} delay={i * 80}>
-              <a
-                href={c.href}
-                target="_blank"
-                rel="noreferrer"
-                className="block rounded-2xl bg-card border border-border p-6 text-center hover:-translate-y-1 hover:border-primary/40 hover:shadow-card transition-all"
-              >
-                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-primary to-primary-glow text-primary-foreground">
-                  <c.Icon className="h-5 w-5" />
+                  {/* Xabar */}
+                  <div className="mb-7">
+                    <label className="block text-white/50 text-xs font-medium mb-2 uppercase tracking-wider">
+                      Qo'shimcha savol yoki xabar
+                    </label>
+                    <textarea
+                      name="xabar"
+                      value={form.xabar}
+                      onChange={handleChange}
+                      placeholder="Savolingizni yozing..."
+                      rows={4}
+                      className="w-full bg-[#0A0A0F] border border-white/10 focus:border-[#E8192C]/50 rounded-xl px-4 py-3.5 text-white text-sm outline-none transition-colors placeholder:text-white/25 resize-none"
+                    />
+                  </div>
+
+                  <button
+                    onClick={handleSubmit}
+                    disabled={loading || !form.ism || !form.telefon}
+                    className="w-full bg-[#E8192C] hover:bg-[#c4111f] disabled:opacity-40 disabled:cursor-not-allowed text-white font-medium py-4 rounded-xl transition-all text-sm"
+                  >
+                    {loading ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          />
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                          />
+                        </svg>
+                        Yuborilmoqda...
+                      </span>
+                    ) : (
+                      "Ariza yuborish →"
+                    )}
+                  </button>
+
+                  <p className="text-white/25 text-xs text-center mt-4">
+                    Ma'lumotlaringiz faqat siz bilan bog'lanish uchun ishlatiladi
+                  </p>
                 </div>
-                <div className="mt-3 text-sm font-semibold">{c.label}</div>
-                <div className="mt-1 text-sm text-muted-foreground">{c.value}</div>
-              </a>
-            </Reveal>
-          ))}
+              )}
+            </div>
+
+            {/* ALOQA MA'LUMOTLARI */}
+            <div className="lg:col-span-2 flex flex-col gap-5">
+              {/* Kontaktlar */}
+              <div className="bg-[#12121A] border border-white/5 rounded-2xl p-6">
+                <h3 className="font-['Syne'] font-semibold text-base mb-5">Aloqa ma'lumotlari</h3>
+                <div className="flex flex-col gap-4">
+                  {contacts.map((c) => (
+                    <a
+                      key={c.title}
+                      href={c.href}
+                      target={c.href.startsWith("http") ? "_blank" : undefined}
+                      rel="noreferrer noopener"
+                      className="flex items-start gap-4 group no-underline"
+                    >
+                      <div className="w-10 h-10 rounded-xl bg-[#E8192C]/10 border border-[#E8192C]/20 flex items-center justify-center text-lg shrink-0 group-hover:bg-[#E8192C]/20 transition-colors">
+                        {c.icon}
+                      </div>
+                      <div>
+                        <div className="text-white/40 text-xs mb-0.5">{c.title}</div>
+                        <div className="text-white text-sm font-medium group-hover:text-[#E8192C] transition-colors break-all">
+                          {c.value}
+                        </div>
+                        <div className="text-white/30 text-xs mt-0.5">{c.sub}</div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Ijtimoiy tarmoqlar */}
+              <div className="bg-[#12121A] border border-white/5 rounded-2xl p-6">
+                <h3 className="font-['Syne'] font-semibold text-base mb-5">Ijtimoiy tarmoqlar</h3>
+                <div className="flex flex-col gap-3">
+                  {socials.map((s) => (
+                    <a
+                      key={s.label}
+                      href={s.href}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="flex items-center justify-between px-4 py-3 bg-[#0A0A0F] border border-white/5 hover:border-white/15 rounded-xl transition-all group no-underline"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span>{s.icon}</span>
+                        <span className="text-white/65 group-hover:text-white text-sm transition-colors">
+                          {s.label}
+                        </span>
+                      </div>
+                      <span className="text-white/25 group-hover:text-white/60 text-sm transition-colors">
+                        →
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Xarita placeholder */}
+              <div className="bg-[#12121A] border border-white/5 rounded-2xl overflow-hidden">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.5!2d69.2832!3d41.2995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDE3JzU4LjIiTiA2OcKwMTcnMDIuMyJF!5e0!3m2!1suz!2suz!4v1234567890"
+                  width="100%"
+                  height="200"
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="France TCF manzili"
+                  className="grayscale opacity-70 border-0"
+                />
+                <div className="px-5 py-4">
+                  <p className="text-white/60 text-xs">
+                    📍 Oybek metro, Farmatsevtika instituti ichida
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
-
-      <style>{`
-        .input {
-          width: 100%;
-          border-radius: 0.75rem;
-          border: 1px solid var(--border);
-          background: var(--background);
-          padding: 0.7rem 1rem;
-          font-size: 0.95rem;
-          outline: none;
-          transition: border-color 0.2s, box-shadow 0.2s;
-        }
-        .input:focus {
-          border-color: var(--primary);
-          box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 18%, transparent);
-        }
-      `}</style>
-    </div>
-  );
-}
-
-function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <label className="block text-sm font-medium mb-1.5">{label}</label>
-      {children}
-      {error && <p className="mt-1 text-xs text-maple">{error}</p>}
     </div>
   );
 }

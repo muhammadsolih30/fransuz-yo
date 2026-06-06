@@ -1,311 +1,430 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Link } from "@tanstack/react-router";
-import { useState } from "react";
-import {
-  Leaf, CheckCircle2, Users, Home, BookOpen, Heart, TreePine, Wallet,
-  Plane, ChevronDown, MapPin, ArrowRight,
-} from "lucide-react";
-import { Reveal } from "@/components/Reveal";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Kanada haqida — FransuzTili Canada" },
-      { name: "description", content: "Fransuz tili orqali Kanadaga doimiy yashovchi bo'lish bo'yicha to'liq qo'llanma: kvotalar, xarajatlar, til talablari va jarayon." },
-      { property: "og:title", content: "Fransuz tili orqali Kanadaga PR" },
-      { property: "og:description", content: "Eng real va ishonchli yo'l — hozir va yaqin kelajakda ham." },
+      { title: "France TCF O'quv Markazi — Fransuz tili orqali Kanadaga" },
+      { name: "description", content: "TCF Canada imtihoniga professional tayyorgarlik." },
     ],
   }),
-  component: AboutCanada,
+  component: HomePage,
 });
 
-const reasons = [
-  { icon: Leaf, title: "Ko'payib borayotgan kvotalar", text: "2023: 8,700 • 2024: 23,000 • 2025: 30,000 kishi" },
-  { icon: CheckCircle2, title: "Eng real natija", text: "Doimiy yashovchi maqomi uchun hozirgi eng samarali usul" },
-  { icon: Users, title: "Oila bilan ko'chish", text: "Turmush o'rtog'ingiz va farzandlaringiz bilan birga" },
-];
-
-const benefits = [
-  { icon: Home, title: "Vizasiz cheksiz yashash" },
-  { icon: Plane, title: "3 yildan keyin Kanada pasporti" },
-  { icon: BookOpen, title: "Farzandlar uchun bepul ta'lim" },
-  { icon: Heart, title: "Bepul tibbiy xizmat" },
-  { icon: TreePine, title: "Toza ekologiya va xavfsizlik" },
-  { icon: Wallet, title: "Yuqori daromad va rivojlanish" },
-];
-
-const costs = [
-  { item: "Elchixona davlat boji (har bir katta)", price: "~$670" },
-  { item: "Doimiy yashovchi kartasi uchun davlat boji", price: "~$400" },
-  { item: "Biometrika to'lovi (14 yoshdan katta)", price: "~$60" },
-  { item: "Notarial tarjima va hujjatlar", price: "~$100–$200" },
-  { item: "Diplomni xalqaro baholash (WES)", price: "~$180" },
-  { item: "Tibbiy ko'rik (voyaga yetganlar)", price: "~$250" },
-  { item: "Tibbiy ko'rik (farzandlar)", price: "~$100–$150" },
-];
-
-const timeline = [
-  { t: "Fransuz tilini o'rganish", d: "3–12 oy" },
-  { t: "TCF Canada sertifikati", d: "Imtihon natijasi" },
-  { t: "Hujjatlarni tayyorlash", d: "~1 oy" },
-  { t: "Elchixona ko'rib chiqishi", d: "4–5 oy" },
-  { t: "Viza! 🎉", d: "Kanadaga yo'l ochiq" },
-];
-
-const faqs = [
-  { q: "Fransuz tili darajasi qancha bo'lishi kerak?", a: "Kamida B2 — TCF Canada sertifikati asosida." },
-  { q: "Oiladan faqat bir kishi bilsa yetadimi?", a: "Ha, yetarli. Agar turmush qurmagan bo'lsa, ball yanada yuqori bo'ladi." },
-  { q: "Ta'lim darajasiga talab bormi?", a: "Minimum kollej yoki litsey. Bakalavr yaxshiroq, magistr/PhD eng yaxshisi." },
-  { q: "Yoshga cheklov bormi?", a: "Yo'q, lekin 20–29 yosh eng yuqori ball beradi. 30–35 o'rtacha, 35+ dan keyin ball pasayadi." },
-  { q: "Bu dastur yopilib qolmaydimi?", a: "3 yillik reja e'lon qilingan, har yili 30,000 kvota tasdiqlangan." },
-  { q: "Jarayonni qachon boshlash kerak?", a: "Til o'rganish bilan parallel hujjatlarni tayyorlash vaqtdan yutadi." },
-  { q: "Bank hisobida pul bo'lishi shartmi?", a: "Hujjat jarayonida bank hisobini qonuniy shakllantirishda yordam beramiz." },
-  { q: "Jami qancha xarajat bo'ladi?", a: "Barcha to'lovlar va xizmat haqi bilan jami ~$7,000–$8,000." },
-];
-
-function AboutCanada() {
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
-
+function CountUp({ target, suffix = "" }: { target: number; suffix?: string }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const started = useRef(false);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting && !started.current) {
+          started.current = true;
+          let cur = 0;
+          const step = target / 60;
+          const timer = setInterval(() => {
+            cur += step;
+            if (cur >= target) {
+              setCount(target);
+              clearInterval(timer);
+            } else setCount(Math.floor(cur));
+          }, 30);
+        }
+      },
+      { threshold: 0.5 },
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [target]);
   return (
-    <div>
-      {/* HERO */}
-      <section className="relative overflow-hidden maple-pattern text-primary-foreground">
-        <div className="absolute inset-0 opacity-30 pointer-events-none">
-          <Leaf className="absolute top-10 left-[10%] h-20 w-20 animate-float text-maple" fill="currentColor" />
-          <Leaf className="absolute top-32 right-[12%] h-14 w-14 animate-float text-white anim-delay-1200" fill="currentColor" />
-          <Leaf className="absolute bottom-16 left-[20%] h-10 w-10 animate-float text-maple anim-delay-2400" fill="currentColor" />
+    <span ref={ref}>
+      {count.toLocaleString()}
+      {suffix}
+    </span>
+  );
+}
+
+const stats = [
+  { num: 100, suffix: "+", label: "O'quvchilar" },
+  { num: 30000, suffix: "+", label: "2025 kvotasi" },
+  { num: 6, suffix: " oy", label: "Kurs davomiyligi" },
+  { num: 10, suffix: "+", label: "Yil tajriba" },
+];
+
+const features = [
+  {
+    icon: "🎯",
+    title: "TCF Canada tayyorgarlik",
+    desc: "Listening, Reading, Writing, Speaking — barcha bo'limlar bo'yicha strategiyalar va maxsus metodika.",
+  },
+  {
+    icon: "👨‍🏫",
+    title: "C1+ o'qituvchilar",
+    desc: "10 yildan ortiq pedagogik tajribaga ega, native speaker va xalqaro sertifikatli mutaxassislar.",
+  },
+  {
+    icon: "📅",
+    title: "Moslashuvchan jadval",
+    desc: "Offline, online, mini-guruh va individual — siz tanlagan vaqt va formatda darslar.",
+  },
+  {
+    icon: "🇨🇦",
+    title: "Immigratsiya yo'nalishi",
+    desc: "Express Entry dasturi va hujjatlar bo'yicha umumiy yo'nalish va maslahat.",
+  },
+  {
+    icon: "📊",
+    title: "Ball optimallashtirish",
+    desc: "Yosh, ta'lim va ingliz tili balingizga qarab maksimal CRS ball strategiyasi.",
+  },
+  {
+    icon: "🏆",
+    title: "Kafolatlangan natija",
+    desc: "O'quvchilarimiz 1 oyda B1 dan C2 gacha — haqiqiy sertifikatlar bilan tasdiqlangan.",
+  },
+];
+
+const steps = [
+  { n: "01", t: "Murojaat qiling", d: "Telefon yoki Telegram orqali bog'laning" },
+  { n: "02", t: "Daraja aniqlanadi", d: "Boshlang'ich test orqali darajangiz belgilanadi" },
+  { n: "03", t: "Kursni boshlaysiz", d: "Qulay format va jadvalda darslar boshlanadi" },
+  { n: "04", t: "TCF topshirasiz", d: "B2+ natija bilan imtihondan o'tasiz" },
+  { n: "05", t: "Kanadaga yo'l", d: "Express Entry orqali PR jarayoni boshlanadi" },
+];
+
+export default function HomePage() {
+  return (
+    <div className="bg-black text-white">
+      {/* ═══ HERO ═══ */}
+      <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
+        {/* Gradient orqa fon */}
+        <div className="absolute inset-0">
+          <div
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full opacity-20"
+            style={{ background: "radial-gradient(ellipse, #E8192C 0%, transparent 70%)" }}
+          />
+          <div
+            className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full opacity-10"
+            style={{ background: "radial-gradient(ellipse, #003DA5 0%, transparent 70%)" }}
+          />
+          {/* Grid pattern */}
+          <div
+            className="absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage:
+                "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)",
+              backgroundSize: "80px 80px",
+            }}
+          />
         </div>
-        <div className="relative max-w-7xl mx-auto px-5 sm:px-8 py-24 md:py-36 text-center">
-          <Reveal>
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur px-4 py-1.5 text-xs font-medium ring-1 ring-white/25">
-              🍁 Kanada Express Entry — Frankofon dasturi
-            </span>
-          </Reveal>
-          <Reveal delay={120}>
-            <h1 className="mt-6 text-4xl md:text-6xl font-bold leading-tight max-w-4xl mx-auto">
-              Fransuz tili orqali Kanadaga<br />
-              <span className="text-maple">doimiy yashovchi</span> bo'ling
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20">
+          <div className="max-w-4xl">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 border border-white/10 bg-white/5 backdrop-blur px-4 py-2 rounded-full text-xs text-white/70 mb-8">
+              <span className="w-2 h-2 rounded-full bg-[#E8192C] animate-pulse" />
+              2025 — 30,000 kvota tasdiqlangan • Kanada hukumati ma'lumoti
+            </div>
+
+            <h1
+              className="font-['Syne'] font-black leading-[1.0] tracking-tight mb-8"
+              style={{ fontSize: "clamp(3rem, 8vw, 7rem)" }}
+            >
+              Fransuz tili
+              <br />
+              orqali
+              <br />
+              <span className="text-[#E8192C]">Kanadaga.</span>
             </h1>
-          </Reveal>
-          <Reveal delay={220}>
-            <p className="mt-6 text-lg md:text-xl text-white/85 max-w-2xl mx-auto">
-              Eng real va ishonchli yo'l — hozir va yaqin kelajakda ham.
+
+            <p className="text-white/50 text-xl leading-relaxed mb-10 max-w-xl">
+              TCF Canada imtihoniga professional tayyorgarlik. Offline, online, mini-guruh va
+              individual darslar.
             </p>
-          </Reveal>
-          <Reveal delay={320}>
-            <div className="mt-10 flex flex-wrap gap-3 justify-center">
-              <a href="#nega" className="inline-flex items-center gap-2 rounded-full bg-white text-primary px-7 py-3 font-semibold hover:bg-white/90 transition shadow-elegant">
-                Batafsil ma'lumot <ArrowRight className="h-4 w-4" />
-              </a>
-              <Link to="/boglanish" className="inline-flex items-center gap-2 rounded-full bg-maple text-maple-foreground px-7 py-3 font-semibold hover:opacity-90 transition">
-                Ro'yxatdan o'tish
+
+            <div className="flex flex-wrap gap-4">
+              <Link
+                to="/boglanish"
+                className="no-underline bg-[#E8192C] hover:bg-[#c4111f] text-white font-semibold px-8 py-4 rounded-xl text-sm transition-all hover:scale-105 active:scale-95"
+              >
+                Bepul maslahat olish →
+              </Link>
+              <Link
+                to="/kurslar"
+                className="no-underline border border-white/20 hover:border-white/50 text-white font-medium px-8 py-4 rounded-xl text-sm transition-all"
+              >
+                Kurslar haqida
               </Link>
             </div>
-          </Reveal>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30">
+          <div className="w-px h-12 bg-white animate-pulse" />
+          <span className="text-xs tracking-widest uppercase">Scroll</span>
         </div>
       </section>
 
-      {/* WHY */}
-      <section id="nega" className="max-w-7xl mx-auto px-5 sm:px-8 py-20 md:py-28">
-        <Reveal>
-          <h2 className="text-3xl md:text-4xl font-bold text-center">Nega <span className="text-gradient">fransuz tili</span> orqali?</h2>
-          <p className="text-center text-muted-foreground mt-4 max-w-2xl mx-auto">Kanada hukumati har yili minglab frankofon muhojirlarni qabul qiladi.</p>
-        </Reveal>
-        <div className="grid md:grid-cols-3 gap-6 mt-14">
-          {reasons.map((r, i) => (
-            <Reveal key={r.title} delay={i * 120}>
-              <div className="group h-full rounded-3xl bg-card border border-border p-8 shadow-card hover:-translate-y-1 hover:shadow-elegant transition-all">
-                <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br from-primary to-primary-glow text-primary-foreground mb-5">
-                  <r.icon className="h-6 w-6" />
+      {/* ═══ STATS ═══ */}
+      <section className="border-y border-white/5 py-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5">
+            {stats.map((s) => (
+              <div
+                key={s.label}
+                className="bg-black px-10 py-10 text-center hover:bg-white/[0.03] transition-colors"
+              >
+                <div className="font-['Syne'] font-black text-5xl text-[#E8192C] mb-2">
+                  <CountUp target={s.num} suffix={s.suffix} />
                 </div>
-                <h3 className="text-xl font-semibold">{r.title}</h3>
-                <p className="mt-3 text-muted-foreground">{r.text}</p>
+                <div className="text-white/40 text-sm tracking-wider uppercase">{s.label}</div>
               </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* BENEFITS */}
-      <section className="bg-linear-to-b from-accent/40 to-background py-20 md:py-28">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <Reveal>
-            <h2 className="text-3xl md:text-4xl font-bold text-center">Doimiy Yashovchi Maqomi Sizga Nima Beradi?</h2>
-          </Reveal>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-14">
-            {benefits.map((b, i) => (
-              <Reveal key={b.title} delay={i * 80}>
-                <div className="flex items-start gap-4 rounded-2xl bg-card border border-border p-6 hover:border-primary/30 transition">
-                  <div className="shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                    <b.icon className="h-5 w-5" />
-                  </div>
-                  <p className="font-medium pt-2">{b.title}</p>
-                </div>
-              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* COSTS */}
-      <section className="max-w-5xl mx-auto px-5 sm:px-8 py-20 md:py-28">
-        <Reveal>
-          <h2 className="text-3xl md:text-4xl font-bold text-center">Xarajatlar Ro'yxati</h2>
-          <p className="text-center text-muted-foreground mt-3">Summalar AQSh dollarida</p>
-        </Reveal>
-        <Reveal delay={120}>
-          <div className="mt-12 rounded-3xl bg-card border border-border overflow-hidden shadow-card">
-            {costs.map((c, i) => (
-              <div key={c.item} className={`flex items-center justify-between gap-4 px-6 py-5 ${i !== 0 ? "border-t border-border" : ""}`}>
-                <span className="text-foreground/85">{c.item}</span>
-                <span className="font-semibold text-primary whitespace-nowrap">{c.price}</span>
+      {/* ═══ FEATURES ═══ */}
+      <section className="py-28">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div>
+              <p className="text-[#E8192C] text-xs font-medium tracking-[0.2em] uppercase mb-4">
+                Nima beramiz
+              </p>
+              <h2 className="font-['Syne'] font-black text-5xl md:text-6xl leading-none">
+                Bizni ajratib
+                <br />
+                turadi
+              </h2>
+            </div>
+            <Link
+              to="/kurslar"
+              className="no-underline text-white/50 hover:text-white text-sm transition-colors self-start md:self-auto"
+            >
+              Barcha kurslar →
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5">
+            {features.map((f, i) => (
+              <div
+                key={f.title}
+                className={`bg-black p-10 hover:bg-white/[0.03] transition-all group ${i === 1 ? "md:border-t-2 md:border-[#E8192C]" : ""}`}
+              >
+                <div className="text-4xl mb-6">{f.icon}</div>
+                <h3 className="font-['Syne'] font-bold text-xl mb-3 group-hover:text-[#E8192C] transition-colors">
+                  {f.title}
+                </h3>
+                <p className="text-white/40 text-sm leading-relaxed">{f.desc}</p>
               </div>
             ))}
-            <div className="flex items-center justify-between gap-4 px-6 py-6 bg-linear-to-r from-primary to-primary-glow text-primary-foreground">
-              <span className="font-semibold">JAMI (xizmat haqi bilan)</span>
-              <span className="text-xl font-bold">~$7,000–$8,000</span>
-            </div>
-          </div>
-        </Reveal>
-      </section>
-
-      {/* LANGUAGE */}
-      <section className="bg-accent/30 py-20">
-        <div className="max-w-5xl mx-auto px-5 sm:px-8">
-          <Reveal>
-            <h2 className="text-3xl md:text-4xl font-bold text-center">Til Talablari</h2>
-          </Reveal>
-          <div className="grid md:grid-cols-2 gap-6 mt-12">
-            <Reveal>
-              <div className="rounded-3xl bg-card border border-border p-8 shadow-card">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-lg">🇫🇷 Fransuz tili</h3>
-                  <span className="rounded-full bg-primary text-primary-foreground px-3 py-1 text-xs font-semibold">Majburiy</span>
-                </div>
-                <p className="mt-3 text-muted-foreground">Kamida B2 darajasi — TCF Canada sertifikati</p>
-                <div className="mt-5 h-2 rounded-full bg-secondary overflow-hidden">
-                  <div className="h-full bg-linear-to-r from-primary to-primary-glow w-85p" />
-                </div>
-                <p className="text-xs text-muted-foreground mt-2">B2 darajasi</p>
-              </div>
-            </Reveal>
-            <Reveal delay={120}>
-              <div className="rounded-3xl bg-card border border-border p-8 shadow-card">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-lg">🇬🇧 Ingliz tili</h3>
-                  <span className="rounded-full bg-maple text-maple-foreground px-3 py-1 text-xs font-semibold">Bonus</span>
-                </div>
-                <p className="mt-3 text-muted-foreground">Qo'shimcha ustunlik beradi — yuqori ball</p>
-                <div className="mt-5 h-2 rounded-full bg-secondary overflow-hidden">
-                  <div className="h-full bg-maple w-45p" />
-                </div>
-                <p className="text-xs text-muted-foreground mt-2">Tavsiya etiladi</p>
-              </div>
-            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* CITY */}
-      <section className="max-w-5xl mx-auto px-5 sm:px-8 py-20 md:py-28">
-        <Reveal>
-          <h2 className="text-3xl md:text-4xl font-bold text-center">Qaysi Shaharga Borish Ma'qul?</h2>
-        </Reveal>
-        <Reveal delay={120}>
-          <div className="mt-12 rounded-3xl overflow-hidden border border-border shadow-elegant grid md:grid-cols-2">
-            <div className="maple-pattern text-primary-foreground p-10 flex flex-col justify-center">
-              <MapPin className="h-10 w-10" />
-              <h3 className="mt-4 text-3xl font-bold">Montreal, Quebec</h3>
-              <p className="mt-2 text-white/85">Frankofon Kanadaning yuragi</p>
-            </div>
-            <div className="bg-card p-10">
-              <ul className="space-y-4">
+      {/* ═══ 1 OYLIK NATIJA ═══ */}
+      <section className="py-28 border-y border-white/5">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div>
+              <p className="text-[#E8192C] text-xs font-medium tracking-[0.2em] uppercase mb-4">
+                Haqiqiy natija
+              </p>
+              <h2 className="font-['Syne'] font-black text-5xl md:text-6xl leading-none mb-6">
+                1 oyda
+                <br />
+                B1 → <span className="text-[#E8192C]">C2</span>
+              </h2>
+              <p className="text-white/50 text-base leading-relaxed mb-10">
+                O'quvchimiz Dilnura Saidbekova — faqat 1 oy o'qib, TCF Canada imtihonida C2 darajaga
+                erishdi.
+              </p>
+              <div className="grid grid-cols-2 gap-3 mb-10">
                 {[
-                  "Aholisi asosan fransuz tilida so'zlashadi",
-                  "O'zbeklar diasporasi ko'p",
-                  "Uy-joy narxi arzonroq",
-                  "Ish topish imkoniyati yaxshi",
-                ].map((t) => (
-                  <li key={t} className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 shrink-0" />
-                    <span>{t}</span>
-                  </li>
+                  {
+                    s: "Listening",
+                    l: "C2",
+                    c: "border-green-500/30 bg-green-500/5 text-green-400",
+                  },
+                  { s: "Reading", l: "C2", c: "border-green-500/30 bg-green-500/5 text-green-400" },
+                  { s: "Writing", l: "B2", c: "border-blue-500/30 bg-blue-500/5 text-blue-400" },
+                  { s: "Speaking", l: "B2", c: "border-blue-500/30 bg-blue-500/5 text-blue-400" },
+                ].map((sc) => (
+                  <div key={sc.s} className={`border rounded-xl p-4 ${sc.c}`}>
+                    <div className="font-['Syne'] font-black text-2xl">{sc.l}</div>
+                    <div className="text-xs opacity-70 mt-1">{sc.s}</div>
+                  </div>
                 ))}
-              </ul>
+              </div>
+              <Link
+                to="/natijalar"
+                className="no-underline inline-flex items-center gap-2 text-white border-b border-white/30 hover:border-white pb-1 text-sm transition-all"
+              >
+                Barcha natijalar →
+              </Link>
+            </div>
+
+            {/* Sertifikat karta */}
+            <div className="relative">
+              <div className="bg-white/[0.03] border border-white/8 rounded-3xl p-10 text-center">
+                <div className="inline-flex items-center gap-2 bg-[#E8192C]/10 border border-[#E8192C]/20 px-4 py-1.5 rounded-full text-[#E8192C] text-xs mb-8">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#E8192C] animate-pulse" />1 oylik
+                  natija
+                </div>
+                <div className="font-['Syne'] font-black text-8xl text-[#E8192C] mb-2">C2</div>
+                <div className="text-white/40 text-sm mb-8">TCF Canada • April 2026</div>
+                <div className="text-white/60 text-sm italic border-t border-white/5 pt-6">
+                  "Finally 🎉 Alhamdulillah. Rahmat ustoz!"
+                </div>
+                <div className="text-white/30 text-xs mt-2">— Dilnura Saidbekova</div>
+              </div>
+              {/* Decoration */}
+              <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full border border-[#E8192C]/20 opacity-50" />
+              <div className="absolute -bottom-4 -left-4 w-16 h-16 rounded-full border border-white/10 opacity-50" />
             </div>
           </div>
-        </Reveal>
+        </div>
       </section>
 
-      {/* TIMELINE */}
-      <section className="bg-linear-to-b from-background to-accent/40 py-20 md:py-28">
-        <div className="max-w-5xl mx-auto px-5 sm:px-8">
-          <Reveal>
-            <h2 className="text-3xl md:text-4xl font-bold text-center">Jarayon Qancha Vaqt Oladi?</h2>
-          </Reveal>
-          <div className="mt-14 relative">
-            <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-border md:-translate-x-1/2" />
-            <div className="space-y-8">
-              {timeline.map((s, i) => (
-                <Reveal key={s.t} delay={i * 100}>
-                  <div className={`relative flex items-start gap-6 md:gap-0 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}>
-                    <div className="absolute left-6 md:left-1/2 -translate-x-1/2 mt-2 h-5 w-5 rounded-full bg-linear-to-br from-primary to-maple ring-4 ring-background z-10" />
-                    <div className="ml-16 md:ml-0 md:w-1/2 md:px-10">
-                      <div className="rounded-2xl bg-card border border-border p-6 shadow-card">
-                        <div className="text-xs font-semibold text-maple uppercase tracking-wider">Bosqich {i + 1}</div>
-                        <h3 className="mt-1 text-xl font-semibold">{s.t}</h3>
-                        <p className="text-muted-foreground mt-1">{s.d}</p>
-                      </div>
-                    </div>
+      {/* ═══ JARAYON ═══ */}
+      <section className="py-28">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="mb-16">
+            <p className="text-[#E8192C] text-xs font-medium tracking-[0.2em] uppercase mb-4">
+              Jarayon
+            </p>
+            <h2 className="font-['Syne'] font-black text-5xl md:text-6xl leading-none">
+              Qanday ishlaydi?
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-px bg-white/5">
+            {steps.map((s, i) => (
+              <div key={s.n} className="bg-black p-8 hover:bg-white/[0.03] transition-colors group">
+                <div className="font-['Syne'] font-black text-5xl text-white/8 mb-6 group-hover:text-[#E8192C]/20 transition-colors">
+                  {s.n}
+                </div>
+                <h3 className="font-['Syne'] font-bold text-base mb-2">{s.t}</h3>
+                <p className="text-white/40 text-xs leading-relaxed">{s.d}</p>
+                {i < steps.length - 1 && (
+                  <div className="hidden md:block absolute top-1/2 -right-3 text-white/20 text-lg">
+                    →
                   </div>
-                </Reveal>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ FAQ ═══ */}
+      <section className="py-28 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+            <div>
+              <p className="text-[#E8192C] text-xs font-medium tracking-[0.2em] uppercase mb-4">
+                FAQ
+              </p>
+              <h2 className="font-['Syne'] font-black text-5xl md:text-6xl leading-none mb-6">
+                Ko'p
+                <br />
+                so'raladigan
+                <br />
+                savollar
+              </h2>
+              <p className="text-white/40 text-sm leading-relaxed">
+                Qo'shimcha savollaringiz bo'lsa — bizga murojaat qiling.
+              </p>
+              <Link
+                to="/boglanish"
+                className="no-underline mt-8 inline-flex bg-[#E8192C] text-white text-sm font-medium px-6 py-3 rounded-xl transition-all hover:bg-[#c4111f]"
+              >
+                Bog'lanish →
+              </Link>
+            </div>
+            <div className="flex flex-col gap-1">
+              {[
+                {
+                  q: "Fransuz tilini qancha vaqtda o'rganish mumkin?",
+                  a: "3–4 oyda (baza yaxshi bo'lsa) yoki 6–12 oy. Nomzodning qobiliyatiga qarab.",
+                },
+                {
+                  q: "TCF Canada uchun qanday daraja kerak?",
+                  a: "Kamida B2 daraja (NLC Level 7). Listening, Reading, Writing, Speaking — barchasidan.",
+                },
+                {
+                  q: "Kurs qancha turadi?",
+                  a: "Offline: 700–800 ming, Online: 490 ming, Mini-guruh: 900 ming, Individual: 1,200,000 so'm/oy.",
+                },
+                {
+                  q: "Oiladan bir kishi bilsa yetadimi?",
+                  a: "Ha, yetarli. Turmush qurmagan nomzod uchun ball yanada yuqori chiqadi.",
+                },
+                {
+                  q: "Viza olishga qancha vaqt ketadi?",
+                  a: "Sertifikat olgandan keyin o'rtacha 5–6 oy. 1 oy hujjat, 4–5 oy elchixonada ko'rib chiqish.",
+                },
+                {
+                  q: "Jami qancha xarajat ketadi?",
+                  a: "Barcha xarajatlar (elchixona, hujjat, tibbiy ko'rik, xizmat haqi) bilan jami $7,000–8,000.",
+                },
+              ].map((f, i) => (
+                <details key={i} className="group border-b border-white/5">
+                  <summary className="flex items-center justify-between gap-4 py-5 cursor-pointer list-none">
+                    <span className="font-['Syne'] font-semibold text-sm text-white/80 group-open:text-white transition-colors">
+                      {f.q}
+                    </span>
+                    <span className="text-[#E8192C] text-xl flex-shrink-0 group-open:rotate-45 transition-transform duration-300">
+                      +
+                    </span>
+                  </summary>
+                  <p className="text-white/45 text-sm leading-relaxed pb-5">{f.a}</p>
+                </details>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="max-w-3xl mx-auto px-5 sm:px-8 py-20 md:py-28">
-        <Reveal>
-          <h2 className="text-3xl md:text-4xl font-bold text-center">Ko'p So'raladigan Savollar</h2>
-        </Reveal>
-        <div className="mt-12 space-y-3">
-          {faqs.map((f, i) => {
-            const open = openFaq === i;
-            return (
-              <Reveal key={f.q} delay={i * 50}>
-                <button
-                  onClick={() => setOpenFaq(open ? null : i)}
-                  className="w-full text-left rounded-2xl bg-card border border-border hover:border-primary/40 transition overflow-hidden"
+      {/* ═══ CTA ═══ */}
+      <section className="py-28 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="relative rounded-3xl overflow-hidden border border-white/8 p-16 text-center">
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(ellipse at center, rgba(232,25,44,0.15) 0%, transparent 70%)",
+              }}
+            />
+            <div className="relative z-10">
+              <h2 className="font-['Syne'] font-black text-5xl md:text-7xl leading-none mb-6">
+                Tayyor
+                <br />
+                <span className="text-[#E8192C]">boshlashga?</span>
+              </h2>
+              <p className="text-white/50 text-lg mb-10 max-w-lg mx-auto">
+                Birinchi qadam — fransuz tilini o'rganish. Biz siz bilan to'liq yo'lda.
+              </p>
+              <div className="flex flex-wrap gap-4 justify-center">
+                <Link
+                  to="/boglanish"
+                  className="no-underline bg-[#E8192C] hover:bg-[#c4111f] text-white font-semibold px-10 py-5 rounded-xl text-base transition-all hover:scale-105"
                 >
-                  <div className="flex items-center justify-between gap-4 px-6 py-5">
-                    <span className="font-semibold">{f.q}</span>
-                    <ChevronDown className={`h-5 w-5 text-primary shrink-0 transition-transform ${open ? "rotate-180" : ""}`} />
-                  </div>
-                  <div className={`grid transition-all duration-300 ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
-                    <div className="overflow-hidden">
-                      <p className="px-6 pb-5 text-muted-foreground">{f.a}</p>
-                    </div>
-                  </div>
-                </button>
-              </Reveal>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="max-w-5xl mx-auto px-5 sm:px-8 pb-20">
-        <Reveal>
-          <div className="rounded-3xl maple-pattern text-primary-foreground p-10 md:p-14 text-center shadow-elegant">
-            <h2 className="text-3xl md:text-4xl font-bold">Yo'lingizni bugun boshlang</h2>
-            <p className="mt-4 text-white/85 max-w-xl mx-auto">TCF Canada imtihoniga professional tayyorgarlik kurslarimizga ro'yxatdan o'ting.</p>
-            <Link to="/boglanish" className="mt-8 inline-flex items-center gap-2 rounded-full bg-white text-primary px-7 py-3 font-semibold hover:bg-white/90 transition">
-              Ro'yxatdan o'tish <ArrowRight className="h-4 w-4" />
-            </Link>
+                  Hozir boshlash →
+                </Link>
+                <a
+                  href="tel:+998772200809"
+                  className="no-underline border border-white/20 hover:border-white/50 text-white font-medium px-10 py-5 rounded-xl text-base transition-all"
+                >
+                  +998 77 220 08 09
+                </a>
+              </div>
+            </div>
           </div>
-        </Reveal>
+        </div>
       </section>
     </div>
   );
