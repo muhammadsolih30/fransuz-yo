@@ -47,11 +47,11 @@ export function Navbar() {
               <span className="text-white font-['Syne'] font-extrabold text-lg leading-none">F</span>
               <div className="absolute -right-1 -bottom-1 w-3 h-3 bg-[#E0A526] rounded-tl-lg" />
             </div>
-            <div className="hidden sm:flex flex-col leading-none">
-              <span className="font-['Syne'] font-extrabold text-lg text-[#15233B] tracking-tight">
+            <div className="flex flex-col leading-none">
+              <span className="font-['Syne'] font-extrabold text-base sm:text-lg text-[#15233B] tracking-tight">
                 France <span className="text-[#d62839]">TCF</span>
               </span>
-              <span className="text-[10px] text-[#15233B]/50 font-medium tracking-wider">
+              <span className="text-[9px] sm:text-[10px] text-[#646F82] font-medium tracking-wider">
                 O'QUV MARKAZI
               </span>
             </div>
@@ -63,7 +63,7 @@ export function Navbar() {
               <Link
                 key={l.to}
                 to={l.to}
-                className="no-underline text-[#15233B]/75 hover:text-[#d62839] text-sm font-semibold px-3.5 py-2 rounded-full hover:bg-[#d62839]/8 transition-all"
+                className="no-underline text-[#3E4B62] hover:text-[#d62839] text-sm font-semibold px-3.5 py-2 rounded-full hover:bg-[#d62839]/8 transition-all"
                 activeProps={{
                   className:
                     "no-underline text-[#d62839] text-sm font-semibold px-3.5 py-2 rounded-full bg-[#d62839]/10",
@@ -105,36 +105,75 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Drawer overlay (dimmed 25% area) */}
       <div
-        className={`lg:hidden fixed inset-x-0 top-0 bottom-0 -z-10 bg-white/95 backdrop-blur-2xl transition-all duration-300 ${open ? "opacity-100 visible" : "opacity-0 invisible"
+        className={`lg:hidden fixed inset-0 z-40 bg-[#15233B]/40 backdrop-blur-[2px] transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${open ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+        onClick={() => setOpen(false)}
+        aria-hidden="true"
+      />
+
+      {/* Mobile Drawer (right side, ~75% width) */}
+      <aside
+        className={`lg:hidden fixed top-0 right-0 bottom-0 z-50 w-[75%] max-w-sm bg-white shadow-[-20px_0_60px_-20px_rgba(21,35,59,0.4)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform ${open ? "translate-x-0" : "translate-x-full"
           }`}
       >
-        <div className="px-6 pt-28 pb-8 flex flex-col gap-2 h-full">
-          {links.map((l) => (
-            <Link
-              key={l.to}
-              to={l.to}
+        <div className="px-6 pt-7 pb-8 flex flex-col h-full">
+          {/* Drawer header */}
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-2">
+              <div className="relative w-9 h-9 rounded-lg bg-[#d62839] flex items-center justify-center overflow-hidden">
+                <span className="text-white font-['Syne'] font-extrabold text-base leading-none">F</span>
+                <div className="absolute -right-1 -bottom-1 w-2.5 h-2.5 bg-[#E0A526] rounded-tl-md" />
+              </div>
+              <span className="font-['Syne'] font-extrabold text-base text-[#15233B]">
+                France <span className="text-[#d62839]">TCF</span>
+              </span>
+            </div>
+            <button
+              type="button"
               onClick={() => setOpen(false)}
-              className="no-underline text-[#15233B] hover:text-[#d62839] text-xl font-bold py-3.5 border-b border-[#15233B]/8 transition-colors"
+              aria-label="Yopish"
+              className="w-9 h-9 rounded-full border border-[#15233B]/15 text-[#15233B] flex items-center justify-center hover:bg-[#15233B] hover:text-white transition-colors"
             >
-              {l.label}
-            </Link>
-          ))}
-          <div className="mt-auto flex flex-col gap-3">
-            <a href="tel:+998947382221" className="no-underline text-center text-[#15233B] font-bold text-lg">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Links */}
+          <nav className="flex flex-col">
+            {links.map((l, i) => (
+              <Link
+                key={l.to}
+                to={l.to}
+                onClick={() => setOpen(false)}
+                style={{ transitionDelay: open ? `${120 + i * 55}ms` : "0ms" }}
+                className={`no-underline text-[#15233B] hover:text-[#d62839] text-lg font-bold py-4 border-b border-[#15233B]/8 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${open ? "opacity-100 translate-x-0" : "opacity-0 translate-x-6"
+                  }`}
+                activeProps={{ className: "no-underline text-[#d62839] text-lg font-bold py-4 border-b border-[#15233B]/8" }}
+              >
+                {l.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Footer CTA */}
+          <div className="mt-auto flex flex-col gap-3 pt-6">
+            <a href="tel:+998947382221" className="no-underline text-center text-[#15233B] font-bold text-base">
               +998 94 738 22 21
             </a>
             <Link
               to="/boglanish"
               onClick={() => setOpen(false)}
-              className="no-underline bg-[#d62839] hover:bg-[#ae1b2a] text-white font-semibold py-4 rounded-full text-center transition-all"
+              className="no-underline bg-[#d62839] hover:bg-[#ae1b2a] text-white font-semibold py-3.5 rounded-2xl text-center transition-all active:scale-[0.98] shadow-[0_10px_26px_-8px_rgba(214,40,57,0.6)]"
             >
               Ro'yxatdan o'tish →
             </Link>
           </div>
         </div>
-      </div>
+      </aside>
     </header>
   );
 }

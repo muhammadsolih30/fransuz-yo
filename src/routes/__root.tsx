@@ -1,6 +1,9 @@
 import { Outlet, createRootRoute, ScrollRestoration } from "@tanstack/react-router";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
+import { RegisterModal } from "../components/RegisterModal";
+import { FloatingButtons } from "../components/FloatingButtons";
+import { MobileCtaBar } from "../components/MobileCtaBar";
 import appCss from "../styles.css?url";
 
 export const Route = createRootRoute({
@@ -47,6 +50,9 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
+      <RegisterModal />
+      <FloatingButtons />
+      <MobileCtaBar />
     </>
   );
 }

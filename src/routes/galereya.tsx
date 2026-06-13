@@ -59,8 +59,10 @@ function GalereyaPage() {
     <div className="bg-white text-[#15233B] overflow-hidden">
       {/* HERO */}
       <section className="relative pt-36 pb-16 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#FAF6EF] via-white to-[#fcefec]" />
-        <div className="absolute inset-0 bg-grid opacity-60" />
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/image/opening/galariyaBo%27limi.png')", opacity: 0.95 }}
+        />
         <div className="absolute -top-20 right-0 w-[500px] h-[400px] rounded-full bg-[#d62839]/10 blur-[120px] animate-float-slow" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="eyebrow text-[#d62839] mb-4 animate-slide-up-sm">
@@ -69,7 +71,7 @@ function GalereyaPage() {
           <h1 className="font-['Syne'] font-extrabold text-[clamp(2.6rem,7vw,5rem)] leading-[0.98] mb-6 animate-slide-up delay-100">
             Bizning <span className="text-gradient-canada">darsxona</span>
           </h1>
-          <p className="text-[#15233B]/70 text-lg max-w-2xl animate-slide-up delay-200">
+          <p className="text-[#3E4B62] text-lg max-w-2xl animate-slide-up delay-200">
             Darsxonamiz, ochilish marosimi va dars jarayonlaridan lavhalar.
           </p>
         </div>
@@ -78,23 +80,24 @@ function GalereyaPage() {
       {/* TABS */}
       <div className="sticky top-24 z-30 glass-nav border-y border-[#15233B]/8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex gap-2 py-4 overflow-x-auto no-scrollbar">
+          <div className="grid grid-cols-3 sm:flex gap-1.5 sm:gap-2 py-3 sm:py-4">
             {tabs.map((t) => (
               <button
                 key={t.key}
                 onClick={() => setTab(t.key)}
-                className={`flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-bold transition-all whitespace-nowrap ${tab === t.key
+                className={`flex items-center justify-center gap-1.5 px-2 sm:px-6 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold transition-all ${tab === t.key
                   ? "bg-[#d62839] text-white shadow-[0_10px_24px_-8px_rgba(213,43,30,0.5)]"
-                  : "bg-[#FAF6EF] text-[#15233B]/65 hover:bg-[#15233B]/8"
+                  : "bg-[#FAF6EF] text-[#3E4B62] hover:bg-[#15233B]/8"
                   }`}
               >
-                {t.label}
-                <span className={`text-xs px-2 py-0.5 rounded-full ${tab === t.key ? "bg-white/20" : "bg-white text-[#15233B]/50"}`}>{t.count}</span>
+                <span className="truncate">{t.label}</span>
+                <span className={`shrink-0 text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full ${tab === t.key ? "bg-white/20" : "bg-white text-[#646F82]"}`}>{t.count}</span>
               </button>
             ))}
           </div>
         </div>
       </div>
+
 
       {/* CONTENT */}
       <section className="py-14 lg:py-20 bg-[#FAF6EF] min-h-[40vh]">
@@ -145,7 +148,7 @@ function GalereyaPage() {
 
           {tab === "videolar" && (
             <div>
-              <p className="text-[#15233B]/50 text-xs font-bold tracking-widest uppercase mb-6">Offline dars lavhalari</p>
+              <p className="text-[#646F82] text-xs font-bold tracking-widest uppercase mb-6">Offline dars lavhalari</p>
               <div className="grid md:grid-cols-3 gap-6 mb-12">
                 {videos.slice(0, 3).map((v) => (
                   <div key={v.id} className="card overflow-hidden group">
@@ -157,13 +160,13 @@ function GalereyaPage() {
                     </div>
                     <div className="px-5 py-4">
                       <span className="text-[#d62839] text-xs font-bold">{v.type}</span>
-                      <p className="text-[#15233B]/75 text-sm mt-1">{v.title}</p>
+                      <p className="text-[#3E4B62] text-sm mt-1">{v.title}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <p className="text-[#15233B]/50 text-xs font-bold tracking-widest uppercase mb-6">Qo'shimcha videolar</p>
+              <p className="text-[#646F82] text-xs font-bold tracking-widest uppercase mb-6">Qo'shimcha videolar</p>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {videos.slice(3).map((v) => (
                   <div key={v.id} className="card overflow-hidden group">

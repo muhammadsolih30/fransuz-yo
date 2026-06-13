@@ -73,8 +73,10 @@ function NatijalarPage() {
     <div className="bg-white text-[#15233B] overflow-hidden">
       {/* HERO */}
       <section className="relative pt-36 pb-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#FAF6EF] via-white to-[#fcefec]" />
-        <div className="absolute inset-0 bg-grid opacity-60" />
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/image/opening/natijalarBo%27limi.png')", opacity: 0.95 }}
+        />
         <div className="absolute -top-20 left-1/3 w-[500px] h-[500px] rounded-full bg-[#d62839]/10 blur-[120px] animate-float-slow" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="eyebrow text-[#d62839] mb-4 animate-slide-up-sm">
@@ -83,7 +85,7 @@ function NatijalarPage() {
           <h1 className="font-['Syne'] font-extrabold text-[clamp(2.6rem,7vw,5rem)] leading-[0.98] mb-6 animate-slide-up delay-100">
             Haqiqiy <span className="text-gradient-canada">natijalar</span>
           </h1>
-          <p className="text-[#15233B]/70 text-lg max-w-2xl animate-slide-up delay-200">
+          <p className="text-[#3E4B62] text-lg max-w-2xl animate-slide-up delay-200">
             Har bir natija haqiqiy sertifikat bilan tasdiqlangan. Biz reklama emas, ish bilan
             gaplashamiz.
           </p>
@@ -105,7 +107,7 @@ function NatijalarPage() {
             {stats.map((s, i) => (
               <div key={s.l} className="reveal text-center" data-delay={i * 80}>
                 <div className="font-['Syne'] font-extrabold text-5xl lg:text-6xl text-gradient-canada mb-2">{s.n}</div>
-                <div className="text-[#15233B]/60 text-sm font-medium">{s.l}</div>
+                <div className="text-[#546074] text-sm font-medium">{s.l}</div>
               </div>
             ))}
           </div>
@@ -141,10 +143,10 @@ function NatijalarPage() {
                 <div className="flex items-start justify-between mb-8">
                   <div>
                     <h3 className="font-['Syne'] font-extrabold text-2xl">{r.name}</h3>
-                    <p className="text-[#15233B]/50 text-sm mt-1">{r.cert} • {r.date} • {r.period}</p>
+                    <p className="text-[#646F82] text-sm mt-1">{r.cert} • {r.date} • {r.period}</p>
                   </div>
                   <div className="text-right bg-[#FAF6EF] rounded-xl px-4 py-2">
-                    <div className="text-[#15233B]/45 text-xs">Boshlang'ich</div>
+                    <div className="text-[#646F82] text-xs">Boshlang'ich</div>
                     <div className="font-['Syne'] font-bold text-[#15233B] text-lg">{r.from}</div>
                   </div>
                 </div>
@@ -160,7 +162,7 @@ function NatijalarPage() {
                   ))}
                 </div>
                 {r.quote && (
-                  <p className="text-[#15233B]/70 text-sm italic leading-relaxed border-t border-[#15233B]/8 pt-6">"{r.quote}"</p>
+                  <p className="text-[#3E4B62] text-sm italic leading-relaxed border-t border-[#15233B]/8 pt-6">"{r.quote}"</p>
                 )}
               </div>
             ))}
@@ -168,7 +170,7 @@ function NatijalarPage() {
 
           <div className="reveal mt-7 card border-2 border-dashed border-[#15233B]/15 bg-transparent p-12 text-center">
             <div className="font-['Syne'] font-extrabold text-5xl text-[#15233B]/15 mb-3">+</div>
-            <p className="text-[#15233B]/50 text-sm">Yangi natijalar muntazam qo'shilib boriladi...</p>
+            <p className="text-[#646F82] text-sm">Yangi natijalar muntazam qo'shilib boriladi...</p>
           </div>
         </div>
       </section>
@@ -183,7 +185,7 @@ function NatijalarPage() {
                 TCF ball <span className="text-gradient-canada">darajalari</span>
               </h2>
               <div className="bg-[#E0A526]/12 border border-[#E0A526]/40 rounded-2xl p-5">
-                <p className="text-[#15233B]/80 text-sm leading-relaxed">
+                <p className="text-[#2C3850] text-sm leading-relaxed">
                   💡 Kanada uchun kamida <strong>B2 daraja (CLB 7)</strong> talab qilinadi.
                 </p>
               </div>
@@ -197,8 +199,8 @@ function NatijalarPage() {
               {tcfLevels.map((row, i) => (
                 <div key={row.level} className={`grid grid-cols-3 px-6 py-4 items-center ${i < tcfLevels.length - 1 ? "border-b border-[#15233B]/8" : ""} hover:bg-[#FAF6EF] transition-colors`}>
                   <span className={`font-['Syne'] font-extrabold ${row.c}`}>{row.level}</span>
-                  <span className="text-[#15233B]/60 text-sm text-center">{row.l}</span>
-                  <span className="text-[#15233B]/60 text-sm text-center">{row.r}</span>
+                  <span className="text-[#546074] text-sm text-center">{row.l}</span>
+                  <span className="text-[#546074] text-sm text-center">{row.r}</span>
                 </div>
               ))}
             </div>
@@ -210,7 +212,7 @@ function NatijalarPage() {
       <section className="py-20 lg:py-28 bg-[#FAF6EF]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal relative rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-[#d62839] via-[#c01f2e] to-[#15233B] p-12 lg:p-20 text-center">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,193,7,0.25),transparent_50%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(224,165,38,0.30),transparent_50%)]" />
             <div className="absolute inset-0 bg-grid opacity-10" />
             <div className="relative z-10 max-w-3xl mx-auto">
               <h2 className="font-['Syne'] font-extrabold text-4xl lg:text-6xl leading-tight mb-6 text-white">

@@ -48,23 +48,29 @@ function BoglanishPage() {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async () => {
+  const ADMIN = "France_TCF"; // Telegram admin username (@siz)
+
+  const buildMessage = () =>
+    `🆕 Yangi ariza — France TCF\n\n` +
+    `👤 Ism: ${form.ism}\n` +
+    `📞 Telefon: ${form.telefon}\n` +
+    `📚 Format: ${formats.find((f) => f.v === form.format)?.l ?? "—"}\n` +
+    `🎯 Daraja: ${darajalar.find((d) => d.v === form.daraja)?.l ?? "—"}\n` +
+    `💬 Xabar: ${form.xabar || "—"}`;
+
+  const handleSubmit = () => {
     if (!form.ism || !form.telefon) return;
     setLoading(true);
-    const msg = `🆕 Yangi ariza — France TCF\n\n👤 ${form.ism}\n📞 ${form.telefon}\n📚 ${form.format || "—"}\n🎯 ${form.daraja || "—"}\n💬 ${form.xabar || "—"}`;
-    try {
-      await fetch(`https://api.telegram.org/botYOUR_BOT_TOKEN/sendMessage`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chat_id: "YOUR_CHAT_ID", text: msg }),
-      });
-    } catch {
-      // xato bo'lsa ham foydalanuvchiga ijobiy ko'rsatamiz, admin Telegram orqali bog'lanadi
-    }
+
+    // Telegram deep-link: admin chati tayyor xabar bilan ochiladi.
+    // Bot token kerak emas — to'g'ridan-to'g'ri ishlaydi.
+    const url = `https://t.me/${ADMIN}?text=${encodeURIComponent(buildMessage())}`;
+
     setTimeout(() => {
+      window.open(url, "_blank", "noopener,noreferrer");
       setLoading(false);
       setSent(true);
-    }, 700);
+    }, 500);
   };
 
   return (
@@ -81,7 +87,7 @@ function BoglanishPage() {
           <h1 className="font-['Syne'] font-extrabold text-[clamp(2.6rem,7vw,5rem)] leading-[0.98] mb-6 animate-slide-up delay-100">
             Bepul <span className="text-gradient-canada">maslahat</span> oling
           </h1>
-          <p className="text-[#15233B]/70 text-lg max-w-2xl animate-slide-up delay-200">
+          <p className="text-[#3E4B62] text-lg max-w-2xl animate-slide-up delay-200">
             Qaysi format siz uchun mos — birgalikda aniqlaymiz. Ariza qoldiring yoki to'g'ridan-to'g'ri
             adminamizga yozing.
           </p>
@@ -101,7 +107,7 @@ function BoglanishPage() {
                     <span className="font-['Syne'] font-extrabold text-5xl text-green-600">✓</span>
                   </div>
                   <h3 className="font-['Syne'] font-extrabold text-3xl mb-3">Qabul qilindi!</h3>
-                  <p className="text-[#15233B]/55 text-sm mb-8 max-w-sm">
+                  <p className="text-[#546074] text-sm mb-8 max-w-sm">
                     Arizangiz qabul qilindi. Tezroq bog'lanish uchun adminga to'g'ridan-to'g'ri yozing.
                   </p>
                   <a href="https://t.me/France_TCF" target="_blank" rel="noreferrer" className="btn-primary">
@@ -114,7 +120,7 @@ function BoglanishPage() {
 
                   <div className="grid sm:grid-cols-2 gap-5 mb-5">
                     <div>
-                      <label className="block text-[#15233B]/55 text-xs font-bold tracking-wider uppercase mb-2.5">Ismingiz *</label>
+                      <label className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">Ismingiz *</label>
                       <input
                         type="text"
                         placeholder="Ism Familiya"
@@ -124,7 +130,7 @@ function BoglanishPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-[#15233B]/55 text-xs font-bold tracking-wider uppercase mb-2.5">Telefon *</label>
+                      <label className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">Telefon *</label>
                       <input
                         type="tel"
                         placeholder="+998 90 000 00 00"
@@ -136,7 +142,7 @@ function BoglanishPage() {
                   </div>
 
                   <div className="mb-5">
-                    <label className="block text-[#15233B]/55 text-xs font-bold tracking-wider uppercase mb-2.5">Format</label>
+                    <label className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">Format</label>
                     <div className="grid grid-cols-2 gap-3">
                       {formats.map((f) => (
                         <button
@@ -145,7 +151,7 @@ function BoglanishPage() {
                           onClick={() => setForm((p) => ({ ...p, format: f.v }))}
                           className={`text-left px-4 py-3 text-sm rounded-xl border-2 transition-all ${form.format === f.v
                             ? "border-[#d62839] text-[#d62839] bg-[#d62839]/5 font-semibold"
-                            : "border-[#15233B]/10 text-[#15233B]/65 hover:border-[#15233B]/25"
+                            : "border-[#15233B]/10 text-[#3E4B62] hover:border-[#15233B]/25"
                             }`}
                         >
                           {f.l}
@@ -155,7 +161,7 @@ function BoglanishPage() {
                   </div>
 
                   <div className="mb-5">
-                    <label className="block text-[#15233B]/55 text-xs font-bold tracking-wider uppercase mb-2.5">Hozirgi daraja</label>
+                    <label className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">Hozirgi daraja</label>
                     <select
                       value={form.daraja}
                       onChange={(e) => setForm((p) => ({ ...p, daraja: e.target.value }))}
@@ -169,7 +175,7 @@ function BoglanishPage() {
                   </div>
 
                   <div className="mb-8">
-                    <label className="block text-[#15233B]/55 text-xs font-bold tracking-wider uppercase mb-2.5">Savol / xabar</label>
+                    <label className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">Savol / xabar</label>
                     <textarea
                       placeholder="Savolingizni yozing..."
                       rows={3}
@@ -207,7 +213,7 @@ function BoglanishPage() {
                         <span className="group-hover:scale-110 transition-transform">{c.icon}</span>
                       </div>
                       <div>
-                        <div className="text-[#15233B]/45 text-xs">{c.title}</div>
+                        <div className="text-[#646F82] text-xs">{c.title}</div>
                         <div className="text-[#15233B] group-hover:text-[#d62839] text-sm font-bold transition-colors break-all">{c.value}</div>
                         <div className="text-[#15233B]/40 text-xs mt-0.5">{c.sub}</div>
                       </div>

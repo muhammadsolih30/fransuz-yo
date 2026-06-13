@@ -166,7 +166,7 @@ function HomePage() {
                       </div>
                       <div>
                         <div className="font-['Syne'] font-bold text-base">CRS Profilingiz</div>
-                        <div className="text-[#15233B]/50 text-xs">Express Entry hisoblagich</div>
+                        <div className="text-[#646F82] text-xs">Express Entry hisoblagich</div>
                       </div>
                     </div>
                     <span className="text-xs font-bold text-green-600 bg-green-50 px-3 py-1.5 rounded-full">
@@ -183,7 +183,7 @@ function HomePage() {
                     ].map((bar, i) => (
                       <div key={bar.label}>
                         <div className="flex justify-between text-xs font-semibold mb-2">
-                          <span className="text-[#15233B]/70">{bar.label}</span>
+                          <span className="text-[#3E4B62]">{bar.label}</span>
                           <span className="text-[#15233B]">{bar.val}%</span>
                         </div>
                         <div className="h-2.5 rounded-full bg-[#15233B]/8 overflow-hidden">
@@ -200,7 +200,7 @@ function HomePage() {
                   </div>
 
                   <div className="mt-8 pt-6 border-t border-[#15233B]/8 flex items-center justify-between">
-                    <span className="text-[#15233B]/60 text-sm font-medium">Taxminiy CRS ball</span>
+                    <span className="text-[#546074] text-sm font-medium">Taxminiy CRS ball</span>
                     <span className="font-['Syne'] font-extrabold text-3xl text-gradient-canada">
                       400–470+
                     </span>
@@ -256,7 +256,7 @@ function HomePage() {
                 <div className="font-['Syne'] font-extrabold text-4xl lg:text-5xl text-gradient-canada mb-2">
                   <CountUp target={s.num} suffix={s.suffix} />
                 </div>
-                <div className="text-[#15233B]/60 text-sm font-medium">{s.label}</div>
+                <div className="text-[#546074] text-sm font-medium">{s.label}</div>
               </div>
             ))}
           </div>
@@ -289,7 +289,7 @@ function HomePage() {
                 <h3 className="font-['Syne'] font-bold text-xl mb-3 group-hover:text-[#d62839] transition-colors">
                   {f.title}
                 </h3>
-                <p className="text-[#15233B]/65 text-sm leading-relaxed">{f.desc}</p>
+                <p className="text-[#3E4B62] text-sm leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>
@@ -308,7 +308,7 @@ function HomePage() {
                 1 oyda B1 dan{" "}
                 <span className="text-gradient-canada">C2</span> gacha
               </h2>
-              <p className="text-[#15233B]/70 text-lg leading-relaxed mb-8">
+              <p className="text-[#3E4B62] text-lg leading-relaxed mb-8">
                 O'quvchimiz Dilnura Saidbekova — atigi 1 oy o'qib, TCF Canada imtihonida C2
                 darajaga erishdi. Bu reklama emas, haqiqiy sertifikat bilan tasdiqlangan natija.
               </p>
@@ -322,9 +322,9 @@ function HomePage() {
                   <div key={sc.s} className="rounded-2xl p-5 bg-[#FAF6EF] border border-[#15233B]/8 hover:border-[#d62839]/25 hover:-translate-y-1 transition-all">
                     <div className="flex items-baseline justify-between mb-1">
                       <span className="font-['Syne'] font-extrabold text-2xl text-[#d62839]">{sc.l}</span>
-                      <span className="text-[#15233B]/50 text-xs font-semibold">{sc.v}</span>
+                      <span className="text-[#646F82] text-xs font-semibold">{sc.v}</span>
                     </div>
-                    <div className="text-[#15233B]/60 text-xs font-medium uppercase tracking-wide">{sc.s}</div>
+                    <div className="text-[#546074] text-xs font-medium uppercase tracking-wide">{sc.s}</div>
                   </div>
                 ))}
               </div>
@@ -346,11 +346,11 @@ function HomePage() {
                   <div className="font-['Syne'] font-extrabold text-[120px] leading-none text-gradient-canada mb-2">
                     C2
                   </div>
-                  <div className="text-[#15233B]/50 text-sm font-semibold mb-8">TCF Canada • 2026</div>
-                  <p className="text-[#15233B]/75 text-base italic leading-relaxed border-t border-[#15233B]/8 pt-8">
+                  <div className="text-[#646F82] text-sm font-semibold mb-8">TCF Canada • 2026</div>
+                  <p className="text-[#3E4B62] text-base italic leading-relaxed border-t border-[#15233B]/8 pt-8">
                     "Finally 🎉 Alhamdulillah. Rahmat ustoz!"
                   </p>
-                  <div className="text-[#15233B]/50 text-sm mt-3 font-semibold">— Dilnura Saidbekova</div>
+                  <div className="text-[#646F82] text-sm mt-3 font-semibold">— Dilnura Saidbekova</div>
                 </div>
                 <div className="absolute -top-6 -right-6 w-28 h-28 rounded-full border-4 border-[#E0A526]/30 animate-float" />
                 <div className="absolute -bottom-6 -left-6 w-20 h-20 rounded-full border-4 border-[#d62839]/20 animate-float-slow" />
@@ -383,7 +383,7 @@ function HomePage() {
               >
                 <div className="font-['Syne'] font-extrabold text-5xl text-white/15 mb-4">{s.n}</div>
                 <h3 className="font-['Syne'] font-bold text-lg mb-2">{s.t}</h3>
-                <p className="text-white/55 text-sm leading-relaxed">{s.d}</p>
+                <p className="text-white/75 text-sm leading-relaxed">{s.d}</p>
               </div>
             ))}
           </div>
@@ -401,7 +401,7 @@ function HomePage() {
               <h2 className="font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight mb-6">
                 Ko'p so'raladigan savollar
               </h2>
-              <p className="text-[#15233B]/65 text-base leading-relaxed mb-8">
+              <p className="text-[#3E4B62] text-base leading-relaxed mb-8">
                 Express Entry va fransuz tili haqida eng muhim savollar. Boshqa savol bo'lsa —
                 bizga yozing.
               </p>
@@ -425,7 +425,7 @@ function HomePage() {
                       +
                     </span>
                   </summary>
-                  <p className="text-[#15233B]/65 text-sm leading-relaxed px-6 pb-6">{f.a}</p>
+                  <p className="text-[#3E4B62] text-sm leading-relaxed px-6 pb-6">{f.a}</p>
                 </details>
               ))}
             </div>
@@ -437,7 +437,7 @@ function HomePage() {
       <section className="py-20 lg:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal relative rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-[#d62839] via-[#c01f2e] to-[#15233B] p-12 lg:p-20 text-center">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,193,7,0.25),transparent_50%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(224,165,38,0.30),transparent_50%)]" />
             <div className="absolute inset-0 bg-grid opacity-10" />
             <div className="absolute top-10 right-10 w-32 h-32 rounded-full bg-white/10 blur-2xl animate-float" />
             <div className="absolute bottom-10 left-10 w-40 h-40 rounded-full bg-[#E0A526]/20 blur-3xl animate-float-slow" />

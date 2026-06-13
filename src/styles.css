@@ -42,6 +42,17 @@
     overflow-x: hidden;
   }
 
+  /* Mac-kabi silliqlik: interaktiv elementlar uchun yumshoq easing */
+  a,
+  button,
+  summary,
+  .card,
+  input,
+  select,
+  textarea {
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
   h1,
   h2,
   h3,
@@ -225,6 +236,22 @@
     animation: marquee 30s linear infinite;
   }
 
+  @keyframes tg-wave {
+    0% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+
+    100% {
+      transform: scale(2.2);
+      opacity: 0;
+    }
+  }
+
+  .animate-tg-wave {
+    animation: tg-wave 2s ease-out infinite;
+  }
+
   .delay-100 {
     animation-delay: 0.1s;
   }
@@ -276,6 +303,19 @@
   }
 
   .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Avtomatik matn reveal (h1–h4, p, li) */
+  .reveal-auto {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+
+  .reveal-auto.is-visible {
     opacity: 1;
     transform: translateY(0);
   }

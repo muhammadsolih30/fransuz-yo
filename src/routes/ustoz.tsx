@@ -48,8 +48,10 @@ function UstozPage() {
     <div className="bg-white text-[#15233B] overflow-hidden">
       {/* HERO */}
       <section className="relative pt-36 pb-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#FAF6EF] via-white to-[#eaf0f8]" />
-        <div className="absolute inset-0 bg-grid opacity-60" />
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/image/opening/ustozlarBo%27limi.png')", opacity: 0.95 }}
+        />
         <div className="absolute -top-20 right-0 w-[500px] h-[500px] rounded-full bg-[#15233B]/10 blur-[120px] animate-float-slow" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="eyebrow text-[#d62839] mb-4 animate-slide-up-sm">
@@ -58,7 +60,7 @@ function UstozPage() {
           <h1 className="font-['Syne'] font-extrabold text-[clamp(2.6rem,7vw,5rem)] leading-[0.98] mb-6 animate-slide-up delay-100">
             <span className="text-gradient-canada">C1–C2</span> darajali ustozlar
           </h1>
-          <p className="text-[#15233B]/70 text-lg max-w-2xl animate-slide-up delay-200">
+          <p className="text-[#3E4B62] text-lg max-w-2xl animate-slide-up delay-200">
             Tajribali fransuz tili ustozlari va native mentorlar bilan TCF Canada uchun
             professional tayyorgarlik.
           </p>
@@ -78,12 +80,12 @@ function UstozPage() {
                   <span className="bg-[#15233B] text-white font-['Syne'] font-bold text-sm px-4 py-2 rounded-xl">{t.level}</span>
                 </div>
                 <h3 className="font-['Syne'] font-extrabold text-2xl mb-1 group-hover:text-[#d62839] transition-colors">{t.name}</h3>
-                <p className="text-[#15233B]/55 text-sm mb-1">{t.role}</p>
-                <p className="text-[#15233B]/45 text-xs mb-6">⏱️ {t.exp}</p>
-                <p className="text-[#15233B]/70 text-sm leading-relaxed mb-6">{t.desc}</p>
+                <p className="text-[#546074] text-sm mb-1">{t.role}</p>
+                <p className="text-[#646F82] text-xs mb-6">⏱️ {t.exp}</p>
+                <p className="text-[#3E4B62] text-sm leading-relaxed mb-6">{t.desc}</p>
                 <div className="flex flex-wrap gap-2">
                   {t.skills.map((s) => (
-                    <span key={s} className="text-xs font-semibold px-3 py-1.5 rounded-full bg-[#FAF6EF] border border-[#15233B]/8 text-[#15233B]/70">{s}</span>
+                    <span key={s} className="text-xs font-semibold px-3 py-1.5 rounded-full bg-[#FAF6EF] border border-[#15233B]/8 text-[#3E4B62]">{s}</span>
                   ))}
                 </div>
               </div>
@@ -92,7 +94,7 @@ function UstozPage() {
 
           {/* Sertifikatlar lentasi */}
           <div className="reveal mt-10 card p-8 bg-gradient-to-br from-[#15233B] to-[#1d3a5f] text-white">
-            <p className="text-white/60 text-sm font-semibold mb-5 text-center">Biz tayyorlaydigan sertifikatlar</p>
+            <p className="text-white/80 text-sm font-semibold mb-5 text-center">Biz tayyorlaydigan sertifikatlar</p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               {certs.map((c) => (
                 <span key={c} className="flex items-center gap-2 bg-white/10 border border-white/15 px-5 py-2.5 rounded-xl font-['Syne'] font-bold text-sm">
@@ -119,7 +121,7 @@ function UstozPage() {
               <div key={v.t} className="reveal card card-hover p-8 group" data-delay={(i % 4) * 90}>
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#eaf0f8] to-[#d6e3f3] flex items-center justify-center text-3xl mb-5 group-hover:scale-110 group-hover:-rotate-6 transition-transform">{v.icon}</div>
                 <h3 className="font-['Syne'] font-bold text-lg mb-3 group-hover:text-[#d62839] transition-colors">{v.t}</h3>
-                <p className="text-[#15233B]/65 text-sm leading-relaxed">{v.d}</p>
+                <p className="text-[#3E4B62] text-sm leading-relaxed">{v.d}</p>
               </div>
             ))}
           </div>
@@ -130,7 +132,7 @@ function UstozPage() {
       <section className="py-20 lg:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal relative rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-[#15233B] via-[#1d3a5f] to-[#d62839] p-12 lg:p-20 text-center">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,193,7,0.25),transparent_50%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(224,165,38,0.30),transparent_50%)]" />
             <div className="absolute inset-0 bg-grid opacity-10" />
             <div className="relative z-10 max-w-3xl mx-auto">
               <h2 className="font-['Syne'] font-extrabold text-4xl lg:text-6xl leading-tight mb-6 text-white">
