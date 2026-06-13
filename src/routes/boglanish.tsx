@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { useReveal } from "../hooks/useReveal";
 
 export const Route = createFileRoute("/boglanish")({
   head: () => ({
     meta: [
       { title: "Bog'lanish — France TCF O'quv Markazi" },
-      { name: "description", content: "France TCF O'quv markazi bilan bog'laning." },
+      { name: "description", content: "France TCF O'quv markazi bilan bog'laning. Bepul maslahat oling." },
     ],
   }),
   component: BoglanishPage,
@@ -16,7 +17,6 @@ const formats = [
   { v: "online", l: "💻 Online guruh" },
   { v: "mini", l: "👥 Mini-guruh" },
   { v: "individual", l: "🎯 Individual" },
-  { v: "bilmayman", l: "❓ Bilmayman" },
 ];
 
 const darajalar = [
@@ -29,44 +29,21 @@ const darajalar = [
 ];
 
 const contacts = [
-  {
-    icon: "📞",
-    title: "Telefon",
-    value: "+998 77 220 08 09",
-    href: "tel:+998772200809",
-    sub: "Du–Shan 9:00–20:00",
-  },
-  {
-    icon: "✈️",
-    title: "Telegram",
-    value: "@Fransuz_lingua",
-    href: "https://t.me/Fransuz_lingua",
-    sub: "Tezkor javob",
-  },
-  {
-    icon: "📧",
-    title: "Email",
-    value: "muhammadsolih08091011@gmail.com",
-    href: "mailto:muhammadsolih08091011@gmail.com",
-    sub: "24 soat ichida",
-  },
-  {
-    icon: "📍",
-    title: "Manzil",
-    value: "Oybek metro, Farmatsevtika instituti ichida",
-    href: "#",
-    sub: "Toshkent",
-  },
+  { icon: "📞", title: "Telefon", value: "+998 94 738 22 21", href: "tel:+998947382221", sub: "Qo'ng'iroq qiling" },
+  { icon: "💬", title: "Admin", value: "@France_TCF", href: "https://t.me/France_TCF", sub: "Barcha savollarga javob" },
+  { icon: "✈️", title: "Telegram kanal", value: "@Francais_languee", href: "https://t.me/Francais_languee", sub: "Yangiliklar va darslar" },
+  { icon: "📍", title: "Manzil", value: "Oybek metro, Toshkent", href: "#", sub: "Offline darsxona" },
 ];
 
 const socials = [
-  { l: "Telegram kanal", href: "https://t.me/Canadali" },
-  { l: "Instagram", href: "https://instagram.com/kanadalik_uzbek" },
-  { l: "YouTube", href: "https://youtube.com/@canadAli" },
-  { l: "Alimardon (shaxsiy)", href: "https://t.me/Mr_Ali_Canada" },
+  { l: "Telegram kanal", href: "https://t.me/Francais_languee", icon: "✈️" },
+  { l: "Instagram", href: "https://www.instagram.com/francais_languee/reels/", icon: "📷" },
+  { l: "Natijalar", href: "https://t.me/Fransuzu", icon: "📊" },
+  { l: "Admin", href: "https://t.me/France_TCF", icon: "💬" },
 ];
 
 function BoglanishPage() {
+  useReveal();
   const [form, setForm] = useState({ ism: "", telefon: "", format: "", daraja: "", xabar: "" });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -82,115 +59,94 @@ function BoglanishPage() {
         body: JSON.stringify({ chat_id: "YOUR_CHAT_ID", text: msg }),
       });
     } catch {
-      // Handle error silently
+      // xato bo'lsa ham foydalanuvchiga ijobiy ko'rsatamiz, admin Telegram orqali bog'lanadi
     }
     setTimeout(() => {
       setLoading(false);
       setSent(true);
-    }, 800);
+    }, 700);
   };
 
   return (
-    <div className="bg-black text-white">
+    <div className="bg-white text-[#15233B] overflow-hidden">
       {/* HERO */}
-      <section className="relative min-h-[50vh] flex flex-col justify-end pb-20 overflow-hidden">
-        <div className="absolute inset-0">
-          <div
-            className="absolute top-0 left-0 w-[600px] h-[400px] rounded-full opacity-12"
-            style={{ background: "radial-gradient(ellipse, #E8192C 0%, transparent 70%)" }}
-          />
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage:
-                "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)",
-              backgroundSize: "80px 80px",
-            }}
-          />
-        </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-6 pt-36">
-          <p className="text-[#E8192C] text-xs font-medium tracking-[0.2em] uppercase mb-4">
-            Bog'lanish
+      <section className="relative pt-36 pb-16 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#FAF6EF] via-white to-[#fcefec]" />
+        <div className="absolute inset-0 bg-grid opacity-60" />
+        <div className="absolute -top-20 left-1/4 w-[500px] h-[400px] rounded-full bg-[#d62839]/10 blur-[120px] animate-float-slow" />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="eyebrow text-[#d62839] mb-4 animate-slide-up-sm">
+            <span className="w-8 h-px bg-[#d62839]" /> Bog'lanish
           </p>
-          <h1
-            className="font-['Syne'] font-black leading-none mb-6"
-            style={{ fontSize: "clamp(3rem, 8vw, 6rem)" }}
-          >
-            Bepul
-            <br />
-            <span className="text-[#E8192C]">maslahat</span>
+          <h1 className="font-['Syne'] font-extrabold text-[clamp(2.6rem,7vw,5rem)] leading-[0.98] mb-6 animate-slide-up delay-100">
+            Bepul <span className="text-gradient-canada">maslahat</span> oling
           </h1>
-          <p className="text-white/40 text-lg max-w-lg">
-            Qaysi format siz uchun mos — birgalikda aniqlaymiz.
+          <p className="text-[#15233B]/70 text-lg max-w-2xl animate-slide-up delay-200">
+            Qaysi format siz uchun mos — birgalikda aniqlaymiz. Ariza qoldiring yoki to'g'ridan-to'g'ri
+            adminamizga yozing.
           </p>
         </div>
       </section>
 
       {/* FORMA + KONTAKT */}
-      <section className="py-20 border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-px bg-white/5">
+      <section className="py-12 lg:py-20 bg-[#FAF6EF] relative">
+        <div className="absolute inset-0 bg-dots opacity-40" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-5 gap-8">
             {/* FORMA */}
-            <div className="lg:col-span-3 bg-black p-10">
+            <div className="lg:col-span-3 reveal card p-8 lg:p-10">
               {sent ? (
-                <div className="h-full flex flex-col items-center justify-center text-center py-20">
-                  <div className="font-['Syne'] font-black text-8xl text-[#E8192C] mb-4">✓</div>
-                  <h3 className="font-['Syne'] font-black text-3xl mb-3">Qabul qilindi!</h3>
-                  <p className="text-white/40 text-sm mb-8">Tez orada siz bilan bog'lanamiz.</p>
-                  <a
-                    href="https://t.me/Fransuz_lingua"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="no-underline bg-[#E8192C] hover:bg-[#c4111f] text-white font-medium px-8 py-4 rounded-xl text-sm transition-all"
-                  >
-                    Telegramda yozish →
+                <div className="h-full flex flex-col items-center justify-center text-center py-16">
+                  <div className="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center mb-6 animate-scale-in">
+                    <span className="font-['Syne'] font-extrabold text-5xl text-green-600">✓</span>
+                  </div>
+                  <h3 className="font-['Syne'] font-extrabold text-3xl mb-3">Qabul qilindi!</h3>
+                  <p className="text-[#15233B]/55 text-sm mb-8 max-w-sm">
+                    Arizangiz qabul qilindi. Tezroq bog'lanish uchun adminga to'g'ridan-to'g'ri yozing.
+                  </p>
+                  <a href="https://t.me/France_TCF" target="_blank" rel="noreferrer" className="btn-primary">
+                    💬 Telegram: @France_TCF
                   </a>
                 </div>
               ) : (
                 <>
-                  <h2 className="font-['Syne'] font-black text-3xl mb-10">Ariza qoldiring</h2>
+                  <h2 className="font-['Syne'] font-extrabold text-3xl mb-8">Ariza qoldiring</h2>
 
-                  <div className="mb-6">
-                    <label className="block text-white/25 text-xs tracking-widest uppercase mb-3">
-                      Ismingiz *
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Ism Familiya"
-                      value={form.ism}
-                      onChange={(e) => setForm((p) => ({ ...p, ism: e.target.value }))}
-                      className="w-full bg-transparent border-b border-white/10 focus:border-[#E8192C] pb-3 text-white text-base outline-none transition-colors placeholder:text-white/15"
-                    />
+                  <div className="grid sm:grid-cols-2 gap-5 mb-5">
+                    <div>
+                      <label className="block text-[#15233B]/55 text-xs font-bold tracking-wider uppercase mb-2.5">Ismingiz *</label>
+                      <input
+                        type="text"
+                        placeholder="Ism Familiya"
+                        value={form.ism}
+                        onChange={(e) => setForm((p) => ({ ...p, ism: e.target.value }))}
+                        className="w-full bg-[#FAF6EF] border border-[#15233B]/10 focus:border-[#d62839] focus:ring-4 focus:ring-[#d62839]/10 rounded-xl px-4 py-3.5 text-[#15233B] text-base outline-none transition-all placeholder:text-[#15233B]/35"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[#15233B]/55 text-xs font-bold tracking-wider uppercase mb-2.5">Telefon *</label>
+                      <input
+                        type="tel"
+                        placeholder="+998 90 000 00 00"
+                        value={form.telefon}
+                        onChange={(e) => setForm((p) => ({ ...p, telefon: e.target.value }))}
+                        className="w-full bg-[#FAF6EF] border border-[#15233B]/10 focus:border-[#d62839] focus:ring-4 focus:ring-[#d62839]/10 rounded-xl px-4 py-3.5 text-[#15233B] text-base outline-none transition-all placeholder:text-[#15233B]/35"
+                      />
+                    </div>
                   </div>
 
-                  <div className="mb-6">
-                    <label className="block text-white/25 text-xs tracking-widest uppercase mb-3">
-                      Telefon *
-                    </label>
-                    <input
-                      type="tel"
-                      placeholder="+998 90 000 00 00"
-                      value={form.telefon}
-                      onChange={(e) => setForm((p) => ({ ...p, telefon: e.target.value }))}
-                      className="w-full bg-transparent border-b border-white/10 focus:border-[#E8192C] pb-3 text-white text-base outline-none transition-colors placeholder:text-white/15"
-                    />
-                  </div>
-
-                  <div className="mb-6">
-                    <label className="block text-white/25 text-xs tracking-widest uppercase mb-3">
-                      Format
-                    </label>
-                    <div className="grid grid-cols-2 gap-2">
+                  <div className="mb-5">
+                    <label className="block text-[#15233B]/55 text-xs font-bold tracking-wider uppercase mb-2.5">Format</label>
+                    <div className="grid grid-cols-2 gap-3">
                       {formats.map((f) => (
                         <button
                           key={f.v}
                           type="button"
                           onClick={() => setForm((p) => ({ ...p, format: f.v }))}
-                          className={`text-left px-4 py-3 text-sm border transition-all ${
-                            form.format === f.v
-                              ? "border-[#E8192C] text-white bg-[#E8192C]/5"
-                              : "border-white/8 text-white/40 hover:border-white/20 hover:text-white/70"
-                          }`}
+                          className={`text-left px-4 py-3 text-sm rounded-xl border-2 transition-all ${form.format === f.v
+                            ? "border-[#d62839] text-[#d62839] bg-[#d62839]/5 font-semibold"
+                            : "border-[#15233B]/10 text-[#15233B]/65 hover:border-[#15233B]/25"
+                            }`}
                         >
                           {f.l}
                         </button>
@@ -198,43 +154,35 @@ function BoglanishPage() {
                     </div>
                   </div>
 
-                  <div className="mb-6">
-                    <label className="block text-white/25 text-xs tracking-widest uppercase mb-3">
-                      Hozirgi daraja
-                    </label>
+                  <div className="mb-5">
+                    <label className="block text-[#15233B]/55 text-xs font-bold tracking-wider uppercase mb-2.5">Hozirgi daraja</label>
                     <select
                       value={form.daraja}
                       onChange={(e) => setForm((p) => ({ ...p, daraja: e.target.value }))}
-                      className="w-full bg-transparent border-b border-white/10 focus:border-[#E8192C] pb-3 text-white text-sm outline-none transition-colors appearance-none cursor-pointer"
+                      className="w-full bg-[#FAF6EF] border border-[#15233B]/10 focus:border-[#d62839] focus:ring-4 focus:ring-[#d62839]/10 rounded-xl px-4 py-3.5 text-[#15233B] text-sm outline-none transition-all cursor-pointer"
                     >
-                      <option value="" className="bg-black">
-                        Tanlang...
-                      </option>
+                      <option value="">Tanlang...</option>
                       {darajalar.map((d) => (
-                        <option key={d.v} value={d.v} className="bg-black">
-                          {d.l}
-                        </option>
+                        <option key={d.v} value={d.v}>{d.l}</option>
                       ))}
                     </select>
                   </div>
 
-                  <div className="mb-10">
-                    <label className="block text-white/25 text-xs tracking-widest uppercase mb-3">
-                      Savol / xabar
-                    </label>
+                  <div className="mb-8">
+                    <label className="block text-[#15233B]/55 text-xs font-bold tracking-wider uppercase mb-2.5">Savol / xabar</label>
                     <textarea
                       placeholder="Savolingizni yozing..."
                       rows={3}
                       value={form.xabar}
                       onChange={(e) => setForm((p) => ({ ...p, xabar: e.target.value }))}
-                      className="w-full bg-transparent border-b border-white/10 focus:border-[#E8192C] pb-3 text-white text-sm outline-none transition-colors placeholder:text-white/15 resize-none"
+                      className="w-full bg-[#FAF6EF] border border-[#15233B]/10 focus:border-[#d62839] focus:ring-4 focus:ring-[#d62839]/10 rounded-xl px-4 py-3.5 text-[#15233B] text-sm outline-none transition-all placeholder:text-[#15233B]/35 resize-none"
                     />
                   </div>
 
                   <button
                     onClick={handleSubmit}
                     disabled={loading || !form.ism || !form.telefon}
-                    className="w-full bg-[#E8192C] hover:bg-[#c4111f] disabled:opacity-30 disabled:cursor-not-allowed text-white font-semibold py-5 text-sm transition-all hover:scale-[1.01] active:scale-[0.99]"
+                    className="w-full bg-[#d62839] hover:bg-[#ae1b2a] disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold py-4 rounded-2xl text-sm transition-all hover:-translate-y-0.5 shadow-[0_10px_30px_-8px_rgba(213,43,30,0.5)]"
                   >
                     {loading ? "Yuborilmoqda..." : "Ariza yuborish →"}
                   </button>
@@ -243,11 +191,10 @@ function BoglanishPage() {
             </div>
 
             {/* KONTAKT */}
-            <div className="lg:col-span-2 bg-black">
-              {/* Aloqa */}
-              <div className="p-10 border-b border-white/5">
-                <h3 className="font-['Syne'] font-bold text-lg mb-8 text-white/60">Aloqa</h3>
-                <div className="flex flex-col gap-6">
+            <div className="lg:col-span-2 flex flex-col gap-6">
+              <div className="reveal card p-7" data-delay={100}>
+                <h3 className="font-['Syne'] font-bold text-lg mb-6">Aloqa ma'lumotlari</h3>
+                <div className="flex flex-col gap-5">
                   {contacts.map((c) => (
                     <a
                       key={c.title}
@@ -256,39 +203,31 @@ function BoglanishPage() {
                       rel="noreferrer"
                       className="no-underline flex items-start gap-4 group"
                     >
-                      <div className="w-10 h-10 border border-white/8 group-hover:border-[#E8192C]/50 flex items-center justify-center text-base flex-shrink-0 transition-colors">
-                        {c.icon}
+                      <div className="w-12 h-12 rounded-2xl bg-[#FAF6EF] border border-[#15233B]/8 group-hover:bg-[#d62839] group-hover:border-[#d62839] flex items-center justify-center text-lg flex-shrink-0 transition-all">
+                        <span className="group-hover:scale-110 transition-transform">{c.icon}</span>
                       </div>
                       <div>
-                        <div className="text-white/25 text-xs mb-0.5">{c.title}</div>
-                        <div className="text-white/70 group-hover:text-white text-sm transition-colors break-all">
-                          {c.value}
-                        </div>
-                        <div className="text-white/20 text-xs mt-0.5">{c.sub}</div>
+                        <div className="text-[#15233B]/45 text-xs">{c.title}</div>
+                        <div className="text-[#15233B] group-hover:text-[#d62839] text-sm font-bold transition-colors break-all">{c.value}</div>
+                        <div className="text-[#15233B]/40 text-xs mt-0.5">{c.sub}</div>
                       </div>
                     </a>
                   ))}
                 </div>
               </div>
 
-              {/* Ijtimoiy tarmoqlar */}
-              <div className="p-10">
-                <h3 className="font-['Syne'] font-bold text-lg mb-6 text-white/60">
-                  Ijtimoiy tarmoqlar
-                </h3>
-                <div className="flex flex-col gap-1">
+              <div className="reveal card p-7 bg-gradient-to-br from-[#15233B] to-[#1d3a5f] text-white" data-delay={200}>
+                <h3 className="font-['Syne'] font-bold text-lg mb-5">Ijtimoiy tarmoqlar</h3>
+                <div className="grid grid-cols-2 gap-3">
                   {socials.map((s) => (
                     <a
                       key={s.l}
                       href={s.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="no-underline flex items-center justify-between px-4 py-3 border-b border-white/5 text-white/40 hover:text-white transition-colors group"
+                      className="no-underline flex items-center gap-2 px-4 py-3 rounded-xl bg-white/8 hover:bg-[#d62839] border border-white/10 text-white/85 hover:text-white text-xs font-semibold transition-all hover:-translate-y-0.5"
                     >
-                      <span className="text-sm">{s.l}</span>
-                      <span className="text-[#E8192C] opacity-0 group-hover:opacity-100 transition-opacity">
-                        →
-                      </span>
+                      <span>{s.icon}</span> {s.l}
                     </a>
                   ))}
                 </div>

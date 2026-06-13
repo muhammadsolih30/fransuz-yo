@@ -1,0 +1,282 @@
+==========================================================================
+            FRANCE TCF O'QUV MARKAZI — SAYT LOYIHASI
+              (inter-nation.uz uslubidagi sayt)
+==========================================================================
+
+Maqsad: Fransuz tili kurslari va Kanada immigratsiyasiga tayyorlov sayti.
+Dizayn ilhomi: inter-nation.uz, ieltszone.uz, najottalim.uz
+Texnologiya: React + TanStack Router + Tailwind CSS v4 + Vite
+Til: O'zbek tili (lotin)
+Asosiy rang: #E8192C (qizil) — fransuz/kanada bayrog'i uslubida
+
+Ishga tushirish: npm run dev  →  http://localhost:5173/
+
+
+==========================================================================
+  1-QISM:  SAYTNING UMUMIY STRUKTURASI (SAHIFALAR)
+==========================================================================
+
+Sayt 7 ta asosiy sahifadan iborat. Har bir sahifa yuqorida NAVBAR va
+pastda FOOTER bilan o'raladi.
+
+--------------------------------------------------------------------------
+[NAVBAR] — Har bir sahifada yuqorida
+--------------------------------------------------------------------------
+  - Logo: FRANCE TCF
+  - Menyu: Kurslar | Immigratsiya | Natijalar | Galereya
+  - Telefon raqami + "Ro'yxatdan o'tish" tugmasi
+  - Mobil uchun: hamburger menyu
+
+--------------------------------------------------------------------------
+[1] BOSH SAHIFA  (/)
+--------------------------------------------------------------------------
+  • Hero — "Fransuz tili orqali Kanadaga" + 2 ta tugma
+  • Statistika — O'quvchilar, kvota, kurs davomiyligi, tajriba
+  • Afzalliklar (Features) — 6 ta karta (nima beramiz)
+  • 1 oylik natija — Dilnura Saidbekova C2 natijasi
+  • Jarayon — 5 bosqich (qanday ishlaydi)
+  • FAQ — 6 ta ko'p so'raladigan savol
+  • CTA — "Tayyor boshlashga?" chaqiruv bloki
+
+--------------------------------------------------------------------------
+[2] KURSLAR  (/kurslar)
+--------------------------------------------------------------------------
+  • Hero — "Format tanlang"
+  • 4 ta kurs kartasi (narxlari bilan):
+        - Offline guruh   — 700-800 ming
+        - Mini-guruh      — 900 ming (eng mashhur)
+        - Online guruh    — 490 ming
+        - Individual      — 1 200 000
+  • Dars dasturi — 6 ta yo'nalish (Listening, Reading, Writing,
+                   Speaking, Grammar, Vocabulary)
+  • TCF Canada kerakli ball jadvali (NLC Level 7 = B2+)
+  • FAQ — kurslar bo'yicha 5 ta savol
+  • CTA
+
+--------------------------------------------------------------------------
+[3] IMMIGRATSIYA  (/immigratsiya)
+--------------------------------------------------------------------------
+  • Hero — "Kanadaga doimiy yashovchi"
+  • Kvota statistikasi — 2023 / 2024 / 2025 yillar
+  • Imkoniyat darajalari — Ideal / Yaxshi / O'rtacha / Pastroq
+  • Ta'lim ballari jadvali — kollej/bakalavr/magistr (bo'ydoq/oilali)
+  • Xarajatlar jadvali — viza, hujjat, tibbiy ko'rik (jami $7-8K)
+  • Afzalliklar — Kanada PR nima beradi (6 ta)
+  • FAQ — immigratsiya bo'yicha 8 ta savol
+  • CTA
+
+--------------------------------------------------------------------------
+[4] NATIJALAR  (/natijalar)
+--------------------------------------------------------------------------
+  • Hero — "Haqiqiy natijalar"
+  • Statistika — 100+ o'quvchi, B2+ o'rtacha, 1 oy eng tez, C2 eng yuqori
+  • O'quvchilar natija kartalari (TCF ballari bilan)
+  • TCF ball darajalari jadvali (A1-C2)
+  • CTA
+
+--------------------------------------------------------------------------
+[5] GALEREYA  (/galereya)
+--------------------------------------------------------------------------
+  • Hero — "Bizning darsxona"
+  • 3 ta bo'lim (tab):
+        - Darsxona rasmlari (14 ta)
+        - Ochilish marosimi (2 ta)
+        - Videolar (25 ta joy — YouTube uchun)
+  • Rasmga bosilganda lightbox (kattalashtirib ko'rish)
+
+--------------------------------------------------------------------------
+[6] USTOZ  (/ustoz)
+--------------------------------------------------------------------------
+  • Hero — "Bizning ustozlarimiz"
+  • Ustozlar kartalari
+  • Qadriyatlar — nima uchun biz (4 ta)
+  • CTA
+
+--------------------------------------------------------------------------
+[7] BOG'LANISH  (/boglanish)
+--------------------------------------------------------------------------
+  • Hero — "Bepul maslahat"
+  • Ariza formasi (ism, telefon, format, daraja, xabar)
+  • Aloqa ma'lumotlari (telefon, telegram, email, manzil)
+  • Ijtimoiy tarmoqlar
+
+--------------------------------------------------------------------------
+[FOOTER] — Har bir sahifada pastda
+--------------------------------------------------------------------------
+  - Brend + qisqacha tavsif
+  - Sahifalar ro'yxati
+  - Aloqa ma'lumotlari
+  - Ijtimoiy tarmoq ikonlari
+
+
+==========================================================================
+  2-QISM:  HOZIR MENDA MAVJUD BO'LGAN MA'LUMOTLAR
+          (saytda ishlatilgan barcha real ma'lumotlar)
+==========================================================================
+
+>>> MARKAZ HAQIDA <<<
+  - Nomi:        France TCF O'quv Markazi (ishchi nom: Fransuz Lingua)
+  - Yo'nalish:   Fransuz tili + TCF Canada + Kanada immigratsiyasi
+  - Maqsad:      O'quvchini kamida B2 darajaga olib chiqish
+  - Sertifikatlar: DELF, DALF, CEFR, TCF Canada
+  - Yo'nalishlar:  Speaking, Listening, Reading, Writing, Grammar, Vocabulary
+  - Eslatma:     Faqat til tayyorlash (hujjat ishlari bilan shug'ullanilmaydi)
+
+>>> ALOQA MA'LUMOTLARI (YANGILANGAN — RASMIY) <<<
+  - Markaz nomi: France TCF o'quv markazi (Rasmiy)
+  - Telefon:     +998 94 738 22 21
+  - Admin:       @France_TCF  (barcha savollarga javob beradi)
+  - Manzil:      Oybek metro, Toshkent
+  - Format:      Online | Offline
+
+>>> IJTIMOIY TARMOQLAR (YANGILANGAN) <<<
+  - Telegram kanal:    https://t.me/Francais_languee
+  - Instagram:         https://www.instagram.com/francais_languee/reels/
+  - Natijalar kanali:  https://t.me/Fransuzu  (@Fransuzu)
+  - Admin:             https://t.me/France_TCF  (@France_TCF)
+
+  Markaz tavsifi (rasmiy):
+  🇫🇷 France TCF o'quv markazi (Rasmiy)
+  🇨🇦 Fransuz tili orqali Kanada imkoniyatlari
+  🎓 TCF · DELF · DALF · Milliy sertifikat
+  👩‍🏫 C1-C2 darajali ustozlar
+  💻 Online | Offline
+  📍 Oybek metro · 📞 +998 94 738 22 21
+
+>>> KURSLAR VA NARXLAR <<<
+  - Offline guruh (A1-A2):   700 000 so'm/oy
+  - Offline guruh (B1+):     800 000 so'm/oy
+  - Online guruh:            490 000 so'm/oy
+  - Mini-guruh (2-3 kishi):  900 000 so'm/oy
+  - Individual:            1 200 000 so'm/oy
+  - Kurs davomiyligi:        6-8 oy (darajaga qarab)
+  - Jadval: offline talabga qarab, online kechki vaqt, mini/individual moslashuvchan
+
+>>> O'QITUVCHILAR <<<
+  - Daraja:   C1 va undan yuqori
+  - Tajriba:  10 yildan ortiq
+  - Qo'shimcha: Native speaker + xalqaro imtihon mentorlari
+
+>>> TCF CANADA KERAKLI BALL (NLC Level 7 = B2+) <<<
+  - Speaking:   10-11 / 20
+  - Listening:  458-502 / 699
+  - Reading:    453-498 / 699
+  - Writing:    10-11 / 20
+
+>>> TCF BALL DARAJALARI (umumiy ma'lumotnoma) <<<
+  - A1-A2:  0-180
+  - B1:     181-297
+  - B2:     298-457
+  - C1:     458-502 (Listening) / 453-498 (Reading)
+  - C2:     503-699 (Listening) / 499-699 (Reading)
+
+>>> KANADA KVOTA STATISTIKASI <<<
+  - 2023:   8 700   (yangi dastur boshlandi)
+  - 2024:   23 000  (+164% o'sish)
+  - 2025:   30 000+ (tasdiqlangan kvota)
+
+>>> IMMIGRATSIYA IMKONIYAT DARAJALARI <<<
+  IDEAL:    22-30 yosh, Bakalavr/Magistr/PhD, IELTS 5.5-6.0
+  YAXSHI:   30-35 yosh, Bakalavr, IELTS 5.0
+  O'RTACHA: 35-40 yosh, o'rta ma'lumot, IELTS yo'q
+  PASTROQ:  40+ yosh, o'rta ma'lumot, IELTS yo'q
+  (hammasiga fransuz tili B2+ shart)
+
+>>> TA'LIM DARAJASIGA QARAB BALL (CRS) <<<
+  - 2 yillik kollej:            bo'ydoq 98,  oilali 91
+  - 3 yillik kollej / Bakalavr: bo'ydoq 120, oilali 112
+  - Magistr:                    bo'ydoq 135, oilali 126
+  - Eslatma: tibbiyot, veterinariya, stomatologiya, farmatsevtika yoki
+    huquq yo'nalishida bakalavr -> magistrga tenglashtiriladi
+
+>>> IMMIGRATSIYA XARAJATLARI <<<
+  - Doimiy yashovchi statusi (davlat boji):  ~$670/kishi
+  - Doimiy yashovchi kartasi:                ~$400/kishi
+  - Biometrika (14 yoshdan katta):           ~$60/kishi
+  - Notarial tarjima va hujjatlar:           $100-200
+  - Diplomlarni baholatish (WES):            ~$180
+  - Tibbiy ko'rik (voyaga yetgan):           ~$250/kishi
+  - Tibbiy ko'rik (farzandlar):              $100-150/kishi
+  - JAMI (xizmat haqi bilan):                $7 000 - 8 000
+
+>>> MAVJUD NATIJALAR (o'quvchilar) <<<
+  1) Dilnura Saidbekova — TCF Canada, April 2026, 1 oyda B1->C2
+     Listening C2 (699/699), Reading C2 (699/699),
+     Writing B2 (11/20), Speaking B2 (10/20)
+     Izoh: "Finally. Alhamdulillah. Rahmat ustoz!"
+
+  2) Moxinur Salomatova — O'zbekiston sertifikati, Iyun 2025 (jarayonda)
+     Listening B1 (55), Reading B1 (50), Writing B1 (51), Speaking B1 (38)
+
+>>> GALEREYA (mavjud media) <<<
+  - Darsxona rasmlari: 14 ta (public/image/darsxona papkasida bor)
+  - Ochilish rasmlari: 2 ta joy ajratilgan (papka bo'sh)
+  - Videolar: 25 ta joy ajratilgan (YouTube linklari hali yo'q)
+
+>>> FOYDALI MASLAHATLAR (saytda yozilgan) <<<
+  - Ingliz tili balli fransuz tilidan yuqori bo'lsa -> ingliz tilini
+    "primary language" qilib ko'rsatish kerak (ball yuqoriroq chiqadi)
+  - Oiladan bitta kishi fransuz tilini bilsa yetarli
+  - Tavsiya etilgan shahar: Montreal (Quebec)
+  - Viza muddati: sertifikatdan keyin o'rtacha 5-6 oy
+
+
+==========================================================================
+  3-QISM:  MENGA YANA QANAQA MA'LUMOTLAR KERAK
+          (saytni to'liq va professional qilish uchun)
+==========================================================================
+
+Quyidagilarni bersangiz, saytni yanada to'liq qila olaman:
+
+  [MUHIM — TEXNIK]
+  1. TELEGRAM BOT TOKEN va CHAT ID
+     - Hozir "Bog'lanish" formasi ishlamaydi (placeholder token turibdi).
+     - Arizalar Telegramga kelishi uchun bot token va chat id kerak.
+     - BotFather'dan bot yarating va token bering.
+
+  2. RASMLAR (galereya)
+     - Darsxona rasmlari fayl nomlari kod bilan mos kelishi kerak
+       (hozir public/image/darsxona da boshqa nomlar bilan turibdi).
+     - Ochilish marosimi rasmlari yo'q — bo'lsa bering.
+
+  3. VIDEO LINKLARI
+     - YouTube video linklari (25 tagacha joy bor).
+
+  [MAZMUN — KONTENT]
+  4. MARKAZ NOMI — yakuniy nom (hozir "France TCF" ishchi nom).
+     Logotip bo'lsa, uni ham bering.
+
+  5. USTOZLAR HAQIDA aniq ma'lumot:
+     - Ism-familiyalari
+     - Rasmlari
+     - Tajribasi, sertifikatlari
+     - Qaysi yo'nalishni o'qitishi
+
+  6. KO'PROQ NATIJALAR / SHARHLAR
+     - O'quvchilarning yana natijalari (sertifikat rasmlari bilan)
+     - Video yoki yozma sharhlar (testimonial)
+
+  7. MARKAZ HAQIDA matn:
+     - Tashkil topgan yili
+     - Necha o'quvchi bitirgan (aniq raqam)
+     - Yutuqlar, sertifikatlar
+
+  8. IJTIMOIY TARMOQLAR — aniq, ishlaydigan linklar
+     (hozirgilari to'g'ri ishlaydimi tekshirish kerak).
+
+  9. NARXLAR — o'zgargan bo'lsa yangilash, chegirmalar bo'lsa qo'shish.
+
+  10. ISH VAQTI va DARS JADVALI — aniq vaqtlar.
+
+  [QO'SHIMCHA — IXTIYORIY]
+  11. Karta orqali to'lov / to'lov usullari haqida ma'lumot.
+  12. Tez-tez beriladigan savollarga qo'shimchalar.
+  13. SEO uchun: kalit so'zlar, sayt domeni (qaysi manzilda joylashadi).
+  14. Google Maps manzil havolasi (aniq lokatsiya).
+
+==========================================================================
+  KEYINGI QADAM:
+  Yuqoridagi ro'yxatdan eng muhimi — TELEGRAM BOT TOKEN (forma ishlashi
+  uchun) va USTOZLAR + RASMLAR ma'lumoti. Shularni bersangiz, saytni
+  to'liq ishlaydigan holatga keltiraman.
+==========================================================================

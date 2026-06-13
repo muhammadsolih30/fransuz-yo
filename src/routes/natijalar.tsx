@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useReveal } from "../hooks/useReveal";
 
 export const Route = createFileRoute("/natijalar")({
   head: () => ({
@@ -11,9 +12,10 @@ export const Route = createFileRoute("/natijalar")({
 });
 
 const levelColor: Record<string, string> = {
-  C2: "text-green-400 border-green-500/30 bg-green-500/5",
-  B2: "text-blue-400 border-blue-500/30 bg-blue-500/5",
-  B1: "text-yellow-400 border-yellow-500/30 bg-yellow-500/5",
+  C2: "text-emerald-700 bg-emerald-50 border-emerald-200",
+  C1: "text-emerald-700 bg-emerald-50 border-emerald-200",
+  B2: "text-blue-700 bg-blue-50 border-blue-200",
+  B1: "text-amber-700 bg-amber-50 border-amber-200",
 };
 
 const results = [
@@ -22,8 +24,8 @@ const results = [
     period: "1 oy",
     from: "B1",
     cert: "TCF Canada",
-    date: "April 2026",
-    quote: "Finally 🎉 Alhamdulillah. Rahmat ustoz, sizga ham bergan ilmlarizga 🤗",
+    date: "2026",
+    quote: "Finally 🎉 Alhamdulillah. Rahmat ustoz, sizga ham bergan ilmlaringizga 🤗",
     scores: [
       { s: "Listening", l: "C2", v: "699/699" },
       { s: "Reading", l: "C2", v: "699/699" },
@@ -34,10 +36,10 @@ const results = [
   },
   {
     name: "Moxinur Salomatova",
-    period: "O'rganish jarayonida",
+    period: "Jarayonda",
     from: "A2",
-    cert: "O'zbekiston sertifikati",
-    date: "Iyun 2025",
+    cert: "Milliy sertifikat",
+    date: "2025",
     quote: "",
     scores: [
       { s: "Listening", l: "B1", v: "55" },
@@ -50,67 +52,60 @@ const results = [
 ];
 
 const tcfLevels = [
-  { level: "A1–A2", l: "0–180", r: "0–180", c: "text-orange-400" },
-  { level: "B1", l: "181–297", r: "181–297", c: "text-yellow-400" },
-  { level: "B2", l: "298–457", r: "298–457", c: "text-blue-400" },
-  { level: "C1", l: "458–502", r: "453–498", c: "text-emerald-400" },
-  { level: "C2", l: "503–699", r: "499–699", c: "text-green-400" },
+  { level: "A1–A2", l: "0–180", r: "0–180", c: "text-orange-600" },
+  { level: "B1", l: "181–297", r: "181–297", c: "text-amber-600" },
+  { level: "B2", l: "298–457", r: "298–457", c: "text-blue-600" },
+  { level: "C1", l: "458–502", r: "453–498", c: "text-emerald-600" },
+  { level: "C2", l: "503–699", r: "499–699", c: "text-green-600" },
+];
+
+const stats = [
+  { n: "100+", l: "Bizning o'quvchilar" },
+  { n: "B2+", l: "O'rtacha natija" },
+  { n: "1 oy", l: "Eng tez natija" },
+  { n: "C2", l: "Eng yuqori daraja" },
 ];
 
 function NatijalarPage() {
+  useReveal();
+
   return (
-    <div className="bg-black text-white">
+    <div className="bg-white text-[#15233B] overflow-hidden">
       {/* HERO */}
-      <section className="relative min-h-[60vh] flex flex-col justify-end pb-20 overflow-hidden">
-        <div className="absolute inset-0">
-          <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full opacity-12"
-            style={{ background: "radial-gradient(ellipse, #E8192C 0%, transparent 70%)" }}
-          />
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage:
-                "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)",
-              backgroundSize: "80px 80px",
-            }}
-          />
-        </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-6 pt-36">
-          <p className="text-[#E8192C] text-xs font-medium tracking-[0.2em] uppercase mb-4">
-            Natijalar
+      <section className="relative pt-36 pb-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#FAF6EF] via-white to-[#fcefec]" />
+        <div className="absolute inset-0 bg-grid opacity-60" />
+        <div className="absolute -top-20 left-1/3 w-[500px] h-[500px] rounded-full bg-[#d62839]/10 blur-[120px] animate-float-slow" />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="eyebrow text-[#d62839] mb-4 animate-slide-up-sm">
+            <span className="w-8 h-px bg-[#d62839]" /> Natijalar
           </p>
-          <h1
-            className="font-['Syne'] font-black leading-none mb-6"
-            style={{ fontSize: "clamp(3rem, 8vw, 6rem)" }}
-          >
-            Haqiqiy
-            <br />
-            <span className="text-[#E8192C]">natijalar</span>
+          <h1 className="font-['Syne'] font-extrabold text-[clamp(2.6rem,7vw,5rem)] leading-[0.98] mb-6 animate-slide-up delay-100">
+            Haqiqiy <span className="text-gradient-canada">natijalar</span>
           </h1>
-          <p className="text-white/40 text-lg max-w-lg">
+          <p className="text-[#15233B]/70 text-lg max-w-2xl animate-slide-up delay-200">
             Har bir natija haqiqiy sertifikat bilan tasdiqlangan. Biz reklama emas, ish bilan
             gaplashamiz.
           </p>
+          <a
+            href="https://t.me/Fransuzu"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 mt-7 text-[#d62839] font-bold text-sm hover:gap-3 transition-all no-underline animate-slide-up delay-300"
+          >
+            📊 Barcha natijalar kanali: @Fransuzu →
+          </a>
         </div>
       </section>
 
       {/* STATS */}
-      <section className="border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5">
-            {[
-              { n: "100+", l: "Jami o'quvchilar" },
-              { n: "B2+", l: "O'rtacha natija" },
-              { n: "1 oy", l: "Eng tez natija" },
-              { n: "C2", l: "Eng yuqori daraja" },
-            ].map((s) => (
-              <div
-                key={s.l}
-                className="bg-black px-10 py-10 text-center hover:bg-white/[0.02] transition-colors"
-              >
-                <div className="font-['Syne'] font-black text-4xl text-[#E8192C] mb-2">{s.n}</div>
-                <div className="text-white/30 text-xs tracking-wider uppercase">{s.l}</div>
+      <section className="py-16 lg:py-20 bg-white border-y border-[#15233B]/8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {stats.map((s, i) => (
+              <div key={s.l} className="reveal text-center" data-delay={i * 80}>
+                <div className="font-['Syne'] font-extrabold text-5xl lg:text-6xl text-gradient-canada mb-2">{s.n}</div>
+                <div className="text-[#15233B]/60 text-sm font-medium">{s.l}</div>
               </div>
             ))}
           </div>
@@ -118,123 +113,92 @@ function NatijalarPage() {
       </section>
 
       {/* NATIJALAR */}
-      <section className="py-20 border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-16">
-            <p className="text-[#E8192C] text-xs font-medium tracking-[0.2em] uppercase mb-4">
-              Sertifikatlar
-            </p>
-            <h2
-              className="font-['Syne'] font-black leading-none"
-              style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
-            >
-              O'quvchilar
-              <br />
-              natijalari
+      <section className="py-20 lg:py-28 bg-[#FAF6EF] relative">
+        <div className="absolute inset-0 bg-dots opacity-50" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mb-14 reveal">
+            <p className="eyebrow text-[#d62839] mb-4"><span className="w-8 h-px bg-[#d62839]" /> Sertifikatlar</p>
+            <h2 className="font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight">
+              O'quvchilar <span className="text-gradient-canada">natijalari</span>
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5">
-            {results.map((r) => (
+          <div className="grid lg:grid-cols-2 gap-7">
+            {results.map((r, idx) => (
               <div
                 key={r.name}
-                className={`bg-black p-10 hover:bg-white/[0.02] transition-all ${r.highlight ? "border-t-2 border-[#E8192C]" : ""}`}
+                className={`reveal card p-8 lg:p-10 ${r.highlight ? "ring-2 ring-[#d62839] shadow-[var(--shadow-glow)]" : "card-hover"}`}
+                data-delay={idx * 100}
               >
                 {r.highlight && (
-                  <div className="inline-flex items-center gap-2 bg-[#E8192C]/10 border border-[#E8192C]/20 px-3 py-1 rounded-full text-[#E8192C] text-xs mb-6">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#E8192C] animate-pulse" />1 oylik
-                    natija
+                  <div className="inline-flex items-center gap-2 bg-[#d62839]/10 px-4 py-1.5 rounded-full text-[#d62839] text-xs font-bold mb-6">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d62839] opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-[#d62839]" />
+                    </span>
+                    1 OYLIK NATIJA
                   </div>
                 )}
                 <div className="flex items-start justify-between mb-8">
                   <div>
-                    <h3 className="font-['Syne'] font-bold text-xl">{r.name}</h3>
-                    <p className="text-white/30 text-xs mt-1">
-                      {r.cert} • {r.date} • {r.period}
-                    </p>
+                    <h3 className="font-['Syne'] font-extrabold text-2xl">{r.name}</h3>
+                    <p className="text-[#15233B]/50 text-sm mt-1">{r.cert} • {r.date} • {r.period}</p>
                   </div>
-                  <div className="text-right">
-                    <div className="text-white/20 text-xs">Boshlang'ich</div>
-                    <div className="font-['Syne'] font-bold text-white/40">{r.from}</div>
+                  <div className="text-right bg-[#FAF6EF] rounded-xl px-4 py-2">
+                    <div className="text-[#15233B]/45 text-xs">Boshlang'ich</div>
+                    <div className="font-['Syne'] font-bold text-[#15233B] text-lg">{r.from}</div>
                   </div>
                 </div>
-
-                <div className="grid grid-cols-2 gap-3 mb-8">
+                <div className="grid grid-cols-2 gap-3 mb-6">
                   {r.scores.map((sc) => (
-                    <div
-                      key={sc.s}
-                      className={`border rounded-xl p-4 ${levelColor[sc.l] || "border-white/10"}`}
-                    >
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-xs opacity-60">{sc.s}</span>
+                    <div key={sc.s} className={`border rounded-2xl p-4 ${levelColor[sc.l] || "border-gray-200"} transition-all hover:scale-105`}>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs font-semibold opacity-70">{sc.s}</span>
                         <span className="text-xs font-bold">{sc.l}</span>
                       </div>
-                      <div className="font-['Syne'] font-black text-xl">{sc.v}</div>
+                      <div className="font-['Syne'] font-extrabold text-xl">{sc.v}</div>
                     </div>
                   ))}
                 </div>
-
                 {r.quote && (
-                  <div className="border-t border-white/5 pt-6">
-                    <p className="text-white/40 text-sm italic">"{r.quote}"</p>
-                  </div>
+                  <p className="text-[#15233B]/70 text-sm italic leading-relaxed border-t border-[#15233B]/8 pt-6">"{r.quote}"</p>
                 )}
-
-                {/* Sertifikat placeholder */}
-                <div className="mt-6 border-2 border-dashed border-white/5 rounded-xl p-6 text-center">
-                  <p className="text-white/15 text-xs">Sertifikat rasmi tez orada</p>
-                </div>
               </div>
             ))}
           </div>
 
-          {/* Yangi natijalar */}
-          <div className="mt-px bg-white/5">
-            <div className="bg-black p-10 text-center">
-              <div className="font-['Syne'] font-black text-6xl text-white/5 mb-3">+</div>
-              <p className="text-white/25 text-sm">Yangi natijalar qo'shilmoqda...</p>
-            </div>
+          <div className="reveal mt-7 card border-2 border-dashed border-[#15233B]/15 bg-transparent p-12 text-center">
+            <div className="font-['Syne'] font-extrabold text-5xl text-[#15233B]/15 mb-3">+</div>
+            <p className="text-[#15233B]/50 text-sm">Yangi natijalar muntazam qo'shilib boriladi...</p>
           </div>
         </div>
       </section>
 
       {/* TCF JADVALI */}
-      <section className="py-20 border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
-            <div>
-              <p className="text-[#E8192C] text-xs font-medium tracking-[0.2em] uppercase mb-4">
-                Ma'lumotnoma
-              </p>
-              <h2
-                className="font-['Syne'] font-black leading-none mb-4"
-                style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
-              >
-                TCF ball
-                <br />
-                darajalari
+      <section className="py-20 lg:py-28 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+            <div className="reveal">
+              <p className="eyebrow text-[#d62839] mb-4"><span className="w-8 h-px bg-[#d62839]" /> Ma'lumotnoma</p>
+              <h2 className="font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight mb-6">
+                TCF ball <span className="text-gradient-canada">darajalari</span>
               </h2>
-              <p className="text-white/30 text-sm">
-                Kanada uchun kamida B2 daraja (NLC Level 7) talab qilinadi.
-              </p>
+              <div className="bg-[#E0A526]/12 border border-[#E0A526]/40 rounded-2xl p-5">
+                <p className="text-[#15233B]/80 text-sm leading-relaxed">
+                  💡 Kanada uchun kamida <strong>B2 daraja (CLB 7)</strong> talab qilinadi.
+                </p>
+              </div>
             </div>
-            <div className="border border-white/8 rounded-2xl overflow-hidden">
-              <div className="grid grid-cols-3 border-b border-white/5 px-6 py-3">
-                <span className="text-white/20 text-xs uppercase tracking-wider">Daraja</span>
-                <span className="text-white/20 text-xs uppercase tracking-wider text-center">
-                  Listening
-                </span>
-                <span className="text-white/20 text-xs uppercase tracking-wider text-center">
-                  Reading
-                </span>
+            <div className="reveal card overflow-hidden" data-delay={150}>
+              <div className="grid grid-cols-3 bg-[#15233B] px-6 py-4">
+                <span className="text-white/80 text-xs font-bold uppercase tracking-wider">Daraja</span>
+                <span className="text-white/80 text-xs font-bold uppercase tracking-wider text-center">Listening</span>
+                <span className="text-white/80 text-xs font-bold uppercase tracking-wider text-center">Reading</span>
               </div>
               {tcfLevels.map((row, i) => (
-                <div
-                  key={row.level}
-                  className={`grid grid-cols-3 px-6 py-4 ${i < tcfLevels.length - 1 ? "border-b border-white/5" : ""} hover:bg-white/[0.02] transition-colors`}
-                >
-                  <span className={`font-['Syne'] font-black ${row.c}`}>{row.level}</span>
-                  <span className="text-white/50 text-sm text-center">{row.l}</span>
-                  <span className="text-white/50 text-sm text-center">{row.r}</span>
+                <div key={row.level} className={`grid grid-cols-3 px-6 py-4 items-center ${i < tcfLevels.length - 1 ? "border-b border-[#15233B]/8" : ""} hover:bg-[#FAF6EF] transition-colors`}>
+                  <span className={`font-['Syne'] font-extrabold ${row.c}`}>{row.level}</span>
+                  <span className="text-[#15233B]/60 text-sm text-center">{row.l}</span>
+                  <span className="text-[#15233B]/60 text-sm text-center">{row.r}</span>
                 </div>
               ))}
             </div>
@@ -243,36 +207,21 @@ function NatijalarPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="relative rounded-3xl overflow-hidden border border-white/8 p-16 text-center">
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(ellipse at center, rgba(232,25,44,0.12) 0%, transparent 70%)",
-              }}
-            />
-            <div className="relative z-10">
-              <h2
-                className="font-['Syne'] font-black leading-none mb-6"
-                style={{ fontSize: "clamp(2.5rem, 5vw, 5rem)" }}
-              >
-                Keyingi natija
-                <br />
-                <span className="text-[#E8192C]">sizniki!</span>
+      <section className="py-20 lg:py-28 bg-[#FAF6EF]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="reveal relative rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-[#d62839] via-[#c01f2e] to-[#15233B] p-12 lg:p-20 text-center">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,193,7,0.25),transparent_50%)]" />
+            <div className="absolute inset-0 bg-grid opacity-10" />
+            <div className="relative z-10 max-w-3xl mx-auto">
+              <h2 className="font-['Syne'] font-extrabold text-4xl lg:text-6xl leading-tight mb-6 text-white">
+                Keyingi natija — sizniki!
               </h2>
-              <div className="flex flex-wrap gap-4 justify-center">
-                <Link
-                  to="/boglanish"
-                  className="no-underline bg-[#E8192C] hover:bg-[#c4111f] text-white font-semibold px-10 py-5 rounded-xl text-sm transition-all hover:scale-105"
-                >
-                  Hozir boshlash →
-                </Link>
-                <Link
-                  to="/kurslar"
-                  className="no-underline border border-white/15 hover:border-white/40 text-white/70 hover:text-white font-medium px-10 py-5 rounded-xl text-sm transition-all"
-                >
+              <p className="text-white/85 text-lg mb-10">
+                Siz ham TCF Canada sertifikatiga ega bo'lishingiz mumkin. Hoziroq boshlang.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/boglanish" className="btn-gold">Hozir boshlash →</Link>
+                <Link to="/kurslar" className="inline-flex items-center justify-center gap-2 border-2 border-white/30 hover:border-white hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-2xl text-sm transition-all no-underline backdrop-blur-sm">
                   Kurslarni ko'rish
                 </Link>
               </div>
