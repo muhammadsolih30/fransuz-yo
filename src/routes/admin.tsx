@@ -298,7 +298,11 @@ function Dashboard({
         </nav>
 
         <div className="p-3 border-t border-white/10 shrink-0 flex flex-col gap-2">
-          <a href="/" className="no-underline text-white/60 hover:text-white text-sm font-semibold px-3.5 py-2 rounded-xl hover:bg-white/8 transition-all">
+          <a
+            href="/"
+            onClick={() => auth.logout()}
+            className="no-underline text-white/60 hover:text-white text-sm font-semibold px-3.5 py-2 rounded-xl hover:bg-white/8 transition-all"
+          >
             ← Saytga qaytish
           </a>
           <button
