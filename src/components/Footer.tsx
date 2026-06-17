@@ -114,18 +114,18 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-7 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-3 text-center">
-          <p className="text-white/70 text-xs">
+        <div className="pt-7 sm:pt-8 pb-24 lg:pb-0 flex flex-col sm:flex-row justify-between items-center gap-4 text-center">
+          <p className="text-white/70 text-xs order-2 sm:order-1">
             © {new Date().getFullYear()} France TCF O'quv Markazi
           </p>
-          <div className="flex items-center gap-2 text-white/70 text-xs">
+          <div className="hidden sm:flex items-center gap-2 text-white/70 text-xs order-2">
             <span className="text-base">🇫🇷</span>
             Fransuz tili orqali Kanadaga
             <span className="text-base">🇨🇦</span>
           </div>
           <a
             href="/admin"
-            className="no-underline flex items-center gap-1.5 text-white/45 hover:text-[#E0A526] text-xs font-semibold transition-colors"
+            className="no-underline order-1 sm:order-3 flex items-center justify-center gap-2 text-white bg-white/10 hover:bg-[#d62839] border border-white/20 hover:border-[#d62839] px-5 py-2.5 rounded-xl text-sm font-bold transition-all hover:-translate-y-0.5 w-full sm:w-auto"
           >
             🔒 Admin panel
           </a>
