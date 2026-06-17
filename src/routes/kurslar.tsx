@@ -27,7 +27,7 @@ const courses = [
         duration: "6–8 oy",
         features: [
             "Yuzma-yuz darslar",
-            "Darsxonada materiallar",
+            "Markazda materiallar",
             "Speaking amaliyoti",
             "Ustoz bilan to'g'ridan-to'g'ri",
         ],
@@ -99,7 +99,7 @@ const nlcTable = [
 const faqs = [
     {
         q: "Darslar qaysi platformada o'tiladi?",
-        a: "Online darslar Zoom va Google Meet orqali. Offline darslar Oybek metrodagi darsxonamizda.",
+        a: "Online darslar Zoom va Google Meet orqali. Offline darslar Chilonzor metrodagi markazimizda o'tkaziladi.",
     },
     {
         q: "Kurs davomida materiallar beriladi mi?",

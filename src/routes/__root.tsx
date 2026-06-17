@@ -1,4 +1,4 @@
-import { Outlet, createRootRoute, ScrollRestoration } from "@tanstack/react-router";
+import { Outlet, createRootRoute, ScrollRestoration, useRouterState } from "@tanstack/react-router";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { RegisterModal } from "../components/RegisterModal";
@@ -42,6 +42,18 @@ export const Route = createRootRoute({
 });
 
 function RootComponent() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isAdmin = pathname.startsWith("/admin");
+
+  if (isAdmin) {
+    return (
+      <>
+        <ScrollRestoration />
+        <Outlet />
+      </>
+    );
+  }
+
   return (
     <>
       <ScrollRestoration />

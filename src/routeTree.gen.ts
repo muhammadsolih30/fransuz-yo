@@ -15,6 +15,7 @@ import { Route as KurslarRouteImport } from './routes/kurslar'
 import { Route as ImmigratsiyaRouteImport } from './routes/immigratsiya'
 import { Route as GalereyaRouteImport } from './routes/galereya'
 import { Route as BoglanishRouteImport } from './routes/boglanish'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 
 const UstozRoute = UstozRouteImport.update({
@@ -47,6 +48,11 @@ const BoglanishRoute = BoglanishRouteImport.update({
   path: '/boglanish',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -55,6 +61,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/boglanish': typeof BoglanishRoute
   '/galereya': typeof GalereyaRoute
   '/immigratsiya': typeof ImmigratsiyaRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/boglanish': typeof BoglanishRoute
   '/galereya': typeof GalereyaRoute
   '/immigratsiya': typeof ImmigratsiyaRoute
@@ -74,6 +82,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/boglanish': typeof BoglanishRoute
   '/galereya': typeof GalereyaRoute
   '/immigratsiya': typeof ImmigratsiyaRoute
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/boglanish'
     | '/galereya'
     | '/immigratsiya'
@@ -94,6 +104,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/boglanish'
     | '/galereya'
     | '/immigratsiya'
@@ -103,6 +114,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/boglanish'
     | '/galereya'
     | '/immigratsiya'
@@ -113,6 +125,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   BoglanishRoute: typeof BoglanishRoute
   GalereyaRoute: typeof GalereyaRoute
   ImmigratsiyaRoute: typeof ImmigratsiyaRoute
@@ -165,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BoglanishRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -177,6 +197,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   BoglanishRoute: BoglanishRoute,
   GalereyaRoute: GalereyaRoute,
   ImmigratsiyaRoute: ImmigratsiyaRoute,

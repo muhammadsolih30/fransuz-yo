@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import PhoneInput, { isValidPhoneNumber, parsePhoneNumber } from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import { useReveal } from "../hooks/useReveal";
+import { leadsStore } from "../lib/store";
 
 export const Route = createFileRoute("/boglanish")({
   head: () => ({
@@ -32,7 +35,7 @@ const contacts = [
   { icon: "📞", title: "Telefon", value: "+998 94 738 22 21", href: "tel:+998947382221", sub: "Qo'ng'iroq qiling" },
   { icon: "💬", title: "Admin", value: "@France_TCF", href: "https://t.me/France_TCF", sub: "Barcha savollarga javob" },
   { icon: "✈️", title: "Telegram kanal", value: "@Francais_languee", href: "https://t.me/Francais_languee", sub: "Yangiliklar va darslar" },
-  { icon: "📍", title: "Manzil", value: "Oybek metro, Toshkent", href: "#", sub: "Offline darsxona" },
+  { icon: "📍", title: "Manzil", value: "Chilonzor metro, Toshkent", href: "https://www.google.com/maps/search/?api=1&query=Chilonzor+metro+Toshkent", sub: "Offline darslar manzili" },
 ];
 
 const socials = [
@@ -44,41 +47,56 @@ const socials = [
 
 function BoglanishPage() {
   useReveal();
-  const [form, setForm] = useState({ ism: "", telefon: "", format: "", daraja: "", xabar: "" });
+  const [form, setForm] = useState({ ism: "", telefon: "", telegram: "", format: "", daraja: "", xabar: "" });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [agreed, setAgreed] = useState(false);
+  const [opened, setOpened] = useState(false); // oferta ochib ko'rilganmi
 
-  const ADMIN = "France_TCF"; // Telegram admin username (@siz)
+  const canSubmit = !!form.ism && isValidPhoneNumber(form.telefon || "") && agreed && !loading;
 
-  const buildMessage = () =>
-    `🆕 Yangi ariza — France TCF\n\n` +
-    `👤 Ism: ${form.ism}\n` +
-    `📞 Telefon: ${form.telefon}\n` +
-    `📚 Format: ${formats.find((f) => f.v === form.format)?.l ?? "—"}\n` +
-    `🎯 Daraja: ${darajalar.find((d) => d.v === form.daraja)?.l ?? "—"}\n` +
-    `💬 Xabar: ${form.xabar || "—"}`;
-
-  const handleSubmit = () => {
-    if (!form.ism || !form.telefon) return;
+  const handleSubmit = async () => {
+    if (!canSubmit) return;
     setLoading(true);
 
-    // Telegram deep-link: admin chati tayyor xabar bilan ochiladi.
-    // Bot token kerak emas — to'g'ridan-to'g'ri ishlaydi.
-    const url = `https://t.me/${ADMIN}?text=${encodeURIComponent(buildMessage())}`;
+    // Telefon raqamidan davlat kodini aniqlaymiz
+    let country = "UZ";
+    try {
+      const parsed = parsePhoneNumber(form.telefon);
+      if (parsed?.country) country = parsed.country;
+    } catch {
+      /* ignore */
+    }
 
-    setTimeout(() => {
-      window.open(url, "_blank", "noopener,noreferrer");
-      setLoading(false);
-      setSent(true);
-    }, 500);
+    // Arizani saqlaymiz (Supabase yoki localStorage).
+    // Telegram avtomatik OCHILMAYDI — ariza shunchaki qabul qilinadi.
+    try {
+      await leadsStore.add({
+        ism: form.ism,
+        telefon: form.telefon,
+        telegram: form.telegram.trim(),
+        country,
+        format: formats.find((f) => f.v === form.format)?.l ?? "—",
+        daraja: darajalar.find((d) => d.v === form.daraja)?.l ?? "—",
+        xabar: form.xabar || "—",
+      });
+    } catch (e) {
+      console.error(e);
+    }
+
+    setLoading(false);
+    setSent(true);
   };
+
 
   return (
     <div className="bg-white text-[#15233B] overflow-hidden">
       {/* HERO */}
       <section className="relative pt-36 pb-16 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#FAF6EF] via-white to-[#fcefec]" />
-        <div className="absolute inset-0 bg-grid opacity-60" />
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/image/opening/ruyxatdanOtishBOLIMI.png')", opacity: 0.95 }}
+        />
         <div className="absolute -top-20 left-1/4 w-[500px] h-[400px] rounded-full bg-[#d62839]/10 blur-[120px] animate-float-slow" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="eyebrow text-[#d62839] mb-4 animate-slide-up-sm">
@@ -131,12 +149,30 @@ function BoglanishPage() {
                     </div>
                     <div>
                       <label className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">Telefon *</label>
-                      <input
-                        type="tel"
-                        placeholder="+998 90 000 00 00"
+                      <PhoneInput
+                        international
+                        defaultCountry="UZ"
+                        countryCallingCodeEditable={false}
+                        placeholder="90 000 00 00"
                         value={form.telefon}
-                        onChange={(e) => setForm((p) => ({ ...p, telefon: e.target.value }))}
-                        className="w-full bg-[#FAF6EF] border border-[#15233B]/10 focus:border-[#d62839] focus:ring-4 focus:ring-[#d62839]/10 rounded-xl px-4 py-3.5 text-[#15233B] text-base outline-none transition-all placeholder:text-[#15233B]/35"
+                        onChange={(value) => setForm((p) => ({ ...p, telefon: value ?? "" }))}
+                        className="france-phone"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mb-5">
+                    <label className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">Telegram username</label>
+                    <div className="flex items-center bg-[#FAF6EF] border border-[#15233B]/10 focus-within:border-[#d62839] focus-within:ring-4 focus-within:ring-[#d62839]/10 rounded-xl px-4 transition-all">
+                      <span className="text-[#646F82] font-semibold">@</span>
+                      <input
+                        type="text"
+                        placeholder="username"
+                        value={form.telegram}
+                        onChange={(e) =>
+                          setForm((p) => ({ ...p, telegram: e.target.value.replace(/[@\s]/g, "") }))
+                        }
+                        className="flex-1 bg-transparent py-3.5 pl-1 text-[#15233B] text-base outline-none placeholder:text-[#15233B]/35"
                       />
                     </div>
                   </div>
@@ -185,13 +221,51 @@ function BoglanishPage() {
                     />
                   </div>
 
+                  {/* Ommaviy oferta rozilik */}
+                  <div className="mb-5 bg-[#FAF6EF] border border-[#15233B]/8 rounded-xl p-4">
+                    <a
+                      href="/ommaviy oferta.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => setOpened(true)}
+                      className="no-underline flex items-center gap-3 group"
+                    >
+                      <span className="w-10 h-10 rounded-xl bg-[#d62839]/10 text-[#d62839] flex items-center justify-center text-lg shrink-0">
+                        📄
+                      </span>
+                      <span className="flex-1">
+                        <span className="block text-[#15233B] text-sm font-bold group-hover:text-[#d62839] transition-colors">
+                          Ommaviy oferta {opened && <span className="text-green-600">✓</span>}
+                        </span>
+                        <span className="block text-[#646F82] text-xs">Bosib tanishib chiqing →</span>
+                      </span>
+                    </a>
+
+                    <label className="flex items-start gap-3 mt-4 pt-4 border-t border-[#15233B]/8 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        checked={agreed}
+                        onChange={(e) => setAgreed(e.target.checked)}
+                        className="mt-0.5 w-5 h-5 shrink-0 accent-[#d62839] cursor-pointer"
+                      />
+                      <span className="text-[#3E4B62] text-sm leading-snug">
+                        Men ommaviy oferta bilan tanishib chiqdim va barcha shartlarga roziman.
+                      </span>
+                    </label>
+                  </div>
+
                   <button
                     onClick={handleSubmit}
-                    disabled={loading || !form.ism || !form.telefon}
+                    disabled={!canSubmit}
                     className="w-full bg-[#d62839] hover:bg-[#ae1b2a] disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold py-4 rounded-2xl text-sm transition-all hover:-translate-y-0.5 shadow-[0_10px_30px_-8px_rgba(213,43,30,0.5)]"
                   >
-                    {loading ? "Yuborilmoqda..." : "Ariza yuborish →"}
+                    {loading ? "Yuborilmoqda..." : "Ro'yxatdan o'tish →"}
                   </button>
+                  {!agreed && (form.ism || form.telefon) && (
+                    <p className="text-[#646F82] text-xs text-center mt-3">
+                      Davom etish uchun ommaviy oferta shartlariga rozilik bildiring.
+                    </p>
+                  )}
                 </>
               )}
             </div>

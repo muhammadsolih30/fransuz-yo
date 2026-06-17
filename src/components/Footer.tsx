@@ -97,13 +97,18 @@ export function Footer() {
                   </div>
                 </div>
               </a>
-              <div className="flex items-start gap-3">
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Chilonzor+metro+Toshkent"
+                target="_blank"
+                rel="noreferrer"
+                className="no-underline group flex items-start gap-3"
+              >
                 <span className="text-lg">📍</span>
                 <div>
                   <div className="text-white/55 text-xs">Manzil</div>
-                  <div className="text-white/80 text-sm">Oybek metro, Toshkent</div>
+                  <div className="text-white/80 group-hover:text-[#E0A526] text-sm transition-colors">Chilonzor metro, Toshkent</div>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
         </div>
@@ -118,6 +123,12 @@ export function Footer() {
             Fransuz tili orqali Kanadaga
             <span className="text-base">🇨🇦</span>
           </div>
+          <a
+            href="/admin"
+            className="no-underline flex items-center gap-1.5 text-white/45 hover:text-[#E0A526] text-xs font-semibold transition-colors"
+          >
+            🔒 Admin panel
+          </a>
         </div>
       </div>
     </footer>

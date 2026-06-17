@@ -47,7 +47,7 @@ const features = [
   {
     icon: "💻",
     title: "Online & Offline",
-    desc: "Sizga qulay formatda — masofadan yoki Oybek metrodagi darsxonamizda.",
+    desc: "Sizga qulay formatda — masofadan yoki Chilonzor metrodagi markazimizda.",
   },
   {
     icon: "🚀",

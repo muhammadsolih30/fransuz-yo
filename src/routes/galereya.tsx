@@ -6,7 +6,7 @@ export const Route = createFileRoute("/galereya")({
   head: () => ({
     meta: [
       { title: "Galereya — France TCF O'quv Markazi" },
-      { name: "description", content: "France TCF darsxona rasmlari va video darslar." },
+      { name: "description", content: "France TCF o'quv markazi rasmlari va video darslar." },
     ],
   }),
   component: GalereyaPage,
@@ -50,7 +50,7 @@ function GalereyaPage() {
   const [lightbox, setLightbox] = useState<string | null>(null);
 
   const tabs: { key: Tab; label: string; count: number }[] = [
-    { key: "rasmlar", label: "Darsxona", count: photos.length },
+    { key: "rasmlar", label: "Markazimiz", count: photos.length },
     { key: "ochilish", label: "Ochilish", count: openingPhotos.length },
     { key: "videolar", label: "Videolar", count: videos.length },
   ];
@@ -69,10 +69,10 @@ function GalereyaPage() {
             <span className="w-8 h-px bg-[#d62839]" /> Galereya
           </p>
           <h1 className="font-['Syne'] font-extrabold text-[clamp(2.6rem,7vw,5rem)] leading-[0.98] mb-6 animate-slide-up delay-100">
-            Bizning <span className="text-gradient-canada">darsxona</span>
+            Bizning <span className="text-gradient-canada">markazimiz</span>
           </h1>
           <p className="text-[#3E4B62] text-lg max-w-2xl animate-slide-up delay-200">
-            Darsxonamiz, ochilish marosimi va dars jarayonlaridan lavhalar.
+            Markazimiz, ochilish marosimi va dars jarayonlaridan lavhalar.
           </p>
         </div>
       </section>

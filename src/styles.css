@@ -252,6 +252,28 @@
     animation: tg-wave 2s ease-out infinite;
   }
 
+  @keyframes shake {
+
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+
+    20%,
+    60% {
+      transform: translateX(-6px);
+    }
+
+    40%,
+    80% {
+      transform: translateX(6px);
+    }
+  }
+
+  .animate-shake {
+    animation: shake 0.4s ease-in-out;
+  }
+
   .delay-100 {
     animation-delay: 0.1s;
   }
@@ -398,4 +420,82 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+}
+
+/* ───── PHONE INPUT (react-phone-number-input) ───── */
+.france-phone {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #faf6ef;
+  border: 1px solid rgba(21, 35, 59, 0.1);
+  border-radius: 12px;
+  padding: 6px 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.france-phone:focus-within {
+  border-color: #d62839;
+  box-shadow: 0 0 0 4px rgba(214, 40, 57, 0.1);
+}
+
+.france-phone .PhoneInputCountry {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.france-phone .PhoneInputCountryIcon {
+  width: 28px;
+  height: 20px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(21, 35, 59, 0.15);
+}
+
+.france-phone .PhoneInputCountrySelectArrow {
+  color: #546074;
+  opacity: 0.7;
+}
+
+.france-phone .PhoneInputInput {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: #15233b;
+  padding: 10px 0;
+  font-family: inherit;
+}
+
+.france-phone .PhoneInputInput::placeholder {
+  color: rgba(21, 35, 59, 0.35);
+}
+
+/* ───── ADMIN THEME (light / dark) ───── */
+.admin-root {
+  --a-bg: #faf6ef;
+  --a-surface: #ffffff;
+  --a-surface-2: #faf6ef;
+  --a-text: #15233b;
+  --a-text-soft: #3e4b62;
+  --a-text-muted: #646f82;
+  --a-border: rgba(21, 35, 59, 0.08);
+  --a-border-strong: rgba(21, 35, 59, 0.15);
+  --a-sidebar: #15233b;
+  --a-topbar: rgba(255, 255, 255, 0.85);
+}
+
+.admin-root.dark {
+  --a-bg: #0b1422;
+  --a-surface: #15233b;
+  --a-surface-2: #1b2c47;
+  --a-text: #eef2f8;
+  --a-text-soft: #c4cdda;
+  --a-text-muted: #8b97a8;
+  --a-border: rgba(255, 255, 255, 0.09);
+  --a-border-strong: rgba(255, 255, 255, 0.16);
+  --a-sidebar: #0b1422;
+  --a-topbar: rgba(11, 20, 34, 0.85);
 }
