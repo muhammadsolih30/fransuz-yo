@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
+import { BrandLogo } from "../components/BrandLogo";
 import { auth, leadsStore, themeStore, type Lead, type LeadStatus } from "../lib/store";
 import { flagEmoji, countryName } from "../lib/country";
 
@@ -115,7 +116,7 @@ function LoginScreen({
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0b1422] px-4 relative overflow-hidden">
-      <div className="absolute top-[-10%] left-[15%] w-[600px] h-[600px] rounded-full bg-[#d62839]/25 blur-[140px] animate-float-slow" />
+      <div className="absolute top-[-10%] left-[15%] w-[600px] h-[600px] rounded-full bg-[#e83848]/25 blur-[140px] animate-float-slow" />
       <div className="absolute bottom-[-10%] right-[10%] w-[500px] h-[500px] rounded-full bg-[#E0A526]/15 blur-[140px] animate-float" />
       <div className="absolute inset-0 bg-grid opacity-[0.04]" />
 
@@ -128,10 +129,7 @@ function LoginScreen({
         className="relative w-full max-w-md bg-[var(--a-surface)] backdrop-blur-xl rounded-[2rem] p-8 sm:p-10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)] border border-[var(--a-border)]"
       >
         <div className="flex flex-col items-center mb-8">
-          <div className="relative w-16 h-16 rounded-2xl bg-[#d62839] flex items-center justify-center overflow-hidden shadow-[0_12px_30px_-8px_rgba(214,40,57,0.6)] mb-5">
-            <span className="text-white font-['Syne'] font-extrabold text-3xl leading-none">F</span>
-            <div className="absolute -right-1.5 -bottom-1.5 w-4 h-4 bg-[#E0A526] rounded-tl-xl" />
-          </div>
+          <BrandLogo size="md" className="mb-5" />
           <h1 className="font-['Syne'] font-extrabold text-2xl text-[var(--a-text)]">Admin panel</h1>
           <p className="text-[var(--a-text-muted)] text-sm mt-1">France TCF · Boshqaruv tizimi</p>
         </div>
@@ -150,8 +148,8 @@ function LoginScreen({
             }}
             placeholder="••••••••"
             className={`w-full bg-[var(--a-surface-2)] border rounded-2xl pl-4 pr-12 py-4 text-[var(--a-text)] text-base outline-none transition-all focus:ring-4 ${error
-              ? "border-[#d62839] focus:ring-[#d62839]/10 animate-shake"
-              : "border-[var(--a-border-strong)] focus:border-[#d62839] focus:ring-[#d62839]/10"
+              ? "border-[#e83848] focus:ring-[#e83848]/10 animate-shake"
+              : "border-[var(--a-border-strong)] focus:border-[#e83848] focus:ring-[#e83848]/10"
               }`}
           />
           <button
@@ -163,16 +161,16 @@ function LoginScreen({
             {show ? "🙈" : "👁"}
           </button>
         </div>
-        {error && <p className="text-[#d62839] text-xs mt-2.5 font-medium">Parol noto'g'ri. Qayta urinib ko'ring.</p>}
+        {error && <p className="text-[#e83848] text-xs mt-2.5 font-medium">Parol noto'g'ri. Qayta urinib ko'ring.</p>}
 
         <button
           type="submit"
-          className="w-full mt-6 bg-[#d62839] hover:bg-[#ae1b2a] text-white font-bold py-4 rounded-2xl transition-all hover:-translate-y-0.5 shadow-[0_14px_34px_-10px_rgba(214,40,57,0.6)]"
+          className="w-full mt-6 bg-[#e83848] hover:bg-[#e84858] text-white font-bold py-4 rounded-2xl transition-all hover:-translate-y-0.5 shadow-[0_14px_34px_-10px_rgba(232,56,72,0.6)]"
         >
           Kirish →
         </button>
 
-        <a href="/" className="no-underline block text-center text-[var(--a-text-muted)] hover:text-[#d62839] text-sm font-semibold mt-5 transition-colors">
+        <a href="/" className="no-underline block text-center text-[var(--a-text-muted)] hover:text-[#e83848] text-sm font-semibold mt-5 transition-colors">
           ← Saytga qaytish
         </a>
       </form>
@@ -261,7 +259,7 @@ function Dashboard({
           }`}
       >
         <div className="px-5 h-16 flex items-center gap-2.5 border-b border-white/10 shrink-0">
-          <div className="relative w-9 h-9 rounded-lg bg-[#d62839] flex items-center justify-center overflow-hidden">
+          <div className="relative w-9 h-9 rounded-lg bg-[#e83848] flex items-center justify-center overflow-hidden">
             <span className="text-white font-['Syne'] font-extrabold text-base">F</span>
             <div className="absolute -right-1 -bottom-1 w-2.5 h-2.5 bg-[#E0A526] rounded-tl-md" />
           </div>
@@ -282,7 +280,7 @@ function Dashboard({
                   setSection(s.key);
                   setSidebarOpen(false);
                 }}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all text-left ${active ? "bg-[#d62839] text-white shadow-[0_8px_20px_-8px_rgba(214,40,57,0.7)]" : "text-white/70 hover:bg-white/8 hover:text-white"
+                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all text-left ${active ? "bg-[#e83848] text-white shadow-[0_8px_20px_-8px_rgba(232,56,72,0.7)]" : "text-white/70 hover:bg-white/8 hover:text-white"
                   }`}
               >
                 <span className="text-base shrink-0">{s.icon}</span>
@@ -307,7 +305,7 @@ function Dashboard({
           </a>
           <button
             onClick={handleLogout}
-            className="text-left text-white/60 hover:text-white text-sm font-semibold px-3.5 py-2 rounded-xl hover:bg-[#d62839] transition-all"
+            className="text-left text-white/60 hover:text-white text-sm font-semibold px-3.5 py-2 rounded-xl hover:bg-[#e83848] transition-all"
           >
             ⏻ Tizimdan chiqish
           </button>
@@ -341,7 +339,7 @@ function Dashboard({
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="🔍 Qidirish..."
-                className="hidden sm:block bg-[var(--a-surface-2)] border border-[var(--a-border-strong)] focus:border-[#d62839] focus:ring-4 focus:ring-[#d62839]/10 rounded-xl px-4 py-2.5 text-sm text-[var(--a-text)] outline-none transition-all w-40 lg:w-52"
+                className="hidden sm:block bg-[var(--a-surface-2)] border border-[var(--a-border-strong)] focus:border-[#e83848] focus:ring-4 focus:ring-[#e83848]/10 rounded-xl px-4 py-2.5 text-sm text-[var(--a-text)] outline-none transition-all w-40 lg:w-52"
               />
               <ThemeToggle theme={theme} toggle={toggleTheme} />
             </div>
@@ -367,8 +365,8 @@ function Dashboard({
                 key={key}
                 onClick={() => setSort(key)}
                 className={`shrink-0 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-all ${sort === key
-                  ? "bg-[#d62839] text-white border-[#d62839]"
-                  : "bg-[var(--a-surface)] border-[var(--a-border-strong)] text-[var(--a-text-soft)] hover:border-[#d62839]/50"
+                  ? "bg-[#e83848] text-white border-[#e83848]"
+                  : "bg-[var(--a-surface)] border-[var(--a-border-strong)] text-[var(--a-text-soft)] hover:border-[#e83848]/50"
                   }`}
               >
                 {label}
@@ -418,7 +416,7 @@ function Dashboard({
                   leadsStore.clearAll();
                 }
               }}
-              className="mt-8 text-[var(--a-text-muted)] hover:text-[#d62839] text-xs font-semibold transition-colors"
+              className="mt-8 text-[var(--a-text-muted)] hover:text-[#e83848] text-xs font-semibold transition-colors"
             >
               🗑 Barcha arizalarni tozalash
             </button>
@@ -447,7 +445,7 @@ function LeadCard({ lead, todayStr }: { lead: Lead; todayStr: string }) {
   const isDue = lead.scheduledDate && lead.scheduledDate <= todayStr && lead.status !== "yozildi" && lead.status !== "rad";
 
   return (
-    <div className={`bg-[var(--a-surface)] rounded-2xl border p-5 transition-all hover:shadow-[0_12px_40px_-12px_rgba(0,0,0,0.25)] ${isDue ? "border-[#d62839]/50 ring-1 ring-[#d62839]/25" : "border-[var(--a-border)]"}`}>
+    <div className={`bg-[var(--a-surface)] rounded-2xl border p-5 transition-all hover:shadow-[0_12px_40px_-12px_rgba(0,0,0,0.25)] ${isDue ? "border-[#e83848]/50 ring-1 ring-[#e83848]/25" : "border-[var(--a-border)]"}`}>
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
         <div className="min-w-0">
@@ -555,7 +553,7 @@ function LeadCard({ lead, todayStr }: { lead: Lead; todayStr: string }) {
                   >
                     <span className={`w-2 h-2 rounded-full ${STATUS[s].dot}`} />
                     {STATUS[s].label}
-                    {lead.status === s && <span className="ml-auto text-[#d62839]">✓</span>}
+                    {lead.status === s && <span className="ml-auto text-[#e83848]">✓</span>}
                   </button>
                 ))}
               </div>
@@ -567,7 +565,7 @@ function LeadCard({ lead, todayStr }: { lead: Lead; todayStr: string }) {
           onClick={() => {
             if (confirm("Bu arizani o'chirasizmi?")) leadsStore.remove(lead.id);
           }}
-          className="text-xs font-bold text-[var(--a-text-muted)] hover:text-[#d62839] px-2 py-2 transition-colors"
+          className="text-xs font-bold text-[var(--a-text-muted)] hover:text-[#e83848] px-2 py-2 transition-colors"
         >
           🗑
         </button>

@@ -4,9 +4,9 @@
    DESIGN TOKENS — France TCF (Kanada + Fransiya)
    ═══════════════════════════════════════════════════════════ */
 @theme {
-  --color-canada: #d62839;
-  --color-canada-dark: #ae1b2a;
-  --color-canada-light: #f25c5c;
+  --color-canada: #e83848;
+  --color-canada-dark: #e84858;
+  --color-canada-light: #f46868;
   --color-bleu: #15233b;
   --color-bleu-light: #2a5286;
   --color-or: #e0a526;
@@ -22,14 +22,30 @@
   /* Layered, perceptually-soft shadows */
   --shadow-soft: 0 1px 2px rgba(21, 35, 59, 0.04), 0 6px 20px -8px rgba(21, 35, 59, 0.1);
   --shadow-card: 0 2px 4px rgba(21, 35, 59, 0.04), 0 18px 44px -14px rgba(21, 35, 59, 0.22);
-  --shadow-glow: 0 18px 54px -14px rgba(214, 40, 57, 0.38);
+  --shadow-glow: 0 18px 54px -14px rgba(232, 56, 72, 0.38);
   --shadow-ring: 0 0 0 1px rgba(21, 35, 59, 0.06);
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Navbar pastidan sticky: pt-3 + h-16 + 5px */
+  --site-header-gap: 5px;
+  --site-header-offset: calc(0.75rem + 4rem + var(--site-header-gap));
 }
 
 
 @layer base {
+  @media (min-width: 640px) {
+    :root {
+      --site-header-offset: calc(1rem + 4rem + var(--site-header-gap));
+    }
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --site-header-offset: calc(1rem + 4.5rem + var(--site-header-gap));
+    }
+  }
+
   * {
     box-sizing: border-box;
     margin: 0;
@@ -44,7 +60,7 @@
   body {
     font-family: "Plus Jakarta Sans", "DM Sans", sans-serif;
     background:
-      radial-gradient(1200px 600px at 100% -10%, rgba(214, 40, 57, 0.05), transparent 60%),
+      radial-gradient(1200px 600px at 100% -10%, rgba(232, 56, 72, 0.05), transparent 60%),
       radial-gradient(1000px 500px at -10% 10%, rgba(21, 35, 59, 0.05), transparent 55%),
       #faf6ef;
     color: #15233b;
@@ -52,12 +68,254 @@
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
     text-rendering: optimizeLegibility;
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+
+  html.dark body {
+    background:
+      radial-gradient(1200px 600px at 100% -10%, rgba(232, 56, 72, 0.08), transparent 60%),
+      radial-gradient(1000px 500px at -10% 10%, rgba(21, 35, 59, 0.25), transparent 55%),
+      #0d1117;
+    color: #e6edf3;
+  }
+
+  /* Header — doim oq/yorug' (mavzudan qat'iy nazar) */
+  html.dark .site-header-bar {
+    background-color: rgba(255, 255, 255, 0.92) !important;
+    border-color: rgba(255, 255, 255, 0.85) !important;
+  }
+
+  html.dark header .text-\[\#3E4B62\] {
+    color: #3e4b62 !important;
+  }
+
+  html.dark header .text-\[\#646F82\] {
+    color: #646f82 !important;
+  }
+
+  /* Preferences popover — header ichida doim oq */
+  html.dark .site-header-bar [role="menu"] .rounded-2xl {
+    background-color: #ffffff !important;
+    border-color: rgba(21, 35, 59, 0.1) !important;
+  }
+
+  html.dark .site-header-bar [role="menu"] .text-\[\#3E4B62\],
+  html.dark .site-header-bar [role="menu"] .text-\[\#15233B\] {
+    color: #15233b !important;
+  }
+
+  html.dark .site-header-bar [role="menu"] .text-\[\#646F82\] {
+    color: #646f82 !important;
+  }
+
+  /* ───── DARK MODE: asosiy matn va fonlar ───── */
+  html.dark main .bg-white,
+  html.dark [role="dialog"] .bg-white {
+    background-color: #121820 !important;
+  }
+
+  html.dark main .bg-\[\#FAF6EF\],
+  html.dark main .bg-\[\#faf6ef\] {
+    background-color: #0f1419 !important;
+  }
+
+  html.dark main .text-\[\#15233B\],
+  html.dark main .text-\[\#15233b\],
+  html.dark [role="dialog"] .text-\[\#15233B\] {
+    color: #e6edf3 !important;
+  }
+
+  html.dark main .text-\[\#3E4B62\],
+  html.dark main .text-\[\#546074\],
+  html.dark main .text-\[\#646F82\],
+  html.dark [role="dialog"] .text-\[\#3E4B62\],
+  html.dark [role="dialog"] .text-\[\#546074\],
+  html.dark [role="dialog"] .text-\[\#646F82\] {
+    color: #9aa4b2 !important;
+  }
+
+  html.dark main .text-\[\#2C3850\] {
+    color: #b0bcc9 !important;
+  }
+
+  /* Opacity variant matnlar */
+  html.dark main [class*="text-[#15233B]/"],
+  html.dark main [class*="text-[#15233b]/"] {
+    color: rgba(230, 237, 243, 0.55) !important;
+  }
+
+  /* Ikonkalar — currentColor orqali */
+  html.dark main svg.text-\[\#15233B\],
+  html.dark main svg.text-\[\#15233b\],
+  html.dark main .text-\[\#15233B\] svg,
+  html.dark main .text-\[\#15233b\] svg {
+    color: #e6edf3 !important;
+  }
+
+  html.dark main svg.text-\[\#3E4B62\],
+  html.dark main svg.text-\[\#546074\],
+  html.dark main svg.text-\[\#646F82\] {
+    color: #9aa4b2 !important;
+  }
+
+  /* Chegaralar */
+  html.dark main [class*="border-[#15233B]/"] {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  html.dark main .border-white\/60,
+  html.dark main .border-white\/40 {
+    border-color: rgba(255, 255, 255, 0.12) !important;
+  }
+
+  /* Ichki fonlar */
+  html.dark main .bg-white\/70,
+  html.dark main .bg-white\/80,
+  html.dark main .bg-white\/85 {
+    background-color: rgba(22, 27, 34, 0.85) !important;
+  }
+
+  html.dark main .hover\:bg-\[\#FAF6EF\]:hover,
+  html.dark main .hover\:bg-\[\#faf6ef\]:hover {
+    background-color: #1a2332 !important;
+  }
+
+  html.dark main .hover\:bg-\[\#15233B\]\/8:hover {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+  }
+
+  html.dark .chip {
+    background-color: rgba(22, 27, 34, 0.9) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    color: #e6edf3 !important;
+  }
+
+  html.dark .glass-nav {
+    background: rgba(18, 24, 32, 0.92) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  html.dark .card {
+    background-color: #161b22 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  html.dark .card-gradient-border::before {
+    opacity: 0.35;
+  }
+
+  /* Tugmalar — outline */
+  html.dark main .btn-outline {
+    background-color: rgba(22, 27, 34, 0.92) !important;
+    border-color: rgba(255, 255, 255, 0.18) !important;
+    color: #e6edf3 !important;
+  }
+
+  html.dark main .btn-outline:hover {
+    background-color: #1f2937 !important;
+    border-color: rgba(255, 255, 255, 0.32) !important;
+    color: #ffffff !important;
+  }
+
+  html.dark main .border-2.border-\[\#15233B\]\/12 {
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    color: #e6edf3 !important;
+  }
+
+  /* Suzuvchi tugmalar */
+  html.dark .fixed.right-4 button,
+  html.dark .fixed.right-6 button {
+    background-color: #1a2332 !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    color: #e6edf3 !important;
+  }
+
+  html.dark .lg\:hidden.fixed.inset-x-0 .bg-white\/85 {
+    background-color: rgba(22, 27, 34, 0.92) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* Media placeholder (foto/sertifikat) */
+  html.dark main .from-\[\#eaf0f8\],
+  html.dark main .from-\[\#FAF6EF\],
+  html.dark main .from-\[\#fef3f3\],
+  html.dark main .from-\[\#fce8e8\],
+  html.dark main .from-\[\#fcefec\] {
+    --tw-gradient-from: #1a2332 var(--tw-gradient-from-position) !important;
+    --tw-gradient-to: rgb(26 35 50 / 0) var(--tw-gradient-to-position) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+  }
+
+  html.dark main .to-\[\#FAF6EF\],
+  html.dark main .to-\[\#f9ddd8\],
+  html.dark main .to-\[\#fcefec\] {
+    --tw-gradient-to: #121820 var(--tw-gradient-to-position) !important;
+  }
+
+  html.dark main .via-\[\#fce8e8\] {
+    --tw-gradient-via: #161b22 var(--tw-gradient-via-position) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-via), var(--tw-gradient-to) !important;
+  }
+
+  html.dark main .via-white {
+    --tw-gradient-via: #161b22 var(--tw-gradient-via-position) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-via), var(--tw-gradient-to) !important;
+  }
+
+  /* Oltin badge — matn o'qilishi uchun */
+  html.dark main .bg-\[\#E0A526\].text-\[\#15233B\] {
+    color: #15233b !important;
+  }
+
+  html.dark [role="dialog"] .hover\:text-\[\#15233B\]:hover {
+    color: #e6edf3 !important;
+  }
+
+  html.dark main h1:not([class*="text-white"]):not([class*="text-[#e83848]"]),
+  html.dark main h2:not([class*="text-white"]):not([class*="text-[#e83848]"]),
+  html.dark main h3:not([class*="text-white"]):not([class*="text-[#e83848]"]),
+  html.dark main h4:not([class*="text-white"]):not([class*="text-[#e83848]"]) {
+    color: #e6edf3;
+  }
+
+  /* Sahifa hero — qora temada fon rasmi ustiga qorong'u qatlam */
+  html.dark .page-hero__image {
+    opacity: 0.35 !important;
+  }
+
+  html.dark .page-hero__scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(13, 17, 23, 0.65) 0%,
+      rgba(13, 17, 23, 0.94) 100%
+    ) !important;
+  }
+
+  html.dark main .panel-soft-accent .social-chip {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
+    color: #e6edf3 !important;
+  }
+
+  html.dark main .panel-soft-accent .social-chip:hover {
+    background-color: #e83848 !important;
+    border-color: #e83848 !important;
+    color: #ffffff !important;
+  }
+
+  html.dark main .bg-green-100 {
+    background-color: rgba(34, 197, 94, 0.14) !important;
+  }
+
+  html.dark main select option {
+    background-color: #161b22;
+    color: #e6edf3;
   }
 
   /* Accessible keyboard focus — visible only for keyboard users */
   :focus-visible {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.9), 0 0 0 5px rgba(214, 40, 57, 0.55);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.9), 0 0 0 5px rgba(232, 56, 72, 0.55);
     border-radius: 12px;
   }
 
@@ -74,9 +332,11 @@
     }
 
     .reveal,
-    .reveal-auto {
+    .reveal-auto,
+    .reveal-char {
       opacity: 1 !important;
       transform: none !important;
+      filter: none !important;
     }
   }
 
@@ -105,7 +365,7 @@
   }
 
   ::selection {
-    background: #d62839;
+    background: #e83848;
     color: #ffffff;
   }
 
@@ -125,7 +385,7 @@
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(#d62839, #ae1b2a);
+    background: linear-gradient(#e83848, #e84858);
   }
 
   html {
@@ -134,6 +394,37 @@
 }
 
 @layer utilities {
+
+  /* Header ostida 5px — bo'lim oxirida to'xtaydi (position: sticky) */
+  .sticky-below-header {
+    position: sticky;
+    top: var(--site-header-offset);
+    z-index: 10;
+    max-height: calc(100vh - var(--site-header-offset) - 0.5rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(21, 35, 59, 0.2) transparent;
+  }
+
+  .sticky-below-header::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .sticky-below-header::-webkit-scrollbar-thumb {
+    background: rgba(21, 35, 59, 0.2);
+    border-radius: 4px;
+  }
+
+  @media (max-width: 1023px) {
+    .sticky-below-header {
+      position: static;
+      top: auto;
+      z-index: auto;
+      max-height: none;
+      overflow-y: visible;
+    }
+  }
 
   /* ───── ANIMATIONS ───── */
   @keyframes fade-in {
@@ -277,6 +568,15 @@
     will-change: transform, opacity, filter;
   }
 
+  /* Hero tagline — video ustida aniq o'qiladi */
+  .hero-tagline {
+    color: #ffffff;
+    text-shadow:
+      0 1px 3px rgba(21, 35, 59, 0.95),
+      0 2px 14px rgba(21, 35, 59, 0.75),
+      0 0 28px rgba(21, 35, 59, 0.55);
+  }
+
   /* Mayin yorug' halo — video ustida matn aniq o'qilishi uchun */
   .hero-text-halo {
     text-shadow:
@@ -310,6 +610,72 @@
 
   .animate-marquee {
     animation: marquee 30s linear infinite;
+  }
+
+  /* Yumshoq accent — to'q qizil o'rniga */
+  .panel-soft-accent {
+    background: linear-gradient(135deg, #fef5f5 0%, #ffffff 55%, #faf6ef 100%);
+    border: 1px solid rgba(232, 56, 72, 0.16);
+    color: #15233b;
+  }
+
+  html.dark main .panel-soft-accent {
+    background: linear-gradient(
+      135deg,
+      rgba(232, 56, 72, 0.14) 0%,
+      #161b22 52%,
+      #121820 100%
+    ) !important;
+    border-color: rgba(232, 56, 72, 0.28) !important;
+    color: #e6edf3 !important;
+  }
+
+  html.dark main .panel-soft-accent h2,
+  html.dark main .panel-soft-accent h3,
+  html.dark main .panel-soft-accent h4,
+  html.dark main .panel-soft-accent dt,
+  html.dark main .panel-soft-accent dd,
+  html.dark main .panel-soft-accent p {
+    color: inherit;
+  }
+
+  html.dark main .panel-soft-accent .text-\[\#15233B\],
+  html.dark main .panel-soft-accent a.text-\[\#15233B\] {
+    color: #e6edf3 !important;
+  }
+
+  html.dark main .panel-soft-accent a.text-\[\#15233B\]:hover {
+    color: #ff8a96 !important;
+  }
+
+  .table-head-dark {
+    background-color: #15233b;
+    color: #ffffff;
+  }
+
+  .site-marquee-link {
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(21, 35, 59, 0.35);
+  }
+
+  .site-marquee-link:hover {
+    color: #ffd666;
+  }
+
+  /* Sahifa hero (bog'lanish va boshqalar) */
+  .page-hero__scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(250, 246, 239, 0.45) 0%,
+      rgba(250, 246, 239, 0.9) 100%
+    );
+  }
+
+  /* Mobil pastki CTA paneli uchun joy */
+  @media (max-width: 1023px) {
+    main {
+      padding-bottom: max(5.5rem, calc(4.25rem + env(safe-area-inset-bottom, 0px)));
+    }
   }
 
   @keyframes tg-wave {
@@ -380,7 +746,7 @@
 
   /* ───── TEXT GRADIENTS ───── */
   .text-gradient-canada {
-    background: linear-gradient(115deg, #ae1b2a 0%, #d62839 45%, #f25c5c 100%);
+    background: linear-gradient(115deg, #e84858 0%, #e83848 45%, #f46868 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -388,7 +754,7 @@
 
   /* Animated brand gradient text (for hero accents) */
   .text-gradient-animated {
-    background: linear-gradient(115deg, #ae1b2a, #d62839, #f25c5c, #e0a526, #d62839);
+    background: linear-gradient(115deg, #e84858, #e83848, #f46868, #e0a526, #e83848);
     background-size: 250% auto;
     -webkit-background-clip: text;
     background-clip: text;
@@ -403,19 +769,92 @@
     color: transparent;
   }
 
-  /* ───── REVEAL ON SCROLL ───── */
+  /* ───── REVEAL ON SCROLL — pastdan ketma-ket ───── */
   .reveal {
     opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+
+  .reveal[data-from="bottom"],
+  .reveal:not([data-from]) {
+    transform: translateY(72px);
+  }
+
+  .reveal[data-from="left"] {
+    transform: translateX(-80px) rotate(-7deg);
+  }
+
+  .reveal[data-from="right"] {
+    transform: translateX(80px) rotate(7deg);
+  }
+
+  .reveal[data-from="top"] {
+    transform: translateY(-64px);
+  }
+
+  .reveal[data-from="spin"] {
+    transform: translateY(48px) rotate(108deg) scale(0.62);
+  }
+
+  .reveal[data-from="zoom"] {
+    transform: scale(0.45);
+    filter: blur(6px);
   }
 
   .reveal.is-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
+    filter: none;
   }
 
-  /* Avtomatik matn reveal (h1–h4, p, li) */
+  /* Harf-harflab — pastdan birlashadi */
+  .reveal-char {
+    display: inline-block;
+    opacity: 0;
+    transition:
+      opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.5s ease;
+    will-change: opacity, transform;
+  }
+
+  .reveal-char[data-from="bottom"],
+  .reveal-char:not([data-from]) {
+    transform: translateY(1.1em);
+  }
+
+  .reveal-char[data-from="left"] {
+    transform: translateX(-1.4em);
+  }
+
+  .reveal-char[data-from="right"] {
+    transform: translateX(1.4em);
+  }
+
+  .reveal-char[data-from="top"] {
+    transform: translateY(-1.1em);
+  }
+
+  .reveal-char[data-from="spin"] {
+    transform: translateY(0.6em) rotate(160deg) scale(0.2);
+  }
+
+  .reveal-char[data-from="zoom"] {
+    transform: scale(0.15);
+    filter: blur(4px);
+  }
+
+  .reveal-chars.is-visible .reveal-char {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  /* Eski avtomatik reveal (zaxira) */
   .reveal-auto {
     opacity: 0;
     transform: translateY(22px);
@@ -469,13 +908,13 @@
 
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 text-white font-semibold px-8 py-4 rounded-2xl text-sm transition-all duration-300 no-underline;
-    background: linear-gradient(135deg, #e23344 0%, #d62839 55%, #ae1b2a 100%);
-    box-shadow: 0 10px 30px -8px rgba(214, 40, 57, 0.5);
+    background: linear-gradient(135deg, #f46868 0%, #e83848 55%, #e84858 100%);
+    box-shadow: 0 10px 30px -8px rgba(232, 56, 72, 0.45);
   }
 
   .btn-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 20px 44px -12px rgba(214, 40, 57, 0.65);
+    box-shadow: 0 20px 44px -12px rgba(232, 56, 72, 0.55);
   }
 
   .btn-primary:active {
@@ -530,7 +969,7 @@
   .card-hover:hover {
     transform: translateY(-8px);
     box-shadow: var(--shadow-card);
-    border-color: rgba(214, 40, 57, 0.22);
+    border-color: rgba(232, 56, 72, 0.22);
   }
 
   /* ───── GLASS NAV ───── */
@@ -546,25 +985,33 @@
   }
 
   /* ───── YOUTUBE BACKGROUND VIDEO (cover) ───── */
+  .yt-bg-scaler {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
   .yt-bg {
     position: absolute;
     top: 50%;
     left: 50%;
     width: 100vw;
     height: 56.25vw;
-    /* 16:9 */
     min-height: 100%;
     min-width: 177.78vh;
-    /* 16:9 */
     transform: translate(-50%, -50%);
     pointer-events: none;
     border: 0;
   }
 
+  .yt-bg iframe {
+    pointer-events: none !important;
+  }
+
   /* ───── AURORA / MESH HERO BACKGROUND ───── */
   .bg-aurora {
     background:
-      radial-gradient(40% 50% at 15% 20%, rgba(214, 40, 57, 0.14), transparent 60%),
+      radial-gradient(40% 50% at 15% 20%, rgba(232, 56, 72, 0.14), transparent 60%),
       radial-gradient(45% 55% at 85% 15%, rgba(224, 165, 38, 0.14), transparent 60%),
       radial-gradient(50% 60% at 70% 90%, rgba(21, 35, 59, 0.12), transparent 60%);
   }
@@ -586,27 +1033,40 @@
     }
   }
 
+  .footer-wave-wrap {
+    position: relative;
+    height: 70px;
+    margin-top: -1px;
+    background: #2d2d2d;
+    overflow: hidden;
+  }
+
   .footer-wave {
     position: absolute;
-    top: 1px;
+    bottom: 0;
     left: 0;
     right: 0;
-    height: 60px;
-    transform: translateY(-100%);
+    height: 70px;
     background-repeat: repeat-x;
-    background-size: 1200px 60px;
+    background-size: 1200px 70px;
     pointer-events: none;
   }
 
   .footer-wave-1 {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60' preserveAspectRatio='none'%3E%3Cpath d='M0,30 C150,60 350,2 600,30 C850,58 1050,2 1200,30 L1200,60 L0,60 Z' fill='%23bf2230'/%3E%3C/svg%3E");
-    animation: wave-scroll 13s linear infinite;
-    opacity: 0.55;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 70' preserveAspectRatio='none'%3E%3Cpath d='M0,35 C150,70 350,0 600,35 C850,70 1050,0 1200,35 L1200,70 L0,70 Z' fill='%23e84858'/%3E%3C/svg%3E");
+    animation: wave-scroll 14s linear infinite;
+    opacity: 0.7;
   }
 
   .footer-wave-2 {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60' preserveAspectRatio='none'%3E%3Cpath d='M0,36 C200,8 400,56 600,36 C800,16 1000,56 1200,36 L1200,60 L0,60 Z' fill='%23a3182a'/%3E%3C/svg%3E");
-    animation: wave-scroll 9s linear infinite reverse;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 70' preserveAspectRatio='none'%3E%3Cpath d='M0,42 C200,10 400,62 600,42 C800,22 1000,62 1200,42 L1200,70 L0,70 Z' fill='%23e84393'/%3E%3C/svg%3E");
+    animation: wave-scroll 10s linear infinite reverse;
+    opacity: 0.85;
+  }
+
+  .footer-wave-3 {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 70' preserveAspectRatio='none'%3E%3Cpath d='M0,48 C250,18 450,58 600,48 C750,38 950,58 1200,48 L1200,70 L0,70 Z' fill='%23ff6600'/%3E%3C/svg%3E");
+    animation: wave-scroll 7s linear infinite;
   }
 
   /* ───── HAIRLINE DIVIDER ───── */
@@ -628,7 +1088,7 @@
     inset: 0;
     padding: 1px;
     border-radius: inherit;
-    background: linear-gradient(135deg, rgba(214, 40, 57, 0.5), rgba(224, 165, 38, 0.4), rgba(21, 35, 59, 0.3));
+    background: linear-gradient(135deg, rgba(232, 56, 72, 0.5), rgba(224, 165, 38, 0.4), rgba(21, 35, 59, 0.3));
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -657,9 +1117,26 @@
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+html.dark main .france-phone {
+  background: #1a2332;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+html.dark main .france-phone .PhoneInputInput {
+  color: #e6edf3;
+}
+
+html.dark main .france-phone .PhoneInputInput::placeholder {
+  color: rgba(230, 237, 243, 0.4);
+}
+
+html.dark main .france-phone .PhoneInputCountrySelectArrow {
+  color: #9aa4b2;
+}
+
 .france-phone:focus-within {
-  border-color: #d62839;
-  box-shadow: 0 0 0 4px rgba(214, 40, 57, 0.1);
+  border-color: #e83848;
+  box-shadow: 0 0 0 4px rgba(232, 56, 72, 0.1);
 }
 
 .france-phone .PhoneInputCountry {
@@ -694,6 +1171,287 @@
 
 .france-phone .PhoneInputInput::placeholder {
   color: rgba(21, 35, 59, 0.35);
+}
+
+/* ───── CERTIFICATE PRIZE REVEAL ───── */
+.cert-reveal-wrap {
+  perspective: 1100px;
+  width: 100%;
+}
+
+.cert-reveal-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateY(0deg) scale(0.9);
+  opacity: 0;
+}
+
+.cert-reveal-card--spin {
+  animation: cert-prize-spin 2.5s cubic-bezier(0.15, 0.85, 0.25, 1) forwards;
+  animation-delay: var(--cert-delay, 0s);
+}
+
+.cert-reveal-card--done {
+  animation: none;
+  transform: rotateY(360deg) scale(1);
+  opacity: 1;
+}
+
+.cert-reveal-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow:
+    0 4px 24px -6px rgba(21, 35, 59, 0.18),
+    0 0 0 1px rgba(21, 35, 59, 0.06);
+}
+
+.cert-reveal-face--front {
+  transform: rotateY(0deg);
+  background: #fff;
+}
+
+.cert-reveal-face--back {
+  transform: rotateY(180deg);
+  background: linear-gradient(145deg, #e83848 0%, #b83040 55%, #8f2838 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cert-reveal-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cert-magnifier-host {
+  position: absolute;
+  inset: 0;
+}
+
+.cert-magnifier-host--ready {
+  cursor: none;
+}
+
+/* Haqiqiy lupa — metall halqa, shisha, dasta */
+.cert-magnifier-tool {
+  position: absolute;
+  width: 188px;
+  height: 248px;
+  transform: translate(-46%, -54%);
+  pointer-events: none;
+  z-index: 6;
+  filter: drop-shadow(0 14px 22px rgba(21, 35, 59, 0.38));
+}
+
+.cert-magnifier-glass-ring {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 188px;
+  height: 188px;
+  margin-left: -94px;
+  border-radius: 50%;
+  padding: 8px;
+  background: linear-gradient(
+    145deg,
+    #f5e6a8 0%,
+    #c9a227 18%,
+    #8b6914 42%,
+    #d4af37 58%,
+    #f0dc82 78%,
+    #a67c00 100%
+  );
+  box-shadow:
+    inset 0 3px 6px rgba(255, 255, 255, 0.65),
+    inset 0 -4px 8px rgba(60, 40, 0, 0.35),
+    0 2px 0 rgba(255, 255, 255, 0.25);
+}
+
+.cert-magnifier-viewport {
+  position: relative;
+  width: 172px;
+  height: 172px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f8fafc;
+  box-shadow:
+    inset 0 0 14px rgba(21, 35, 59, 0.12),
+    inset 0 2px 8px rgba(255, 255, 255, 0.5);
+}
+
+.cert-magnifier-glare {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 172px;
+  height: 172px;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 28% 22%, rgba(255, 255, 255, 0.72) 0%, transparent 42%),
+    radial-gradient(circle at 72% 78%, rgba(21, 35, 59, 0.08) 0%, transparent 38%);
+  box-shadow: inset -8px -10px 16px rgba(21, 35, 59, 0.06);
+}
+
+.cert-magnifier-ferrule {
+  position: absolute;
+  top: 168px;
+  left: 50%;
+  width: 22px;
+  height: 16px;
+  margin-left: 28px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #c9a227, #7a5c10 55%, #5c4508);
+  transform: rotate(42deg);
+  transform-origin: top center;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.35);
+}
+
+.cert-magnifier-handle {
+  position: absolute;
+  top: 178px;
+  left: 50%;
+  width: 18px;
+  height: 88px;
+  margin-left: 52px;
+  border-radius: 4px 4px 10px 10px;
+  background: linear-gradient(
+    90deg,
+    #4a2f14 0%,
+    #8b5a2b 22%,
+    #c4894a 45%,
+    #9a6530 68%,
+    #5c3a1a 100%
+  );
+  transform: rotate(42deg);
+  transform-origin: top center;
+  box-shadow:
+    inset 2px 0 4px rgba(255, 255, 255, 0.2),
+    inset -2px 0 4px rgba(0, 0, 0, 0.25),
+    3px 6px 10px rgba(21, 35, 59, 0.28);
+}
+
+.cert-magnifier-handle::after {
+  content: "";
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #b8783a, #4a2f14);
+}
+
+.cert-magnifier-lens-img {
+  position: absolute;
+  max-width: none;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.cert-reveal-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.45) 48%,
+    transparent 62%
+  );
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cert-reveal-card--done .cert-reveal-shine {
+  animation: cert-shine-flash 0.55s ease-out 0.05s forwards;
+}
+
+.cert-reveal-back-pattern {
+  position: absolute;
+  inset: 12px;
+  border: 2px dashed rgba(255, 255, 255, 0.35);
+  border-radius: 0.75rem;
+}
+
+.cert-reveal-back-logo {
+  font-family: "Syne", sans-serif;
+  font-weight: 800;
+  font-size: 2.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.15em;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+@keyframes cert-prize-spin {
+  0% {
+    transform: rotateY(0deg) scale(0.88);
+    opacity: 0.4;
+  }
+  8% {
+    opacity: 1;
+  }
+  18% {
+    transform: rotateY(630deg) scale(0.96);
+  }
+  32% {
+    transform: rotateY(1080deg) scale(1);
+  }
+  46% {
+    transform: rotateY(1440deg) scale(1);
+  }
+  58% {
+    transform: rotateY(1620deg) scale(1);
+  }
+  68% {
+    transform: rotateY(1800deg) scale(1);
+  }
+  74% {
+    transform: rotateY(1890deg) scale(1);
+  }
+  80% {
+    transform: rotateY(1980deg) scale(1);
+  }
+  86% {
+    transform: rotateY(1980deg) scale(1.02);
+  }
+  92% {
+    transform: rotateY(1980deg) scale(1);
+  }
+  100% {
+    transform: rotateY(2160deg) scale(1);
+  }
+}
+
+@keyframes cert-shine-flash {
+  0% {
+    opacity: 0;
+    transform: translateX(-120%);
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(120%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cert-reveal-card {
+    transform: rotateY(0deg) scale(1);
+    opacity: 1;
+    animation: none !important;
+  }
 }
 
 /* ───── ADMIN THEME (light / dark) ───── */

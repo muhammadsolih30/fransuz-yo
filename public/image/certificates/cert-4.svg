@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 520" fill="none">
+  <rect width="400" height="520" rx="12" fill="#F0F4FA"/>
+  <rect x="16" y="16" width="368" height="488" rx="8" stroke="#15233B" stroke-width="2" fill="#FFFFFF"/>
+  <text x="200" y="75" text-anchor="middle" font-family="Georgia, serif" font-size="19" font-weight="bold" fill="#15233B">TEF CANADA</text>
+  <text x="200" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#646F82">Test d'évaluation de français</text>
+  <line x1="65" y1="118" x2="335" y2="118" stroke="#E0A526" stroke-width="2"/>
+  <text x="60" y="160" font-family="Arial, sans-serif" font-size="10" fill="#3E4B62">Oral</text>
+  <text x="340" y="160" text-anchor="end" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#059669">C1</text>
+  <text x="60" y="188" font-family="Arial, sans-serif" font-size="10" fill="#3E4B62">Écrit</text>
+  <text x="340" y="188" text-anchor="end" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#059669">C1</text>
+  <text x="60" y="216" font-family="Arial, sans-serif" font-size="10" fill="#3E4B62">Compréhension</text>
+  <text x="340" y="216" text-anchor="end" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#2563EB">B2+</text>
+  <rect x="120" y="280" width="160" height="100" rx="8" fill="#15233B" fill-opacity="0.05" stroke="#15233B" stroke-opacity="0.15"/>
+  <text x="200" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#15233B">CLB 9</text>
+  <text x="200" y="355" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#646F82">Niveau avancé</text>
+  <text x="200" y="460" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#646F82">Paris  CCI</text>
+</svg>

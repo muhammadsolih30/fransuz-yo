@@ -1,20 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { PageMeta } from "../components/PageMeta";
+import { useSitePreferences } from "../contexts/SitePreferencesContext";
 import { useReveal } from "../hooks/useReveal";
 
 export const Route = createFileRoute("/galereya")({
-  head: () => ({
-    meta: [
-      { title: "Galereya — France TCF O'quv Markazi" },
-      { name: "description", content: "France TCF o'quv markazi rasmlari va video darslar." },
-    ],
-  }),
   component: GalereyaPage,
 });
 
 type Tab = "rasmlar" | "ochilish" | "videolar";
 
-// Haqiqiy fayl nomlari (public/image/darsxona)
 const photos = [
   "photo_2025-09-15_16-53-59.jpg",
   "photo_2025-09-15_16-53-59 (2).jpg",
@@ -40,44 +35,45 @@ const openingPhotos = [
 const videos = Array.from({ length: 25 }, (_, i) => ({
   id: i + 1,
   youtubeId: null as string | null,
-  title: i < 3 ? `Offline dars lavhasi #${i + 1}` : `Video #${i + 1}`,
-  type: i < 3 ? "Offline dars" : "Qo'shimcha",
 }));
 
 function GalereyaPage() {
-  useReveal();
+  const { content } = useSitePreferences();
+  const ui = content.ui.gallery;
+  const shared = content.ui.shared;
+  const a11y = content.ui.a11y;
+
   const [tab, setTab] = useState<Tab>("rasmlar");
+  useReveal([tab]);
   const [lightbox, setLightbox] = useState<string | null>(null);
 
   const tabs: { key: Tab; label: string; count: number }[] = [
-    { key: "rasmlar", label: "Markazimiz", count: photos.length },
-    { key: "ochilish", label: "Ochilish", count: openingPhotos.length },
-    { key: "videolar", label: "Videolar", count: videos.length },
+    { key: "rasmlar", label: ui.tabs.photos, count: photos.length },
+    { key: "ochilish", label: ui.tabs.opening, count: openingPhotos.length },
+    { key: "videolar", label: ui.tabs.videos, count: videos.length },
   ];
 
   return (
     <div className="bg-white text-[#15233B] overflow-hidden">
-      {/* HERO */}
+      <PageMeta page="gallery" />
+
       <section className="relative pt-36 pb-16 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: "url('/image/opening/galariyaBo%27limi.png')", opacity: 0.95 }}
         />
-        <div className="absolute -top-20 right-0 w-[500px] h-[400px] rounded-full bg-[#d62839]/10 blur-[120px] animate-float-slow" />
+        <div className="absolute -top-20 right-0 w-[500px] h-[400px] rounded-full bg-[#e83848]/10 blur-[120px] animate-float-slow" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="eyebrow text-[#d62839] mb-4 animate-slide-up-sm">
-            <span className="w-8 h-px bg-[#d62839]" /> Galereya
+          <p className="eyebrow text-[#e83848] mb-4 animate-slide-up-sm">
+            <span className="w-8 h-px bg-[#e83848]" /> {ui.eyebrow}
           </p>
           <h1 className="font-['Syne'] font-extrabold text-[clamp(2.6rem,7vw,5rem)] leading-[0.98] mb-6 animate-slide-up delay-100">
-            Bizning <span className="text-gradient-canada">markazimiz</span>
+            {ui.title}
           </h1>
-          <p className="text-[#3E4B62] text-lg max-w-2xl animate-slide-up delay-200">
-            Markazimiz, ochilish marosimi va dars jarayonlaridan lavhalar.
-          </p>
+          <p className="text-[#3E4B62] text-lg max-w-2xl animate-slide-up delay-200">{ui.subtitle}</p>
         </div>
       </section>
 
-      {/* TABS */}
       <div className="sticky top-24 z-30 glass-nav border-y border-[#15233B]/8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-3 sm:flex gap-1.5 sm:gap-2 py-3 sm:py-4">
@@ -85,21 +81,24 @@ function GalereyaPage() {
               <button
                 key={t.key}
                 onClick={() => setTab(t.key)}
-                className={`flex items-center justify-center gap-1.5 px-2 sm:px-6 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold transition-all ${tab === t.key
-                  ? "bg-[#d62839] text-white shadow-[0_10px_24px_-8px_rgba(213,43,30,0.5)]"
-                  : "bg-[#FAF6EF] text-[#3E4B62] hover:bg-[#15233B]/8"
-                  }`}
+                className={`flex items-center justify-center gap-1.5 px-2 sm:px-6 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold transition-all ${
+                  tab === t.key
+                    ? "bg-[#e83848] text-white shadow-[0_10px_24px_-8px_rgba(232,56,72,0.5)]"
+                    : "bg-[#FAF6EF] text-[#3E4B62] hover:bg-[#15233B]/8"
+                }`}
               >
                 <span className="truncate">{t.label}</span>
-                <span className={`shrink-0 text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full ${tab === t.key ? "bg-white/20" : "bg-white text-[#646F82]"}`}>{t.count}</span>
+                <span
+                  className={`shrink-0 text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full ${tab === t.key ? "bg-white/20" : "bg-white text-[#646F82]"}`}
+                >
+                  {t.count}
+                </span>
               </button>
             ))}
           </div>
         </div>
       </div>
 
-
-      {/* CONTENT */}
       <section className="py-14 lg:py-20 bg-[#FAF6EF] min-h-[40vh]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {tab === "rasmlar" && (
@@ -112,13 +111,17 @@ function GalereyaPage() {
                 >
                   <img
                     src={p.src}
-                    alt={`Darsxona ${p.id}`}
+                    alt={`${ui.classroomAlt} ${p.id}`}
                     loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    onError={(e) => { (e.target as HTMLImageElement).style.opacity = "0"; }}
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.opacity = "0";
+                    }}
                   />
                   <div className="absolute inset-0 bg-[#15233B]/0 group-hover:bg-[#15233B]/30 transition-all flex items-center justify-center">
-                    <span className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[#d62839] text-2xl opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all">+</span>
+                    <span className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[#e83848] text-2xl opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all">
+                      +
+                    </span>
                   </div>
                 </button>
               ))}
@@ -135,10 +138,12 @@ function GalereyaPage() {
                 >
                   <img
                     src={p.src}
-                    alt={`Ochilish ${p.id}`}
+                    alt={`${ui.openingAlt} ${p.id}`}
                     loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    onError={(e) => { (e.target as HTMLImageElement).style.opacity = "0"; }}
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.opacity = "0";
+                    }}
                   />
                   <div className="absolute inset-0 bg-[#15233B]/0 group-hover:bg-[#15233B]/20 transition-all" />
                 </button>
@@ -148,31 +153,43 @@ function GalereyaPage() {
 
           {tab === "videolar" && (
             <div>
-              <p className="text-[#646F82] text-xs font-bold tracking-widest uppercase mb-6">Offline dars lavhalari</p>
+              <p className="text-[#646F82] text-xs font-bold tracking-widest uppercase mb-6">
+                {ui.offlineLessonClips}
+              </p>
               <div className="grid md:grid-cols-3 gap-6 mb-12">
-                {videos.slice(0, 3).map((v) => (
+                {videos.slice(0, 3).map((v, i) => (
                   <div key={v.id} className="card overflow-hidden group">
                     <div className="aspect-video flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-[#fcefec] to-[#f9ddd8] group-hover:from-[#f9ddd8] group-hover:to-[#f4ccc6] transition-colors cursor-pointer">
-                      <div className="w-16 h-16 rounded-full bg-[#d62839] flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
-                        <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                      <div className="w-16 h-16 rounded-full bg-[#e83848] flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                        <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
                       </div>
-                      <p className="text-[#15233B]/40 text-xs font-medium">Tez orada</p>
+                      <p className="text-[#15233B]/40 text-xs font-medium">{ui.noVideos}</p>
                     </div>
                     <div className="px-5 py-4">
-                      <span className="text-[#d62839] text-xs font-bold">{v.type}</span>
-                      <p className="text-[#3E4B62] text-sm mt-1">{v.title}</p>
+                      <span className="text-[#e83848] text-xs font-bold">{ui.offlineLesson}</span>
+                      <p className="text-[#3E4B62] text-sm mt-1">
+                        {ui.offlineLessonVideo} #{i + 1}
+                      </p>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <p className="text-[#646F82] text-xs font-bold tracking-widest uppercase mb-6">Qo'shimcha videolar</p>
+              <p className="text-[#646F82] text-xs font-bold tracking-widest uppercase mb-6">{ui.moreVideos}</p>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {videos.slice(3).map((v) => (
                   <div key={v.id} className="card overflow-hidden group">
                     <div className="aspect-video flex flex-col items-center justify-center gap-2 bg-[#FAF6EF] group-hover:bg-[#fcefec] transition-colors cursor-pointer">
-                      <div className="w-10 h-10 rounded-full border-2 border-[#15233B]/15 flex items-center justify-center group-hover:border-[#d62839] transition-colors">
-                        <svg className="w-4 h-4 text-[#15233B]/30 ml-0.5 group-hover:text-[#d62839] transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                      <div className="w-10 h-10 rounded-full border-2 border-[#15233B]/15 flex items-center justify-center group-hover:border-[#e83848] transition-colors">
+                        <svg
+                          className="w-4 h-4 text-[#15233B]/30 ml-0.5 group-hover:text-[#e83848] transition-colors"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
                       </div>
                       <p className="text-[#15233B]/30 text-[10px]">#{v.id}</p>
                     </div>
@@ -180,10 +197,15 @@ function GalereyaPage() {
                 ))}
               </div>
 
-              <div className="mt-8 card p-8 text-center bg-gradient-to-br from-[#a3182a] to-[#6e1019] text-white">
-                <p className="text-white/70 text-sm">YouTube linklari qo'shilishi bilan videolar avtomatik paydo bo'ladi</p>
-                <a href="https://t.me/Francais_languee" target="_blank" rel="noreferrer" className="no-underline inline-flex items-center gap-2 text-[#E0A526] text-sm font-bold mt-3 hover:gap-3 transition-all">
-                  ✈️ Telegram kanalimiz →
+              <div className="mt-8 card p-8 text-center panel-soft-accent">
+                <p className="text-[#546074] text-sm">{ui.youtubeNote}</p>
+                <a
+                  href="https://t.me/Francais_languee"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="no-underline inline-flex items-center gap-2 text-[#E0A526] text-sm font-bold mt-3 hover:gap-3 transition-all"
+                >
+                  {ui.telegramChannel}
                 </a>
               </div>
             </div>
@@ -191,7 +213,6 @@ function GalereyaPage() {
         </div>
       </section>
 
-      {/* LIGHTBOX */}
       {lightbox && (
         <div
           className="fixed inset-0 bg-[#15233B]/95 backdrop-blur-sm z-[60] flex items-center justify-center p-4 animate-fade-in"
@@ -200,11 +221,13 @@ function GalereyaPage() {
           <button
             className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white text-3xl font-thin transition-all flex items-center justify-center"
             onClick={() => setLightbox(null)}
-            aria-label="Yopish"
-          >×</button>
+            aria-label={a11y.close}
+          >
+            ×
+          </button>
           <img
             src={lightbox}
-            alt="Ko'rish"
+            alt={a11y.viewImage}
             className="max-w-full max-h-[90vh] object-contain rounded-2xl shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           />

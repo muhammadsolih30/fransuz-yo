@@ -70,11 +70,15 @@ export const whyUs: { icon: LucideIcon; title: string; desc: string }[] = [
   },
 ];
 
-export const navLinks = [
-  { to: "/haqimizda", label: "Biz haqimizda" },
-  { to: "/kurslar", label: "Kurs narxlar" },
-  { to: "/natijalar", label: "Natijalar" },
-  { to: "/ustoz", label: "Ustozlar" },
+export type SiteLink =
+  | { to: string; label: string; hash?: never }
+  | { to: "/"; label: string; hash: string };
+
+export const navLinks: SiteLink[] = [
+  { to: "/", hash: "haqimizda", label: "Biz haqimizda" },
+  { to: "/", hash: "kurslar", label: "Kurs narxlar" },
+  { to: "/", hash: "natijalar", label: "Natijalar" },
+  { to: "/", hash: "ustoz", label: "Ustozlar" },
   { to: "/immigratsiya", label: "Immigratsiya" },
   { to: "/faq", label: "FAQ" },
   { to: "/probniy-dars", label: "Probniy dars" },
@@ -87,3 +91,6 @@ export const footerLinks = [
   { to: "/galereya", label: "Galereya" },
   { to: "/boglanish", label: "Bog'lanish" },
 ];
+
+/** Bosh sahifadagi scroll-spy bo'limlari */
+export const HOME_SECTION_IDS = ["haqimizda", "kurslar", "natijalar", "ustoz"] as const;

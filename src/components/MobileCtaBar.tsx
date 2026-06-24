@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { useSitePreferences } from "../contexts/SitePreferencesContext";
 
 /**
  * Faqat MOBILDA ko'rinadigan pastki harakat paneli.
  * Ozgina scroll (250px) qilingach pastdan chiqib keladi.
- * Har bir tugma o'zidan to'lqin tarqatadi (telegramnikiga o'xshash).
  */
 export function MobileCtaBar() {
+    const { content } = useSitePreferences();
+    const { mobileCta } = content.ui;
+    const { shared, a11y } = content.ui;
     const [show, setShow] = useState(false);
 
     useEffect(() => {
@@ -22,21 +25,19 @@ export function MobileCtaBar() {
                 }`}
         >
             <div className="flex items-stretch gap-2.5 bg-white/85 backdrop-blur-xl border border-white/60 rounded-2xl p-2 shadow-[0_-8px_30px_-10px_rgba(21,35,59,0.3)]">
-                {/* Ro'yxatdan o'tish */}
                 <Link
                     to="/boglanish"
-                    className="relative flex-1 overflow-hidden no-underline flex items-center justify-center gap-2 bg-gradient-to-r from-[#e23344] via-[#d62839] to-[#ae1b2a] text-white font-bold text-sm rounded-xl px-4 py-3.5"
+                    className="relative flex-1 overflow-hidden no-underline flex items-center justify-center gap-2 bg-gradient-to-r from-[#f46868] via-[#e83848] to-[#e84858] text-white font-bold text-sm rounded-xl px-4 py-3.5"
                 >
-                    <span className="absolute inset-0 rounded-xl bg-[#d62839]/40 animate-tg-wave" />
-                    <span className="relative">✍️ Ro'yxatdan o'tish</span>
+                    <span className="absolute inset-0 rounded-xl bg-[#e83848]/40 animate-tg-wave" />
+                    <span className="relative">{mobileCta.register}</span>
                 </Link>
 
-                {/* Telegram */}
                 <a
                     href="https://t.me/France_TCF"
                     target="_blank"
                     rel="noreferrer noopener"
-                    aria-label="Telegram admin"
+                    aria-label={a11y.telegramAdmin}
                     className="relative overflow-hidden px-4 flex items-center justify-center bg-[#229ED9] rounded-xl"
                 >
                     <span className="absolute inset-0 rounded-xl bg-[#229ED9]/50 animate-tg-wave" />
@@ -45,10 +46,9 @@ export function MobileCtaBar() {
                     </svg>
                 </a>
 
-                {/* Telefon */}
                 <a
                     href="tel:+998947382221"
-                    aria-label="Qo'ng'iroq qilish"
+                    aria-label={a11y.callUs}
                     className="relative overflow-hidden px-4 flex items-center justify-center bg-[#22a45d] rounded-xl"
                 >
                     <span className="absolute inset-0 rounded-xl bg-[#22a45d]/50 animate-tg-wave [animation-delay:0.6s]" />

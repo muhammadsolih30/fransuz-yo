@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 520" fill="none">
+  <rect width="400" height="520" rx="12" fill="#FAF6EF"/>
+  <rect x="16" y="16" width="368" height="488" rx="8" stroke="#C9A227" stroke-width="3" fill="#FFFCF7"/>
+  <rect x="28" y="28" width="344" height="464" rx="4" stroke="#15233B" stroke-width="1" stroke-opacity="0.15"/>
+  <text x="200" y="72" text-anchor="middle" font-family="Georgia, serif" font-size="22" font-weight="bold" fill="#15233B">TCF CANADA</text>
+  <text x="200" y="98" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#646F82">Test de connaissance du français</text>
+  <line x1="60" y1="115" x2="340" y2="115" stroke="#C9A227" stroke-width="2"/>
+  <text x="200" y="155" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#546074">CERTIFICAT DE RÉSULTATS</text>
+  <rect x="80" y="175" width="240" height="28" rx="4" fill="#F0EBE3"/>
+  <text x="200" y="194" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#15233B">D. SAIDBEKOVA</text>
+  <text x="60" y="235" font-family="Arial, sans-serif" font-size="10" fill="#3E4B62">Compréhension orale</text>
+  <text x="340" y="235" text-anchor="end" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#059669">C2  699</text>
+  <text x="60" y="260" font-family="Arial, sans-serif" font-size="10" fill="#3E4B62">Compréhension écrite</text>
+  <text x="340" y="260" text-anchor="end" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#059669">C2  699</text>
+  <text x="60" y="285" font-family="Arial, sans-serif" font-size="10" fill="#3E4B62">Expression écrite</text>
+  <text x="340" y="285" text-anchor="end" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#2563EB">B2  11</text>
+  <text x="60" y="310" font-family="Arial, sans-serif" font-size="10" fill="#3E4B62">Expression orale</text>
+  <text x="340" y="310" text-anchor="end" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#2563EB">B2  10</text>
+  <circle cx="200" cy="390" r="42" stroke="#e83848" stroke-width="2" fill="none" stroke-dasharray="4 3"/>
+  <text x="200" y="386" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#e83848">VALIDÉ</text>
+  <text x="200" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#e83848">2026</text>
+  <text x="200" y="470" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#646F82">France Éducation International</text>
+</svg>

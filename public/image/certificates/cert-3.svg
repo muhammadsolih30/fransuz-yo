@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 520" fill="none">
+  <rect width="400" height="520" rx="12" fill="#FFF8F0"/>
+  <rect x="16" y="16" width="368" height="488" rx="8" stroke="#C9A227" stroke-width="2.5" fill="#FFFFFF"/>
+  <text x="200" y="80" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="bold" fill="#15233B">DELF B2</text>
+  <text x="200" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#646F82">Diplôme d'études en langue française</text>
+  <line x1="70" y1="125" x2="330" y2="125" stroke="#e83848" stroke-width="1.5"/>
+  <text x="200" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#3E4B62">O'quvchi natijasi</text>
+  <rect x="100" y="185" width="200" height="24" rx="3" fill="#FAF6EF"/>
+  <text x="200" y="202" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#15233B">B2 DARAJA</text>
+  <text x="200" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#e83848">82</text>
+  <text x="200" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#646F82">/ 100 ball</text>
+  <circle cx="200" cy="370" r="50" fill="#e83848" fill-opacity="0.08" stroke="#e83848" stroke-width="2"/>
+  <text x="200" y="368" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#e83848">RÉUSSI</text>
+  <text x="200" y="385" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#e83848">Mars 2025</text>
+</svg>

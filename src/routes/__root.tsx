@@ -4,6 +4,7 @@ import { Footer } from "../components/Footer";
 import { RegisterModal } from "../components/RegisterModal";
 import { FloatingButtons } from "../components/FloatingButtons";
 import { MobileCtaBar } from "../components/MobileCtaBar";
+import { useReveal } from "../hooks/useReveal";
 import appCss from "../styles.css?url";
 
 export const Route = createRootRoute({
@@ -43,7 +44,10 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const hash = useRouterState({ select: (s) => s.location.hash });
   const isAdmin = pathname.startsWith("/admin");
+
+  useReveal([pathname, hash]);
 
   if (isAdmin) {
     return (

@@ -1,10 +1,38 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
+import { Phone } from "lucide-react";
 import { useState, useEffect } from "react";
-import { navLinks } from "../lib/site-content";
+import { BrandLogo } from "./BrandLogo";
+import { PreferencesMenu } from "./PreferencesMenu";
+import { NavSiteLink } from "./NavSiteLink";
+import { useSitePreferences } from "../contexts/SitePreferencesContext";
+import { useScrollSpy } from "../hooks/useScrollSpy";
+
+const NAV_LINK_BASE =
+  "relative no-underline text-[#3E4B62] hover:text-[#e83848] text-[11px] 2xl:text-[13px] font-semibold px-1.5 2xl:px-2.5 pt-2 pb-2.5 transition-colors whitespace-nowrap";
+
+const NAV_LINK_ACTIVE =
+  "relative no-underline text-[#e83848] text-[11px] 2xl:text-[13px] font-bold px-1.5 2xl:px-2.5 pt-2 pb-2.5 whitespace-nowrap after:content-[''] after:absolute after:bottom-0 after:left-1.5 after:right-1.5 2xl:after:left-2 2xl:after:right-2 after:h-[2px] after:bg-[#e83848] after:rounded-full";
+
+const NAV_MOBILE_BASE =
+  "no-underline text-[#15233B] hover:text-[#e83848] text-base font-bold py-3.5 border-b border-[#15233B]/8 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] border-l-[3px] border-l-transparent pl-4";
+
+const NAV_MOBILE_ACTIVE =
+  "no-underline text-[#e83848] text-base font-bold py-3.5 border-b border-[#15233B]/8 border-l-[3px] border-l-[#e83848] pl-4";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { t, navLinks, content } = useSitePreferences();
+  const { a11y } = content.ui;
+  const HOME_SECTION_IDS = content.site.HOME_SECTION_IDS;
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isHome = pathname === "/";
+  const activeSection = useScrollSpy(HOME_SECTION_IDS, isHome);
+
+  const isLinkActive = (link: (typeof navLinks)[number]) => {
+    if (link.hash) return isHome && activeSection === link.hash;
+    return pathname === link.to;
+  };
 
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 16);
@@ -20,83 +48,88 @@ export function Navbar() {
     };
   }, [open]);
 
+  const headerShell = scrolled
+    ? "bg-white/85 backdrop-blur-2xl shadow-[0_10px_40px_-12px_rgba(21,35,59,0.25)] border border-white/80"
+    : "bg-white/75 backdrop-blur-xl shadow-[0_8px_32px_-16px_rgba(21,35,59,0.2)] border border-white/60";
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 lg:px-6 pt-3 sm:pt-4">
       <div className="max-w-7xl mx-auto">
         <div
-          className={`relative flex items-center justify-between gap-3 h-16 md:h-18 pl-4 pr-3 md:pl-5 md:pr-3 rounded-2xl md:rounded-full transition-all duration-500 ${
-            scrolled
-              ? "bg-white/50 backdrop-blur-2xl shadow-[0_10px_40px_-12px_rgba(21,35,59,0.25)] border border-white/60"
-              : "bg-white/50 backdrop-blur-xl shadow-[0_8px_32px_-16px_rgba(21,35,59,0.2)] border border-white/40"
-          }`}
+          className={`site-header-bar relative grid grid-cols-[auto_1fr_auto] items-center gap-2 sm:gap-3 h-16 md:h-[4.5rem] pl-3 pr-2 sm:pl-4 sm:pr-3 md:pl-5 md:pr-3 rounded-2xl md:rounded-full transition-[background,box-shadow,border-color] duration-500 ${headerShell}`}
         >
           <Link
             to="/"
-            className="no-underline flex items-center gap-2.5 group shrink-0"
+            className="no-underline flex items-center group shrink-0"
             onClick={() => setOpen(false)}
           >
-            <div className="relative w-10 h-10 rounded-xl bg-[#d62839] flex items-center justify-center overflow-hidden shadow-[0_6px_18px_-6px_rgba(214,40,57,0.6)] group-hover:scale-105 transition-transform">
-              <span className="text-white font-['Syne'] font-extrabold text-lg leading-none">F</span>
-              <div className="absolute -right-1 -bottom-1 w-3 h-3 bg-[#E0A526] rounded-tl-lg" />
-            </div>
-            <div className="flex flex-col leading-none">
-              <span className="font-['Syne'] font-extrabold text-base sm:text-lg text-[#15233B] tracking-tight">
-                France <span className="text-[#d62839]">TCF</span>
-              </span>
-              <span className="text-[9px] sm:text-[10px] text-[#646F82] font-medium tracking-wider">
-                O'QUV MARKAZI
-              </span>
-            </div>
+            <BrandLogo size="sm" className="group-hover:scale-105 transition-transform" />
           </Link>
 
-          <nav className="hidden xl:flex items-center gap-0.5">
-            {navLinks.map((l) => (
-              <Link
-                key={l.to}
-                to={l.to}
-                className="no-underline text-[#3E4B62] hover:text-[#d62839] text-[13px] font-semibold px-2.5 py-2 rounded-full hover:bg-[#d62839]/8 transition-all whitespace-nowrap"
-                activeProps={{
-                  className:
-                    "no-underline text-[#d62839] text-[13px] font-semibold px-2.5 py-2 rounded-full bg-[#d62839]/10",
-                }}
-              >
-                {l.label}
-              </Link>
-            ))}
+          <Link
+            to="/"
+            onClick={() => setOpen(false)}
+            className="xl:hidden col-start-2 no-underline flex items-center justify-center min-w-0 px-2 sm:px-3 overflow-hidden text-center group"
+          >
+            <span className="font-['Syne'] font-extrabold text-[1.35rem] sm:text-[1.5rem] leading-none tracking-tight truncate max-w-full transition-transform group-hover:scale-[1.02]">
+              <span className="text-[#15233B]">France </span>
+              <span className="text-gradient-canada">TCF</span>
+            </span>
+          </Link>
+
+          <nav className="hidden xl:flex items-center justify-center min-w-0 overflow-hidden px-1 col-start-2">
+            <div className="flex items-center justify-center gap-0 min-w-0 max-w-full overflow-x-auto scrollbar-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {navLinks.map((l) => (
+                <NavSiteLink
+                  key={l.hash ?? l.to}
+                  link={l}
+                  active={isLinkActive(l)}
+                  className={NAV_LINK_BASE}
+                  activeClassName={NAV_LINK_ACTIVE}
+                />
+              ))}
+            </div>
           </nav>
 
-          <div className="hidden xl:flex items-center gap-3 shrink-0">
+          <div className="hidden xl:flex items-center gap-2 shrink-0 justify-end">
+            <PreferencesMenu />
             <a
               href="tel:+998947382221"
-              className="no-underline text-[#15233B] hover:text-[#d62839] text-sm font-bold transition-colors whitespace-nowrap"
+              className="no-underline flex items-center justify-center w-9 h-9 2xl:w-auto 2xl:h-auto 2xl:gap-1.5 rounded-full 2xl:rounded-none text-[#15233B] hover:text-[#e83848] transition-colors shrink-0"
+              aria-label={t.common.phone}
+              title="+998 94 738 22 21"
             >
-              +998 94 738 22 21
+              <Phone className="w-4 h-4 shrink-0" strokeWidth={2} />
+              <span className="hidden 2xl:inline text-sm font-bold whitespace-nowrap">+998 94 738 22 21</span>
             </a>
             <Link
               to="/boglanish"
-              className="no-underline bg-[#d62839] hover:bg-[#ae1b2a] text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-all hover:-translate-y-0.5 shadow-[0_8px_20px_-8px_rgba(214,40,57,0.6)] whitespace-nowrap"
+              className="no-underline bg-[#e83848] hover:bg-[#e84858] text-white text-xs 2xl:text-sm font-semibold min-w-[7.25rem] 2xl:min-w-[9.5rem] h-9 2xl:h-10 px-3.5 2xl:px-5 rounded-full transition-[background,transform] hover:-translate-y-0.5 shadow-[0_8px_20px_-8px_rgba(232,56,72,0.6)] whitespace-nowrap inline-flex items-center justify-center shrink-0"
             >
-              Ro'yxatdan o'tish
+              {t.common.register}
             </Link>
           </div>
 
-          <button
-            type="button"
-            aria-label={open ? "Menyuni yopish" : "Menyuni ochish"}
-            aria-expanded={open}
-            className="xl:hidden flex flex-col gap-1.5 p-2.5 rounded-full hover:bg-[#15233B]/5 transition-colors shrink-0"
-            onClick={() => setOpen(!open)}
-          >
-            <span
-              className={`block w-6 h-0.5 bg-[#15233B] rounded-full transition-all duration-300 ${open ? "rotate-45 translate-y-2" : ""}`}
-            />
-            <span
-              className={`block w-6 h-0.5 bg-[#15233B] rounded-full transition-all duration-300 ${open ? "opacity-0" : ""}`}
-            />
-            <span
-              className={`block w-6 h-0.5 bg-[#15233B] rounded-full transition-all duration-300 ${open ? "-rotate-45 -translate-y-2" : ""}`}
-            />
-          </button>
+          <div className="xl:hidden flex items-center gap-1.5 shrink-0 justify-end col-start-3">
+            <PreferencesMenu />
+            <button
+              type="button"
+              aria-label={open ? a11y.menuClose : a11y.menuOpen}
+              aria-expanded={open}
+              className="flex flex-col gap-1.5 p-2.5 rounded-full hover:bg-[#15233B]/5 transition-colors shrink-0 w-10 h-10 items-center justify-center"
+              onClick={() => setOpen(!open)}
+            >
+              <span
+                className={`block w-6 h-0.5 bg-[#15233B] rounded-full transition-all duration-300 ${open ? "rotate-45 translate-y-2" : ""}`}
+              />
+              <span
+                className={`block w-6 h-0.5 bg-[#15233B] rounded-full transition-all duration-300 ${open ? "opacity-0" : ""}`}
+              />
+              <span
+                className={`block w-6 h-0.5 bg-[#15233B] rounded-full transition-all duration-300 ${open ? "-rotate-45 -translate-y-2" : ""}`}
+              />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -114,20 +147,14 @@ export function Navbar() {
         }`}
       >
         <div className="px-6 pt-7 pb-8 flex flex-col min-h-full">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-2">
-              <div className="relative w-9 h-9 rounded-lg bg-[#d62839] flex items-center justify-center overflow-hidden">
-                <span className="text-white font-['Syne'] font-extrabold text-base leading-none">F</span>
-                <div className="absolute -right-1 -bottom-1 w-2.5 h-2.5 bg-[#E0A526] rounded-tl-md" />
-              </div>
-              <span className="font-['Syne'] font-extrabold text-base text-[#15233B]">
-                France <span className="text-[#d62839]">TCF</span>
-              </span>
-            </div>
+          <div className="flex items-center justify-between mb-6">
+            <Link to="/" onClick={() => setOpen(false)} className="no-underline flex items-center">
+              <BrandLogo size="xs" className="rounded-lg" />
+            </Link>
             <button
               type="button"
               onClick={() => setOpen(false)}
-              aria-label="Yopish"
+              aria-label={a11y.close}
               className="w-9 h-9 rounded-full border border-[#15233B]/15 text-[#15233B] flex items-center justify-center hover:bg-[#15233B] hover:text-white transition-colors"
             >
               <svg
@@ -148,40 +175,33 @@ export function Navbar() {
             <Link
               to="/"
               onClick={() => setOpen(false)}
-              className="no-underline text-[#15233B] hover:text-[#d62839] text-lg font-bold py-4 border-b border-[#15233B]/8"
+              className="no-underline text-[#15233B] hover:text-[#e83848] text-lg font-bold py-4 border-b border-[#15233B]/8"
             >
-              Bosh sahifa
+              {t.nav.home}
             </Link>
-            {navLinks.map((l, i) => (
-              <Link
-                key={l.to}
-                to={l.to}
+            {navLinks.map((l) => (
+              <NavSiteLink
+                key={l.hash ?? l.to}
+                link={l}
+                active={isLinkActive(l)}
                 onClick={() => setOpen(false)}
-                style={{ transitionDelay: open ? `${120 + i * 55}ms` : "0ms" }}
-                className={`no-underline text-[#15233B] hover:text-[#d62839] text-base font-bold py-3.5 border-b border-[#15233B]/8 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                  open ? "opacity-100 translate-x-0" : "opacity-0 translate-x-6"
-                }`}
-                activeProps={{
-                  className:
-                    "no-underline text-[#d62839] text-base font-bold py-3.5 border-b border-[#15233B]/8",
-                }}
-              >
-                {l.label}
-              </Link>
+                className={`${NAV_MOBILE_BASE} ${open ? "opacity-100 translate-x-0" : "opacity-0 translate-x-6"}`}
+                activeClassName={`${NAV_MOBILE_ACTIVE} ${open ? "opacity-100 translate-x-0" : "opacity-0 translate-x-6"}`}
+              />
             ))}
             <Link
               to="/galereya"
               onClick={() => setOpen(false)}
-              className="no-underline text-[#15233B] hover:text-[#d62839] text-base font-bold py-3.5 border-b border-[#15233B]/8"
+              className="no-underline text-[#15233B] hover:text-[#e83848] text-base font-bold py-3.5 border-b border-[#15233B]/8"
             >
-              Galereya
+              {t.nav.gallery}
             </Link>
             <Link
               to="/boglanish"
               onClick={() => setOpen(false)}
-              className="no-underline text-[#15233B] hover:text-[#d62839] text-base font-bold py-3.5 border-b border-[#15233B]/8"
+              className="no-underline text-[#15233B] hover:text-[#e83848] text-base font-bold py-3.5 border-b border-[#15233B]/8"
             >
-              Bog'lanish
+              {t.nav.contact}
             </Link>
           </nav>
 
@@ -192,9 +212,9 @@ export function Navbar() {
             <Link
               to="/boglanish"
               onClick={() => setOpen(false)}
-              className="no-underline bg-[#d62839] hover:bg-[#ae1b2a] text-white font-semibold py-3.5 rounded-2xl text-center transition-all active:scale-[0.98] shadow-[0_10px_26px_-8px_rgba(214,40,57,0.6)]"
+              className="no-underline bg-[#e83848] hover:bg-[#e84858] text-white font-semibold py-3.5 rounded-2xl text-center transition-all active:scale-[0.98] shadow-[0_10px_26px_-8px_rgba(232,56,72,0.6)]"
             >
-              Ro'yxatdan o'tish →
+              {t.common.register} →
             </Link>
           </div>
         </div>
