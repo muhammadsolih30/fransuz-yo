@@ -25,7 +25,7 @@ export function MobileCtaBar() {
                 {/* Ro'yxatdan o'tish */}
                 <Link
                     to="/boglanish"
-                    className="relative flex-1 overflow-hidden no-underline flex items-center justify-center gap-2 bg-gradient-to-r from-[#15233B] via-[#7a1530] to-[#d62839] text-white font-bold text-sm rounded-xl px-4 py-3.5"
+                    className="relative flex-1 overflow-hidden no-underline flex items-center justify-center gap-2 bg-gradient-to-r from-[#e23344] via-[#d62839] to-[#ae1b2a] text-white font-bold text-sm rounded-xl px-4 py-3.5"
                 >
                     <span className="absolute inset-0 rounded-xl bg-[#d62839]/40 animate-tg-wave" />
                     <span className="relative">✍️ Ro'yxatdan o'tish</span>

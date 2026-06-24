@@ -180,7 +180,7 @@ function GalereyaPage() {
                 ))}
               </div>
 
-              <div className="mt-8 card p-8 text-center bg-gradient-to-br from-[#15233B] to-[#1d3a5f] text-white">
+              <div className="mt-8 card p-8 text-center bg-gradient-to-br from-[#a3182a] to-[#6e1019] text-white">
                 <p className="text-white/70 text-sm">YouTube linklari qo'shilishi bilan videolar avtomatik paydo bo'ladi</p>
                 <a href="https://t.me/Francais_languee" target="_blank" rel="noreferrer" className="no-underline inline-flex items-center gap-2 text-[#E0A526] text-sm font-bold mt-3 hover:gap-3 transition-all">
                   ✈️ Telegram kanalimiz →

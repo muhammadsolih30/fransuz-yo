@@ -9,18 +9,38 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VakansiyaRouteImport } from './routes/vakansiya'
 import { Route as UstozRouteImport } from './routes/ustoz'
+import { Route as ProbniyDarsRouteImport } from './routes/probniy-dars'
+import { Route as OmmaviyOfertaRouteImport } from './routes/ommaviy-oferta'
 import { Route as NatijalarRouteImport } from './routes/natijalar'
 import { Route as KurslarRouteImport } from './routes/kurslar'
 import { Route as ImmigratsiyaRouteImport } from './routes/immigratsiya'
+import { Route as HaqimizdaRouteImport } from './routes/haqimizda'
 import { Route as GalereyaRouteImport } from './routes/galereya'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as BoglanishRouteImport } from './routes/boglanish'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 
+const VakansiyaRoute = VakansiyaRouteImport.update({
+  id: '/vakansiya',
+  path: '/vakansiya',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const UstozRoute = UstozRouteImport.update({
   id: '/ustoz',
   path: '/ustoz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProbniyDarsRoute = ProbniyDarsRouteImport.update({
+  id: '/probniy-dars',
+  path: '/probniy-dars',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OmmaviyOfertaRoute = OmmaviyOfertaRouteImport.update({
+  id: '/ommaviy-oferta',
+  path: '/ommaviy-oferta',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NatijalarRoute = NatijalarRouteImport.update({
@@ -38,9 +58,19 @@ const ImmigratsiyaRoute = ImmigratsiyaRouteImport.update({
   path: '/immigratsiya',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HaqimizdaRoute = HaqimizdaRouteImport.update({
+  id: '/haqimizda',
+  path: '/haqimizda',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GalereyaRoute = GalereyaRouteImport.update({
   id: '/galereya',
   path: '/galereya',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BoglanishRoute = BoglanishRouteImport.update({
@@ -63,32 +93,47 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/boglanish': typeof BoglanishRoute
+  '/faq': typeof FaqRoute
   '/galereya': typeof GalereyaRoute
+  '/haqimizda': typeof HaqimizdaRoute
   '/immigratsiya': typeof ImmigratsiyaRoute
   '/kurslar': typeof KurslarRoute
   '/natijalar': typeof NatijalarRoute
+  '/ommaviy-oferta': typeof OmmaviyOfertaRoute
+  '/probniy-dars': typeof ProbniyDarsRoute
   '/ustoz': typeof UstozRoute
+  '/vakansiya': typeof VakansiyaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/boglanish': typeof BoglanishRoute
+  '/faq': typeof FaqRoute
   '/galereya': typeof GalereyaRoute
+  '/haqimizda': typeof HaqimizdaRoute
   '/immigratsiya': typeof ImmigratsiyaRoute
   '/kurslar': typeof KurslarRoute
   '/natijalar': typeof NatijalarRoute
+  '/ommaviy-oferta': typeof OmmaviyOfertaRoute
+  '/probniy-dars': typeof ProbniyDarsRoute
   '/ustoz': typeof UstozRoute
+  '/vakansiya': typeof VakansiyaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/boglanish': typeof BoglanishRoute
+  '/faq': typeof FaqRoute
   '/galereya': typeof GalereyaRoute
+  '/haqimizda': typeof HaqimizdaRoute
   '/immigratsiya': typeof ImmigratsiyaRoute
   '/kurslar': typeof KurslarRoute
   '/natijalar': typeof NatijalarRoute
+  '/ommaviy-oferta': typeof OmmaviyOfertaRoute
+  '/probniy-dars': typeof ProbniyDarsRoute
   '/ustoz': typeof UstozRoute
+  '/vakansiya': typeof VakansiyaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -96,51 +141,92 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/boglanish'
+    | '/faq'
     | '/galereya'
+    | '/haqimizda'
     | '/immigratsiya'
     | '/kurslar'
     | '/natijalar'
+    | '/ommaviy-oferta'
+    | '/probniy-dars'
     | '/ustoz'
+    | '/vakansiya'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/admin'
     | '/boglanish'
+    | '/faq'
     | '/galereya'
+    | '/haqimizda'
     | '/immigratsiya'
     | '/kurslar'
     | '/natijalar'
+    | '/ommaviy-oferta'
+    | '/probniy-dars'
     | '/ustoz'
+    | '/vakansiya'
   id:
     | '__root__'
     | '/'
     | '/admin'
     | '/boglanish'
+    | '/faq'
     | '/galereya'
+    | '/haqimizda'
     | '/immigratsiya'
     | '/kurslar'
     | '/natijalar'
+    | '/ommaviy-oferta'
+    | '/probniy-dars'
     | '/ustoz'
+    | '/vakansiya'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   BoglanishRoute: typeof BoglanishRoute
+  FaqRoute: typeof FaqRoute
   GalereyaRoute: typeof GalereyaRoute
+  HaqimizdaRoute: typeof HaqimizdaRoute
   ImmigratsiyaRoute: typeof ImmigratsiyaRoute
   KurslarRoute: typeof KurslarRoute
   NatijalarRoute: typeof NatijalarRoute
+  OmmaviyOfertaRoute: typeof OmmaviyOfertaRoute
+  ProbniyDarsRoute: typeof ProbniyDarsRoute
   UstozRoute: typeof UstozRoute
+  VakansiyaRoute: typeof VakansiyaRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/vakansiya': {
+      id: '/vakansiya'
+      path: '/vakansiya'
+      fullPath: '/vakansiya'
+      preLoaderRoute: typeof VakansiyaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ustoz': {
       id: '/ustoz'
       path: '/ustoz'
       fullPath: '/ustoz'
       preLoaderRoute: typeof UstozRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/probniy-dars': {
+      id: '/probniy-dars'
+      path: '/probniy-dars'
+      fullPath: '/probniy-dars'
+      preLoaderRoute: typeof ProbniyDarsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ommaviy-oferta': {
+      id: '/ommaviy-oferta'
+      path: '/ommaviy-oferta'
+      fullPath: '/ommaviy-oferta'
+      preLoaderRoute: typeof OmmaviyOfertaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/natijalar': {
@@ -164,11 +250,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ImmigratsiyaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/haqimizda': {
+      id: '/haqimizda'
+      path: '/haqimizda'
+      fullPath: '/haqimizda'
+      preLoaderRoute: typeof HaqimizdaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/galereya': {
       id: '/galereya'
       path: '/galereya'
       fullPath: '/galereya'
       preLoaderRoute: typeof GalereyaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/boglanish': {
@@ -199,11 +299,16 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   BoglanishRoute: BoglanishRoute,
+  FaqRoute: FaqRoute,
   GalereyaRoute: GalereyaRoute,
+  HaqimizdaRoute: HaqimizdaRoute,
   ImmigratsiyaRoute: ImmigratsiyaRoute,
   KurslarRoute: KurslarRoute,
   NatijalarRoute: NatijalarRoute,
+  OmmaviyOfertaRoute: OmmaviyOfertaRoute,
+  ProbniyDarsRoute: ProbniyDarsRoute,
   UstozRoute: UstozRoute,
+  VakansiyaRoute: VakansiyaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

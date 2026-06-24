@@ -1,6 +1,26 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CountUp } from "../components/CountUp";
+import { useEffect, useState } from "react";
+import {
+  Briefcase,
+  FileText,
+  Gift,
+  GraduationCap,
+  HelpCircle,
+  Image as ImageIcon,
+  Info,
+  Phone,
+  Plane,
+  Trophy,
+  Users,
+} from "lucide-react";
+import { HeroVideoBg } from "../components/HeroVideoBg";
 import { useReveal } from "../hooks/useReveal";
+import {
+  centerClaim,
+  heroTagline,
+  whyUs,
+} from "../lib/site-content";
+import { generalFaq } from "../lib/faq-content";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -16,80 +36,79 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const stats = [
-  { num: 30000, suffix: "+", label: "2025 yil PR kvotasi" },
-  { num: 50, suffix: " ball", label: "Fransuz tili bonusi" },
-  { num: 399, suffix: "", label: "Oxirgi saralash bali" },
-  { num: 100, suffix: "+", label: "Bizning o'quvchilar" },
-];
-
-const features = [
-  {
-    icon: "🍁",
-    title: "Eng oson yo'l",
-    desc: "Fransuz tili Kanadaga ishlash yoki o'qish uchun ketishning eng oson va ishonchli yo'li.",
-  },
-  {
-    icon: "🎯",
-    title: "+50 CRS ball",
-    desc: "Fransuz tili bilan qo'shimcha 50 ball, kamroq raqobat va maxsus French-speaking tanlovlar.",
-  },
-  {
-    icon: "👩‍🏫",
-    title: "C1–C2 ustozlar",
-    desc: "Yuqori darajali, tajribali ustozlar va native speaker mentorlar bilan jonli darslar.",
-  },
-  {
-    icon: "📜",
-    title: "Rasmiy sertifikatlar",
-    desc: "TCF Canada, TEF Canada, DELF, DALF va Milliy sertifikatga to'liq tayyorgarlik.",
-  },
-  {
-    icon: "💻",
-    title: "Online & Offline",
-    desc: "Sizga qulay formatda — masofadan yoki Chilonzor metrodagi markazimizda.",
-  },
-  {
-    icon: "🚀",
-    title: "Natijaga yo'naltirilgan",
-    desc: "B2 (CLB 7) va undan yuqori — Express Entry uchun yetarli balgacha olib chiqamiz.",
-  },
-];
-
 const steps = [
-  { n: "01", t: "Murojaat qiling", d: "Telefon yoki Telegram orqali bepul maslahat oling" },
+  { n: "01", t: "Murojaat qiling", d: "Telefon yoki Telegram orqali bepul konsultatsiya oling" },
   { n: "02", t: "Daraja aniqlanadi", d: "Boshlang'ich test orqali darajangiz belgilanadi" },
-  { n: "03", t: "Kursni boshlaysiz", d: "Qulay format va jadvalda darslar boshlanadi" },
-  { n: "04", t: "TCF / TEF topshirasiz", d: "B2+ (CLB 7) natija bilan imtihondan o'tasiz" },
+  { n: "03", t: "Kursni boshlaysiz", d: "Intensive guruh yoki individual formatda darslar boshlanadi" },
+  { n: "04", t: "TCF topshirasiz", d: "CLB 8+ (B2+) natija bilan TCF Canada imtihonidan o'tasiz" },
   { n: "05", t: "Kanadaga yo'l", d: "Express Entry orqali PR jarayoni boshlanadi" },
 ];
 
-const faqs = [
-  {
-    q: "Express Entry nima?",
-    a: "Express Entry — Kanadaning asosiy immigratsiya tizimi. U orqali Kanadaga doimiy yashash (PR), ishlash va keyin fuqarolik olish mumkin.",
-  },
-  {
-    q: "Fransuz tili nega katta PLUS?",
-    a: "Kanada fransuz tilini qattiq qo'llab-quvvatlaydi: qo'shimcha 50 ball (CRS), kamroq raqobat va maxsus French-speaking tanlovlar (draws) mavjud.",
-  },
-  {
-    q: "Qanday daraja kerak?",
-    a: "Fransuz tilidan minimum B2 (CLB 7). TCF Canada yoki TEF Canada imtihoni topshiriladi. Qanchalik yuqori bo'lsa — shuncha yaxshi.",
-  },
-  {
-    q: "Inglizsiz ham bo'ladimi?",
-    a: "Ha. Inglizsiz ham mumkin, lekin ingliz tili (hatto IELTS 5) bo'lsa profil yanada kuchli bo'ladi. Fransuz + ingliz = juda kuchli profil.",
-  },
-  {
-    q: "Yoshga talab bormi?",
-    a: "Ideal: 20–35 yosh. 40 dan keyin ball kamayadi, lekin baribir mumkin. 35 dan katta bo'lsangiz, ingliz va fransuz tilini bilishingiz tavsiya etiladi.",
-  },
-  {
-    q: "Yiliga qancha kishi qabul qilinadi?",
-    a: "Fransuz tili orqali yiliga 20 000 – 30 000 kishi PR oladi. Trend har yili o'smoqda: 2022 (~6,200) → 2025 (~30,000+).",
-  },
+const faqs = generalFaq.slice(0, 6);
+
+const marqueePages = [
+  { to: "/haqimizda", label: "Biz haqimizda", icon: Info },
+  { to: "/kurslar", label: "Kurs narxlar", icon: GraduationCap },
+  { to: "/natijalar", label: "Natijalar", icon: Trophy },
+  { to: "/ustoz", label: "Ustozlar", icon: Users },
+  { to: "/immigratsiya", label: "Immigratsiya", icon: Plane },
+  { to: "/faq", label: "FAQ", icon: HelpCircle },
+  { to: "/probniy-dars", label: "Probniy dars", icon: Gift },
+  { to: "/vakansiya", label: "Vakansiya", icon: Briefcase },
+  { to: "/ommaviy-oferta", label: "Oferta", icon: FileText },
+  { to: "/galereya", label: "Galereya", icon: ImageIcon },
+  { to: "/boglanish", label: "Bog'lanish", icon: Phone },
+] as const;
+
+/** Sarlavhani harf-harflab, har 5 soniyada har xil rangda qayta chiqaruvchi komponent */
+const headingSegments = ["Biz bilan ", "Kanada va Fransiyaga ", "ilk qadam"];
+
+const headingPalettes = [
+  ["#15233b", "#d62839", "#15233b"],
+  ["#d62839", "#e0a526", "#d62839"],
+  ["#15233b", "#2a5286", "#d62839"],
+  ["#ae1b2a", "#15233b", "#e0a526"],
 ];
+
+function TypedHeading() {
+  const [cycle, setCycle] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => setCycle((c) => c + 1), 5000);
+    return () => clearInterval(id);
+  }, []);
+
+  const colors = headingPalettes[cycle % headingPalettes.length];
+  let charIndex = 0;
+  const startDelay = 0.1;
+  const step = 0.03;
+
+  return (
+    <h1
+      key={cycle}
+      data-no-reveal
+      className="font-['Syne'] font-extrabold text-[clamp(2.7rem,7vw,5.6rem)] leading-[1.02] mb-6 hero-text-halo"
+    >
+      {headingSegments.map((seg, si) => (
+        <span key={si} style={{ color: colors[si], transition: "color 0.4s ease" }}>
+          {Array.from(seg).map((ch, ci) => {
+            const delay = startDelay + charIndex * step;
+            charIndex += 1;
+            return (
+              <span
+                key={`${si}-${ci}`}
+                className="char"
+                style={{ animationDelay: `${delay}s` }}
+              >
+                {ch === " " ? "\u00A0" : ch}
+              </span>
+            );
+          })}
+        </span>
+      ))}
+    </h1>
+  );
+}
 
 function HomePage() {
   useReveal();
@@ -97,169 +116,99 @@ function HomePage() {
   return (
     <div className="bg-white text-[#15233B] overflow-hidden">
       {/* ════════════ HERO ════════════ */}
-      <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
-        {/* Background image — Kanada & Fransiya */}
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: "url('/image/opening/ckanada%20va%20firansiya.png')",
-            opacity: 0.95,
-          }}
-        />
+      <section className="relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden bg-[#faf6ef]">
+        <HeroVideoBg videoId="HfTkZmKK1b0" rate={1.2} endTrim={15} />
+        {/* Juda yengil overlay — video tiniq ko'rinadi, matn esa o'qiladi */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#faf6ef]/5 to-[#faf6ef]/45" />
         <div className="absolute -top-32 -right-20 w-[600px] h-[600px] rounded-full bg-[#d62839]/10 blur-[120px] animate-float-slow" />
-        <div className="absolute -bottom-40 -left-20 w-[500px] h-[500px] rounded-full bg-[#15233B]/10 blur-[120px] animate-float" />
+        <div className="absolute -bottom-40 -left-20 w-[500px] h-[500px] rounded-full bg-[#E0A526]/10 blur-[120px] animate-float" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid lg:grid-cols-12 gap-12 items-center">
-            {/* Left content */}
-            <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 bg-white border border-[#d62839]/15 px-4 py-2 rounded-full text-xs font-semibold text-[#d62839] mb-7 shadow-sm animate-slide-up-sm">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d62839] opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#d62839]" />
-                </span>
-                🍁 2025 — 30 000+ kvota • Express Entry ochiq
-              </div>
-
-              <h1 className="font-['Syne'] font-extrabold text-[clamp(2.6rem,6.5vw,5.5rem)] leading-[0.98] mb-6 animate-slide-up delay-100">
-                Fransuz tili
-                <br />
-                orqali{" "}
-                <span className="text-gradient-canada">Kanadaga</span>
-              </h1>
-
-              <p className="text-[#15233B] text-lg lg:text-xl leading-relaxed mb-9 max-w-xl animate-slide-up delay-200 font-medium bg-white/65 backdrop-blur-md border border-white/60 rounded-2xl px-5 py-4 shadow-sm">
-                Kanadaga ishlash yoki o'qish uchun ketishning eng oson yo'li — fransuz tili.
-                Express Entry tizimida <span className="font-bold text-[#d62839]">+50 ball</span> va
-                kamroq raqobat. TCF Canada'ga professional tayyorgarlik.
-              </p>
-
-              <div className="flex flex-wrap gap-4 mb-12 animate-slide-up delay-300">
-                <Link to="/boglanish" className="btn-primary">
-                  Bepul maslahat olish
-                  <span aria-hidden>→</span>
-                </Link>
-                <Link to="/immigratsiya" className="btn-outline">
-                  Express Entry haqida
-                </Link>
-              </div>
-
-              {/* Trust badges */}
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-3 animate-slide-up delay-400">
-                {["TCF Canada", "TEF Canada", "DELF · DALF", "Milliy sertifikat"].map((b) => (
-                  <div key={b} className="flex items-center gap-2 text-sm text-[#15233B] font-semibold bg-white/70 backdrop-blur-sm border border-white/60 px-3.5 py-1.5 rounded-full shadow-sm">
-                    <span className="text-[#E0A526]">✦</span>
-                    {b}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right visual card */}
-            <div className="lg:col-span-5 animate-scale-in delay-300">
-              <div className="relative">
-                <div className="card p-8 lg:p-10 relative z-10">
-                  <div className="flex items-center justify-between mb-8">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-2xl bg-[#d62839] flex items-center justify-center text-2xl shadow-[0_8px_20px_-6px_rgba(213,43,30,0.5)]">
-                        🍁
-                      </div>
-                      <div>
-                        <div className="font-['Syne'] font-bold text-base">CRS Profilingiz</div>
-                        <div className="text-[#646F82] text-xs">Express Entry hisoblagich</div>
-                      </div>
-                    </div>
-                    <span className="text-xs font-bold text-green-600 bg-green-50 px-3 py-1.5 rounded-full">
-                      Yetarli
-                    </span>
-                  </div>
-
-                  <div className="space-y-5">
-                    {[
-                      { label: "Fransuz tili (B2–C1)", val: 88, color: "bg-[#d62839]" },
-                      { label: "Yosh (20–35)", val: 95, color: "bg-[#15233B]" },
-                      { label: "Ta'lim (Bakalavr+)", val: 80, color: "bg-[#E0A526]" },
-                      { label: "Ingliz tili (bonus)", val: 60, color: "bg-[#2a5286]" },
-                    ].map((bar, i) => (
-                      <div key={bar.label}>
-                        <div className="flex justify-between text-xs font-semibold mb-2">
-                          <span className="text-[#3E4B62]">{bar.label}</span>
-                          <span className="text-[#15233B]">{bar.val}%</span>
-                        </div>
-                        <div className="h-2.5 rounded-full bg-[#15233B]/8 overflow-hidden">
-                          <div
-                            className={`h-full rounded-full ${bar.color}`}
-                            style={{
-                              width: `${bar.val}%`,
-                              animation: `slide-up 1.2s ease-out ${i * 0.15}s both`,
-                            }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-8 pt-6 border-t border-[#15233B]/8 flex items-center justify-between">
-                    <span className="text-[#546074] text-sm font-medium">Taxminiy CRS ball</span>
-                    <span className="font-['Syne'] font-extrabold text-3xl text-gradient-canada">
-                      400–470+
-                    </span>
-                  </div>
-                </div>
-
-                {/* Floating badges */}
-                <div className="absolute -top-5 -right-4 bg-[#E0A526] text-[#15233B] font-bold text-sm px-4 py-2.5 rounded-2xl shadow-xl animate-float z-20">
-                  +50 ball 🎯
-                </div>
-                <div className="absolute -bottom-5 -left-4 bg-white border border-[#15233B]/10 text-[#15233B] font-bold text-xs px-4 py-2.5 rounded-2xl shadow-xl animate-float-slow z-20">
-                  🇨🇦 PR maqomi
-                </div>
-              </div>
-            </div>
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center flex flex-col items-center">
+          <div className="chip mb-7 animate-slide-up-sm border-[#d62839]/15 text-[#d62839]">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d62839] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#d62839]" />
+            </span>
+            🇫🇷 {centerClaim.replace("France TCF — ", "")} 🇨🇦
           </div>
-        </div>
-      </section>
 
-      {/* ════════════ MARQUEE ════════════ */}
-      <section className="py-6 bg-[#15233B] overflow-hidden">
-        <div className="flex animate-marquee whitespace-nowrap">
-          {[...Array(2)].map((_, dup) => (
-            <div key={dup} className="flex items-center gap-10 px-5 shrink-0">
-              {[
-                "🍁 Express Entry",
-                "🇫🇷 Fransuz tili +50 ball",
-                "📜 TCF Canada",
-                "✦ DELF · DALF",
-                "🇨🇦 Doimiy yashash (PR)",
-                "🎓 C1–C2 ustozlar",
-                "💼 Ishlash imkoniyati",
-              ].map((t) => (
-                <span key={t} className="text-white/70 font-semibold text-sm tracking-wide">
-                  {t}
-                </span>
-              ))}
-            </div>
-          ))}
-        </div>
-      </section>
+          <TypedHeading />
 
-      {/* ════════════ STATS ════════════ */}
-      <section className="py-20 lg:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {stats.map((s, i) => (
-              <div
-                key={s.label}
-                className="reveal text-center p-6 rounded-3xl bg-[#FAF6EF] border border-[#15233B]/6 hover:border-[#d62839]/20 hover:shadow-[var(--shadow-card)] transition-all duration-500"
-                data-delay={i * 80}
-              >
-                <div className="font-['Syne'] font-extrabold text-4xl lg:text-5xl text-gradient-canada mb-2">
-                  <CountUp target={s.num} suffix={s.suffix} />
-                </div>
-                <div className="text-[#546074] text-sm font-medium">{s.label}</div>
+          <p className="text-[#3E4B62] text-lg lg:text-xl leading-relaxed mb-9 max-w-2xl mx-auto animate-slide-up delay-500 font-medium hero-text-halo">
+            {heroTagline}
+          </p>
+
+          <div className="flex flex-wrap gap-4 justify-center mb-10 animate-slide-up delay-300">
+            <Link to="/boglanish" className="btn-primary">
+              Bepul maslahat olish
+              <span aria-hidden>→</span>
+            </Link>
+            <Link to="/immigratsiya" className="btn-outline">
+              Express Entry haqida
+            </Link>
+          </div>
+
+          {/* Trust badges */}
+          <div className="flex flex-wrap items-center justify-center gap-2.5 mb-12 animate-slide-up delay-400">
+            {["TCF Canada", "TEF Canada", "DELF · DALF", "Milliy sertifikat"].map((b) => (
+              <div key={b} className="flex items-center gap-2 text-sm text-[#15233B] font-semibold bg-white/70 backdrop-blur-sm border border-white/60 px-3.5 py-1.5 rounded-full shadow-sm">
+                <span className="text-[#E0A526]">✦</span>
+                {b}
               </div>
             ))}
           </div>
+
+          {/* Hero stat strip */}
+          <div className="w-full max-w-3xl grid grid-cols-2 sm:grid-cols-4 gap-px rounded-3xl overflow-hidden border border-white/60 bg-white/60 backdrop-blur-md shadow-[var(--shadow-card)] animate-scale-in delay-500">
+            {[
+              { num: "2", label: "Filiallar" },
+              { num: "4 yil", label: "Tajriba" },
+              { num: "500+", label: "O'quvchilar" },
+              { num: "3000+", label: "Bitiruvchilar" },
+            ].map((s) => (
+              <div key={s.label} className="bg-white/40 px-4 py-5">
+                <div className="font-['Syne'] font-extrabold text-2xl lg:text-3xl text-gradient-canada">
+                  {s.num}
+                </div>
+                <div className="text-[#546074] text-xs font-medium mt-1">{s.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Scroll cue */}
+          <div className="mt-12 hidden sm:flex flex-col items-center gap-2 text-[#646F82] animate-float">
+            <span className="text-[10px] font-semibold tracking-[0.25em] uppercase">Pastga</span>
+            <span className="w-6 h-10 rounded-full border-2 border-[#15233B]/20 flex items-start justify-center p-1.5">
+              <span className="w-1 h-2 rounded-full bg-[#d62839]" />
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════ MARQUEE — sahifalar ════════════ */}
+      <section className="relative py-6 bg-gradient-to-r from-[#d62839] via-[#c01f2e] to-[#ae1b2a] overflow-hidden group">
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-gradient-to-r from-[#d62839] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 z-10 bg-gradient-to-l from-[#ae1b2a] to-transparent" />
+        <div className="flex animate-marquee [animation-duration:18s] whitespace-nowrap group-hover:[animation-play-state:paused]">
+          {[...Array(2)].map((_, dup) => (
+            <div key={dup} className="flex items-center shrink-0">
+              {marqueePages.map((p) => {
+                const Icon = p.icon;
+                return (
+                  <span key={`${dup}-${p.to}`} className="flex items-center">
+                    <Link
+                      to={p.to}
+                      className="no-underline flex items-center gap-2 text-white/75 hover:text-[#E0A526] font-['Syne'] font-bold text-base px-5 transition-colors"
+                    >
+                      <Icon className="w-4 h-4 text-[#E0A526]" strokeWidth={1.8} />
+                      {p.label}
+                    </Link>
+                    <span className="text-[#E0A526]/40 text-xs">◆</span>
+                  </span>
+                );
+              })}
+            </div>
+          ))}
         </div>
       </section>
 
@@ -272,26 +221,29 @@ function HomePage() {
               <span className="w-8 h-px bg-[#d62839]" /> Nega biz
             </p>
             <h2 className="font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight">
-              Kanada yo'lida <span className="text-gradient-canada">ishonchli hamroh</span>
+              Nega aynan <span className="text-gradient-canada">bizni tanlashadi?</span>
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((f, i) => (
-              <div
-                key={f.title}
-                className="reveal card card-hover p-8 group"
-                data-delay={(i % 3) * 100}
-              >
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#fcefec] to-[#f9ddd8] flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500">
-                  {f.icon}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {whyUs.map((f, i) => {
+              const Icon = f.icon;
+              return (
+                <div
+                  key={f.title}
+                  className="reveal card card-hover p-7 group"
+                  data-delay={(i % 4) * 80}
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#fcefec] to-[#f9ddd8] flex items-center justify-center mb-5 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500">
+                    <Icon className="w-6 h-6 text-[#d62839]" strokeWidth={1.8} />
+                  </div>
+                  <h3 className="font-['Syne'] font-bold text-base mb-2 group-hover:text-[#d62839] transition-colors">
+                    {f.title}
+                  </h3>
+                  <p className="text-[#3E4B62] text-sm leading-relaxed">{f.desc}</p>
                 </div>
-                <h3 className="font-['Syne'] font-bold text-xl mb-3 group-hover:text-[#d62839] transition-colors">
-                  {f.title}
-                </h3>
-                <p className="text-[#3E4B62] text-sm leading-relaxed">{f.desc}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -305,11 +257,11 @@ function HomePage() {
                 <span className="w-8 h-px bg-[#d62839]" /> Haqiqiy natija
               </p>
               <h2 className="font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight mb-6">
-                1 oyda B1 dan{" "}
+                6 oyda B1 dan{" "}
                 <span className="text-gradient-canada">C2</span> gacha
               </h2>
               <p className="text-[#3E4B62] text-lg leading-relaxed mb-8">
-                O'quvchimiz Dilnura Saidbekova — atigi 1 oy o'qib, TCF Canada imtihonida C2
+                O'quvchimiz Dilnura Saidbekova — 6 oy o'qib, TCF Canada imtihonida C2
                 darajaga erishdi. Bu reklama emas, haqiqiy sertifikat bilan tasdiqlangan natija.
               </p>
               <div className="grid grid-cols-2 gap-4 mb-8">
@@ -341,7 +293,7 @@ function HomePage() {
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d62839] opacity-75" />
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-[#d62839]" />
                     </span>
-                    1 OYLIK NATIJA
+                    6 OYLIK NATIJA
                   </div>
                   <div className="font-['Syne'] font-extrabold text-[120px] leading-none text-gradient-canada mb-2">
                     C2
@@ -361,16 +313,15 @@ function HomePage() {
       </section>
 
       {/* ════════════ JARAYON ════════════ */}
-      <section className="py-20 lg:py-28 bg-[#15233B] text-white relative overflow-hidden">
-        <div className="absolute top-0 right-1/4 w-[400px] h-[400px] rounded-full bg-[#d62839]/20 blur-[120px]" />
-        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full bg-[#E0A526]/10 blur-[120px]" />
+      <section className="py-20 lg:py-28 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-aurora opacity-70" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16 reveal">
-            <p className="eyebrow text-[#E0A526] mb-4 justify-center flex">
-              <span className="w-8 h-px bg-[#E0A526] self-center" /> Jarayon
+            <p className="eyebrow text-[#d62839] mb-4 justify-center flex">
+              <span className="w-8 h-px bg-[#d62839] self-center" /> Jarayon
             </p>
             <h2 className="font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight">
-              5 qadamda Kanadaga
+              CLB 8+ ga — <span className="text-gradient-canada">5 qadamda</span> Kanadaga
             </h2>
           </div>
 
@@ -378,12 +329,12 @@ function HomePage() {
             {steps.map((s, i) => (
               <div
                 key={s.n}
-                className="reveal relative bg-white/5 backdrop-blur border border-white/10 rounded-3xl p-7 hover:bg-white/10 hover:-translate-y-2 transition-all duration-500"
+                className="reveal card card-hover relative p-7"
                 data-delay={i * 90}
               >
-                <div className="font-['Syne'] font-extrabold text-5xl text-white/15 mb-4">{s.n}</div>
-                <h3 className="font-['Syne'] font-bold text-lg mb-2">{s.t}</h3>
-                <p className="text-white/75 text-sm leading-relaxed">{s.d}</p>
+                <div className="font-['Syne'] font-extrabold text-5xl text-[#d62839]/15 mb-4">{s.n}</div>
+                <h3 className="font-['Syne'] font-bold text-lg mb-2 text-[#15233B]">{s.t}</h3>
+                <p className="text-[#3E4B62] text-sm leading-relaxed">{s.d}</p>
               </div>
             ))}
           </div>
@@ -402,12 +353,17 @@ function HomePage() {
                 Ko'p so'raladigan savollar
               </h2>
               <p className="text-[#3E4B62] text-base leading-relaxed mb-8">
-                Express Entry va fransuz tili haqida eng muhim savollar. Boshqa savol bo'lsa —
-                bizga yozing.
+                TCF Canada va kurslar haqida eng muhim savollar. Barcha FAQ uchun alohida sahifaga
+                o'ting.
               </p>
-              <Link to="/boglanish" className="btn-primary">
-                Bog'lanish →
-              </Link>
+              <div className="flex flex-wrap gap-3">
+                <Link to="/faq" className="btn-outline">
+                  Barcha FAQ →
+                </Link>
+                <Link to="/boglanish" className="btn-primary">
+                  Bog'lanish →
+                </Link>
+              </div>
             </div>
 
             <div className="lg:col-span-8 flex flex-col gap-3">
@@ -436,7 +392,7 @@ function HomePage() {
       {/* ════════════ CTA ════════════ */}
       <section className="py-20 lg:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="reveal relative rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-[#d62839] via-[#c01f2e] to-[#15233B] p-12 lg:p-20 text-center">
+          <div className="reveal relative rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-[#e23344] via-[#d62839] to-[#ae1b2a] p-12 lg:p-20 text-center">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(224,165,38,0.30),transparent_50%)]" />
             <div className="absolute inset-0 bg-grid opacity-10" />
             <div className="absolute top-10 right-10 w-32 h-32 rounded-full bg-white/10 blur-2xl animate-float" />

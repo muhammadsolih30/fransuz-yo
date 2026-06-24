@@ -65,7 +65,7 @@ export function RegisterModal() {
             {/* Modal */}
             <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden animate-scale-in">
                 {/* Top accent */}
-                <div className="relative bg-gradient-to-br from-[#d62839] via-[#c01f2e] to-[#15233B] px-8 pt-9 pb-12 text-center overflow-hidden">
+                <div className="relative bg-gradient-to-br from-[#e23344] via-[#d62839] to-[#ae1b2a] px-8 pt-9 pb-12 text-center overflow-hidden">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(224,165,38,0.3),transparent_55%)]" />
                     <div className="absolute -bottom-8 -left-6 w-28 h-28 rounded-full bg-white/10 blur-2xl" />
 

@@ -1,4 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import {
+  BookText,
+  Headphones,
+  Laptop,
+  MessageCircle,
+  Mic,
+  PenLine,
+  School,
+  Target,
+  Users,
+} from "lucide-react";
 import { useReveal } from "../hooks/useReveal";
 
 export const Route = createFileRoute("/kurslar")({
@@ -16,29 +27,28 @@ export const Route = createFileRoute("/kurslar")({
 
 const courses = [
     {
-        emoji: "🏫",
+        icon: School,
         type: "Offline guruh",
         prices: [
-            { label: "A1–A2 daraja", price: "700 000" },
-            { label: "B1+ daraja", price: "800 000" },
+            { label: "Guruh dars", price: "700 000–800 000" },
         ],
         schedule: "Talabga qarab jadval belgilanadi",
-        students: "5–10 kishi",
+        students: "10–12 kishi",
         duration: "6–8 oy",
         features: [
             "Yuzma-yuz darslar",
             "Markazda materiallar",
-            "Speaking amaliyoti",
+            "Intensive guruh",
             "Ustoz bilan to'g'ridan-to'g'ri",
         ],
         highlight: false,
     },
     {
-        emoji: "👥",
-        type: "Mini-guruh",
-        prices: [{ label: "2–3 kishi", price: "900 000" }],
+        icon: Users,
+        type: "Online mini-guruh",
+        prices: [{ label: "2–4 kishi", price: "900 000" }],
         schedule: "O'quvchiga qulay vaqtga moslashtiriladi",
-        students: "2–3 kishi",
+        students: "2–4 kishi",
         duration: "6–8 oy",
         features: [
             "Intensiv darslar",
@@ -46,14 +56,14 @@ const courses = [
             "Tez natija",
             "Moslashuvchan jadval",
         ],
-        highlight: true,
+        highlight: false,
     },
     {
-        emoji: "💻",
+        icon: Laptop,
         type: "Online guruh",
         prices: [{ label: "Zoom / Google Meet", price: "490 000" }],
         schedule: "Asosan kechki vaqtlarda",
-        students: "5–12 kishi",
+        students: "10–15 kishi",
         duration: "6–8 oy",
         features: [
             "Istalgan joydan",
@@ -61,32 +71,35 @@ const courses = [
             "Yozib olingan darslar",
             "Online materiallar",
         ],
-        highlight: false,
+        highlight: true,
     },
     {
-        emoji: "🎯",
+        icon: Target,
         type: "Individual",
-        prices: [{ label: "Online", price: "1 200 000" }],
+        prices: [
+            { label: "Online", price: "1 200 000" },
+            { label: "Offline", price: "2 000 000" },
+        ],
         schedule: "To'liq moslashtiriladi",
         students: "1 kishi",
         duration: "6–8 oy",
         features: [
             "Shaxsiy tayyorgarlik",
             "O'z sur'atida",
-            "Zaif tomonlarga e'tibor",
-            "Maksimal natija",
+            "Qo'shimcha o'qituvchi",
+            "CLB 8+ maqsad",
         ],
         highlight: false,
     },
 ];
 
 const subjects = [
-    { icon: "🎧", t: "Listening", d: "TCF formatidagi audio mashqlar va vaqt boshqaruvi strategiyalari" },
-    { icon: "📖", t: "Reading", d: "Matn tushunish, tez o'qish va javob topish texnikalari" },
-    { icon: "✍️", t: "Writing", d: "Rasmiy va norasmiy yozuv, TCF mezonlari bo'yicha baholash" },
-    { icon: "🗣️", t: "Speaking", d: "Amaliy suhbat, monolog va dialog mashqlari" },
-    { icon: "📚", t: "Grammar", d: "Fransuz grammatikasi asoslari va murakkab konstruktsiyalar" },
-    { icon: "💬", t: "Vocabulary", d: "TCF imtihoniga oid leksika va kundalik muloqot so'zlari" },
+    { icon: Headphones, t: "Listening", d: "TCF formatidagi audio mashqlar va vaqt boshqaruvi strategiyalari" },
+    { icon: BookText, t: "Reading", d: "Matn tushunish, tez o'qish va javob topish texnikalari" },
+    { icon: PenLine, t: "Writing", d: "Rasmiy va norasmiy yozuv, TCF mezonlari bo'yicha baholash" },
+    { icon: Mic, t: "Speaking", d: "Amaliy suhbat, monolog va dialog mashqlari" },
+    { icon: BookText, t: "Grammar", d: "Fransuz grammatikasi asoslari va murakkab konstruktsiyalar" },
+    { icon: MessageCircle, t: "Vocabulary", d: "TCF imtihoniga oid leksika va kundalik muloqot so'zlari" },
 ];
 
 const nlcTable = [
@@ -164,8 +177,8 @@ function KurslarPage() {
                                     </div>
                                 )}
                                 <div className="flex items-center gap-3 mb-4">
-                                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#fcefec] to-[#f9ddd8] flex items-center justify-center text-xl group-hover:scale-110 transition-transform shrink-0">
-                                        {c.emoji}
+                                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#fcefec] to-[#f9ddd8] flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
+                                        <c.icon className="w-5 h-5 text-[#d62839]" strokeWidth={1.8} />
                                     </div>
                                     <div>
                                         <h3 className="font-['Syne'] font-extrabold text-lg leading-tight group-hover:text-[#d62839] transition-colors">
@@ -231,15 +244,18 @@ function KurslarPage() {
                         </h2>
                     </div>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {subjects.map((s, i) => (
+                        {subjects.map((s, i) => {
+                            const Icon = s.icon;
+                            return (
                             <div key={s.t} className="reveal card card-hover p-8 group" data-delay={(i % 3) * 100}>
-                                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#eaf0f8] to-[#d6e3f3] flex items-center justify-center text-3xl mb-5 group-hover:scale-110 group-hover:-rotate-6 transition-transform">
-                                    {s.icon}
+                                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#eaf0f8] to-[#d6e3f3] flex items-center justify-center mb-5 group-hover:scale-110 group-hover:-rotate-6 transition-transform">
+                                    <Icon className="w-7 h-7 text-[#15233B]" strokeWidth={1.8} />
                                 </div>
                                 <h3 className="font-['Syne'] font-bold text-xl mb-3 group-hover:text-[#d62839] transition-colors">{s.t}</h3>
                                 <p className="text-[#3E4B62] text-sm leading-relaxed">{s.d}</p>
                             </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
             </section>
@@ -257,7 +273,7 @@ function KurslarPage() {
                             </h2>
                             <p className="text-[#3E4B62] text-base leading-relaxed mb-6">
                                 Express Entry uchun TCF Canada imtihonida barcha bo'limlardan kamida{" "}
-                                <span className="font-bold text-[#d62839]">CLB 7 (B2+)</span> daraja kerak.
+                                <span className="font-bold text-[#d62839]">CLB 8+ (B2+)</span> daraja maqsad qilinadi.
                             </p>
                             <div className="bg-[#E0A526]/12 border border-[#E0A526]/40 rounded-2xl p-5">
                                 <p className="text-[#2C3850] text-sm leading-relaxed">
@@ -267,8 +283,8 @@ function KurslarPage() {
                             </div>
                         </div>
                         <div className="reveal card overflow-hidden" data-delay={150}>
-                            <div className="bg-[#15233B] px-6 py-4">
-                                <span className="text-white font-['Syne'] font-bold text-sm">CLB 7 = B2+ (minimal)</span>
+                            <div className="bg-[#a3182a] px-6 py-4">
+                                <span className="text-white font-['Syne'] font-bold text-sm">CLB 8+ = B2+ (maqsad)</span>
                             </div>
                             {nlcTable.map((row, i) => (
                                 <div
@@ -315,7 +331,7 @@ function KurslarPage() {
             {/* CTA */}
             <section className="py-20 lg:py-28 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="reveal relative rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-[#d62839] via-[#c01f2e] to-[#15233B] p-12 lg:p-20 text-center">
+                    <div className="reveal relative rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-[#e23344] via-[#d62839] to-[#ae1b2a] p-12 lg:p-20 text-center">
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(224,165,38,0.30),transparent_50%)]" />
                         <div className="absolute inset-0 bg-grid opacity-10" />
                         <div className="relative z-10 max-w-3xl mx-auto">

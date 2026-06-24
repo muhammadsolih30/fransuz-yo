@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import PhoneInput, { isValidPhoneNumber, parsePhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
+import { BarChart3, MapPin, Phone } from "lucide-react";
+import { InstagramIcon, TelegramIcon } from "../components/BrandIcons";
 import { useReveal } from "../hooks/useReveal";
 import { leadsStore } from "../lib/store";
 
@@ -16,10 +18,11 @@ export const Route = createFileRoute("/boglanish")({
 });
 
 const formats = [
-  { v: "offline", l: "🏫 Offline guruh" },
-  { v: "online", l: "💻 Online guruh" },
-  { v: "mini", l: "👥 Mini-guruh" },
-  { v: "individual", l: "🎯 Individual" },
+  { v: "offline", l: "🏫 Offline guruh (10–12 kishi)" },
+  { v: "online", l: "💻 Online guruh (10–15 kishi)" },
+  { v: "mini", l: "👥 Online mini-guruh (2–4 kishi)" },
+  { v: "individual-online", l: "🎯 Individual online (1.2 mln)" },
+  { v: "individual-offline", l: "🎯 Individual offline (2 mln)" },
 ];
 
 const darajalar = [
@@ -32,17 +35,17 @@ const darajalar = [
 ];
 
 const contacts = [
-  { icon: "📞", title: "Telefon", value: "+998 94 738 22 21", href: "tel:+998947382221", sub: "Qo'ng'iroq qiling" },
-  { icon: "💬", title: "Admin", value: "@France_TCF", href: "https://t.me/France_TCF", sub: "Barcha savollarga javob" },
-  { icon: "✈️", title: "Telegram kanal", value: "@Francais_languee", href: "https://t.me/Francais_languee", sub: "Yangiliklar va darslar" },
-  { icon: "📍", title: "Manzil", value: "Chilonzor metro, Toshkent", href: "https://www.google.com/maps/search/?api=1&query=Chilonzor+metro+Toshkent", sub: "Offline darslar manzili" },
+  { icon: Phone, title: "Telefon", value: "+998 94 738 22 21", href: "tel:+998947382221", sub: "Qo'ng'iroq qiling" },
+  { icon: TelegramIcon, title: "Admin", value: "@France_TCF", href: "https://t.me/France_TCF", sub: "Barcha savollarga javob" },
+  { icon: TelegramIcon, title: "Telegram kanal", value: "@Francais_languee", href: "https://t.me/Francais_languee", sub: "Yangiliklar va darslar" },
+  { icon: MapPin, title: "Manzil", value: "Chilonzor metro, Toshkent", href: "https://www.google.com/maps/search/?api=1&query=Chilonzor+metro+Toshkent", sub: "Offline darslar manzili" },
 ];
 
 const socials = [
-  { l: "Telegram kanal", href: "https://t.me/Francais_languee", icon: "✈️" },
-  { l: "Instagram", href: "https://www.instagram.com/francais_languee/reels/", icon: "📷" },
-  { l: "Natijalar", href: "https://t.me/Fransuzu", icon: "📊" },
-  { l: "Admin", href: "https://t.me/France_TCF", icon: "💬" },
+  { l: "Telegram kanal", href: "https://t.me/Francais_languee", icon: TelegramIcon },
+  { l: "Instagram", href: "https://www.instagram.com/francais_languee/reels/", icon: InstagramIcon },
+  { l: "Natijalar", href: "https://t.me/Fransuzu", icon: BarChart3 },
+  { l: "Admin", href: "https://t.me/France_TCF", icon: TelegramIcon },
 ];
 
 function BoglanishPage() {
@@ -275,7 +278,9 @@ function BoglanishPage() {
               <div className="reveal card p-7" data-delay={100}>
                 <h3 className="font-['Syne'] font-bold text-lg mb-6">Aloqa ma'lumotlari</h3>
                 <div className="flex flex-col gap-5">
-                  {contacts.map((c) => (
+                  {contacts.map((c) => {
+                    const Icon = c.icon;
+                    return (
                     <a
                       key={c.title}
                       href={c.href}
@@ -283,8 +288,8 @@ function BoglanishPage() {
                       rel="noreferrer"
                       className="no-underline flex items-start gap-4 group"
                     >
-                      <div className="w-12 h-12 rounded-2xl bg-[#FAF6EF] border border-[#15233B]/8 group-hover:bg-[#d62839] group-hover:border-[#d62839] flex items-center justify-center text-lg flex-shrink-0 transition-all">
-                        <span className="group-hover:scale-110 transition-transform">{c.icon}</span>
+                      <div className="w-12 h-12 rounded-2xl bg-[#FAF6EF] border border-[#15233B]/8 text-[#d62839] group-hover:bg-[#d62839] group-hover:border-[#d62839] group-hover:text-white flex items-center justify-center flex-shrink-0 transition-all">
+                        <Icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
                       </div>
                       <div>
                         <div className="text-[#646F82] text-xs">{c.title}</div>
@@ -292,14 +297,17 @@ function BoglanishPage() {
                         <div className="text-[#15233B]/40 text-xs mt-0.5">{c.sub}</div>
                       </div>
                     </a>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 
-              <div className="reveal card p-7 bg-gradient-to-br from-[#15233B] to-[#1d3a5f] text-white" data-delay={200}>
+              <div className="reveal card p-7 bg-gradient-to-br from-[#a3182a] to-[#6e1019] text-white" data-delay={200}>
                 <h3 className="font-['Syne'] font-bold text-lg mb-5">Ijtimoiy tarmoqlar</h3>
                 <div className="grid grid-cols-2 gap-3">
-                  {socials.map((s) => (
+                  {socials.map((s) => {
+                    const Icon = s.icon;
+                    return (
                     <a
                       key={s.l}
                       href={s.href}
@@ -307,9 +315,10 @@ function BoglanishPage() {
                       rel="noreferrer"
                       className="no-underline flex items-center gap-2 px-4 py-3 rounded-xl bg-white/8 hover:bg-[#d62839] border border-white/10 text-white/85 hover:text-white text-xs font-semibold transition-all hover:-translate-y-0.5"
                     >
-                      <span>{s.icon}</span> {s.l}
+                      <Icon className="w-4 h-4 shrink-0" /> {s.l}
                     </a>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </div>
