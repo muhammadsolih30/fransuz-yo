@@ -26,7 +26,7 @@ import {
   Users,
 } from "lucide-react";
 import { Globe, HeartHandshake, TrendingUp } from "lucide-react";
-import { certificateImages } from "../../certificate-images";
+import { certificateImages, studentCertificates } from "../../certificate-images";
 import { HOME_SECTION_IDS } from "../../site-content";
 import type { TranslationKeys } from "../types";
 import { enUi } from "./en-ui";
@@ -588,6 +588,6 @@ export const enLocale = {
       },
     ],
   },
-  certificates: { certificateImages },
+  certificates: { certificateImages, studentCertificates },
   ui: enUi,
 };

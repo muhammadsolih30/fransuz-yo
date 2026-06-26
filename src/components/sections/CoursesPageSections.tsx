@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { CourseCarousel } from "../CourseCarousel";
 import { useSitePreferences } from "../../contexts/SitePreferencesContext";
 
 type Props = { embedded?: boolean };
@@ -28,76 +29,29 @@ export function CoursesPageSections({ embedded = false }: Props) {
         </div>
       </section>
 
-      <section className="py-16 lg:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid sm:grid-cols-2 gap-5">
-            {courses.map((c, idx) => (
-              <div
-                key={c.type}
-                className={`reveal relative card p-5 lg:p-6 group ${c.highlight ? "ring-2 ring-[#e83848] shadow-[var(--shadow-glow)]" : "card-hover"}`}
-                data-delay={(idx % 2) * 100}
-              >
-                {c.highlight && (
-                  <div className="absolute -top-3 left-6 bg-[#E0A526] text-[#15233B] text-[11px] font-extrabold px-4 py-1 rounded-full shadow-lg">
-                    {shared.mostPopular}
-                  </div>
-                )}
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#fcefec] to-[#f9ddd8] flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
-                    <c.icon className="w-5 h-5 text-[#e83848]" strokeWidth={1.8} />
-                  </div>
-                  <div>
-                    <h3 className="font-['Syne'] font-extrabold text-lg leading-tight group-hover:text-[#e83848] transition-colors">
-                      {c.type}
-                    </h3>
-                    <p className="text-[#646F82] text-xs">
-                      👥 {c.students} • ⏱️ {c.duration}
-                    </p>
-                  </div>
-                </div>
+      <section className="course-marquee-section py-16 lg:py-24 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center reveal">
+          <p className="course-section__eyebrow">{ui.carouselEyebrow}</p>
+          <h3 className="course-section__title">
+            {ui.carouselTitleBefore}{" "}
+            <span className="course-section__title-accent">{ui.carouselTitleAccent}</span>{" "}
+            {ui.carouselTitleAfter}
+          </h3>
+        </div>
 
-                <div className="mb-3 bg-[#FAF6EF] rounded-xl px-4 py-2.5">
-                  {c.prices.map((p) => (
-                    <div
-                      key={p.label}
-                      className="flex justify-between items-center py-1.5 border-b border-[#15233B]/8 last:border-0"
-                    >
-                      <span className="text-[#3E4B62] text-xs font-medium">{p.label}</span>
-                      <span className="font-['Syne'] font-extrabold text-lg text-[#15233B]">
-                        {p.price}
-                        <span className="text-[#646F82] text-[10px] font-normal ml-1">{shared.perMonth}</span>
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex items-center gap-2 mb-3 text-xs text-[#546074]">
-                  <span>🕐</span>
-                  <span>{c.schedule}</span>
-                </div>
-
-                <ul className="grid grid-cols-2 gap-x-3 gap-y-1.5 mb-5">
-                  {c.features.map((f) => (
-                    <li key={f} className="flex items-start gap-1.5 text-xs text-[#3E4B62]">
-                      <span className="text-green-600 shrink-0 mt-0.5">✓</span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-
-                <Link
-                  to="/boglanish"
-                  className={`no-underline block text-center py-2.5 rounded-xl text-sm font-bold transition-all ${
-                    c.highlight
-                      ? "bg-[#e83848] text-white hover:bg-[#e84858] shadow-[0_10px_30px_-8px_rgba(232,56,72,0.5)] hover:-translate-y-0.5"
-                      : "border-2 border-[#15233B]/12 text-[#15233B] hover:border-[#e83848] hover:text-[#e83848]"
-                  }`}
-                >
-                  {shared.registerArrow}
-                </Link>
-              </div>
-            ))}
-          </div>
+        <div className="reveal">
+          <CourseCarousel
+            courses={courses}
+            labels={{
+              lessonDuration: ui.lessonDuration,
+              courseDuration: ui.courseDuration,
+              priceLabel: ui.priceLabel,
+              groupSize: ui.groupSize,
+              perMonth: shared.perMonth,
+              register: shared.registerArrow,
+              mostPopular: shared.mostPopular,
+            }}
+          />
         </div>
       </section>
 

@@ -1,12 +1,12 @@
-import { CertificateReveal } from "../CertificateReveal";
+import { CertificateCarousel } from "../CertificateCarousel";
 import { useSitePreferences } from "../../contexts/SitePreferencesContext";
 
 type Props = { embedded?: boolean };
 
 export function ResultsPageSections({ embedded = false }: Props) {
   const { content } = useSitePreferences();
-  const { levelColor, studentResults, resultFeedbacks, resultStats, tcfLevels } = content.results;
-  const { certificateImages } = content.certificates;
+  const { resultFeedbacks, resultStats, tcfLevels } = content.results;
+  const { studentCertificates } = content.certificates;
   const ui = content.ui.results;
 
   const heroClass = embedded
@@ -51,63 +51,37 @@ export function ResultsPageSections({ embedded = false }: Props) {
         </div>
       </section>
 
-      <section className="py-20 lg:py-28 bg-[#FAF6EF] relative">
-        <div className="absolute inset-0 bg-dots opacity-50" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mb-12 reveal">
-            <p className="eyebrow text-[#e83848] mb-4">
-              <span className="w-8 h-px bg-[#e83848]" /> {ui.certsEyebrow}
+      <section className="py-24 lg:py-32 relative overflow-hidden scroll-mt-28">
+        <div className="absolute inset-0 bg-[#FAF6EF]" />
+        <div className="absolute top-0 left-1/4 w-[600px] h-[400px] rounded-full bg-[#e83848]/6 blur-[100px]" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[350px] rounded-full bg-[#E0A526]/8 blur-[90px]" />
+        <div className="absolute inset-0 bg-dots opacity-30" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-10 lg:mb-14 reveal">
+            <span className="inline-flex items-center px-5 py-2 rounded-full bg-white border border-[#e83848]/15 text-[#e83848] text-xs font-bold uppercase tracking-wider mb-6 shadow-sm">
+              {ui.certsEyebrow}
+            </span>
+            <h3 className="font-['Syne'] font-extrabold text-[clamp(2rem,5vw,3.25rem)] leading-tight text-[#15233B]">
+              {ui.certsTitle}{" "}
+              <span className="text-gradient-canada">{ui.certsTitleAccent}</span>
+            </h3>
+            <p className="text-[#546074] text-base mt-5 max-w-lg mx-auto leading-relaxed">
+              {ui.certsSubtitle}
             </p>
-            <h3 className="font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight">{ui.certsTitle}</h3>
-            <p className="text-[#546074] text-sm mt-4">{ui.certsSubtitle}</p>
           </div>
+        </div>
 
-          <div className="grid lg:grid-cols-2 gap-8 mb-12">
-            {studentResults.map((r, idx) => (
-              <div
-                key={r.name}
-                className={`reveal card p-6 lg:p-8 ${r.highlight ? "ring-2 ring-[#e83848] shadow-[var(--shadow-glow)]" : ""}`}
-                data-delay={idx * 100}
-              >
-                <div className="grid sm:grid-cols-2 gap-6">
-                  <CertificateReveal
-                    src={certificateImages[idx]?.src ?? certificateImages[0].src}
-                    alt={certificateImages[idx]?.alt ?? r.name}
-                    index={idx}
-                  />
-                  <div>
-                    {r.highlight && (
-                      <div className="inline-flex items-center gap-2 bg-[#e83848]/10 px-3 py-1 rounded-full text-[#e83848] text-[10px] font-bold mb-4">
-                        {ui.oneMonthBadge}
-                      </div>
-                    )}
-                    <h4 className="font-['Syne'] font-extrabold text-xl mb-1">{r.name}</h4>
-                    <p className="text-[#646F82] text-xs mb-4">
-                      {r.cert} • {r.date} • {r.period}
-                    </p>
-                    <div className="grid grid-cols-2 gap-2">
-                      {r.scores.map((sc) => (
-                        <div
-                          key={sc.s}
-                          className={`border rounded-xl p-3 ${levelColor[sc.l] || "border-gray-200"}`}
-                        >
-                          <div className="text-[10px] font-semibold opacity-70">{sc.s}</div>
-                          <div className="font-['Syne'] font-extrabold text-lg">{sc.l}</div>
-                          <div className="text-[10px]">{sc.v}</div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {certificateImages.slice(2).map((cert, i) => (
-              <CertificateReveal key={cert.src} src={cert.src} alt={cert.alt} index={i + 2} />
-            ))}
-          </div>
+        <div className="relative z-10 reveal" data-delay={80}>
+          <CertificateCarousel
+            certificates={studentCertificates}
+            labels={{
+              viewDetails: ui.certViewDetails,
+              mediaSoon: content.ui.shared.mediaSoon,
+              scrollHint: ui.certScrollHint,
+              total: ui.certTotal.replace("{n}", String(studentCertificates.length)),
+            }}
+          />
         </div>
       </section>
 

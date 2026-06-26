@@ -1,5 +1,5 @@
 import { milestones } from "../../about-content";
-import { certificateImages } from "../../certificate-images";
+import { certificateImages, studentCertificates } from "../../certificate-images";
 import { courses, courseFaqs, courseSubjects, nlcTable } from "../../courses-content";
 import { generalFaq, immigrationFaq } from "../../faq-content";
 import {
@@ -136,6 +136,6 @@ export const uzLocale = {
     ofertaRequisites,
   },
   vacancy: { vacancies },
-  certificates: { certificateImages },
+  certificates: { certificateImages, studentCertificates },
   ui: uzUi,
 };
