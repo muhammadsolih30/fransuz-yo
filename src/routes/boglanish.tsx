@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import PhoneInput, { isValidPhoneNumber, parsePhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { BarChart3, MapPin, Phone } from "lucide-react";
@@ -43,7 +43,8 @@ function BoglanishPage() {
 
   const canSubmit = !!form.ism && isValidPhoneNumber(form.telefon || "") && agreed && !loading;
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event?: FormEvent) => {
+    event?.preventDefault();
     if (!canSubmit) return;
     setLoading(true);
 
@@ -115,13 +116,17 @@ function BoglanishPage() {
                 <>
                   <h2 className="font-['Syne'] font-extrabold text-3xl mb-8">{ui.formTitle}</h2>
 
+                  <form onSubmit={handleSubmit} noValidate>
                   <div className="grid sm:grid-cols-2 gap-5 mb-5">
                     <div>
-                      <label className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">
+                      <label htmlFor="contact-name" className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">
                         {ui.nameLabel}
                       </label>
                       <input
+                        id="contact-name"
+                        name="ism"
                         type="text"
+                        autoComplete="name"
                         placeholder={ui.namePlaceholder}
                         value={form.ism}
                         onChange={(e) => setForm((p) => ({ ...p, ism: e.target.value }))}
@@ -129,10 +134,11 @@ function BoglanishPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">
+                      <label htmlFor="contact-phone" className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">
                         {ui.phoneLabel}
                       </label>
                       <PhoneInput
+                        id="contact-phone"
                         international
                         defaultCountry="UZ"
                         countryCallingCodeEditable={false}
@@ -145,13 +151,16 @@ function BoglanishPage() {
                   </div>
 
                   <div className="mb-5">
-                    <label className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">
+                    <label htmlFor="contact-telegram" className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">
                       {ui.telegramLabel}
                     </label>
                     <div className="flex items-center bg-[#FAF6EF] border border-[#15233B]/10 focus-within:border-[#e83848] focus-within:ring-4 focus-within:ring-[#e83848]/10 rounded-xl px-4 transition-all">
                       <span className="text-[#646F82] font-semibold">@</span>
                       <input
+                        id="contact-telegram"
+                        name="telegram"
                         type="text"
+                        autoComplete="off"
                         placeholder="username"
                         value={form.telegram}
                         onChange={(e) =>
@@ -162,16 +171,17 @@ function BoglanishPage() {
                     </div>
                   </div>
 
-                  <div className="mb-5">
-                    <label className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">
+                  <fieldset className="mb-5 border-0 p-0">
+                    <legend className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">
                       {ui.formatLabel}
-                    </label>
+                    </legend>
                     <div className="grid grid-cols-2 gap-3">
                       {ui.formats.map((f) => (
                         <button
                           key={f.v}
                           type="button"
                           onClick={() => setForm((p) => ({ ...p, format: f.v }))}
+                          aria-pressed={form.format === f.v}
                           className={`text-left px-4 py-3 text-sm rounded-xl border-2 transition-all ${
                             form.format === f.v
                               ? "border-[#e83848] text-[#e83848] bg-[#e83848]/5 font-semibold"
@@ -182,13 +192,15 @@ function BoglanishPage() {
                         </button>
                       ))}
                     </div>
-                  </div>
+                  </fieldset>
 
                   <div className="mb-5">
-                    <label className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">
+                    <label htmlFor="contact-level" className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">
                       {ui.levelLabel}
                     </label>
                     <select
+                      id="contact-level"
+                      name="daraja"
                       value={form.daraja}
                       onChange={(e) => setForm((p) => ({ ...p, daraja: e.target.value }))}
                       className="w-full bg-[#FAF6EF] border border-[#15233B]/10 focus:border-[#e83848] focus:ring-4 focus:ring-[#e83848]/10 rounded-xl px-4 py-3.5 text-[#15233B] text-sm outline-none transition-all cursor-pointer"
@@ -203,10 +215,12 @@ function BoglanishPage() {
                   </div>
 
                   <div className="mb-8">
-                    <label className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">
+                    <label htmlFor="contact-message" className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">
                       {ui.messageLabel}
                     </label>
                     <textarea
+                      id="contact-message"
+                      name="xabar"
                       placeholder={ui.messagePlaceholder}
                       rows={3}
                       value={form.xabar}
@@ -244,7 +258,7 @@ function BoglanishPage() {
                   </div>
 
                   <button
-                    onClick={handleSubmit}
+                    type="submit"
                     disabled={!canSubmit}
                     className="w-full bg-[#e83848] hover:bg-[#e84858] disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold py-4 rounded-2xl text-sm transition-all hover:-translate-y-0.5 shadow-[0_10px_30px_-8px_rgba(232,56,72,0.5)]"
                   >
@@ -253,6 +267,7 @@ function BoglanishPage() {
                   {!agreed && (form.ism || form.telefon) && (
                     <p className="text-[#646F82] text-xs text-center mt-3">{ui.ofertaRequired}</p>
                   )}
+                  </form>
                 </>
               )}
             </div>

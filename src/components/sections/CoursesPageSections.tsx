@@ -50,6 +50,7 @@ export function CoursesPageSections({ embedded = false }: Props) {
               perMonth: shared.perMonth,
               register: shared.registerArrow,
               mostPopular: shared.mostPopular,
+              carouselAria: content.ui.a11y.coursesCarousel,
             }}
           />
         </div>

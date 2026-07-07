@@ -72,6 +72,9 @@ export const uzUi = {
     telegramAdmin: "Telegram admin",
     callUs: "Qo'ng'iroq qilish",
     viewImage: "Ko'rish",
+    skipToContent: "Asosiy kontentga o'tish",
+    certificatesCarousel: "O'quvchi sertifikatlari karuseli",
+    coursesCarousel: "Kurslar karuseli",
   },
   home: {
     headingSegments: ["Biz bilan ", "Kanada va Fransiyaga ", "ilk qadam"],
@@ -161,6 +164,7 @@ export const uzUi = {
     certScrollHint: "Ustiga keling — to'xtaydi",
     certTotal: "{n} ta sertifikat",
     certViewDetails: "Batafsil ko'rish",
+    examLabel: "Imtihon",
     certScores: "Natijalar",
     certStory: "Muvaffaqiyat hikoyasi",
     oneMonthBadge: "⭐ 1 OYLIK NATIJA",

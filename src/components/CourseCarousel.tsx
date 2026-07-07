@@ -11,6 +11,7 @@ type Labels = {
   perMonth: string;
   register: string;
   mostPopular: string;
+  carouselAria: string;
 };
 
 type Props = {
@@ -38,7 +39,7 @@ export function CourseCarousel({ courses, labels }: Props) {
 
   return (
     <div className="course-marquee-shell">
-      <div className="course-marquee group" aria-label="Kurslar karuseli">
+      <div className="course-marquee group" aria-label={labels.carouselAria}>
         <div
           className="course-marquee__track"
           style={{ "--course-count": courses.length } as CSSProperties}

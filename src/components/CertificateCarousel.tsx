@@ -8,6 +8,8 @@ type Props = {
     mediaSoon: string;
     scrollHint: string;
     total: string;
+    carouselAria: string;
+    examLabel: string;
   };
 };
 
@@ -22,7 +24,7 @@ export function CertificateCarousel({ certificates, labels }: Props) {
         <p className="cert-marquee-shell__hint">{labels.scrollHint}</p>
       </div>
 
-      <div className="cert-marquee group" aria-label="Sertifikatlar karuseli">
+      <div className="cert-marquee group" aria-label={labels.carouselAria}>
         <div
           className="cert-marquee__track"
           style={{ "--cert-count": certificates.length } as React.CSSProperties}
@@ -33,7 +35,7 @@ export function CertificateCarousel({ certificates, labels }: Props) {
               cert={cert}
               index={idx % certificates.length}
               marquee
-              labels={{ viewDetails: labels.viewDetails, mediaSoon: labels.mediaSoon }}
+              labels={{ viewDetails: labels.viewDetails, mediaSoon: labels.mediaSoon, examLabel: labels.examLabel }}
             />
           ))}
         </div>

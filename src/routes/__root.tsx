@@ -4,6 +4,7 @@ import { Footer } from "../components/Footer";
 import { RegisterModal } from "../components/RegisterModal";
 import { FloatingButtons } from "../components/FloatingButtons";
 import { MobileCtaBar } from "../components/MobileCtaBar";
+import { SkipToContent } from "../components/SkipToContent";
 import { useReveal } from "../hooks/useReveal";
 import appCss from "../styles.css?url";
 
@@ -60,9 +61,10 @@ function RootComponent() {
 
   return (
     <>
+      <SkipToContent />
       <ScrollRestoration />
       <Navbar />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <Outlet />
       </main>
       <Footer />

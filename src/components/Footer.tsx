@@ -57,7 +57,7 @@ export function Footer() {
         <div className="footer-wave footer-wave-3" />
       </div>
 
-      <div className="relative bg-[#FF6600] overflow-hidden text-black">
+      <div className="relative bg-[#FF6600] dark:bg-[#1a1208] overflow-hidden text-black dark:text-[#f5e6d3] footer-orange-band">
         <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-black/5 blur-[120px]" />
         <div className="absolute bottom-0 left-0 w-[350px] h-[350px] rounded-full bg-black/5 blur-[100px]" />
 
@@ -132,14 +132,6 @@ export function Footer() {
                       {t.footer.addressValue}
                     </div>
                   </div>
-                </a>
-
-                <a
-                  href="/admin"
-                  className={`no-underline inline-flex items-center gap-1.5 text-[11px] font-medium pt-1 ${footerInkFaint}`}
-                  aria-label="Admin panel"
-                >
-                  {t.footer.adminPanel}
                 </a>
               </div>
             </div>

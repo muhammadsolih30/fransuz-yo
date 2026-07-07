@@ -24,7 +24,7 @@ export function MobileCtaBar() {
             className={`lg:hidden fixed inset-x-0 bottom-0 z-[90] px-3 pb-3 pt-2 transition-all duration-400 ${show ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
                 }`}
         >
-            <div className="flex items-stretch gap-2.5 bg-white/85 backdrop-blur-xl border border-white/60 rounded-2xl p-2 shadow-[0_-8px_30px_-10px_rgba(21,35,59,0.3)]">
+            <div className="flex items-stretch gap-2.5 bg-white/85 dark:bg-[#161b22]/90 backdrop-blur-xl border border-white/60 dark:border-white/10 rounded-2xl p-2 shadow-[0_-8px_30px_-10px_rgba(21,35,59,0.3)] dark:shadow-[0_-8px_30px_-10px_rgba(0,0,0,0.45)]">
                 <Link
                     to="/boglanish"
                     className="relative flex-1 overflow-hidden no-underline flex items-center justify-center gap-2 bg-gradient-to-r from-[#f46868] via-[#e83848] to-[#e84858] text-white font-bold text-sm rounded-xl px-4 py-3.5"

@@ -21,6 +21,7 @@ import { ResultsPageSections } from "../components/sections/ResultsPageSections"
 import { TeachersPageSections } from "../components/sections/TeachersPageSections";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
 import { useHashScroll } from "../hooks/useHashScroll";
+import { useReducedMotion } from "../hooks/useReducedMotion";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -48,35 +49,39 @@ const marqueeIcons: Record<string, typeof Info> = {
 };
 
 function TypedHeading({ segments }: { segments: readonly string[] }) {
+  const reducedMotion = useReducedMotion();
   const [cycle, setCycle] = useState(0);
 
   useEffect(() => {
-    const id = setInterval(() => setCycle((c) => c + 1), 5000);
+    if (reducedMotion) return;
+    const id = setInterval(() => setCycle((c) => c + 1), 8000);
     return () => clearInterval(id);
-  }, []);
+  }, [reducedMotion]);
 
   const colors = headingPalettes[cycle % headingPalettes.length];
   let charIndex = 0;
-  const startDelay = 0.1;
-  const step = 0.03;
+  const startDelay = reducedMotion ? 0 : 0.1;
+  const step = reducedMotion ? 0 : 0.03;
 
   return (
     <h1
-      key={cycle}
+      key={reducedMotion ? "static" : cycle}
       data-no-reveal
       className="font-['Syne'] font-extrabold text-[clamp(2.7rem,7vw,5.6rem)] leading-[1.02] mb-6 hero-text-halo"
     >
       {segments.map((seg, si) => (
         <span key={si} style={{ color: colors[si], transition: "color 0.4s ease" }}>
-          {Array.from(seg).map((ch, ci) => {
-            const delay = startDelay + charIndex * step;
-            charIndex += 1;
-            return (
-              <span key={`${si}-${ci}`} className="char" style={{ animationDelay: `${delay}s` }}>
-                {ch === " " ? "\u00A0" : ch}
-              </span>
-            );
-          })}
+          {reducedMotion
+            ? seg
+            : Array.from(seg).map((ch, ci) => {
+                const delay = startDelay + charIndex * step;
+                charIndex += 1;
+                return (
+                  <span key={`${si}-${ci}`} className="char" style={{ animationDelay: `${delay}s` }}>
+                    {ch === " " ? "\u00A0" : ch}
+                  </span>
+                );
+              })}
         </span>
       ))}
     </h1>
@@ -112,7 +117,7 @@ function HomePage() {
     <div className="bg-white text-[#15233B] overflow-hidden">
       <PageMeta page="home" />
 
-      <section className="relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden bg-[#faf6ef]">
+      <section className="hero-section relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden bg-[#faf6ef]">
         <HeroVideoBg videoId="HfTkZmKK1b0" rate={1.2} endTrim={15} />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#faf6ef]/5 to-[#faf6ef]/45" />
         <div className="absolute -top-32 -right-20 w-[600px] h-[600px] rounded-full bg-[#e83848]/10 blur-[120px] animate-float-slow" />

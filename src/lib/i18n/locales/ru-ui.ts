@@ -74,6 +74,9 @@ export const ruUi = {
     adminPanel: "Панель администратора",
     viewImage: "Просмотр",
     breadcrumb: "навигационная цепочка",
+    skipToContent: "Перейти к основному содержимому",
+    certificatesCarousel: "Карусель сертификатов",
+    coursesCarousel: "Карусель курсов",
   },
   home: {
     headingSegments: ["С нами ", "ваш первый шаг в ", "Канаду и Францию"],
@@ -163,6 +166,7 @@ export const ruUi = {
     certScrollHint: "Наведите для паузы",
     certTotal: "{n} сертификатов",
     certViewDetails: "Подробнее",
+    examLabel: "Экзамен",
     certScores: "Результаты",
     certStory: "История успеха",
     oneMonthBadge: "⭐ РЕЗУЛЬТАТ ЗА 1 МЕСЯЦ",

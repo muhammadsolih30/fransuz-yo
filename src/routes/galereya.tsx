@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PageMeta } from "../components/PageMeta";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
 import { useReveal } from "../hooks/useReveal";
@@ -8,7 +8,7 @@ export const Route = createFileRoute("/galereya")({
   component: GalereyaPage,
 });
 
-type Tab = "rasmlar" | "ochilish" | "videolar";
+type Tab = "rasmlar" | "ochilish";
 
 const photos = [
   "photo_2025-09-15_16-53-59.jpg",
@@ -32,11 +32,6 @@ const openingPhotos = [
   { id: 2, src: `/image/darsxona/${encodeURI("chiroyle page2.jpg")}` },
 ];
 
-const videos = Array.from({ length: 25 }, (_, i) => ({
-  id: i + 1,
-  youtubeId: null as string | null,
-}));
-
 function GalereyaPage() {
   const { content } = useSitePreferences();
   const ui = content.ui.gallery;
@@ -47,10 +42,18 @@ function GalereyaPage() {
   useReveal([tab]);
   const [lightbox, setLightbox] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (!lightbox) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setLightbox(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightbox]);
+
   const tabs: { key: Tab; label: string; count: number }[] = [
     { key: "rasmlar", label: ui.tabs.photos, count: photos.length },
     { key: "ochilish", label: ui.tabs.opening, count: openingPhotos.length },
-    { key: "videolar", label: ui.tabs.videos, count: videos.length },
   ];
 
   return (
@@ -76,10 +79,13 @@ function GalereyaPage() {
 
       <div className="sticky top-24 z-30 glass-nav border-y border-[#15233B]/8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-3 sm:flex gap-1.5 sm:gap-2 py-3 sm:py-4">
+          <div className="grid grid-cols-2 sm:flex gap-1.5 sm:gap-2 py-3 sm:py-4" role="tablist" aria-label={ui.title}>
             {tabs.map((t) => (
               <button
                 key={t.key}
+                type="button"
+                role="tab"
+                aria-selected={tab === t.key}
                 onClick={() => setTab(t.key)}
                 className={`flex items-center justify-center gap-1.5 px-2 sm:px-6 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold transition-all ${
                   tab === t.key
@@ -151,71 +157,15 @@ function GalereyaPage() {
             </div>
           )}
 
-          {tab === "videolar" && (
-            <div>
-              <p className="text-[#646F82] text-xs font-bold tracking-widest uppercase mb-6">
-                {ui.offlineLessonClips}
-              </p>
-              <div className="grid md:grid-cols-3 gap-6 mb-12">
-                {videos.slice(0, 3).map((v, i) => (
-                  <div key={v.id} className="card overflow-hidden group">
-                    <div className="aspect-video flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-[#fcefec] to-[#f9ddd8] group-hover:from-[#f9ddd8] group-hover:to-[#f4ccc6] transition-colors cursor-pointer">
-                      <div className="w-16 h-16 rounded-full bg-[#e83848] flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
-                        <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      </div>
-                      <p className="text-[#15233B]/40 text-xs font-medium">{ui.noVideos}</p>
-                    </div>
-                    <div className="px-5 py-4">
-                      <span className="text-[#e83848] text-xs font-bold">{ui.offlineLesson}</span>
-                      <p className="text-[#3E4B62] text-sm mt-1">
-                        {ui.offlineLessonVideo} #{i + 1}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <p className="text-[#646F82] text-xs font-bold tracking-widest uppercase mb-6">{ui.moreVideos}</p>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {videos.slice(3).map((v) => (
-                  <div key={v.id} className="card overflow-hidden group">
-                    <div className="aspect-video flex flex-col items-center justify-center gap-2 bg-[#FAF6EF] group-hover:bg-[#fcefec] transition-colors cursor-pointer">
-                      <div className="w-10 h-10 rounded-full border-2 border-[#15233B]/15 flex items-center justify-center group-hover:border-[#e83848] transition-colors">
-                        <svg
-                          className="w-4 h-4 text-[#15233B]/30 ml-0.5 group-hover:text-[#e83848] transition-colors"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      </div>
-                      <p className="text-[#15233B]/30 text-[10px]">#{v.id}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-8 card p-8 text-center panel-soft-accent">
-                <p className="text-[#546074] text-sm">{ui.youtubeNote}</p>
-                <a
-                  href="https://t.me/Francais_languee"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="no-underline inline-flex items-center gap-2 text-[#E0A526] text-sm font-bold mt-3 hover:gap-3 transition-all"
-                >
-                  {ui.telegramChannel}
-                </a>
-              </div>
-            </div>
-          )}
         </div>
       </section>
 
       {lightbox && (
         <div
           className="fixed inset-0 bg-[#15233B]/95 backdrop-blur-sm z-[60] flex items-center justify-center p-4 animate-fade-in"
+          role="dialog"
+          aria-modal="true"
+          aria-label={a11y.viewImage}
           onClick={() => setLightbox(null)}
         >
           <button

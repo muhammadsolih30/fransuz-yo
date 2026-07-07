@@ -74,6 +74,9 @@ export const enUi = {
     adminPanel: "Admin panel",
     viewImage: "View",
     breadcrumb: "breadcrumb",
+    skipToContent: "Skip to main content",
+    certificatesCarousel: "Student certificates carousel",
+    coursesCarousel: "Courses carousel",
   },
   home: {
     headingSegments: ["With us, ", "your first step to ", "Canada and France"],
@@ -163,6 +166,7 @@ export const enUi = {
     certScrollHint: "Hover to pause",
     certTotal: "{n} certificates",
     certViewDetails: "View details",
+    examLabel: "Exam",
     certScores: "Results",
     certStory: "Success story",
     oneMonthBadge: "⭐ 1-MONTH RESULT",

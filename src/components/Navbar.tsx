@@ -1,17 +1,18 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Phone } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BrandLogo } from "./BrandLogo";
 import { PreferencesMenu } from "./PreferencesMenu";
 import { NavSiteLink } from "./NavSiteLink";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
 import { useScrollSpy } from "../hooks/useScrollSpy";
+import { useFocusTrap } from "../hooks/useFocusTrap";
 
 const NAV_LINK_BASE =
-  "relative no-underline text-[#3E4B62] hover:text-[#e83848] text-[11px] 2xl:text-[13px] font-semibold px-1.5 2xl:px-2.5 pt-2 pb-2.5 transition-colors whitespace-nowrap";
+  "relative no-underline text-[#3E4B62] hover:text-[#e83848] text-xs lg:text-[11px] 2xl:text-[13px] font-semibold px-1.5 2xl:px-2.5 pt-2 pb-2.5 transition-colors whitespace-nowrap";
 
 const NAV_LINK_ACTIVE =
-  "relative no-underline text-[#e83848] text-[11px] 2xl:text-[13px] font-bold px-1.5 2xl:px-2.5 pt-2 pb-2.5 whitespace-nowrap after:content-[''] after:absolute after:bottom-0 after:left-1.5 after:right-1.5 2xl:after:left-2 2xl:after:right-2 after:h-[2px] after:bg-[#e83848] after:rounded-full";
+  "relative no-underline text-[#e83848] text-xs lg:text-[11px] 2xl:text-[13px] font-bold px-1.5 2xl:px-2.5 pt-2 pb-2.5 whitespace-nowrap after:content-[''] after:absolute after:bottom-0 after:left-1.5 after:right-1.5 2xl:after:left-2 2xl:after:right-2 after:h-[2px] after:bg-[#e83848] after:rounded-full";
 
 const NAV_MOBILE_BASE =
   "no-underline text-[#15233B] hover:text-[#e83848] text-base font-bold py-3.5 border-b border-[#15233B]/8 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] border-l-[3px] border-l-transparent pl-4";
@@ -22,6 +23,7 @@ const NAV_MOBILE_ACTIVE =
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const drawerRef = useRef<HTMLElement>(null);
   const { t, navLinks, content } = useSitePreferences();
   const { a11y } = content.ui;
   const HOME_SECTION_IDS = content.site.HOME_SECTION_IDS;
@@ -48,6 +50,17 @@ export function Navbar() {
     };
   }, [open]);
 
+  useFocusTrap(open, drawerRef);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   const headerShell = scrolled
     ? "bg-white/85 backdrop-blur-2xl shadow-[0_10px_40px_-12px_rgba(21,35,59,0.25)] border border-white/80"
     : "bg-white/75 backdrop-blur-xl shadow-[0_8px_32px_-16px_rgba(21,35,59,0.2)] border border-white/60";
@@ -69,7 +82,7 @@ export function Navbar() {
           <Link
             to="/"
             onClick={() => setOpen(false)}
-            className="xl:hidden col-start-2 no-underline flex items-center justify-center min-w-0 px-2 sm:px-3 overflow-hidden text-center group"
+            className="lg:hidden col-start-2 no-underline flex items-center justify-center min-w-0 px-2 sm:px-3 overflow-hidden text-center group"
           >
             <span className="font-['Syne'] font-extrabold text-[1.35rem] sm:text-[1.5rem] leading-none tracking-tight truncate max-w-full transition-transform group-hover:scale-[1.02]">
               <span className="text-[#15233B]">France </span>
@@ -77,7 +90,7 @@ export function Navbar() {
             </span>
           </Link>
 
-          <nav className="hidden xl:flex items-center justify-center min-w-0 overflow-hidden px-1 col-start-2">
+          <nav className="hidden lg:flex items-center justify-center min-w-0 overflow-hidden px-1 col-start-2">
             <div className="flex items-center justify-center gap-0 min-w-0 max-w-full overflow-x-auto scrollbar-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {navLinks.map((l) => (
                 <NavSiteLink
@@ -91,7 +104,7 @@ export function Navbar() {
             </div>
           </nav>
 
-          <div className="hidden xl:flex items-center gap-2 shrink-0 justify-end">
+          <div className="hidden lg:flex items-center gap-2 shrink-0 justify-end">
             <PreferencesMenu />
             <a
               href="tel:+998947382221"
@@ -110,12 +123,13 @@ export function Navbar() {
             </Link>
           </div>
 
-          <div className="xl:hidden flex items-center gap-1.5 shrink-0 justify-end col-start-3">
+          <div className="lg:hidden flex items-center gap-1.5 shrink-0 justify-end col-start-3">
             <PreferencesMenu />
             <button
               type="button"
               aria-label={open ? a11y.menuClose : a11y.menuOpen}
               aria-expanded={open}
+              aria-controls="mobile-nav-drawer"
               className="flex flex-col gap-1.5 p-2.5 rounded-full hover:bg-[#15233B]/5 transition-colors shrink-0 w-10 h-10 items-center justify-center"
               onClick={() => setOpen(!open)}
             >
@@ -134,7 +148,7 @@ export function Navbar() {
       </div>
 
       <div
-        className={`xl:hidden fixed inset-0 z-40 bg-[#15233B]/40 backdrop-blur-[2px] transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`lg:hidden fixed inset-0 z-40 bg-[#15233B]/40 backdrop-blur-[2px] transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           open ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setOpen(false)}
@@ -142,7 +156,12 @@ export function Navbar() {
       />
 
       <aside
-        className={`xl:hidden fixed top-0 right-0 bottom-0 z-50 w-[85%] max-w-sm bg-white shadow-[-20px_0_60px_-20px_rgba(21,35,59,0.4)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform overflow-y-auto ${
+        ref={drawerRef}
+        id="mobile-nav-drawer"
+        role="dialog"
+        aria-modal={open}
+        aria-label={a11y.menuOpen}
+        className={`lg:hidden fixed top-0 right-0 bottom-0 z-50 w-[85%] max-w-sm bg-white shadow-[-20px_0_60px_-20px_rgba(21,35,59,0.4)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform overflow-y-auto ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >

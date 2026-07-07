@@ -80,6 +80,8 @@ export function ResultsPageSections({ embedded = false }: Props) {
               mediaSoon: content.ui.shared.mediaSoon,
               scrollHint: ui.certScrollHint,
               total: ui.certTotal.replace("{n}", String(studentCertificates.length)),
+              carouselAria: content.ui.a11y.certificatesCarousel,
+              examLabel: ui.examLabel,
             }}
           />
         </div>

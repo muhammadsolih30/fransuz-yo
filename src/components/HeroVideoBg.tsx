@@ -57,10 +57,27 @@ export function HeroVideoBg({ videoId, rate = 1.5, endTrim = 15 }: Props) {
   const qualityRef = useRef<VideoQuality>("hd720");
   const loopTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const showTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(false);
   const targetQuality = useAdaptiveVideoQuality();
 
   qualityRef.current = targetQuality;
+
+  useEffect(() => {
+    const node = containerRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setShouldLoad(true);
+      },
+      { rootMargin: "120px" },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const player = playerRef.current;
@@ -68,6 +85,8 @@ export function HeroVideoBg({ videoId, rate = 1.5, endTrim = 15 }: Props) {
   }, [targetQuality]);
 
   useEffect(() => {
+    if (!shouldLoad) return;
+
     let cancelled = false;
 
     const startLoopGuard = () => {
@@ -162,10 +181,10 @@ export function HeroVideoBg({ videoId, rate = 1.5, endTrim = 15 }: Props) {
       }
       playerRef.current = null;
     };
-  }, [videoId, rate, endTrim]);
+  }, [videoId, rate, endTrim, shouldLoad]);
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none select-none" aria-hidden>
+    <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none select-none" aria-hidden>
       <div className="absolute inset-0 bg-[#faf6ef] bg-aurora" />
       <div
         className={`absolute inset-0 transition-opacity duration-1000 ease-out ${

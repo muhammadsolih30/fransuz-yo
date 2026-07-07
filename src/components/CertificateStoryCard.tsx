@@ -29,6 +29,7 @@ type Props = {
   labels: {
     viewDetails: string;
     mediaSoon: string;
+    examLabel: string;
   };
 };
 
@@ -78,7 +79,7 @@ export function CertificateStoryCard({ cert, index = 0, marquee = false, labels 
 
           <div className="cert-slide-card__row">
             <Award className="w-4 h-4 shrink-0 text-[#e83848]" strokeWidth={2} />
-            <span className="cert-slide-card__label">Imtihon</span>
+            <span className="cert-slide-card__label">{labels.examLabel}</span>
             <span className="cert-slide-card__value">{cert.certType}</span>
           </div>
 
