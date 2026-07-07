@@ -22,7 +22,7 @@ function preview(text: string, max = 110): string {
   return `${(lastSpace > 60 ? cut.slice(0, lastSpace) : cut).trim()}…`;
 }
 
-const certImg = (n: number) => `/image/sertifikatlar/sertifikat${n}.jpg`;
+const certImg = (n: number) => `/image/sertifikatlar/${n}.png`;
 
 export const studentCertificates: StudentCertificate[] = [
   {

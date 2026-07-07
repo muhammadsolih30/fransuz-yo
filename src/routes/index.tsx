@@ -160,23 +160,25 @@ function HomePage() {
 
           <TypedHeading segments={ui.headingSegments} />
 
-          <p className="hero-tagline text-base sm:text-lg lg:text-xl leading-relaxed mb-7 sm:mb-9 max-w-2xl mx-auto animate-slide-up delay-500 font-semibold px-1">
+          <p className="hero-tagline text-[0.9375rem] sm:text-lg lg:text-xl leading-[1.55] sm:leading-relaxed mb-5 sm:mb-9 max-w-2xl mx-auto animate-slide-up delay-500 font-medium sm:font-semibold px-1">
             {heroTagline}
           </p>
 
-          <div className="hero-cta-row flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center mb-8 sm:mb-10 w-full max-w-sm sm:max-w-none animate-slide-up delay-300">
-            <Link to="/boglanish" className="btn-primary hero-btn-primary">
-              {shared.freeConsultation}
-              <span aria-hidden>→</span>
+          <div className="hero-cta-row grid grid-cols-2 gap-2 sm:flex sm:flex-row sm:flex-wrap sm:gap-4 justify-center mb-6 sm:mb-10 w-full max-w-lg sm:max-w-none mx-auto animate-slide-up delay-300">
+            <Link to="/boglanish" className="btn-primary hero-btn-primary hero-cta-row__primary">
+              <span className="hero-cta-row__label">{shared.freeConsultation}</span>
+              <span className="hero-cta-row__arrow" aria-hidden>
+                →
+              </span>
             </Link>
-            <Link to="/immigratsiya" className="btn-outline hero-btn-outline">
-              {shared.expressEntry}
+            <Link to="/immigratsiya" className="btn-outline hero-btn-outline hero-cta-row__secondary">
+              <span className="hero-cta-row__label">{shared.expressEntry}</span>
             </Link>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-2.5 mb-10 sm:mb-12 animate-slide-up delay-400">
+          <div className="hero-trust-row grid grid-cols-2 sm:flex sm:flex-wrap items-stretch sm:items-center justify-center gap-2 sm:gap-2.5 mb-8 sm:mb-12 w-full max-w-md sm:max-w-none mx-auto animate-slide-up delay-400">
             {ui.trustBadges.map((b) => (
-              <div key={b} className="hero-trust-pill">
+              <div key={b} className="hero-trust-pill justify-center sm:justify-start">
                 <span className="text-[#e83848]" aria-hidden>
                   ✦
                 </span>
@@ -185,7 +187,7 @@ function HomePage() {
             ))}
           </div>
 
-          <div className="hero-stats-panel w-full max-w-3xl grid grid-cols-2 sm:grid-cols-4 gap-px rounded-2xl overflow-hidden animate-scale-in delay-500">
+          <div className="hero-stats-panel w-full max-w-3xl grid grid-cols-4 gap-px rounded-2xl overflow-hidden animate-scale-in delay-500">
             {ui.heroStats.map((s) => (
               <div key={s.label} className="hero-stats-panel__cell px-4 py-5 text-center">
                 <div className="hero-stats-panel__num">{s.num}</div>
