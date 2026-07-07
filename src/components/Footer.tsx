@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { BarChart3, MapPin, Phone } from "lucide-react";
-import { BrandLogo } from "./BrandLogo";
+import { BrandMark } from "./BrandMark";
 import { InstagramIcon, TelegramIcon } from "./BrandIcons";
 import { NavSiteLink } from "./NavSiteLink";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
@@ -17,22 +17,12 @@ export function Footer() {
 
   return (
     <footer className="site-footer relative text-white">
-      <div className="site-footer__brand flex flex-col items-center justify-center gap-3 py-8 sm:py-10 border-b border-white/10">
-        <Link to="/" className="no-underline inline-flex group">
-          <BrandLogo size="xl" className="h-14 sm:h-24 md:h-28 group-hover:scale-[1.03] transition-transform" />
-        </Link>
-        <p className="hidden sm:block text-white/60 text-[10px] sm:text-xs tracking-[0.28em] sm:tracking-[0.35em] uppercase text-center px-4">
-          {t.footer.centerLabel}
-        </p>
-      </div>
-
       <div className="footer-main-band relative overflow-hidden">
-
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-12 sm:pb-16">
           <div className="grid grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-10 pb-10 sm:pb-12 border-b footer-main-band__divider">
             <div className="col-span-2 lg:col-span-7">
-              <Link to="/" className="no-underline inline-block mb-5 group">
-                <BrandLogo size="md" className="rounded-xl group-hover:scale-105 transition-transform" />
+              <Link to="/" className="no-underline inline-flex mb-5 group">
+                <BrandMark size="md" tone="dark" className="group-hover:scale-[1.02] transition-transform origin-left" />
               </Link>
               <p className="footer-ink-soft text-sm leading-relaxed max-w-sm mb-6">{t.footer.aboutText}</p>
               <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2.5">

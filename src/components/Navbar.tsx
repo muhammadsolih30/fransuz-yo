@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Phone } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-import { BrandLogo } from "./BrandLogo";
+import { BrandMark } from "./BrandMark";
 import { PreferencesMenu } from "./PreferencesMenu";
 import { NavSiteLink } from "./NavSiteLink";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
@@ -73,21 +73,14 @@ export function Navbar() {
         >
           <Link
             to="/"
-            className="no-underline flex items-center group shrink-0"
+            className="no-underline flex items-center min-w-0 flex-1 lg:flex-none group"
             onClick={() => setOpen(false)}
           >
-            <BrandLogo size="sm" className="!h-10 sm:!h-12 group-hover:scale-105 transition-transform shrink-0" />
-          </Link>
-
-          <Link
-            to="/"
-            onClick={() => setOpen(false)}
-            className="lg:hidden flex-1 min-w-0 no-underline flex items-center justify-center px-2 overflow-hidden text-center group"
-          >
-            <span className="font-['Syne'] font-extrabold text-[1.2rem] sm:text-[1.45rem] leading-none tracking-tight truncate max-w-full transition-transform group-hover:scale-[1.02]">
-              <span className="text-[#15233B]">France </span>
-              <span className="text-gradient-canada">TCF</span>
-            </span>
+            <BrandMark
+              size="sm"
+              tone="light"
+              className="group-hover:scale-[1.01] transition-transform origin-left"
+            />
           </Link>
 
           <nav className="hidden lg:flex items-center justify-center min-w-0 overflow-hidden px-1 col-start-2">
