@@ -643,27 +643,27 @@
     gap: 0.5rem;
     font-size: 0.8125rem;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.9);
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: saturate(180%) blur(16px);
-    -webkit-backdrop-filter: saturate(180%) blur(16px);
-    border: 1px solid var(--stripe-border-light);
+    color: rgba(255, 255, 255, 0.96);
+    background: rgba(12, 20, 38, 0.68);
+    backdrop-filter: saturate(160%) blur(18px);
+    -webkit-backdrop-filter: saturate(160%) blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
     padding: 0.45rem 1rem;
     border-radius: 9999px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.28);
   }
 
   .hero-stats-panel {
-    border: 1px solid var(--stripe-border-light);
-    background: rgba(255, 255, 255, 0.07);
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(10, 18, 36, 0.72);
+    backdrop-filter: saturate(160%) blur(22px);
+    -webkit-backdrop-filter: saturate(160%) blur(22px);
+    box-shadow: 0 10px 44px rgba(0, 0, 0, 0.32);
   }
 
   .hero-stats-panel__cell {
-    background: transparent;
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.08);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .hero-stats-panel__cell:last-child {
@@ -681,7 +681,7 @@
   }
 
   .hero-stats-panel__label {
-    color: rgba(255, 255, 255, 0.62);
+    color: rgba(255, 255, 255, 0.78);
     font-size: 0.75rem;
     font-weight: 500;
     margin-top: 0.25rem;
