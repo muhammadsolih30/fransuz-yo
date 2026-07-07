@@ -2711,6 +2711,94 @@ html.dark .course-slide-card__cover {
   transform: translateY(-1px);
 }
 
+/* ───── COMPACT FEATURE CARDS (2-col mobile grids) ───── */
+.feature-card-compact {
+  padding: 0.85rem 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .feature-card-compact {
+    padding: 1.75rem;
+  }
+}
+
+.feature-card-compact--step {
+  padding: 0.85rem 0.7rem;
+}
+
+@media (min-width: 640px) {
+  .feature-card-compact--step {
+    padding: 1.75rem;
+  }
+}
+
+.feature-card-compact__icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.65rem;
+  transition: transform 0.5s ease;
+}
+
+@media (min-width: 640px) {
+  .feature-card-compact__icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 1rem;
+    margin-bottom: 1.1rem;
+  }
+}
+
+.feature-card-compact__title {
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  line-height: 1.25;
+  margin-bottom: 0.35rem;
+  color: #15233b;
+}
+
+@media (min-width: 640px) {
+  .feature-card-compact__title {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.feature-card-compact--step .feature-card-compact__title {
+  font-size: 0.8rem;
+}
+
+@media (min-width: 640px) {
+  .feature-card-compact--step .feature-card-compact__title {
+    font-size: 1.125rem;
+  }
+}
+
+.feature-card-compact__desc {
+  font-size: 0.65rem;
+  line-height: 1.4;
+  color: #3e4b62;
+}
+
+@media (min-width: 640px) {
+  .feature-card-compact__desc {
+    font-size: 0.875rem;
+    line-height: 1.625;
+  }
+}
+
+.site-nav-marquee__track {
+  animation-duration: 22s;
+}
+
+.footer-marquee__track {
+  animation-duration: 28s;
+}
+
 /* ───── MOBILE UX ───── */
 .hero-video-scrim {
   background: linear-gradient(
@@ -2731,6 +2819,14 @@ html.dark .hero-video-scrim {
 }
 
 @media (max-width: 639px) {
+  .site-nav-marquee__track {
+    animation-duration: 11s !important;
+  }
+
+  .footer-marquee__track {
+    animation-duration: 14s !important;
+  }
+
   .yt-bg {
     top: 42%;
     width: 120vw;

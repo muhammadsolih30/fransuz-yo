@@ -102,16 +102,16 @@ function ImmigratsiyaPage() {
             <h2 className="font-['Syne'] font-extrabold text-4xl leading-tight">{ui.expressEntryTitle}</h2>
             <p className="text-[#3E4B62] text-base mt-4">{ui.expressEntryBody}</p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-12">
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 mb-12">
             {crsFactors.map((f, i) => {
               const Icon = f.icon;
               return (
-                <div key={f.title} className="reveal card card-hover p-6" data-delay={i * 70}>
-                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#fcefec] to-[#f9ddd8] flex items-center justify-center mb-4">
-                    <Icon className="w-5 h-5 text-[#e83848]" strokeWidth={1.8} />
+                <div key={f.title} className="reveal card card-hover feature-card-compact" data-delay={i * 70}>
+                  <div className="feature-card-compact__icon bg-gradient-to-br from-[#fcefec] to-[#f9ddd8]">
+                    <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-[#e83848]" strokeWidth={1.8} />
                   </div>
-                  <h3 className="font-['Syne'] font-bold mb-2 text-[#15233B]">{f.title}</h3>
-                  <p className="text-[#3E4B62] text-xs leading-relaxed">{f.desc}</p>
+                  <h3 className="feature-card-compact__title text-[#15233B]">{f.title}</h3>
+                  <p className="feature-card-compact__desc text-[#3E4B62]">{f.desc}</p>
                 </div>
               );
             })}

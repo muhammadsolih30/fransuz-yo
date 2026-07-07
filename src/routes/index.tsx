@@ -209,7 +209,7 @@ function HomePage() {
       <section className="relative py-7 bg-[#15233B] dark:bg-[#0d1117] overflow-hidden group site-nav-marquee">
         <div className="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-gradient-to-r from-[#15233B] dark:from-[#0d1117] to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-24 z-10 bg-gradient-to-l from-[#15233B] dark:from-[#0d1117] to-transparent" />
-        <div className="flex animate-marquee [animation-duration:22s] whitespace-nowrap group-hover:[animation-play-state:paused]">
+        <div className="flex animate-marquee site-nav-marquee__track whitespace-nowrap group-hover:[animation-play-state:paused]">
           {[...Array(2)].map((_, dup) => (
             <div key={dup} className="flex items-center shrink-0">
               {marqueePages.map((p) => {
@@ -254,18 +254,18 @@ function HomePage() {
             <h2 className="section-heading font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight">{ui.whyUsTitle}</h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
             {whyUs.map((f, i) => {
               const Icon = f.icon;
               return (
-                <div key={f.title} className="reveal card card-hover p-7 group" data-delay={(i % 4) * 80}>
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#15233B]/10 to-[#2a5286]/15 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500">
-                    <Icon className="w-6 h-6 text-[#e83848]" strokeWidth={1.8} />
+                <div key={f.title} className="reveal card card-hover feature-card-compact group" data-delay={(i % 4) * 80}>
+                  <div className="feature-card-compact__icon bg-gradient-to-br from-[#15233B]/10 to-[#2a5286]/15 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500">
+                    <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-[#e83848]" strokeWidth={1.8} />
                   </div>
-                  <h3 className="card-title font-['Syne'] font-bold text-base mb-2 group-hover:text-[#e83848] transition-colors">
+                  <h3 className="feature-card-compact__title card-title group-hover:text-[#e83848] transition-colors">
                     {f.title}
                   </h3>
-                  <p className="section-body text-sm leading-relaxed">{f.desc}</p>
+                  <p className="feature-card-compact__desc section-body">{f.desc}</p>
                 </div>
               );
             })}
@@ -342,12 +342,12 @@ function HomePage() {
             <h2 className="section-heading font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight">{ui.processTitle}</h2>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-5">
             {ui.steps.map((s, i) => (
-              <div key={s.n} className="reveal card card-hover relative p-7" data-delay={i * 90}>
-                <div className="font-['Syne'] font-extrabold text-5xl text-[#2a5286]/20 mb-4">{s.n}</div>
-                <h3 className="card-title font-['Syne'] font-bold text-lg mb-2">{s.t}</h3>
-                <p className="section-body text-sm leading-relaxed">{s.d}</p>
+              <div key={s.n} className="reveal card card-hover relative feature-card-compact feature-card-compact--step" data-delay={i * 90}>
+                <div className="font-['Syne'] font-extrabold text-3xl sm:text-5xl text-[#2a5286]/20 mb-2 sm:mb-4">{s.n}</div>
+                <h3 className="feature-card-compact__title card-title sm:text-lg">{s.t}</h3>
+                <p className="feature-card-compact__desc section-body">{s.d}</p>
               </div>
             ))}
           </div>

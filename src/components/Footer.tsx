@@ -17,11 +17,13 @@ export function Footer() {
 
   return (
     <footer className="site-footer relative text-white">
-      <div className="site-footer__brand text-center py-10 sm:py-12 border-b border-white/10">
-        <h2 className="font-['Syne'] font-extrabold leading-none tracking-tight text-[clamp(2.6rem,10vw,7rem)] animate-float-slow text-white">
-          France <span className="text-[#e83848]">TCF</span>
-        </h2>
-        <p className="text-white/65 text-xs sm:text-sm mt-3 tracking-[0.35em] uppercase">{t.footer.centerLabel}</p>
+      <div className="site-footer__brand flex flex-col items-center justify-center gap-3 py-8 sm:py-10 border-b border-white/10">
+        <Link to="/" className="no-underline inline-flex group">
+          <BrandLogo size="xl" className="h-16 sm:h-24 md:h-28 group-hover:scale-[1.03] transition-transform" />
+        </Link>
+        <p className="text-white/60 text-[10px] sm:text-xs tracking-[0.28em] sm:tracking-[0.35em] uppercase text-center px-4">
+          {t.footer.centerLabel}
+        </p>
       </div>
 
       <div className="footer-main-band relative overflow-hidden">
@@ -93,7 +95,7 @@ export function Footer() {
           <div className="relative py-6 border-b footer-main-band__divider overflow-hidden group">
             <div className="pointer-events-none absolute inset-y-0 left-0 w-20 z-10 footer-marquee-fade footer-marquee-fade--left" />
             <div className="pointer-events-none absolute inset-y-0 right-0 w-20 z-10 footer-marquee-fade footer-marquee-fade--right" />
-            <div className="flex animate-marquee whitespace-nowrap group-hover:[animation-play-state:paused]">
+            <div className="flex animate-marquee footer-marquee__track whitespace-nowrap group-hover:[animation-play-state:paused]">
               {[...Array(2)].map((_, dup) => (
                 <div key={dup} className="flex items-center shrink-0">
                   {footerLinks.map((p) => (

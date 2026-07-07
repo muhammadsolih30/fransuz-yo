@@ -98,18 +98,18 @@ export function AboutPageSections({ embedded = false }: Props) {
               {ui.whyUsTitle}
             </h3>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
             {whyUs.map((f, i) => {
               const Icon = f.icon;
               return (
-                <div key={f.title} className="reveal card card-hover p-7 group" data-delay={(i % 4) * 80}>
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#fcefec] to-[#f9ddd8] flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                    <Icon className="w-6 h-6 text-[#e83848]" strokeWidth={1.8} />
+                <div key={f.title} className="reveal card card-hover feature-card-compact group" data-delay={(i % 4) * 80}>
+                  <div className="feature-card-compact__icon bg-gradient-to-br from-[#fcefec] to-[#f9ddd8]">
+                    <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-[#e83848]" strokeWidth={1.8} />
                   </div>
-                  <h4 className="font-['Syne'] font-bold text-base mb-2 group-hover:text-[#e83848] transition-colors">
+                  <h4 className="feature-card-compact__title group-hover:text-[#e83848] transition-colors">
                     {f.title}
                   </h4>
-                  <p className="text-[#3E4B62] text-sm leading-relaxed">{f.desc}</p>
+                  <p className="feature-card-compact__desc">{f.desc}</p>
                 </div>
               );
             })}

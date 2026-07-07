@@ -69,24 +69,21 @@ export function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 lg:px-6 pt-3 sm:pt-4">
       <div className="max-w-7xl mx-auto">
         <div
-          className={`site-header-bar relative grid grid-cols-[auto_1fr_auto] items-center gap-2 sm:gap-3 h-16 md:h-[4.5rem] pl-3 pr-2 sm:pl-4 sm:pr-3 md:pl-5 md:pr-3 rounded-2xl md:rounded-full transition-[background,box-shadow,border-color] duration-500 ${headerShell}`}
+          className={`site-header-bar relative flex lg:grid lg:grid-cols-[auto_1fr_auto] items-center justify-between lg:justify-stretch gap-2 sm:gap-3 h-16 md:h-[4.5rem] pl-3 pr-2 sm:pl-4 sm:pr-3 md:pl-5 md:pr-3 rounded-2xl md:rounded-full transition-[background,box-shadow,border-color] duration-500 ${headerShell}`}
         >
           <Link
             to="/"
-            className="no-underline flex items-center group shrink-0"
+            className="no-underline flex items-center gap-2 sm:gap-3 group shrink-0 min-w-0"
             onClick={() => setOpen(false)}
           >
-            <BrandLogo size="sm" className="group-hover:scale-105 transition-transform" />
-          </Link>
-
-          <Link
-            to="/"
-            onClick={() => setOpen(false)}
-            className="lg:hidden col-start-2 no-underline flex items-center justify-center min-w-0 px-2 sm:px-3 overflow-hidden text-center group"
-          >
-            <span className="font-['Syne'] font-extrabold text-[1.35rem] sm:text-[1.5rem] leading-none tracking-tight truncate max-w-full transition-transform group-hover:scale-[1.02]">
-              <span className="text-[#15233B]">France </span>
-              <span className="text-gradient-canada">TCF</span>
+            <BrandLogo size="sm" className="group-hover:scale-105 transition-transform shrink-0" />
+            <span className="hidden sm:flex lg:hidden flex-col justify-center min-w-0 leading-tight">
+              <span className="font-['Syne'] font-extrabold text-base text-[#15233B] truncate">
+                France <span className="text-[#e83848]">TCF</span>
+              </span>
+              <span className="text-[9px] font-semibold tracking-[0.2em] uppercase text-[#646F82] truncate">
+                {t.footer.centerLabel}
+              </span>
             </span>
           </Link>
 
@@ -123,7 +120,7 @@ export function Navbar() {
             </Link>
           </div>
 
-          <div className="lg:hidden flex items-center gap-1.5 shrink-0 justify-end col-start-3">
+          <div className="lg:hidden flex items-center gap-1.5 shrink-0 justify-end">
             <PreferencesMenu />
             <button
               type="button"

@@ -94,18 +94,18 @@ export function TeachersPageSections({ embedded = false }: Props) {
             </p>
             <h3 className="font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight">{ui.valuesTitle}</h3>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {teacherValues.map((v, i) => {
               const Icon = v.icon;
               return (
-                <div key={v.t} className="reveal card card-hover p-8 group" data-delay={(i % 4) * 90}>
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#eaf0f8] to-[#d6e3f3] flex items-center justify-center mb-5 group-hover:scale-110 group-hover:-rotate-6 transition-transform">
-                    <Icon className="w-7 h-7 text-[#15233B]" strokeWidth={1.8} />
+                <div key={v.t} className="reveal card card-hover feature-card-compact group" data-delay={(i % 4) * 90}>
+                  <div className="feature-card-compact__icon bg-gradient-to-br from-[#eaf0f8] to-[#d6e3f3]">
+                    <Icon className="w-5 h-5 sm:w-7 sm:h-7 text-[#15233B]" strokeWidth={1.8} />
                   </div>
-                  <h4 className="font-['Syne'] font-bold text-lg mb-3 group-hover:text-[#e83848] transition-colors">
+                  <h4 className="feature-card-compact__title group-hover:text-[#e83848] transition-colors">
                     {v.t}
                   </h4>
-                  <p className="text-[#3E4B62] text-sm leading-relaxed">{v.d}</p>
+                  <p className="feature-card-compact__desc">{v.d}</p>
                 </div>
               );
             })}
