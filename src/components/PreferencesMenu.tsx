@@ -56,7 +56,7 @@ export function PreferencesMenu() {
   };
 
   const rowBtn =
-    "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-sm font-semibold transition-colors duration-150";
+    "w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-left text-xs font-semibold transition-colors duration-150";
   const rowIdle = "text-[#3E4B62] hover:bg-[#15233B]/6 hover:text-[#15233B]";
   const rowActive = "bg-[#15233B]/8 text-[#15233B]";
 
@@ -87,19 +87,19 @@ export function PreferencesMenu() {
       </button>
 
       <div
-        className={`absolute right-0 top-[calc(100%+10px)] z-[60] w-[min(100vw-2rem,15rem)] origin-top-right transition-all duration-200 ease-out ${
+        className={`absolute right-0 top-[calc(100%+8px)] z-[60] w-[min(100vw-2rem,12.5rem)] origin-top-right transition-all duration-200 ease-out ${
           open
             ? "opacity-100 visible scale-100 translate-y-0 pointer-events-auto"
             : "opacity-0 invisible scale-95 -translate-y-1 pointer-events-none"
         }`}
         role="menu"
       >
-        <div className="rounded-2xl bg-white border border-[#15233B]/10 shadow-[0_16px_48px_-12px_rgba(21,35,59,0.28)] overflow-hidden">
-          <div className="px-3 pt-3 pb-1">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#646F82] px-1 mb-1">
+        <div className="rounded-xl bg-white border border-[#15233B]/10 shadow-[0_12px_36px_-10px_rgba(21,35,59,0.24)] overflow-hidden">
+          <div className="px-2.5 pt-2 pb-0.5">
+            <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#646F82] px-1 mb-0.5">
               {t.footer.language}
             </p>
-            <div className="flex flex-col gap-0.5">
+            <div className="flex flex-col gap-px">
               {locales.map((l) => (
                 <button
                   key={l.id}
@@ -109,21 +109,21 @@ export function PreferencesMenu() {
                   onClick={() => handleLocale(l.id)}
                   className={`${rowBtn} ${locale === l.id ? rowActive : rowIdle}`}
                 >
-                  <span className="w-7 text-xs font-extrabold text-[#15233B]/70">{l.label}</span>
+                  <span className="w-6 text-[10px] font-extrabold text-[#15233B]/70">{l.label}</span>
                   <span className="flex-1">{l.name}</span>
-                  {locale === l.id && <Check className="w-4 h-4 text-[#e83848] shrink-0" strokeWidth={2.5} />}
+                  {locale === l.id && <Check className="w-3.5 h-3.5 text-[#e83848] shrink-0" strokeWidth={2.5} />}
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="mx-3 my-2 h-px bg-[#15233B]/8" />
+          <div className="mx-2.5 my-1.5 h-px bg-[#15233B]/8" />
 
-          <div className="px-3 pb-3 pt-1">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#646F82] px-1 mb-1">
+          <div className="px-2.5 pb-2 pt-0.5">
+            <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#646F82] px-1 mb-0.5">
               {t.footer.theme}
             </p>
-            <div className="flex flex-col gap-0.5">
+            <div className="flex flex-col gap-px">
               {themes.map((th) => {
                 const Icon = th.icon;
                 return (
@@ -135,11 +135,11 @@ export function PreferencesMenu() {
                     onClick={() => handleTheme(th.id)}
                     className={`${rowBtn} ${theme === th.id ? rowActive : rowIdle}`}
                   >
-                    <span className="w-7 flex justify-center">
-                      <Icon className="w-4 h-4" strokeWidth={2} />
+                    <span className="w-6 flex justify-center">
+                      <Icon className="w-3.5 h-3.5" strokeWidth={2} />
                     </span>
                     <span className="flex-1">{t.footer[th.labelKey]}</span>
-                    {theme === th.id && <Check className="w-4 h-4 text-[#e83848] shrink-0" strokeWidth={2.5} />}
+                    {theme === th.id && <Check className="w-3.5 h-3.5 text-[#e83848] shrink-0" strokeWidth={2.5} />}
                   </button>
                 );
               })}
