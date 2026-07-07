@@ -2799,6 +2799,18 @@ html.dark .course-slide-card__cover {
   animation-duration: 28s;
 }
 
+.data-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  overscroll-behavior-x: contain;
+}
+
+.immigration-data-table th,
+.immigration-data-table td {
+  white-space: nowrap;
+}
+
 /* ───── MOBILE UX ───── */
 .hero-video-scrim {
   background: linear-gradient(

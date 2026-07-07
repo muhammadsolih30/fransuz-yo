@@ -121,8 +121,8 @@ function ImmigratsiyaPage() {
             <div className="bg-[#e83848] px-6 py-4">
               <span className="text-white font-['Syne'] font-bold text-sm">{ui.crsTableTitle}</span>
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[420px]">
+            <div className="data-table-scroll">
+              <table className="immigration-data-table w-full min-w-[420px]">
                 <thead>
                   <tr className="bg-[#FAF6EF] text-left">
                     <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#546074]">
@@ -173,8 +173,8 @@ function ImmigratsiyaPage() {
               </div>
             </div>
             <div className="reveal card overflow-hidden" data-delay={120}>
-              <div className="overflow-x-auto max-h-[460px] overflow-y-auto">
-                <table className="w-full min-w-[360px]">
+              <div className="data-table-scroll max-h-[460px] overflow-y-auto">
+                <table className="immigration-data-table w-full min-w-[360px]">
                   <thead className="sticky top-0">
                     <tr className="bg-[#15233B] text-white text-left">
                       <th className="px-5 py-3 text-xs font-bold uppercase tracking-wider">{ui.ageCol}</th>
@@ -215,8 +215,9 @@ function ImmigratsiyaPage() {
             </p>
             <h2 className="font-['Syne'] font-extrabold text-3xl lg:text-4xl leading-tight">{ui.educationTitle}</h2>
           </div>
-          <div className="reveal card overflow-hidden overflow-x-auto">
-            <table className="w-full min-w-[520px]">
+          <div className="reveal card overflow-hidden">
+            <div className="data-table-scroll">
+              <table className="immigration-data-table w-full min-w-[520px]">
               <thead>
                 <tr className="bg-[#15233B] text-white text-left">
                   <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider">{ui.educationLevel}</th>
@@ -237,7 +238,8 @@ function ImmigratsiyaPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+              </table>
+            </div>
           </div>
         </div>
       </section>
@@ -278,50 +280,87 @@ function ImmigratsiyaPage() {
             </div>
           </div>
 
-          <div className="reveal mt-10 card overflow-hidden overflow-x-auto">
-            <div className="bg-[#15233B] px-6 py-4">
-              <span className="text-white font-['Syne'] font-bold text-sm">{ui.nclcTableTitle}</span>
+          <div className="reveal mt-10 card overflow-hidden">
+            <div className="bg-[#15233B] px-4 sm:px-6 py-4">
+              <span className="text-white font-['Syne'] font-bold text-xs sm:text-sm leading-snug">
+                {ui.nclcTableTitle}
+              </span>
             </div>
-            <table className="w-full min-w-[640px]">
-              <thead>
-                <tr className="bg-[#FAF6EF] text-left">
-                  <th className="px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#546074]">
-                    {ui.nclcCols.nclc}
-                  </th>
-                  <th className="px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#546074]">
-                    {ui.nclcCols.speaking}
-                  </th>
-                  <th className="px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#546074]">
-                    {ui.nclcCols.listening}
-                  </th>
-                  <th className="px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#546074]">
-                    {ui.nclcCols.reading}
-                  </th>
-                  <th className="px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#546074]">
-                    {ui.nclcCols.writing}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {nclcTable.map((row, i) => (
-                  <tr
-                    key={row.nclc}
-                    className={`${i < nclcTable.length - 1 ? "border-b border-[#15233B]/8" : ""} ${row.highlight ? "bg-[#e83848]/8" : ""}`}
-                  >
-                    <td className="px-5 py-3 font-['Syne'] font-extrabold text-[#15233B]">
+
+            <div className="sm:hidden divide-y divide-[#15233B]/8">
+              {nclcTable.map((row) => (
+                <div key={row.nclc} className={`p-4 ${row.highlight ? "bg-[#e83848]/8" : ""}`}>
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="font-['Syne'] font-extrabold text-[#15233B] text-sm leading-tight">
                       {row.nclc}
-                      {row.highlight && (
-                        <span className="ml-2 text-[10px] font-bold text-[#e83848] uppercase">{ui.nclcMin}</span>
-                      )}
-                    </td>
-                    <td className="px-5 py-3 text-sm text-[#3E4B62]">{row.oral}</td>
-                    <td className="px-5 py-3 text-sm text-[#3E4B62]">{row.listening}</td>
-                    <td className="px-5 py-3 text-sm text-[#3E4B62]">{row.reading}</td>
-                    <td className="px-5 py-3 text-sm text-[#3E4B62]">{row.written}</td>
+                    </span>
+                    {row.highlight && (
+                      <span className="text-[10px] font-bold text-[#e83848] uppercase shrink-0">{ui.nclcMin}</span>
+                    )}
+                  </div>
+                  <dl className="grid grid-cols-2 gap-x-3 gap-y-2.5">
+                    {(
+                      [
+                        ["speaking", row.oral],
+                        ["listening", row.listening],
+                        ["reading", row.reading],
+                        ["writing", row.written],
+                      ] as const
+                    ).map(([key, value]) => (
+                      <div key={key}>
+                        <dt className="text-[#546074] font-semibold uppercase tracking-wide text-[10px]">
+                          {ui.nclcCols[key]}
+                        </dt>
+                        <dd className="text-[#3E4B62] text-xs font-medium mt-0.5">{value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              ))}
+            </div>
+
+            <div className="hidden sm:block data-table-scroll">
+              <table className="immigration-data-table w-full min-w-[640px]">
+                <thead>
+                  <tr className="bg-[#FAF6EF] text-left">
+                    <th className="px-4 lg:px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#546074] whitespace-nowrap">
+                      {ui.nclcCols.nclc}
+                    </th>
+                    <th className="px-4 lg:px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#546074] whitespace-nowrap">
+                      {ui.nclcCols.speaking}
+                    </th>
+                    <th className="px-4 lg:px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#546074] whitespace-nowrap">
+                      {ui.nclcCols.listening}
+                    </th>
+                    <th className="px-4 lg:px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#546074] whitespace-nowrap">
+                      {ui.nclcCols.reading}
+                    </th>
+                    <th className="px-4 lg:px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#546074] whitespace-nowrap">
+                      {ui.nclcCols.writing}
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {nclcTable.map((row, i) => (
+                    <tr
+                      key={row.nclc}
+                      className={`${i < nclcTable.length - 1 ? "border-b border-[#15233B]/8" : ""} ${row.highlight ? "bg-[#e83848]/8" : ""}`}
+                    >
+                      <td className="px-4 lg:px-5 py-3 font-['Syne'] font-extrabold text-[#15233B] whitespace-nowrap">
+                        {row.nclc}
+                        {row.highlight && (
+                          <span className="ml-2 text-[10px] font-bold text-[#e83848] uppercase">{ui.nclcMin}</span>
+                        )}
+                      </td>
+                      <td className="px-4 lg:px-5 py-3 text-sm text-[#3E4B62] whitespace-nowrap">{row.oral}</td>
+                      <td className="px-4 lg:px-5 py-3 text-sm text-[#3E4B62] whitespace-nowrap">{row.listening}</td>
+                      <td className="px-4 lg:px-5 py-3 text-sm text-[#3E4B62] whitespace-nowrap">{row.reading}</td>
+                      <td className="px-4 lg:px-5 py-3 text-sm text-[#3E4B62] whitespace-nowrap">{row.written}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </section>
@@ -372,8 +411,9 @@ function ImmigratsiyaPage() {
             <h2 className="font-['Syne'] font-extrabold text-3xl lg:text-4xl leading-tight mb-4">{ui.quotaTitle}</h2>
             <p className="text-[#3E4B62] text-sm leading-relaxed">{ui.quotaBody}</p>
           </div>
-          <div className="reveal card overflow-hidden overflow-x-auto">
-            <table className="w-full min-w-[560px]">
+          <div className="reveal card overflow-hidden">
+            <div className="data-table-scroll">
+            <table className="immigration-data-table w-full min-w-[560px]">
               <thead>
                 <tr className="bg-[#15233B] text-white text-left">
                   <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider">{ui.quotaCols.year}</th>
@@ -395,7 +435,8 @@ function ImmigratsiyaPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+              </table>
+            </div>
           </div>
         </div>
       </section>

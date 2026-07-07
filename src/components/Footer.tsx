@@ -19,9 +19,9 @@ export function Footer() {
     <footer className="site-footer relative text-white">
       <div className="site-footer__brand flex flex-col items-center justify-center gap-3 py-8 sm:py-10 border-b border-white/10">
         <Link to="/" className="no-underline inline-flex group">
-          <BrandLogo size="xl" className="h-16 sm:h-24 md:h-28 group-hover:scale-[1.03] transition-transform" />
+          <BrandLogo size="xl" className="h-14 sm:h-24 md:h-28 group-hover:scale-[1.03] transition-transform" />
         </Link>
-        <p className="text-white/60 text-[10px] sm:text-xs tracking-[0.28em] sm:tracking-[0.35em] uppercase text-center px-4">
+        <p className="hidden sm:block text-white/60 text-[10px] sm:text-xs tracking-[0.28em] sm:tracking-[0.35em] uppercase text-center px-4">
           {t.footer.centerLabel}
         </p>
       </div>

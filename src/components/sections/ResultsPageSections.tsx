@@ -102,25 +102,27 @@ export function ResultsPageSections({ embedded = false }: Props) {
               </div>
             </div>
             <div className="reveal card overflow-hidden" data-delay={150}>
-              <div className="grid grid-cols-3 table-head-dark px-6 py-4">
-                <span className="text-white/80 text-xs font-bold uppercase tracking-wider">{ui.tableLevel}</span>
-                <span className="text-white/80 text-xs font-bold uppercase tracking-wider text-center">
-                  {ui.tableListening}
-                </span>
-                <span className="text-white/80 text-xs font-bold uppercase tracking-wider text-center">
-                  {ui.tableReading}
-                </span>
-              </div>
-              {tcfLevels.map((row, i) => (
-                <div
-                  key={row.level}
-                  className={`grid grid-cols-3 px-6 py-4 items-center ${i < tcfLevels.length - 1 ? "border-b border-[#15233B]/8" : ""} hover:bg-[#FAF6EF] transition-colors`}
-                >
-                  <span className={`font-['Syne'] font-extrabold ${row.c}`}>{row.level}</span>
-                  <span className="text-[#546074] text-sm text-center">{row.l}</span>
-                  <span className="text-[#546074] text-sm text-center">{row.r}</span>
+              <div className="data-table-scroll">
+                <div className="grid grid-cols-3 table-head-dark px-4 sm:px-6 py-3 sm:py-4 min-w-[280px]">
+                  <span className="text-white/80 text-[10px] sm:text-xs font-bold uppercase tracking-wider">{ui.tableLevel}</span>
+                  <span className="text-white/80 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-center">
+                    {ui.tableListening}
+                  </span>
+                  <span className="text-white/80 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-center">
+                    {ui.tableReading}
+                  </span>
                 </div>
-              ))}
+                {tcfLevels.map((row, i) => (
+                  <div
+                    key={row.level}
+                    className={`grid grid-cols-3 px-4 sm:px-6 py-3 sm:py-4 items-center min-w-[280px] ${i < tcfLevels.length - 1 ? "border-b border-[#15233B]/8" : ""} hover:bg-[#FAF6EF] transition-colors`}
+                  >
+                    <span className={`font-['Syne'] font-extrabold text-sm sm:text-base ${row.c}`}>{row.level}</span>
+                    <span className="text-[#546074] text-xs sm:text-sm text-center">{row.l}</span>
+                    <span className="text-[#546074] text-xs sm:text-sm text-center">{row.r}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
