@@ -22,7 +22,11 @@ export function Footer() {
           <div className="grid grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-10 pb-10 sm:pb-12 border-b footer-main-band__divider">
             <div className="col-span-2 lg:col-span-7">
               <Link to="/" className="no-underline inline-flex mb-5 group">
-                <BrandMark size="md" tone="dark" className="group-hover:scale-[1.02] transition-transform origin-left" />
+                <BrandMark
+                  size="md"
+                  tone="dark"
+                  className="group-hover:opacity-90 transition-opacity"
+                />
               </Link>
               <p className="footer-ink-soft text-sm leading-relaxed max-w-sm mb-6">{t.footer.aboutText}</p>
               <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2.5">

@@ -161,7 +161,7 @@ export function Navbar() {
         <div className="px-6 pt-7 pb-8 flex flex-col min-h-full">
           <div className="flex items-center justify-between mb-6">
             <Link to="/" onClick={() => setOpen(false)} className="no-underline flex items-center">
-              <BrandLogo size="xs" className="rounded-lg" />
+              <BrandMark size="sm" tone="light" />
             </Link>
             <button
               type="button"

@@ -1,15 +1,17 @@
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
+import { BrandEmblem } from "./BrandEmblem";
 
 type Props = {
   tone?: "light" | "dark";
   size?: "sm" | "md";
   className?: string;
+  showIcon?: boolean;
 };
 
-export function BrandMark({ tone = "light", size = "sm", className = "" }: Props) {
+export function BrandMark({ tone = "light", size = "sm", className = "", showIcon = true }: Props) {
   const { t } = useSitePreferences();
 
-  const iconSize = size === "sm" ? "h-10 w-10 sm:h-11 sm:w-11" : "h-11 w-11 sm:h-12 sm:w-12";
+  const emblemSize = size === "sm" ? "h-10 w-10 sm:h-11 sm:w-11" : "h-11 w-11 sm:h-12 sm:w-12";
   const titleSize = size === "sm" ? "text-[1.05rem] sm:text-lg" : "text-lg sm:text-xl";
   const subSize = size === "sm" ? "text-[8px] sm:text-[9px]" : "text-[9px] sm:text-[10px]";
 
@@ -18,15 +20,7 @@ export function BrandMark({ tone = "light", size = "sm", className = "" }: Props
 
   return (
     <div className={`flex items-center gap-2.5 sm:gap-3 min-w-0 ${className}`}>
-      <img
-        src="/image/saytlogotef.png"
-        alt=""
-        aria-hidden
-        className={`${iconSize} object-cover object-[50%_15%] shrink-0 rounded-full ring-1 ring-black/5`}
-        width={88}
-        height={88}
-        decoding="async"
-      />
+      {showIcon && <BrandEmblem className={emblemSize} />}
       <div className={`flex flex-col justify-center min-w-0 leading-none ${titleInk}`}>
         <span className={`font-['Syne'] font-extrabold ${titleSize} truncate`}>
           France <span className="text-[#e83848]">TCF</span>
