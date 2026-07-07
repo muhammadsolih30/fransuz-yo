@@ -20,23 +20,15 @@ export function Footer() {
     <footer className="site-footer relative text-white">
       <div className="site-footer__brand text-center py-10 sm:py-12 border-b border-white/10">
         <h2 className="font-['Syne'] font-extrabold leading-none tracking-tight text-[clamp(2.6rem,10vw,7rem)] animate-float-slow text-white">
-          France <span className="text-[#FF6600]">TCF</span>
+          France <span className="text-[#e83848]">TCF</span>
         </h2>
-        <p className="text-white/70 text-xs sm:text-sm mt-3 tracking-[0.35em] uppercase">{t.footer.centerLabel}</p>
+        <p className="text-white/65 text-xs sm:text-sm mt-3 tracking-[0.35em] uppercase">{t.footer.centerLabel}</p>
       </div>
 
-      <div className="footer-wave-wrap" aria-hidden>
-        <div className="footer-wave footer-wave-1" />
-        <div className="footer-wave footer-wave-2" />
-        <div className="footer-wave footer-wave-3" />
-      </div>
-
-      <div className="footer-orange-band relative overflow-hidden">
-        <div className="footer-orange-band__glow footer-orange-band__glow--tr" aria-hidden />
-        <div className="footer-orange-band__glow footer-orange-band__glow--bl" aria-hidden />
+      <div className="footer-main-band relative overflow-hidden">
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-12 sm:pb-16">
-          <div className="grid grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-10 pb-10 sm:pb-12 border-b footer-orange-band__divider">
+          <div className="grid grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-10 pb-10 sm:pb-12 border-b footer-main-band__divider">
             <div className="col-span-2 lg:col-span-7">
               <Link to="/" className="no-underline inline-block mb-5 group">
                 <BrandLogo size="md" className="rounded-xl group-hover:scale-105 transition-transform" />
@@ -101,7 +93,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="relative py-6 border-b footer-orange-band__divider overflow-hidden group">
+          <div className="relative py-6 border-b footer-main-band__divider overflow-hidden group">
             <div className="pointer-events-none absolute inset-y-0 left-0 w-20 z-10 footer-marquee-fade footer-marquee-fade--left" />
             <div className="pointer-events-none absolute inset-y-0 right-0 w-20 z-10 footer-marquee-fade footer-marquee-fade--right" />
             <div className="flex animate-marquee whitespace-nowrap group-hover:[animation-play-state:paused]">

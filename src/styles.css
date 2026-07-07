@@ -368,46 +368,29 @@
     color: #fff;
   }
 
-  /* ───── FOOTER — light / dark tokens ───── */
-  .site-footer__brand {
-    background: #2d2d2d;
-  }
-
-  html.dark .site-footer__brand {
+  /* ───── FOOTER — qora fon, oq matn ───── */
+  .site-footer {
     background: #0a0a0a;
   }
 
-  .footer-orange-band {
-    --footer-ink: #1a1208;
-    --footer-ink-soft: rgba(26, 18, 8, 0.78);
-    --footer-ink-faint: rgba(26, 18, 8, 0.55);
-    --footer-chip-bg: rgba(0, 0, 0, 0.08);
-    --footer-chip-border: rgba(0, 0, 0, 0.16);
-    --footer-chip-hover-bg: rgba(0, 0, 0, 0.88);
-    --footer-chip-hover-ink: #ffffff;
-    --footer-divider: rgba(0, 0, 0, 0.14);
-    --footer-marquee-fade: #ff6600;
-    --footer-theme-pill-bg: rgba(0, 0, 0, 0.06);
-    --footer-theme-pill-active-bg: #1a1208;
-    --footer-theme-pill-active-ink: #ffffff;
-    background: #ff6600;
-    color: var(--footer-ink);
+  .site-footer__brand {
+    background: #0a0a0a;
   }
 
-  html.dark .footer-orange-band {
-    --footer-ink: #f5e6d3;
-    --footer-ink-soft: rgba(245, 230, 211, 0.86);
-    --footer-ink-faint: rgba(245, 230, 211, 0.58);
-    --footer-chip-bg: rgba(255, 255, 255, 0.1);
-    --footer-chip-border: rgba(255, 255, 255, 0.16);
-    --footer-chip-hover-bg: rgba(255, 255, 255, 0.18);
+  .footer-main-band {
+    --footer-ink: #f0f3f6;
+    --footer-ink-soft: rgba(240, 243, 246, 0.82);
+    --footer-ink-faint: rgba(240, 243, 246, 0.55);
+    --footer-chip-bg: rgba(255, 255, 255, 0.07);
+    --footer-chip-border: rgba(255, 255, 255, 0.12);
+    --footer-chip-hover-bg: #e83848;
     --footer-chip-hover-ink: #ffffff;
-    --footer-divider: rgba(255, 255, 255, 0.14);
-    --footer-marquee-fade: #1a1208;
-    --footer-theme-pill-bg: rgba(255, 255, 255, 0.08);
-    --footer-theme-pill-active-bg: #f5e6d3;
-    --footer-theme-pill-active-ink: #1a1208;
-    background: #1a1208;
+    --footer-divider: rgba(255, 255, 255, 0.1);
+    --footer-marquee-fade: #0a0a0a;
+    --footer-theme-pill-bg: rgba(255, 255, 255, 0.06);
+    --footer-theme-pill-active-bg: #e83848;
+    --footer-theme-pill-active-ink: #ffffff;
+    background: #0a0a0a;
     color: var(--footer-ink);
   }
 
@@ -424,7 +407,7 @@
     color: var(--footer-ink-faint);
   }
 
-  .footer-orange-band__divider {
+  .footer-main-band__divider {
     border-color: var(--footer-divider);
   }
 
@@ -445,16 +428,16 @@
   }
 
   .footer-contact-link:hover {
-    color: var(--footer-chip-hover-ink);
+    color: #ff9aa5;
   }
 
   .footer-contact-link:hover .footer-ink,
   .footer-contact-link:hover .footer-ink-faint {
-    color: var(--footer-chip-hover-ink);
+    color: #ff9aa5;
   }
 
   .footer-marquee-link:hover {
-    color: var(--footer-chip-hover-ink);
+    color: #ff9aa5;
   }
 
   .footer-marquee-fade--left {
@@ -463,33 +446,6 @@
 
   .footer-marquee-fade--right {
     background: linear-gradient(to left, var(--footer-marquee-fade), transparent);
-  }
-
-  .footer-orange-band__glow {
-    position: absolute;
-    border-radius: 9999px;
-    pointer-events: none;
-    background: rgba(0, 0, 0, 0.05);
-    filter: blur(120px);
-  }
-
-  .footer-orange-band__glow--tr {
-    top: 0;
-    right: 0;
-    width: 400px;
-    height: 400px;
-  }
-
-  .footer-orange-band__glow--bl {
-    bottom: 0;
-    left: 0;
-    width: 350px;
-    height: 350px;
-    filter: blur(100px);
-  }
-
-  html.dark .footer-orange-band__glow {
-    background: rgba(255, 255, 255, 0.04);
   }
 
   .footer-theme-divider {
@@ -508,16 +464,13 @@
   .footer-theme-pill--idle:hover {
     background: var(--footer-chip-hover-bg);
     color: var(--footer-chip-hover-ink);
+    border-color: var(--footer-chip-hover-bg);
   }
 
   .footer-theme-pill--active {
     background: var(--footer-theme-pill-active-bg);
     color: var(--footer-theme-pill-active-ink);
     border-color: var(--footer-theme-pill-active-bg);
-  }
-
-  html.dark .footer-wave-wrap {
-    background: #0a0a0a;
   }
 
   /* Mobile drawer — dark mode */
