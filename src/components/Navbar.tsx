@@ -161,7 +161,7 @@ export function Navbar() {
         role="dialog"
         aria-modal={open}
         aria-label={a11y.menuOpen}
-        className={`lg:hidden fixed top-0 right-0 bottom-0 z-50 w-[85%] max-w-sm bg-white shadow-[-20px_0_60px_-20px_rgba(21,35,59,0.4)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform overflow-y-auto ${
+        className={`lg:hidden fixed top-0 right-0 bottom-0 z-50 w-[85%] max-w-sm mobile-nav-drawer bg-white shadow-[-20px_0_60px_-20px_rgba(21,35,59,0.4)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform overflow-y-auto ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >

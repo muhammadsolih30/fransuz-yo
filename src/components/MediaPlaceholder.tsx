@@ -39,7 +39,7 @@ export function MediaPlaceholder({
 
   return (
     <div
-      className={`relative overflow-hidden rounded-2xl border-2 border-dashed border-[#15233B]/15 ${aspectClass} bg-gradient-to-br ${gradients[type]} ${className}`}
+      className={`media-placeholder relative overflow-hidden rounded-2xl border-2 border-dashed border-[#15233B]/15 ${aspectClass} bg-gradient-to-br ${gradients[type]} ${className}`}
     >
       <div className="absolute inset-0 opacity-30 bg-dots" aria-hidden />
       <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">

@@ -84,14 +84,14 @@ export function LocaleThemeControls({
   }
 
   const pill =
-    "px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all duration-300 border border-black/15";
-  const activePill = "bg-black text-white border-black";
-  const idlePill = `bg-black/5 ${ink}`;
+    "px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all duration-300 border footer-theme-pill";
+  const activePill = "footer-theme-pill--active";
+  const idlePill = "footer-theme-pill--idle";
 
   return (
-    <div className="mt-6 pt-5 border-t border-black/15 space-y-4">
+    <div className="mt-6 pt-5 border-t footer-theme-divider space-y-4">
       <div>
-        <p className={`text-[10px] font-bold uppercase tracking-widest mb-2 ${inkFaint}`}>{t.footer.language}</p>
+        <p className="footer-ink-faint text-[10px] font-bold uppercase tracking-widest mb-2">{t.footer.language}</p>
         <div className="flex gap-1">
           {locales.map((l) => (
             <button
@@ -108,7 +108,7 @@ export function LocaleThemeControls({
       </div>
 
       <div>
-        <p className={`text-[10px] font-bold uppercase tracking-widest mb-2 ${inkFaint}`}>{t.footer.theme}</p>
+        <p className="footer-ink-faint text-[10px] font-bold uppercase tracking-widest mb-2">{t.footer.theme}</p>
         <div className="flex gap-1">
           {themes.map((th) => {
             const Icon = th.icon;
