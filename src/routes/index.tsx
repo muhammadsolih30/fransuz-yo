@@ -66,7 +66,7 @@ function TypedHeading({ segments }: { segments: readonly string[] }) {
     <h1
       key={reducedMotion ? "static" : cycle}
       data-no-reveal
-      className="stripe-display text-[clamp(1.85rem,6.8vw,5.5rem)] leading-[1.06] sm:leading-[1.02] mb-5 sm:mb-7 hero-heading text-balance px-1"
+      className="stripe-display text-[clamp(2rem,7.6vw,5.75rem)] leading-[1.06] sm:leading-[1.02] mb-5 sm:mb-7 hero-heading text-balance px-1"
     >
       {segments.map((seg, si) => {
         const isAccent = si === accentIndex;
@@ -160,7 +160,7 @@ function HomePage() {
 
           <TypedHeading segments={ui.headingSegments} />
 
-          <p className="hero-tagline text-[0.9375rem] sm:text-lg lg:text-xl leading-[1.55] sm:leading-relaxed mb-5 sm:mb-9 max-w-2xl mx-auto animate-slide-up delay-500 font-medium sm:font-semibold px-1">
+          <p className="hero-tagline text-[0.8125rem] sm:text-[0.9375rem] lg:text-base leading-[1.5] sm:leading-relaxed mb-5 sm:mb-9 max-w-2xl mx-auto animate-slide-up delay-500 font-normal sm:font-medium px-1">
             {heroTagline}
           </p>
 
