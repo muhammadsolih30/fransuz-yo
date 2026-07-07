@@ -2,6 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { Phone } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { BrandMark } from "./BrandMark";
+import { BrandLogo } from "./BrandLogo";
 import { PreferencesMenu } from "./PreferencesMenu";
 import { NavSiteLink } from "./NavSiteLink";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
@@ -76,10 +77,14 @@ export function Navbar() {
             className="no-underline flex items-center min-w-0 flex-1 lg:flex-none group"
             onClick={() => setOpen(false)}
           >
+            <BrandLogo
+              size="sm"
+              className="hidden lg:block !h-11 2xl:!h-12 w-auto group-hover:scale-[1.03] transition-transform shrink-0"
+            />
             <BrandMark
               size="sm"
               tone="light"
-              className="group-hover:scale-[1.01] transition-transform origin-left"
+              className="lg:hidden group-hover:scale-[1.01] transition-transform origin-left"
             />
           </Link>
 

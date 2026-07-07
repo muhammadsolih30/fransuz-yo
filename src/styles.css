@@ -1315,6 +1315,16 @@
     @apply inline-flex items-center gap-2 text-xs font-bold tracking-[0.25em] uppercase;
   }
 
+  /* ───── HERO OPENING BACKGROUND ───── */
+  .hero-opening-bg__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 42%;
+  }
+
   /* ───── YOUTUBE BACKGROUND VIDEO (cover) ───── */
   .yt-bg-scaler {
     position: absolute;
@@ -2833,6 +2843,10 @@ html.dark .hero-video-scrim {
 
   .footer-marquee__track {
     animation-duration: 14s !important;
+  }
+
+  .hero-opening-bg__image {
+    object-position: center 38%;
   }
 
   .yt-bg {

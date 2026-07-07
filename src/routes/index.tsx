@@ -13,7 +13,7 @@ import {
   Trophy,
   Users,
 } from "lucide-react";
-import { HeroVideoBg } from "../components/HeroVideoBg";
+import { HeroOpeningBg } from "../components/HeroOpeningBg";
 import { PageMeta } from "../components/PageMeta";
 import { FaqAccordion } from "../components/FaqAccordion";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
@@ -132,7 +132,7 @@ function HomePage() {
       <PageMeta page="home" path="/" />
 
       <section className="hero-section relative min-h-[88svh] sm:min-h-screen flex items-center pt-24 pb-14 sm:pt-28 sm:pb-20 overflow-hidden bg-[#faf6ef]">
-        <HeroVideoBg videoId="HfTkZmKK1b0" rate={1.2} endTrim={15} />
+        <HeroOpeningBg />
         <div className="absolute inset-0 hero-video-scrim pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#faf6ef]/30 via-transparent to-[#faf6ef]/70 sm:from-transparent sm:via-[#faf6ef]/5 sm:to-[#faf6ef]/45" />
         <div className="absolute -top-32 -right-20 w-[600px] h-[600px] rounded-full bg-[#e83848]/10 blur-[120px] animate-float-slow" />
