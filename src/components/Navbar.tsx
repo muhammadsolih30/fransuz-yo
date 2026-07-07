@@ -73,17 +73,20 @@ export function Navbar() {
         >
           <Link
             to="/"
-            className="no-underline flex items-center gap-2 sm:gap-3 group shrink-0 min-w-0"
+            className="no-underline flex items-center group shrink-0"
             onClick={() => setOpen(false)}
           >
-            <BrandLogo size="sm" className="group-hover:scale-105 transition-transform shrink-0" />
-            <span className="hidden sm:flex lg:hidden flex-col justify-center min-w-0 leading-tight">
-              <span className="font-['Syne'] font-extrabold text-base text-[#15233B] truncate">
-                France <span className="text-[#e83848]">TCF</span>
-              </span>
-              <span className="text-[9px] font-semibold tracking-[0.2em] uppercase text-[#646F82] truncate">
-                {t.footer.centerLabel}
-              </span>
+            <BrandLogo size="sm" className="!h-10 sm:!h-12 group-hover:scale-105 transition-transform shrink-0" />
+          </Link>
+
+          <Link
+            to="/"
+            onClick={() => setOpen(false)}
+            className="lg:hidden flex-1 min-w-0 no-underline flex items-center justify-center px-2 overflow-hidden text-center group"
+          >
+            <span className="font-['Syne'] font-extrabold text-[1.2rem] sm:text-[1.45rem] leading-none tracking-tight truncate max-w-full transition-transform group-hover:scale-[1.02]">
+              <span className="text-[#15233B]">France </span>
+              <span className="text-gradient-canada">TCF</span>
             </span>
           </Link>
 
@@ -120,7 +123,7 @@ export function Navbar() {
             </Link>
           </div>
 
-          <div className="lg:hidden flex items-center gap-1.5 shrink-0 justify-end">
+          <div className="lg:hidden flex items-center gap-1 shrink-0 justify-end">
             <PreferencesMenu />
             <button
               type="button"
