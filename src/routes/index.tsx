@@ -128,7 +128,7 @@ function HomePage() {
   );
 
   return (
-    <div className="site-page bg-white dark:bg-[#0d1117] text-[#15233B] dark:text-[#e6edf3] overflow-hidden">
+    <div className="site-page site-page--light bg-[#faf6ef] text-ink overflow-hidden">
       <PageMeta page="home" path="/" />
 
       <section className="hero-section relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden bg-[#faf6ef]">
@@ -243,14 +243,14 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="py-20 lg:py-28 bg-[#FAF6EF] relative">
+      <section className="site-section site-section--cream py-20 lg:py-28 relative">
         <div className="absolute inset-0 bg-dots opacity-50" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-14 reveal">
             <p className="eyebrow text-[#e83848] mb-4">
               <span className="w-8 h-px bg-[#e83848]" /> {ui.whyUsEyebrow}
             </p>
-            <h2 className="font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight">{ui.whyUsTitle}</h2>
+            <h2 className="section-heading font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight">{ui.whyUsTitle}</h2>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -258,13 +258,13 @@ function HomePage() {
               const Icon = f.icon;
               return (
                 <div key={f.title} className="reveal card card-hover p-7 group" data-delay={(i % 4) * 80}>
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#fcefec] to-[#f9ddd8] flex items-center justify-center mb-5 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#15233B]/10 to-[#2a5286]/15 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500">
                     <Icon className="w-6 h-6 text-[#e83848]" strokeWidth={1.8} />
                   </div>
-                  <h3 className="font-['Syne'] font-bold text-base mb-2 group-hover:text-[#e83848] transition-colors">
+                  <h3 className="card-title font-['Syne'] font-bold text-base mb-2 group-hover:text-[#e83848] transition-colors">
                     {f.title}
                   </h3>
-                  <p className="text-[#3E4B62] text-sm leading-relaxed">{f.desc}</p>
+                  <p className="section-body text-sm leading-relaxed">{f.desc}</p>
                 </div>
               );
             })}
@@ -272,15 +272,15 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="py-20 lg:py-28 bg-white">
+      <section className="site-section site-section--white py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div className="reveal">
               <p className="eyebrow text-[#e83848] mb-4">
                 <span className="w-8 h-px bg-[#e83848]" /> {ui.resultEyebrow}
               </p>
-              <h2 className="font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight mb-6">{ui.resultTitle}</h2>
-              <p className="text-[#3E4B62] text-lg leading-relaxed mb-8">{ui.resultBody}</p>
+              <h2 className="section-heading font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight mb-6">{ui.resultTitle}</h2>
+              <p className="section-body text-lg leading-relaxed mb-8">{ui.resultBody}</p>
               <div className="grid grid-cols-2 gap-4 mb-8">
                 {highlightStudent.scores.map((sc) => (
                   <div
@@ -331,37 +331,37 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="py-20 lg:py-28 bg-white relative overflow-hidden">
+      <section className="site-section site-section--white py-20 lg:py-28 relative overflow-hidden">
         <div className="absolute inset-0 bg-aurora opacity-70" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16 reveal">
             <p className="eyebrow text-[#e83848] mb-4 justify-center flex">
               <span className="w-8 h-px bg-[#e83848] self-center" /> {ui.processEyebrow}
             </p>
-            <h2 className="font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight">{ui.processTitle}</h2>
+            <h2 className="section-heading font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight">{ui.processTitle}</h2>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
             {ui.steps.map((s, i) => (
               <div key={s.n} className="reveal card card-hover relative p-7" data-delay={i * 90}>
-                <div className="font-['Syne'] font-extrabold text-5xl text-[#e83848]/15 mb-4">{s.n}</div>
-                <h3 className="font-['Syne'] font-bold text-lg mb-2 text-[#15233B]">{s.t}</h3>
-                <p className="text-[#3E4B62] text-sm leading-relaxed">{s.d}</p>
+                <div className="font-['Syne'] font-extrabold text-5xl text-[#2a5286]/20 mb-4">{s.n}</div>
+                <h3 className="card-title font-['Syne'] font-bold text-lg mb-2">{s.t}</h3>
+                <p className="section-body text-sm leading-relaxed">{s.d}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-20 lg:py-28 bg-[#FAF6EF]">
+      <section className="site-section site-section--cream py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-12 gap-12">
             <div className="lg:col-span-4 reveal">
               <p className="eyebrow text-[#e83848] mb-4">
                 <span className="w-8 h-px bg-[#e83848]" /> {ui.faqEyebrow}
               </p>
-              <h2 className="font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight mb-6">{ui.faqTitle}</h2>
-              <p className="text-[#3E4B62] text-base leading-relaxed mb-8">{ui.faqBody}</p>
+              <h2 className="section-heading font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight mb-6">{ui.faqTitle}</h2>
+              <p className="section-body text-base leading-relaxed mb-8">{ui.faqBody}</p>
               <div className="flex flex-wrap gap-3">
                 <Link to="/faq" className="btn-outline">
                   {shared.allFaq}

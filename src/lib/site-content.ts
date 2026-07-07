@@ -8,7 +8,6 @@ import {
   MessagesSquare,
   Rocket,
   ScrollText,
-  UserPlus,
 } from "lucide-react";
 
 export const centerStats = [
@@ -62,11 +61,6 @@ export const whyUs: { icon: LucideIcon; title: string; desc: string }[] = [
     icon: GraduationCap,
     title: "Academic support",
     desc: "Akademik yordam va imtihon strategiyalari bo'yicha qo'llab-quvvatlash.",
-  },
-  {
-    icon: UserPlus,
-    title: "Qo'shimcha o'qituvchi",
-    desc: "Har bir o'quvchi bilan individual ishlash uchun darsdan tashqari qo'shimcha o'qituvchi.",
   },
 ];
 

@@ -271,11 +271,55 @@
     color: #e6edf3 !important;
   }
 
-  html.dark main h1:not([class*="text-white"]):not([class*="text-[#e83848]"]),
-  html.dark main h2:not([class*="text-white"]):not([class*="text-[#e83848]"]),
-  html.dark main h3:not([class*="text-white"]):not([class*="text-[#e83848]"]),
-  html.dark main h4:not([class*="text-white"]):not([class*="text-[#e83848]"]) {
-    color: #e6edf3;
+  /* ───── Typography tokens (qora / qizil / ko'k palitra) ───── */
+  .text-ink {
+    color: #15233b;
+  }
+
+  .section-heading {
+    color: #15233b;
+  }
+
+  .card-title {
+    color: #15233b;
+  }
+
+  .section-body {
+    color: #3e4b62;
+  }
+
+  html.dark .text-ink,
+  html.dark .section-heading,
+  html.dark .card-title {
+    color: #e6edf3 !important;
+  }
+
+  html.dark .section-body {
+    color: #9aa4b2 !important;
+  }
+
+  .site-page--light {
+    background-color: #faf6ef;
+  }
+
+  html.dark .site-page--light {
+    background-color: #0d1117 !important;
+  }
+
+  .site-section--cream {
+    background-color: #faf6ef;
+  }
+
+  .site-section--white {
+    background-color: #ffffff;
+  }
+
+  html.dark .site-section--cream {
+    background-color: #0f1419 !important;
+  }
+
+  html.dark .site-section--white {
+    background-color: #121820 !important;
   }
 
   /* Sahifa hero — qora temada fon rasmi ustiga qorong'u qatlam */
@@ -524,14 +568,12 @@
   }
 
   /* FAQ accordion */
-  html.dark main .faq-accordion,
-  html.dark main .faq-accordion summary,
-  html.dark main .faq-accordion div {
-    color: #e6edf3;
+  html.dark main .faq-accordion .section-body {
+    color: #9aa4b2 !important;
   }
 
-  html.dark main .faq-accordion div {
-    color: #9aa4b2 !important;
+  html.dark main .faq-accordion summary .text-ink {
+    color: #e6edf3 !important;
   }
 
   /* Form controls */
@@ -1200,13 +1242,13 @@
 
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 text-white font-semibold px-8 py-4 rounded-2xl text-sm transition-all duration-300 no-underline;
-    background: linear-gradient(135deg, #f46868 0%, #e83848 55%, #e84858 100%);
-    box-shadow: 0 10px 30px -8px rgba(232, 56, 72, 0.45);
+    background: linear-gradient(135deg, #e83848 0%, #c42d3c 100%);
+    box-shadow: 0 8px 24px -8px rgba(232, 56, 72, 0.4);
   }
 
   .btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 20px 44px -12px rgba(232, 56, 72, 0.55);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px -8px rgba(232, 56, 72, 0.48);
   }
 
   .btn-primary:active {
@@ -1234,10 +1276,11 @@
   }
 
   .btn-outline:hover {
-    border-color: #15233b;
-    background: #ffffff;
-    transform: translateY(-3px);
-    box-shadow: 0 14px 32px -12px rgba(21, 35, 59, 0.28);
+    border-color: #2a5286;
+    color: #2a5286;
+    background: rgba(42, 82, 134, 0.06);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -12px rgba(42, 82, 134, 0.2);
   }
 
   .btn-outline:active {

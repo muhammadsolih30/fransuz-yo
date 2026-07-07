@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { BarChart3, MapPin, Phone } from "lucide-react";
 import { BrandLogo } from "./BrandLogo";
 import { InstagramIcon, TelegramIcon } from "./BrandIcons";
-import { LocaleThemeControls } from "./LocaleThemeControls";
 import { NavSiteLink } from "./NavSiteLink";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
 
@@ -88,8 +87,6 @@ export function Footer() {
                   </div>
                 </a>
               </div>
-
-              <LocaleThemeControls variant="footer" />
             </div>
           </div>
 

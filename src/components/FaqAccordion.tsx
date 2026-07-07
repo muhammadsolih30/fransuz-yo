@@ -10,7 +10,7 @@ export function FaqAccordion({ items }: Props) {
       {items.map((f, i) => (
         <details key={f.q} className="group card overflow-hidden reveal faq-accordion" data-delay={i * 60}>
           <summary className="flex items-center justify-between gap-4 p-5 sm:p-6 cursor-pointer list-none">
-            <span className="font-['Syne'] font-bold text-sm sm:text-base group-open:text-[#e83848] transition-colors pr-4">
+            <span className="font-['Syne'] font-bold text-sm sm:text-base text-ink group-open:text-[#e83848] transition-colors pr-4">
               {f.q}
             </span>
             <span
@@ -20,7 +20,7 @@ export function FaqAccordion({ items }: Props) {
               +
             </span>
           </summary>
-          <div className="text-[#3E4B62] text-sm leading-relaxed px-5 sm:px-6 pb-5 sm:pb-6 whitespace-pre-line">
+          <div className="section-body text-sm leading-relaxed px-5 sm:px-6 pb-5 sm:pb-6 whitespace-pre-line">
             {f.a}
           </div>
         </details>
