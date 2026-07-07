@@ -172,7 +172,8 @@ export const enUi = {
     oneMonthBadge: "⭐ 1-MONTH RESULT",
     feedbackEyebrow: "Feedback",
     feedbackTitle: "Student reviews",
-    feedbackSoon: "Video feedback and additional reviews coming soon...",
+    feedbackCtaBody: "Watch new video testimonials and success stories on our Telegram channel.",
+    feedbackCta: "Open Telegram channel",
     levelsEyebrow: "Reference",
     levelsTitle: "TCF score levels",
     levelsTip:

@@ -58,7 +58,7 @@ function GalereyaPage() {
 
   return (
     <div className="bg-white text-[#15233B] overflow-hidden">
-      <PageMeta page="gallery" />
+      <PageMeta page="gallery" path="/galereya" />
 
       <section className="relative pt-36 pb-16 overflow-hidden">
         <div

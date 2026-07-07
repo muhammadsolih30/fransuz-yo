@@ -117,8 +117,16 @@ export function ResultsPageSections({ embedded = false }: Props) {
               </div>
             ))}
           </div>
-          <div className="reveal mt-6 card border-2 border-dashed border-[#15233B]/15 p-8 text-center">
-            <p className="text-[#646F82] text-sm">{ui.feedbackSoon}</p>
+          <div className="reveal mt-8 flex flex-col items-center gap-4 rounded-2xl border border-[#15233B]/8 bg-[#FAF6EF] p-8 text-center">
+            <p className="text-[#3E4B62] text-sm max-w-md leading-relaxed">{ui.feedbackCtaBody}</p>
+            <a
+              href="https://t.me/France_TCF"
+              target="_blank"
+              rel="noreferrer"
+              className="btn-primary no-underline"
+            >
+              {ui.feedbackCta}
+            </a>
           </div>
         </div>
       </section>

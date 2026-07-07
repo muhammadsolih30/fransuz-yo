@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Award, ChevronRight, Headphones, BookOpen, PenLine, Mic } from "lucide-react";
 import type { StudentCertificate } from "../lib/certificates-content";
+import { useSitePreferences } from "../contexts/SitePreferencesContext";
 import { CertificateReveal } from "./CertificateReveal";
 import { MediaPlaceholder } from "./MediaPlaceholder";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
@@ -35,6 +36,7 @@ type Props = {
 
 export function CertificateStoryCard({ cert, index = 0, marquee = false, labels }: Props) {
   const [open, setOpen] = useState(false);
+  const { content } = useSitePreferences();
 
   const topLevel =
     cert.scores
@@ -108,7 +110,7 @@ export function CertificateStoryCard({ cert, index = 0, marquee = false, labels 
       </article>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="cert-story-dialog max-w-3xl border border-[#15233B]/10 p-0 gap-0 overflow-hidden rounded-2xl bg-white text-[#15233B]">
+        <DialogContent className="cert-story-dialog max-w-3xl border border-[#15233B]/10 p-0 gap-0 overflow-hidden rounded-2xl bg-white text-[#15233B]" closeLabel={content.ui.a11y.close}>
           <div className="cert-story-dialog__grid">
             {cert.image && (
               <div className="cert-story-dialog__image-col">

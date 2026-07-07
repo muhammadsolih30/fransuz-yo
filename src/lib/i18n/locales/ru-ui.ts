@@ -172,7 +172,8 @@ export const ruUi = {
     oneMonthBadge: "⭐ РЕЗУЛЬТАТ ЗА 1 МЕСЯЦ",
     feedbackEyebrow: "Отзывы",
     feedbackTitle: "Отзывы учеников",
-    feedbackSoon: "Видеоотзывы и дополнительные отзывы скоро...",
+    feedbackCtaBody: "Новые видеоотзывы и истории успеха — в нашем Telegram-канале.",
+    feedbackCta: "Перейти в Telegram",
     levelsEyebrow: "Справочник",
     levelsTitle: "Уровни баллов TCF",
     levelsTip:

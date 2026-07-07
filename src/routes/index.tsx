@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import {
   Briefcase,
   FileText,
@@ -15,13 +15,27 @@ import {
 } from "lucide-react";
 import { HeroVideoBg } from "../components/HeroVideoBg";
 import { PageMeta } from "../components/PageMeta";
-import { AboutPageSections } from "../components/sections/AboutPageSections";
-import { CoursesPageSections } from "../components/sections/CoursesPageSections";
-import { ResultsPageSections } from "../components/sections/ResultsPageSections";
-import { TeachersPageSections } from "../components/sections/TeachersPageSections";
+import { FaqAccordion } from "../components/FaqAccordion";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
 import { useHashScroll } from "../hooks/useHashScroll";
 import { useReducedMotion } from "../hooks/useReducedMotion";
+
+const AboutPageSections = lazy(() =>
+  import("../components/sections/AboutPageSections").then((m) => ({ default: m.AboutPageSections })),
+);
+const CoursesPageSections = lazy(() =>
+  import("../components/sections/CoursesPageSections").then((m) => ({ default: m.CoursesPageSections })),
+);
+const ResultsPageSections = lazy(() =>
+  import("../components/sections/ResultsPageSections").then((m) => ({ default: m.ResultsPageSections })),
+);
+const TeachersPageSections = lazy(() =>
+  import("../components/sections/TeachersPageSections").then((m) => ({ default: m.TeachersPageSections })),
+);
+
+function SectionSkeleton() {
+  return <div className="section-skeleton" aria-hidden />;
+}
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -114,8 +128,8 @@ function HomePage() {
   );
 
   return (
-    <div className="bg-white text-[#15233B] overflow-hidden">
-      <PageMeta page="home" />
+    <div className="site-page bg-white dark:bg-[#0d1117] text-[#15233B] dark:text-[#e6edf3] overflow-hidden">
+      <PageMeta page="home" path="/" />
 
       <section className="hero-section relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden bg-[#faf6ef]">
         <HeroVideoBg videoId="HfTkZmKK1b0" rate={1.2} endTrim={15} />
@@ -178,10 +192,18 @@ function HomePage() {
         </div>
       </section>
 
-      <AboutPageSections embedded />
-      <CoursesPageSections embedded />
-      <ResultsPageSections embedded />
-      <TeachersPageSections embedded />
+      <Suspense fallback={<SectionSkeleton />}>
+        <AboutPageSections embedded />
+      </Suspense>
+      <Suspense fallback={<SectionSkeleton />}>
+        <CoursesPageSections embedded />
+      </Suspense>
+      <Suspense fallback={<SectionSkeleton />}>
+        <ResultsPageSections embedded />
+      </Suspense>
+      <Suspense fallback={<SectionSkeleton />}>
+        <TeachersPageSections embedded />
+      </Suspense>
 
       <section className="relative py-7 bg-gradient-to-r from-[#ec5058] via-[#e83848] to-[#ec5058] overflow-hidden group">
         <div className="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-gradient-to-r from-[#e83848] to-transparent" />
@@ -350,20 +372,8 @@ function HomePage() {
               </div>
             </div>
 
-            <div className="lg:col-span-8 flex flex-col gap-3">
-              {faqs.map((f, i) => (
-                <details key={i} className="reveal group card overflow-hidden" data-delay={i * 60}>
-                  <summary className="flex items-center justify-between gap-4 p-6 cursor-pointer list-none">
-                    <span className="font-['Syne'] font-bold text-base group-open:text-[#e83848] transition-colors pr-4">
-                      {f.q}
-                    </span>
-                    <span className="flex-shrink-0 w-8 h-8 rounded-full bg-[#e83848]/10 text-[#e83848] flex items-center justify-center text-xl group-open:rotate-45 group-open:bg-[#e83848] group-open:text-white transition-all duration-300">
-                      +
-                    </span>
-                  </summary>
-                  <p className="text-[#3E4B62] text-sm leading-relaxed px-6 pb-6">{f.a}</p>
-                </details>
-              ))}
+            <div className="lg:col-span-8">
+              <FaqAccordion items={faqs} />
             </div>
           </div>
         </div>

@@ -14,7 +14,7 @@ function OmmaviyOfertaPage() {
 
   return (
     <div className="bg-white text-[#15233B]">
-      <PageMeta page="oferta" />
+      <PageMeta page="oferta" path="/ommaviy-oferta" />
 
       <section className="relative pt-36 pb-16 overflow-hidden bg-[#FAF6EF]">
         <div className="absolute inset-0 bg-aurora" />

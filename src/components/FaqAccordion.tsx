@@ -8,15 +8,15 @@ export function FaqAccordion({ items }: Props) {
   return (
     <div className="flex flex-col gap-3">
       {items.map((f, i) => (
-        <details
-          key={f.q}
-          className="group card overflow-hidden reveal"
-        >
+        <details key={f.q} className="group card overflow-hidden reveal faq-accordion" data-delay={i * 60}>
           <summary className="flex items-center justify-between gap-4 p-5 sm:p-6 cursor-pointer list-none">
             <span className="font-['Syne'] font-bold text-sm sm:text-base group-open:text-[#e83848] transition-colors pr-4">
               {f.q}
             </span>
-            <span className="shrink-0 w-8 h-8 rounded-full bg-[#e83848]/10 text-[#e83848] flex items-center justify-center text-xl group-open:rotate-45 group-open:bg-[#e83848] group-open:text-white transition-all duration-300">
+            <span
+              className="shrink-0 w-8 h-8 rounded-full bg-[#e83848]/10 text-[#e83848] flex items-center justify-center text-xl group-open:rotate-45 group-open:bg-[#e83848] group-open:text-white transition-all duration-300"
+              aria-hidden="true"
+            >
               +
             </span>
           </summary>

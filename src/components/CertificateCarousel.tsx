@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { StudentCertificate } from "../lib/certificates-content";
 import { CertificateStoryCard } from "./CertificateStoryCard";
 
@@ -15,6 +16,7 @@ type Props = {
 
 export function CertificateCarousel({ certificates, labels }: Props) {
   const loop = [...certificates, ...certificates];
+  const [paused, setPaused] = useState(false);
 
   return (
     <div className="cert-marquee-shell">
@@ -24,7 +26,13 @@ export function CertificateCarousel({ certificates, labels }: Props) {
         <p className="cert-marquee-shell__hint">{labels.scrollHint}</p>
       </div>
 
-      <div className="cert-marquee group" aria-label={labels.carouselAria}>
+      <div
+        className={`cert-marquee group ${paused ? "cert-marquee--paused" : ""}`}
+        aria-label={labels.carouselAria}
+        onTouchStart={() => setPaused(true)}
+        onTouchEnd={() => setPaused(false)}
+        onTouchCancel={() => setPaused(false)}
+      >
         <div
           className="cert-marquee__track"
           style={{ "--cert-count": certificates.length } as React.CSSProperties}

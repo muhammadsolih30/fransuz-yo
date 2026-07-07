@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { CourseCarousel } from "../CourseCarousel";
+import { FaqAccordion } from "../FaqAccordion";
 import { useSitePreferences } from "../../contexts/SitePreferencesContext";
 
 type Props = { embedded?: boolean };
@@ -127,20 +128,8 @@ export function CoursesPageSections({ embedded = false }: Props) {
                 {shared.contactArrow}
               </Link>
             </div>
-            <div className="lg:col-span-8 flex flex-col gap-3">
-              {courseFaqs.map((f, i) => (
-                <details key={i} className="reveal group card overflow-hidden" data-delay={i * 60}>
-                  <summary className="flex items-center justify-between gap-4 p-6 cursor-pointer list-none">
-                    <span className="font-['Syne'] font-bold text-base group-open:text-[#e83848] transition-colors pr-4">
-                      {f.q}
-                    </span>
-                    <span className="flex-shrink-0 w-8 h-8 rounded-full bg-[#e83848]/10 text-[#e83848] flex items-center justify-center text-xl group-open:rotate-45 group-open:bg-[#e83848] group-open:text-white transition-all duration-300">
-                      +
-                    </span>
-                  </summary>
-                  <p className="text-[#3E4B62] text-sm leading-relaxed px-6 pb-6">{f.a}</p>
-                </details>
-              ))}
+            <div className="lg:col-span-8">
+              <FaqAccordion items={courseFaqs} />
             </div>
           </div>
         </div>

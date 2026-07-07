@@ -51,7 +51,7 @@ export function RegisterModal() {
         if (!next) close();
       }}
     >
-      <DialogContent className="register-modal max-w-[19rem] sm:max-w-md border-0 p-0 gap-0 overflow-hidden rounded-2xl sm:rounded-3xl bg-white text-[#15233B]">
+      <DialogContent className="register-modal max-w-[19rem] sm:max-w-md border-0 p-0 gap-0 overflow-hidden rounded-2xl sm:rounded-3xl bg-white text-[#15233B]" closeLabel={content.ui.a11y.close}>
         <div className="relative bg-gradient-to-br from-[#f46868] via-[#e83848] to-[#e84858] px-5 pt-6 pb-9 sm:px-8 sm:pt-9 sm:pb-12 text-center overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(224,165,38,0.3),transparent_55%)]" />
           <div className="absolute -bottom-8 -left-6 w-28 h-28 rounded-full bg-white/10 blur-2xl" />

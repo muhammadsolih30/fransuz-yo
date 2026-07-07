@@ -18,7 +18,7 @@ function VakansiyaPage() {
 
   return (
     <div className="bg-white text-[#15233B] pb-4 lg:pb-0">
-      <PageMeta page="vacancy" />
+      <PageMeta page="vacancy" path="/vakansiya" />
 
       <section className="relative pt-36 pb-16 overflow-hidden">
         <div className="absolute -top-20 right-0 w-[500px] h-[500px] rounded-full bg-[#E0A526]/10 blur-[120px] animate-float-slow" />

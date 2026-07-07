@@ -6,7 +6,6 @@ import { BarChart3, MapPin, Phone } from "lucide-react";
 import { InstagramIcon, TelegramIcon } from "../components/BrandIcons";
 import { PageMeta } from "../components/PageMeta";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
-import { leadsStore } from "../lib/store";
 
 const CONTACT_HREFS = [
   "tel:+998947382221",
@@ -57,6 +56,7 @@ function BoglanishPage() {
     }
 
     try {
+      const { leadsStore } = await import("../lib/store");
       await leadsStore.add({
         ism: form.ism,
         telefon: form.telefon,
@@ -76,7 +76,7 @@ function BoglanishPage() {
 
   return (
     <div className="bg-white text-[#15233B] overflow-hidden">
-      <PageMeta page="contact" />
+      <PageMeta page="contact" path="/boglanish" />
 
       <section className="relative pt-36 pb-16 overflow-hidden page-hero">
         <div

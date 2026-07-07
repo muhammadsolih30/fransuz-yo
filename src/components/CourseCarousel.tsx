@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { useState } from "react";
 import type { CSSProperties } from "react";
 import { Banknote, Calendar, Clock, Users } from "lucide-react";
 import { GROUP_COURSE_IMAGES, type CourseCover, type CourseItem } from "../lib/courses-content";
@@ -36,10 +37,17 @@ function getLessonLength(course: CourseItem): string {
 
 export function CourseCarousel({ courses, labels }: Props) {
   const loop = [...courses, ...courses, ...courses];
+  const [paused, setPaused] = useState(false);
 
   return (
     <div className="course-marquee-shell">
-      <div className="course-marquee group" aria-label={labels.carouselAria}>
+      <div
+        className={`course-marquee group ${paused ? "course-marquee--paused" : ""}`}
+        aria-label={labels.carouselAria}
+        onTouchStart={() => setPaused(true)}
+        onTouchEnd={() => setPaused(false)}
+        onTouchCancel={() => setPaused(false)}
+      >
         <div
           className="course-marquee__track"
           style={{ "--course-count": courses.length } as CSSProperties}

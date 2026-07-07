@@ -170,7 +170,8 @@ export const uzUi = {
     oneMonthBadge: "⭐ 1 OYLIK NATIJA",
     feedbackEyebrow: "Feedbacklar",
     feedbackTitle: "O'quvchilar fikrlari",
-    feedbackSoon: "Video feedback va qo'shimcha sharhlar tez orada qo'shiladi...",
+    feedbackCtaBody: "Yangi video feedbacklar va o'quvchilar hikoyalari Telegram kanalimizda.",
+    feedbackCta: "Telegram kanalga o'tish",
     levelsEyebrow: "Ma'lumotnoma",
     levelsTitle: "TCF ball darajalari",
     levelsTip:

@@ -1612,7 +1612,8 @@ html.dark main .france-phone .PhoneInputCountrySelectArrow {
 }
 
 .cert-marquee:hover .cert-marquee__track,
-.cert-marquee:focus-within .cert-marquee__track {
+.cert-marquee:focus-within .cert-marquee__track,
+.cert-marquee--paused .cert-marquee__track {
   animation-play-state: paused;
 }
 
@@ -2024,6 +2025,111 @@ html.dark .course-slide-card__cta:hover {
   color: #58a6ff;
 }
 
+/* Certificate cards — dark mode */
+html.dark .cert-marquee-shell__count {
+  color: #e6edf3;
+  background: #161b22;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+html.dark .cert-marquee-shell__hint {
+  color: #8b949e;
+}
+
+html.dark .cert-slide-card {
+  background: #161b22;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 4px 6px -2px rgba(0, 0, 0, 0.2),
+    0 20px 48px -16px rgba(0, 0, 0, 0.35);
+}
+
+html.dark .cert-slide-card:hover {
+  border-color: rgba(232, 56, 72, 0.35);
+  box-shadow:
+    0 8px 12px -4px rgba(0, 0, 0, 0.25),
+    0 28px 56px -12px rgba(0, 0, 0, 0.45);
+}
+
+html.dark .cert-slide-card__name,
+html.dark .cert-slide-card__value {
+  color: #e6edf3;
+}
+
+html.dark .cert-slide-card__label,
+html.dark .cert-slide-card__story {
+  color: #8b949e;
+}
+
+html.dark .cert-slide-card__cta {
+  background: #21262d;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #e6edf3;
+}
+
+html.dark .cert-slide-card__cta:hover {
+  background: rgba(232, 56, 72, 0.15);
+  border-color: #e83848;
+  color: #ff7b88;
+}
+
+/* Lazy section placeholder */
+.section-skeleton {
+  min-height: 28rem;
+  margin: 0 auto;
+  max-width: 80rem;
+  border-radius: 1.5rem;
+  background: linear-gradient(
+    90deg,
+    rgba(21, 35, 59, 0.04) 0%,
+    rgba(21, 35, 59, 0.08) 50%,
+    rgba(21, 35, 59, 0.04) 100%
+  );
+  background-size: 200% 100%;
+  animation: section-skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+html.dark .section-skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.07) 50%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  background-size: 200% 100%;
+}
+
+@keyframes section-skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-skeleton {
+    animation: none;
+    background: rgba(21, 35, 59, 0.05);
+  }
+
+  html.dark .section-skeleton {
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* FAQ accordion a11y */
+.faq-accordion summary:focus-visible {
+  outline: 2px solid #e83848;
+  outline-offset: 2px;
+  border-radius: 0.75rem;
+}
+
+html.dark .faq-accordion summary:focus-visible {
+  outline-color: #ff7b88;
+}
+
 .course-section__eyebrow {
   display: inline-flex;
   align-items: center;
@@ -2083,7 +2189,8 @@ html.dark .course-slide-card__cta:hover {
 }
 
 .course-marquee:hover .course-marquee__track,
-.course-marquee:focus-within .course-marquee__track {
+.course-marquee:focus-within .course-marquee__track,
+.course-marquee--paused .course-marquee__track {
   animation-play-state: paused;
 }
 

@@ -16,7 +16,7 @@ function ProbniyDarsPage() {
 
   return (
     <div className="bg-white text-[#15233B] overflow-hidden">
-      <PageMeta page="trial" />
+      <PageMeta page="trial" path="/probniy-dars" />
 
       <section className="relative pt-36 pb-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#FAF6EF] via-white to-[#fcefec]" />

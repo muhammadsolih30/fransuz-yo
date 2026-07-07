@@ -31,7 +31,7 @@ function ImmigratsiyaPage() {
 
   return (
     <div className="bg-white text-[#15233B] overflow-hidden">
-      <PageMeta page="immigration" />
+      <PageMeta page="immigration" path="/immigratsiya" />
 
       <section className="relative pt-36 pb-20 overflow-hidden bg-[#FAF6EF]">
         <div className="absolute inset-0 bg-gradient-to-br from-[#FAF6EF] via-white to-[#fcefec]" />

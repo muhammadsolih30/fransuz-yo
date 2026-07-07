@@ -26,7 +26,7 @@ function FaqPage() {
 
   return (
     <div className="bg-white text-[#15233B] overflow-hidden">
-      <PageMeta page="faq" />
+      <PageMeta page="faq" path="/faq" />
 
       <section className="relative pt-36 pb-16 overflow-hidden bg-[#FAF6EF]">
         <div className="absolute -top-20 right-0 w-[500px] h-[500px] rounded-full bg-[#e83848]/10 blur-[120px]" />
