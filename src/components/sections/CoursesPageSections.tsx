@@ -30,8 +30,8 @@ export function CoursesPageSections({ embedded = false }: Props) {
         </div>
       </section>
 
-      <section className="course-marquee-section py-16 lg:py-24 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center reveal">
+      <section className="course-marquee-section py-10 sm:py-16 lg:py-24 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 sm:mb-12 text-center reveal">
           <p className="course-section__eyebrow">{ui.carouselEyebrow}</p>
           <h3 className="course-section__title">
             {ui.carouselTitleBefore}{" "}
@@ -57,27 +57,27 @@ export function CoursesPageSections({ embedded = false }: Props) {
         </div>
       </section>
 
-      <section className="py-20 lg:py-28 bg-[#FAF6EF] relative">
+      <section className="site-section site-section--cream py-12 sm:py-20 lg:py-28 relative">
         <div className="absolute inset-0 bg-dots opacity-50" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mb-14 reveal">
+          <div className="max-w-2xl mb-8 sm:mb-14 reveal">
             <p className="eyebrow text-[#e83848] mb-4">
               <span className="w-8 h-px bg-[#e83848]" /> {ui.programEyebrow}
             </p>
-            <h3 className="font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight">{ui.programTitle}</h3>
+            <h3 className="section-heading font-['Syne'] font-extrabold text-2xl sm:text-4xl lg:text-5xl leading-tight">{ui.programTitle}</h3>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
             {courseSubjects.map((s, i) => {
               const Icon = s.icon;
               return (
-                <div key={s.t} className="reveal card card-hover p-8 group" data-delay={(i % 3) * 100}>
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#eaf0f8] to-[#d6e3f3] flex items-center justify-center mb-5 group-hover:scale-110 group-hover:-rotate-6 transition-transform">
-                    <Icon className="w-7 h-7 text-[#15233B]" strokeWidth={1.8} />
+                <div key={s.t} className="reveal card card-hover p-4 sm:p-6 lg:p-8 group" data-delay={(i % 3) * 100}>
+                  <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#15233B]/8 to-[#2a5286]/15 flex items-center justify-center mb-3 sm:mb-5 group-hover:scale-110 group-hover:-rotate-6 transition-transform">
+                    <Icon className="w-5 h-5 sm:w-7 sm:h-7 text-[#e83848]" strokeWidth={1.8} />
                   </div>
-                  <h4 className="font-['Syne'] font-bold text-xl mb-3 group-hover:text-[#e83848] transition-colors">
+                  <h4 className="card-title font-['Syne'] font-bold text-sm sm:text-lg lg:text-xl mb-1.5 sm:mb-3 group-hover:text-[#e83848] transition-colors leading-snug">
                     {s.t}
                   </h4>
-                  <p className="text-[#3E4B62] text-sm leading-relaxed">{s.d}</p>
+                  <p className="section-body text-[0.7rem] sm:text-sm leading-relaxed line-clamp-4 sm:line-clamp-none">{s.d}</p>
                 </div>
               );
             })}

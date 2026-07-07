@@ -209,13 +209,6 @@ export function Navbar() {
               />
             ))}
             <Link
-              to="/galereya"
-              onClick={() => setOpen(false)}
-              className="no-underline text-[#15233B] hover:text-[#e83848] text-base font-bold py-3.5 border-b border-[#15233B]/8"
-            >
-              {t.nav.gallery}
-            </Link>
-            <Link
               to="/boglanish"
               onClick={() => setOpen(false)}
               className="no-underline text-[#15233B] hover:text-[#e83848] text-base font-bold py-3.5 border-b border-[#15233B]/8"
@@ -224,14 +217,14 @@ export function Navbar() {
             </Link>
           </nav>
 
-          <div className="mt-auto flex flex-col gap-3 pt-6">
-            <a href="tel:+998947382221" className="no-underline text-center text-[#15233B] font-bold text-base">
+          <div className="mt-auto flex flex-col gap-2.5 pt-5">
+            <a href="tel:+998947382221" className="no-underline text-center text-[#15233B] font-semibold text-sm">
               +998 94 738 22 21
             </a>
             <Link
               to="/boglanish"
               onClick={() => setOpen(false)}
-              className="no-underline bg-[#e83848] hover:bg-[#e84858] text-white font-semibold py-3.5 rounded-2xl text-center transition-all active:scale-[0.98] shadow-[0_10px_26px_-8px_rgba(232,56,72,0.6)]"
+              className="no-underline bg-[#e83848] hover:bg-[#e84858] text-white font-semibold py-2.5 rounded-xl text-center text-sm transition-all active:scale-[0.98] shadow-[0_8px_20px_-8px_rgba(232,56,72,0.55)]"
             >
               {t.common.register} →
             </Link>

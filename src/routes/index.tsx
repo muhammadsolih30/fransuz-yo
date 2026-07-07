@@ -81,7 +81,7 @@ function TypedHeading({ segments }: { segments: readonly string[] }) {
     <h1
       key={reducedMotion ? "static" : cycle}
       data-no-reveal
-      className="font-['Syne'] font-extrabold text-[clamp(2.7rem,7vw,5.6rem)] leading-[1.02] mb-6 hero-text-halo"
+      className="font-['Syne'] font-extrabold text-[clamp(1.75rem,7.2vw,5.6rem)] leading-[1.1] sm:leading-[1.02] mb-4 sm:mb-6 hero-text-halo text-balance px-1"
     >
       {segments.map((seg, si) => (
         <span key={si} style={{ color: colors[si], transition: "color 0.4s ease" }}>
@@ -131,9 +131,10 @@ function HomePage() {
     <div className="site-page site-page--light bg-[#faf6ef] text-ink overflow-hidden">
       <PageMeta page="home" path="/" />
 
-      <section className="hero-section relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden bg-[#faf6ef]">
+      <section className="hero-section relative min-h-[88svh] sm:min-h-screen flex items-center pt-24 pb-14 sm:pt-28 sm:pb-20 overflow-hidden bg-[#faf6ef]">
         <HeroVideoBg videoId="HfTkZmKK1b0" rate={1.2} endTrim={15} />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#faf6ef]/5 to-[#faf6ef]/45" />
+        <div className="absolute inset-0 hero-video-scrim pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#faf6ef]/30 via-transparent to-[#faf6ef]/70 sm:from-transparent sm:via-[#faf6ef]/5 sm:to-[#faf6ef]/45" />
         <div className="absolute -top-32 -right-20 w-[600px] h-[600px] rounded-full bg-[#e83848]/10 blur-[120px] animate-float-slow" />
         <div className="absolute -bottom-40 -left-20 w-[500px] h-[500px] rounded-full bg-[#E0A526]/10 blur-[120px] animate-float" />
 
@@ -148,11 +149,11 @@ function HomePage() {
 
           <TypedHeading segments={ui.headingSegments} />
 
-          <p className="hero-tagline text-lg lg:text-xl leading-relaxed mb-9 max-w-2xl mx-auto animate-slide-up delay-500 font-semibold">
+          <p className="hero-tagline text-base sm:text-lg lg:text-xl leading-relaxed mb-7 sm:mb-9 max-w-2xl mx-auto animate-slide-up delay-500 font-semibold px-1">
             {heroTagline}
           </p>
 
-          <div className="flex flex-wrap gap-4 justify-center mb-10 animate-slide-up delay-300">
+          <div className="hero-cta-row flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center mb-8 sm:mb-10 w-full max-w-sm sm:max-w-none animate-slide-up delay-300">
             <Link to="/boglanish" className="btn-primary">
               {shared.freeConsultation}
               <span aria-hidden>→</span>
