@@ -42,29 +42,14 @@ export const Route = createFileRoute("/")({
 });
 
 const headingPalettes = [
-  ["#15233b", "#e83848", "#15233b"],
-  ["#e83848", "#e0a526", "#e83848"],
-  ["#15233b", "#2a5286", "#e83848"],
-  ["#e84858", "#15233b", "#e0a526"],
+  ["rgba(255,255,255,0.95)", "rgba(255,255,255,0.95)", "accent"],
+  ["rgba(255,255,255,0.92)", "rgba(255,255,255,0.92)", "accent"],
 ];
-
-const marqueeIcons: Record<string, typeof Info> = {
-  haqimizda: Info,
-  kurslar: GraduationCap,
-  natijalar: Trophy,
-  ustoz: Users,
-  "/immigratsiya": Plane,
-  "/faq": HelpCircle,
-  "/probniy-dars": Gift,
-  "/vakansiya": Briefcase,
-  "/ommaviy-oferta": FileText,
-  "/galereya": ImageIcon,
-  "/boglanish": Phone,
-};
 
 function TypedHeading({ segments }: { segments: readonly string[] }) {
   const reducedMotion = useReducedMotion();
   const [cycle, setCycle] = useState(0);
+  const accentIndex = segments.length - 1;
 
   useEffect(() => {
     if (reducedMotion) return;
@@ -81,26 +66,47 @@ function TypedHeading({ segments }: { segments: readonly string[] }) {
     <h1
       key={reducedMotion ? "static" : cycle}
       data-no-reveal
-      className="font-['Syne'] font-extrabold text-[clamp(1.75rem,7.2vw,5.6rem)] leading-[1.1] sm:leading-[1.02] mb-4 sm:mb-6 hero-text-halo text-balance px-1"
+      className="stripe-display text-[clamp(1.85rem,6.8vw,5.5rem)] leading-[1.06] sm:leading-[1.02] mb-5 sm:mb-7 hero-heading text-balance px-1"
     >
-      {segments.map((seg, si) => (
-        <span key={si} style={{ color: colors[si], transition: "color 0.4s ease" }}>
-          {reducedMotion
-            ? seg
-            : Array.from(seg).map((ch, ci) => {
-                const delay = startDelay + charIndex * step;
-                charIndex += 1;
-                return (
-                  <span key={`${si}-${ci}`} className="char" style={{ animationDelay: `${delay}s` }}>
-                    {ch === " " ? "\u00A0" : ch}
-                  </span>
-                );
-              })}
-        </span>
-      ))}
+      {segments.map((seg, si) => {
+        const isAccent = si === accentIndex;
+        return (
+          <span
+            key={si}
+            className={isAccent ? "italic text-gradient-hero-accent" : undefined}
+            style={!isAccent ? { color: colors[si], transition: "color 0.4s ease" } : undefined}
+          >
+            {reducedMotion
+              ? seg
+              : Array.from(seg).map((ch, ci) => {
+                  const delay = startDelay + charIndex * step;
+                  charIndex += 1;
+                  return (
+                    <span key={`${si}-${ci}`} className="char" style={{ animationDelay: `${delay}s` }}>
+                      {ch === " " ? "\u00A0" : ch}
+                    </span>
+                  );
+                })}
+          </span>
+        );
+      })}
     </h1>
   );
 }
+
+const marqueeIcons: Record<string, typeof Info> = {
+  haqimizda: Info,
+  kurslar: GraduationCap,
+  natijalar: Trophy,
+  ustoz: Users,
+  "/immigratsiya": Plane,
+  "/faq": HelpCircle,
+  "/probniy-dars": Gift,
+  "/vakansiya": Briefcase,
+  "/ommaviy-oferta": FileText,
+  "/galereya": ImageIcon,
+  "/boglanish": Phone,
+};
 
 function HomePage() {
   useHashScroll();
@@ -128,18 +134,15 @@ function HomePage() {
   );
 
   return (
-    <div className="site-page site-page--light bg-[#faf6ef] text-ink overflow-hidden">
+    <div className="site-page site-page--light text-ink overflow-hidden">
       <PageMeta page="home" path="/" />
 
-      <section className="hero-section relative min-h-[88svh] sm:min-h-screen flex items-center pt-24 pb-14 sm:pt-28 sm:pb-20 overflow-hidden bg-[#faf6ef]">
+      <section className="hero-section relative min-h-[92svh] sm:min-h-screen flex items-center pt-24 pb-16 sm:pt-28 sm:pb-20 overflow-hidden">
         <HeroOpeningBg />
-        <div className="absolute inset-0 hero-video-scrim pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#faf6ef]/30 via-transparent to-[#faf6ef]/70 sm:from-transparent sm:via-[#faf6ef]/5 sm:to-[#faf6ef]/45" />
-        <div className="absolute -top-32 -right-20 w-[600px] h-[600px] rounded-full bg-[#e83848]/10 blur-[120px] animate-float-slow" />
-        <div className="absolute -bottom-40 -left-20 w-[500px] h-[500px] rounded-full bg-[#E0A526]/10 blur-[120px] animate-float" />
+        <div className="absolute inset-0 hero-canvas-scrim pointer-events-none" />
 
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center flex flex-col items-center">
-          <div className="chip mb-7 animate-slide-up-sm border-[#e83848]/15 text-[#e83848]">
+          <div className="hero-chip chip mb-6 sm:mb-7 animate-slide-up-sm">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e83848] opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#e83848]" />
@@ -154,39 +157,38 @@ function HomePage() {
           </p>
 
           <div className="hero-cta-row flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center mb-8 sm:mb-10 w-full max-w-sm sm:max-w-none animate-slide-up delay-300">
-            <Link to="/boglanish" className="btn-primary">
+            <Link to="/boglanish" className="btn-primary hero-btn-primary">
               {shared.freeConsultation}
               <span aria-hidden>→</span>
             </Link>
-            <Link to="/immigratsiya" className="btn-outline">
+            <Link to="/immigratsiya" className="btn-outline hero-btn-outline">
               {shared.expressEntry}
             </Link>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-2.5 mb-12 animate-slide-up delay-400">
+          <div className="flex flex-wrap items-center justify-center gap-2.5 mb-10 sm:mb-12 animate-slide-up delay-400">
             {ui.trustBadges.map((b) => (
-              <div
-                key={b}
-                className="flex items-center gap-2 text-sm text-[#15233B] font-semibold bg-white/70 backdrop-blur-sm border border-white/60 px-3.5 py-1.5 rounded-full shadow-sm"
-              >
-                <span className="text-[#E0A526]">✦</span>
+              <div key={b} className="hero-trust-pill">
+                <span className="text-[#e83848]" aria-hidden>
+                  ✦
+                </span>
                 {b}
               </div>
             ))}
           </div>
 
-          <div className="w-full max-w-3xl grid grid-cols-2 sm:grid-cols-4 gap-px rounded-3xl overflow-hidden border border-white/60 bg-white/60 backdrop-blur-md shadow-[var(--shadow-card)] animate-scale-in delay-500">
+          <div className="hero-stats-panel w-full max-w-3xl grid grid-cols-2 sm:grid-cols-4 gap-px rounded-2xl overflow-hidden animate-scale-in delay-500">
             {ui.heroStats.map((s) => (
-              <div key={s.label} className="bg-white/40 px-4 py-5">
-                <div className="font-['Syne'] font-extrabold text-2xl lg:text-3xl text-gradient-canada">{s.num}</div>
-                <div className="text-[#546074] text-xs font-medium mt-1">{s.label}</div>
+              <div key={s.label} className="hero-stats-panel__cell px-4 py-5 text-center">
+                <div className="hero-stats-panel__num">{s.num}</div>
+                <div className="hero-stats-panel__label">{s.label}</div>
               </div>
             ))}
           </div>
 
-          <div className="mt-12 hidden sm:flex flex-col items-center gap-2 text-[#646F82] animate-float">
+          <div className="mt-10 sm:mt-12 hidden sm:flex flex-col items-center gap-2 text-white/80 animate-float">
             <span className="text-[10px] font-semibold tracking-[0.25em] uppercase">{shared.scrollDown}</span>
-            <span className="w-6 h-10 rounded-full border-2 border-[#15233B]/20 flex items-start justify-center p-1.5">
+            <span className="w-6 h-10 rounded-full border-2 border-white/50 flex items-start justify-center p-1.5">
               <span className="w-1 h-2 rounded-full bg-[#e83848]" />
             </span>
           </div>
@@ -206,9 +208,9 @@ function HomePage() {
         <TeachersPageSections embedded />
       </Suspense>
 
-      <section className="relative py-7 bg-[#15233B] dark:bg-[#0d1117] overflow-hidden group site-nav-marquee">
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-gradient-to-r from-[#15233B] dark:from-[#0d1117] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 z-10 bg-gradient-to-l from-[#15233B] dark:from-[#0d1117] to-transparent" />
+      <section className="relative py-7 stripe-mesh-dark overflow-hidden group site-nav-marquee border-y border-white/8">
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-gradient-to-r from-[#0a1628] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 z-10 bg-gradient-to-l from-[#0a1628] to-transparent" />
         <div className="flex animate-marquee site-nav-marquee__track whitespace-nowrap group-hover:[animation-play-state:paused]">
           {[...Array(2)].map((_, dup) => (
             <div key={dup} className="flex items-center shrink-0">
@@ -244,14 +246,13 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="site-section site-section--cream py-20 lg:py-28 relative">
-        <div className="absolute inset-0 bg-dots opacity-50" />
+      <section className="site-section site-section--cream py-20 lg:py-28 relative section-ambient">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-14 reveal">
             <p className="eyebrow text-[#e83848] mb-4">
               <span className="w-8 h-px bg-[#e83848]" /> {ui.whyUsEyebrow}
             </p>
-            <h2 className="section-heading font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight">{ui.whyUsTitle}</h2>
+            <h2 className="stripe-display section-heading text-4xl lg:text-5xl leading-tight">{ui.whyUsTitle}</h2>
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
@@ -286,7 +287,7 @@ function HomePage() {
                 {highlightStudent.scores.map((sc) => (
                   <div
                     key={sc.s}
-                    className="rounded-2xl p-5 bg-[#FAF6EF] border border-[#15233B]/8 hover:border-[#e83848]/25 hover:-translate-y-1 transition-all"
+                    className="rounded-2xl p-5 bg-[var(--surface-soft)] border border-[#15233B]/8 hover:border-[#e83848]/25 hover:-translate-y-1 transition-all"
                   >
                     <div className="flex items-baseline justify-between mb-1">
                       <span className="font-['Syne'] font-extrabold text-2xl text-[#e83848]">{sc.l}</span>
@@ -324,16 +325,15 @@ function HomePage() {
                   </p>
                   <div className="text-[#646F82] text-sm mt-3 font-semibold">{ui.resultAuthor}</div>
                 </div>
-                <div className="absolute -top-6 -right-6 w-28 h-28 rounded-full border-4 border-[#E0A526]/30 animate-float" />
-                <div className="absolute -bottom-6 -left-6 w-20 h-20 rounded-full border-4 border-[#e83848]/20 animate-float-slow" />
+                <div className="absolute -top-6 -right-6 w-28 h-28 rounded-full border-4 border-[#e83848]/15 animate-float" />
+                <div className="absolute -bottom-6 -left-6 w-20 h-20 rounded-full border-4 border-[#2a5286]/15 animate-float-slow" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="site-section site-section--white py-20 lg:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-aurora opacity-70" />
+      <section className="site-section site-section--white py-20 lg:py-28 relative overflow-hidden section-ambient">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16 reveal">
             <p className="eyebrow text-[#e83848] mb-4 justify-center flex">

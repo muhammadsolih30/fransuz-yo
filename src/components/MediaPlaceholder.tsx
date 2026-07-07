@@ -28,9 +28,9 @@ export function MediaPlaceholder({
         : "aspect-square";
 
   const gradients = {
-    photo: "from-[#eaf0f8] via-[#fcefec] to-[#FAF6EF]",
-    video: "from-[#fef3f3] via-[#fce8e8] to-[#f9ddd8]",
-    certificate: "from-[#FAF6EF] via-white to-[#f9ddd8]",
+    photo: "from-[#eaf0f8] via-[#f4f7fc] to-[#eef2f8]",
+    video: "from-[#e8eef8] via-[#f4f7fc] to-[#eef2f8]",
+    certificate: "from-[#eef2f8] via-white to-[#e8eef8]",
   };
 
   const Icon = type === "photo" ? Camera : type === "video" ? Play : ScrollText;
@@ -47,13 +47,13 @@ export function MediaPlaceholder({
           className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-3 ${
             videoStyle
               ? "bg-[#e83848] text-white shadow-[0_8px_20px_-8px_rgba(232,56,72,0.5)]"
-              : "bg-white border border-[#15233B]/10 shadow-sm text-[#e83848]"
+              : "bg-white border border-[#15233B]/10 shadow-sm text-[#e83848] dark:bg-[#1a2332] dark:border-white/12"
           }`}
         >
           <Icon className="w-6 h-6" strokeWidth={1.8} fill={type === "video" ? "currentColor" : "none"} />
         </div>
-        <p className="font-['Syne'] font-bold text-sm text-[#15233B]">{label}</p>
-        <p className="text-xs mt-1 text-[#546074] font-medium">{resolvedSublabel}</p>
+        <p className="card-title font-['Syne'] font-bold text-sm">{label}</p>
+        <p className="section-body text-xs mt-1 font-medium">{resolvedSublabel}</p>
       </div>
       {type === "certificate" && (
         <>

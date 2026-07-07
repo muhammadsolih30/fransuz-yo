@@ -10,13 +10,12 @@ export function ResultsPageSections({ embedded = false }: Props) {
   const ui = content.ui.results;
 
   const heroClass = embedded
-    ? "relative py-16 lg:py-20 overflow-hidden scroll-mt-28"
-    : "relative pt-36 pb-20 overflow-hidden";
+    ? "section-intro relative py-16 lg:py-20 overflow-hidden scroll-mt-28"
+    : "section-intro relative pt-36 pb-20 overflow-hidden";
 
   return (
     <div id="natijalar" className="scroll-mt-28">
       <section className={heroClass}>
-        <div className="absolute -top-20 left-1/3 w-[500px] h-[500px] rounded-full bg-[#e83848]/10 blur-[120px] animate-float-slow" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="eyebrow text-[#e83848] mb-4">
             <span className="w-8 h-px bg-[#e83848]" /> {ui.eyebrow}
@@ -51,12 +50,7 @@ export function ResultsPageSections({ embedded = false }: Props) {
         </div>
       </section>
 
-      <section className="py-24 lg:py-32 relative overflow-hidden scroll-mt-28">
-        <div className="absolute inset-0 bg-[#FAF6EF]" />
-        <div className="absolute top-0 left-1/4 w-[600px] h-[400px] rounded-full bg-[#e83848]/6 blur-[100px]" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[350px] rounded-full bg-[#E0A526]/8 blur-[90px]" />
-        <div className="absolute inset-0 bg-dots opacity-30" />
-
+      <section className="site-section site-section--cream py-24 lg:py-32 relative overflow-hidden scroll-mt-28 section-ambient">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-10 lg:mb-14 reveal">
             <span className="inline-flex items-center px-5 py-2 rounded-full bg-white border border-[#e83848]/15 text-[#e83848] text-xs font-bold uppercase tracking-wider mb-6 shadow-sm">

@@ -122,7 +122,7 @@ export function CertificateStoryCard({ cert, index = 0, marquee = false, labels 
                 <p className="text-[11px] font-bold uppercase tracking-widest text-[#e83848]">
                   {cert.certType}
                 </p>
-                <DialogTitle className="font-['Syne'] text-2xl font-extrabold text-[#15233B]">
+                <DialogTitle className="cert-story-dialog__title">
                   {cert.name}
                 </DialogTitle>
               </DialogHeader>
@@ -135,19 +135,17 @@ export function CertificateStoryCard({ cert, index = 0, marquee = false, labels 
                       return (
                         <div key={sc.skill} className="cert-story-dialog__score">
                           <div className="flex items-center gap-1.5 mb-1">
-                            <Icon className="w-3.5 h-3.5 text-[#8b97a8]" />
-                            <span className="text-[10px] font-semibold text-[#8b97a8] uppercase">
-                              {sc.skill}
-                            </span>
+                            <Icon className="w-3.5 h-3.5 text-[#546074]" />
+                            <span className="cert-story-dialog__score-label">{sc.skill}</span>
                           </div>
                           <div className="flex items-baseline justify-between gap-2">
                             <span
-                              className={`font-['Syne'] font-extrabold text-lg ${LEVEL_CLASS[sc.level] ? `cert-level-text ${LEVEL_CLASS[sc.level]}` : ""}`}
+                              className={`cert-story-dialog__score-level ${LEVEL_CLASS[sc.level] ? `cert-level-text ${LEVEL_CLASS[sc.level]}` : ""}`}
                             >
                               {sc.level}
                             </span>
                             {sc.value && (
-                              <span className="text-[10px] text-[#8b97a8]">{sc.value}</span>
+                              <span className="cert-story-dialog__score-value">{sc.value}</span>
                             )}
                           </div>
                         </div>

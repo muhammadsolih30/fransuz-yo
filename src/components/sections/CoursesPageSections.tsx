@@ -12,13 +12,12 @@ export function CoursesPageSections({ embedded = false }: Props) {
   const shared = content.ui.shared;
 
   const heroClass = embedded
-    ? "relative py-16 lg:py-20 overflow-hidden scroll-mt-28"
-    : "relative pt-36 pb-20 overflow-hidden";
+    ? "section-intro relative py-16 lg:py-20 overflow-hidden scroll-mt-28"
+    : "section-intro relative pt-36 pb-20 overflow-hidden";
 
   return (
     <div id="kurslar" className="scroll-mt-28">
       <section className={heroClass}>
-        <div className="absolute -top-20 right-0 w-[500px] h-[500px] rounded-full bg-[#e83848]/10 blur-[120px] animate-float-slow" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="eyebrow text-[#e83848] mb-4 animate-slide-up-sm">
             <span className="w-8 h-px bg-[#e83848]" /> {ui.eyebrow}

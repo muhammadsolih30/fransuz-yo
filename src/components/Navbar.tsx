@@ -63,8 +63,8 @@ export function Navbar() {
   }, [open]);
 
   const headerShell = scrolled
-    ? "bg-white/85 backdrop-blur-2xl shadow-[0_10px_40px_-12px_rgba(21,35,59,0.25)] border border-white/80"
-    : "bg-white/75 backdrop-blur-xl shadow-[0_8px_32px_-16px_rgba(21,35,59,0.2)] border border-white/60";
+    ? "bg-white/92 backdrop-blur-xl border border-[#15233B]/10 shadow-[0_1px_3px_rgba(21,35,59,0.06)]"
+    : "bg-white/88 backdrop-blur-lg border border-[#15233B]/8 shadow-[0_1px_2px_rgba(21,35,59,0.04)]";
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 lg:px-6 pt-3 sm:pt-4">

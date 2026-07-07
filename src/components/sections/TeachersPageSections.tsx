@@ -10,13 +10,12 @@ export function TeachersPageSections({ embedded = false }: Props) {
   const shared = content.ui.shared;
 
   const heroClass = embedded
-    ? "relative py-16 lg:py-20 overflow-hidden scroll-mt-28"
-    : "relative pt-36 pb-20 overflow-hidden";
+    ? "section-intro relative py-16 lg:py-20 overflow-hidden scroll-mt-28"
+    : "section-intro relative pt-36 pb-20 overflow-hidden";
 
   return (
     <div id="ustoz" className="scroll-mt-28">
       <section className={heroClass}>
-        <div className="absolute -top-20 right-0 w-[500px] h-[500px] rounded-full bg-[#E0A526]/10 blur-[120px] animate-float-slow" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="eyebrow text-[#e83848] mb-4">
             <span className="w-8 h-px bg-[#e83848]" /> {ui.eyebrow}
@@ -85,14 +84,13 @@ export function TeachersPageSections({ embedded = false }: Props) {
         </div>
       </section>
 
-      <section className="py-20 lg:py-28 bg-[#FAF6EF] relative">
-        <div className="absolute inset-0 bg-dots opacity-50" />
+      <section className="site-section site-section--cream py-20 lg:py-28 relative">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-14 reveal">
             <p className="eyebrow text-[#e83848] mb-4">
               <span className="w-8 h-px bg-[#e83848]" /> {ui.valuesEyebrow}
             </p>
-            <h3 className="font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight">{ui.valuesTitle}</h3>
+            <h3 className="stripe-display section-heading text-4xl lg:text-5xl leading-tight">{ui.valuesTitle}</h3>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {teacherValues.map((v, i) => {
@@ -102,10 +100,10 @@ export function TeachersPageSections({ embedded = false }: Props) {
                   <div className="feature-card-compact__icon bg-gradient-to-br from-[#eaf0f8] to-[#d6e3f3]">
                     <Icon className="w-5 h-5 sm:w-7 sm:h-7 text-[#15233B]" strokeWidth={1.8} />
                   </div>
-                  <h4 className="feature-card-compact__title group-hover:text-[#e83848] transition-colors">
+                  <h4 className="feature-card-compact__title card-title group-hover:text-[#e83848] transition-colors">
                     {v.t}
                   </h4>
-                  <p className="feature-card-compact__desc">{v.d}</p>
+                  <p className="feature-card-compact__desc section-body">{v.d}</p>
                 </div>
               );
             })}

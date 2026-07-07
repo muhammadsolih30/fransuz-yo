@@ -14,13 +14,12 @@ export function AboutPageSections({ embedded = false }: Props) {
   const titleRest = titleWords.slice(2).join(" ");
 
   const heroClass = embedded
-    ? "relative py-16 lg:py-20 overflow-hidden scroll-mt-28"
-    : "relative pt-36 pb-20 overflow-hidden";
+    ? "section-intro relative py-16 lg:py-20 overflow-hidden scroll-mt-28"
+    : "section-intro relative pt-36 pb-20 overflow-hidden";
 
   return (
     <div id="haqimizda" className="scroll-mt-28">
       <section className={heroClass}>
-        <div className="absolute -top-20 right-0 w-[500px] h-[500px] rounded-full bg-[#e83848]/10 blur-[120px] animate-float-slow" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="eyebrow text-[#e83848] mb-4 animate-slide-up-sm">
             <span className="w-8 h-px bg-[#e83848]" /> {ui.eyebrow}
@@ -106,10 +105,10 @@ export function AboutPageSections({ embedded = false }: Props) {
                   <div className="feature-card-compact__icon bg-gradient-to-br from-[#fcefec] to-[#f9ddd8]">
                     <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-[#e83848]" strokeWidth={1.8} />
                   </div>
-                  <h4 className="feature-card-compact__title group-hover:text-[#e83848] transition-colors">
+                  <h4 className="feature-card-compact__title card-title group-hover:text-[#e83848] transition-colors">
                     {f.title}
                   </h4>
-                  <p className="feature-card-compact__desc">{f.desc}</p>
+                  <p className="feature-card-compact__desc section-body">{f.desc}</p>
                 </div>
               );
             })}

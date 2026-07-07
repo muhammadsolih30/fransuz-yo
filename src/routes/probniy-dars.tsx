@@ -16,22 +16,21 @@ function ProbniyDarsPage() {
   const shared = content.ui.shared;
 
   return (
-    <div className="bg-white text-[#15233B] overflow-hidden">
+    <div className="site-page site-page--light text-ink overflow-hidden">
       <PageMeta page="trial" path="/probniy-dars" />
 
-      <section className="relative pt-36 pb-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#FAF6EF] via-white to-[#fcefec]" />
-        <div className="absolute top-20 right-0 w-[400px] h-[400px] rounded-full bg-[#e83848]/10 blur-[120px] animate-float-slow" />
+      <section className="section-intro relative pt-36 pb-20 overflow-hidden">
+        <div className="absolute inset-0 page-hero-mesh" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="inline-flex items-center gap-2 bg-[#e83848]/10 border border-[#e83848]/20 px-4 py-2 rounded-full text-xs font-bold text-[#e83848] mb-6">
                 {ui.badge}
               </div>
-              <h1 className="font-['Syne'] font-extrabold text-[clamp(2.4rem,7vw,4rem)] leading-[1.02] mb-5">
+              <h1 className="stripe-display section-heading text-[clamp(2.4rem,7vw,4rem)] leading-[1.02] mb-5">
                 {ui.title}
               </h1>
-              <p className="text-[#3E4B62] text-lg leading-relaxed mb-8">{ui.subtitle}</p>
+              <p className="section-body text-lg leading-relaxed mb-8">{ui.subtitle}</p>
               <div className="flex flex-wrap gap-4">
                 <Link to="/boglanish" className="btn-primary no-underline">
                   {ui.cta}
@@ -48,7 +47,7 @@ function ProbniyDarsPage() {
             </div>
 
             <div className="relative">
-              <div className="card p-6 sm:p-8 lg:p-10 bg-white border-2 border-[#e83848]/12 shadow-[var(--shadow-card)]">
+              <div className="card p-6 sm:p-8 lg:p-10 border-2 border-[#e83848]/12 shadow-[var(--shadow-card)]">
                 <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-6">
                   {ui.videos.map((video) => (
                     <MediaPlaceholder
@@ -63,7 +62,7 @@ function ProbniyDarsPage() {
                 </div>
                 <ul className="space-y-3.5">
                   {ui.steps.map((s, i) => (
-                    <li key={s} className="flex items-start gap-3 text-sm text-[#15233B] font-medium leading-relaxed">
+                    <li key={s} className="flex items-start gap-3 text-sm section-body font-medium leading-relaxed">
                       <span className="shrink-0 w-7 h-7 rounded-lg bg-[#e83848] text-white font-['Syne'] font-bold text-xs flex items-center justify-center mt-0.5">
                         {i + 1}
                       </span>
@@ -80,13 +79,13 @@ function ProbniyDarsPage() {
         </div>
       </section>
 
-      <section className="py-20 lg:py-28 bg-[#FAF6EF]">
+      <section className="site-section site-section--cream py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-12 reveal">
             <p className="eyebrow text-[#e83848] mb-4">
               <span className="w-8 h-px bg-[#e83848]" /> {ui.benefitsEyebrow}
             </p>
-            <h2 className="font-['Syne'] font-extrabold text-4xl leading-tight">{ui.benefitsTitle}</h2>
+            <h2 className="stripe-display section-heading text-4xl leading-tight">{ui.benefitsTitle}</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {ui.benefits.map((b, i) => {
@@ -96,8 +95,8 @@ function ProbniyDarsPage() {
                   <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#fcefec] to-[#f9ddd8] flex items-center justify-center mb-4">
                     <Icon className="w-6 h-6 text-[#e83848]" strokeWidth={1.8} />
                   </div>
-                  <h3 className="font-['Syne'] font-bold text-base mb-2">{b.title}</h3>
-                  <p className="text-[#3E4B62] text-sm leading-relaxed">{b.desc}</p>
+                  <h3 className="card-title font-['Syne'] font-bold text-base mb-2">{b.title}</h3>
+                  <p className="section-body text-sm leading-relaxed">{b.desc}</p>
                 </div>
               );
             })}

@@ -31,12 +31,11 @@ function ImmigratsiyaPage() {
   const shared = content.ui.shared;
 
   return (
-    <div className="bg-white text-[#15233B] overflow-hidden">
+    <div className="site-page site-page--light text-ink overflow-hidden">
       <PageMeta page="immigration" path="/immigratsiya" />
 
-      <section className="relative pt-36 pb-20 overflow-hidden bg-[#FAF6EF]">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#FAF6EF] via-white to-[#fcefec]" />
-        <div className="absolute -top-20 right-0 w-[500px] h-[500px] rounded-full bg-[#e83848]/8 blur-[120px] animate-float-slow" />
+      <section className="section-intro relative pt-36 pb-20 overflow-hidden">
+        <div className="absolute inset-0 page-hero-mesh" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="eyebrow text-[#e83848] mb-4">
             <span className="w-8 h-px bg-[#e83848]" /> {ui.eyebrow}
