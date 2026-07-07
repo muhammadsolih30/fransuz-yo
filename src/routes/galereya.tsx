@@ -60,11 +60,12 @@ function GalereyaPage() {
     <div className="bg-white text-[#15233B] overflow-hidden">
       <PageMeta page="gallery" path="/galereya" />
 
-      <section className="relative pt-36 pb-16 overflow-hidden">
+      <section className="relative pt-36 pb-16 overflow-hidden page-hero">
         <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/image/opening/galariyaBo%27limi.png')", opacity: 0.95 }}
+          className="absolute inset-0 bg-cover bg-center opacity-95 page-hero__image"
+          style={{ backgroundImage: "url('/image/opening/galariyaBo%27limi.png')" }}
         />
+        <div className="absolute inset-0 page-hero__scrim" aria-hidden />
         <div className="absolute -top-20 right-0 w-[500px] h-[400px] rounded-full bg-[#e83848]/10 blur-[120px] animate-float-slow" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="eyebrow text-[#e83848] mb-4 animate-slide-up-sm">

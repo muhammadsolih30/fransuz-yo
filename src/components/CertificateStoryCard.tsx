@@ -110,7 +110,7 @@ export function CertificateStoryCard({ cert, index = 0, marquee = false, labels 
       </article>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="cert-story-dialog max-w-3xl border border-[#15233B]/10 p-0 gap-0 overflow-hidden rounded-2xl bg-white text-[#15233B]" closeLabel={content.ui.a11y.close}>
+        <DialogContent className="cert-story-dialog max-w-3xl border border-[#15233B]/10 p-0 gap-0 overflow-hidden rounded-2xl" closeLabel={content.ui.a11y.close}>
           <div className="cert-story-dialog__grid">
             {cert.image && (
               <div className="cert-story-dialog__image-col">

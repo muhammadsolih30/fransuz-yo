@@ -19,36 +19,36 @@ function ProbniyDarsPage() {
     <div className="site-page site-page--light text-ink overflow-hidden">
       <PageMeta page="trial" path="/probniy-dars" />
 
-      <section className="section-intro relative pt-36 pb-20 overflow-hidden">
+      <section className="trial-page__hero section-intro relative pt-28 sm:pt-36 pb-12 sm:pb-20 overflow-hidden page-hero">
         <div className="absolute inset-0 page-hero-mesh" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
             <div>
-              <div className="inline-flex items-center gap-2 bg-[#e83848]/10 border border-[#e83848]/20 px-4 py-2 rounded-full text-xs font-bold text-[#e83848] mb-6">
+              <div className="inline-flex items-center gap-2 bg-[#e83848]/10 border border-[#e83848]/20 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[0.68rem] sm:text-xs font-bold text-[#e83848] mb-4 sm:mb-6">
                 {ui.badge}
               </div>
-              <h1 className="stripe-display section-heading text-[clamp(2.4rem,7vw,4rem)] leading-[1.02] mb-5">
+              <h1 className="stripe-display section-heading text-[clamp(1.85rem,7.5vw,4rem)] leading-[1.05] mb-4 sm:mb-5">
                 {ui.title}
               </h1>
-              <p className="section-body text-lg leading-relaxed mb-8">{ui.subtitle}</p>
-              <div className="flex flex-wrap gap-4">
-                <Link to="/boglanish" className="btn-primary no-underline">
+              <p className="section-body text-base sm:text-lg leading-relaxed mb-6 sm:mb-8">{ui.subtitle}</p>
+              <div className="trial-page__cta flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <Link to="/boglanish" className="btn-primary no-underline text-center w-full sm:w-auto">
                   {ui.cta}
                 </Link>
                 <a
                   href="https://t.me/France_TCF"
                   target="_blank"
                   rel="noreferrer"
-                  className="btn-outline no-underline"
+                  className="btn-outline no-underline text-center w-full sm:w-auto"
                 >
                   {ui.telegram}
                 </a>
               </div>
             </div>
 
-            <div className="relative">
-              <div className="card p-6 sm:p-8 lg:p-10 border-2 border-[#e83848]/12 shadow-[var(--shadow-card)]">
-                <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-6">
+            <div className="relative mt-2 sm:mt-0">
+              <div className="card p-4 sm:p-8 lg:p-10 border-2 border-[#e83848]/12 shadow-[var(--shadow-card)]">
+                <div className="trial-videos-grid grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-5 sm:mb-6">
                   {ui.videos.map((video) => (
                     <MediaPlaceholder
                       key={video.title}
@@ -56,7 +56,7 @@ function ProbniyDarsPage() {
                       label={video.title}
                       sublabel={video.desc}
                       aspect="video"
-                      className="rounded-xl min-h-[7.5rem] sm:min-h-[9rem]"
+                      className="rounded-xl min-h-[10.5rem] sm:min-h-[9rem] w-full"
                     />
                   ))}
                 </div>
@@ -71,7 +71,7 @@ function ProbniyDarsPage() {
                   ))}
                 </ul>
               </div>
-              <div className="absolute -top-4 -right-4 bg-[#E0A526] text-[#15233B] font-bold text-sm px-4 py-2 rounded-2xl shadow-xl animate-float">
+              <div className="absolute top-2 right-2 sm:-top-4 sm:-right-4 bg-[#E0A526] text-[#15233B] font-bold text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl shadow-xl animate-float">
                 {shared.freeGift}
               </div>
             </div>
@@ -79,9 +79,9 @@ function ProbniyDarsPage() {
         </div>
       </section>
 
-      <section className="site-section site-section--cream py-20 lg:py-28">
+      <section className="site-section site-section--cream py-12 sm:py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mb-12 reveal">
+          <div className="max-w-2xl mb-8 sm:mb-12 reveal">
             <p className="eyebrow text-[#e83848] mb-4">
               <span className="w-8 h-px bg-[#e83848]" /> {ui.benefitsEyebrow}
             </p>

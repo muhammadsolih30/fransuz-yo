@@ -143,11 +143,19 @@ function HomePage() {
 
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center flex flex-col items-center">
           <div className="hero-chip chip mb-6 sm:mb-7 animate-slide-up-sm">
-            <span className="relative flex h-2 w-2">
+            <span className="relative flex h-2 w-2 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e83848] opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#e83848]" />
             </span>
-            🇫🇷 {centerClaim.replace("France TCF — ", "")} 🇨🇦
+            <span className="hero-chip__text">
+              <span className="hero-chip__flag" aria-hidden>
+                🇫🇷
+              </span>{" "}
+              {centerClaim.replace("France TCF — ", "")}{" "}
+              <span className="hero-chip__flag" aria-hidden>
+                🇨🇦
+              </span>
+            </span>
           </div>
 
           <TypedHeading segments={ui.headingSegments} />
