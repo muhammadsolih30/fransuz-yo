@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { FaqAccordion } from "../components/FaqAccordion";
+import { ImmigrationCtaBand } from "../components/ImmigrationCtaBand";
 import { PageMeta } from "../components/PageMeta";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
 
@@ -513,6 +514,8 @@ function ImmigratsiyaPage() {
           <FaqAccordion items={immigrationFaq} />
         </div>
       </section>
+
+      <ImmigrationCtaBand />
     </div>
   );
 }

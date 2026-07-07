@@ -34,11 +34,11 @@ export function TeachersPageSections({ embedded = false }: Props) {
             {teachers.map((t, i) => (
               <div key={t.name} className="reveal card card-hover overflow-hidden group" data-delay={i * 100}>
                 <MediaPlaceholder
-                  type="photo"
-                  label={t.name}
-                  sublabel={shared.teacherPhotoSoon}
+                  type="video"
+                  label={`${t.name} — ${shared.introVideo}`}
+                  sublabel={shared.videoSoon}
                   aspect="video"
-                  className="rounded-none border-0 border-b-2 border-dashed border-[#15233B]/10"
+                  className="rounded-none border-0 border-b border-[#15233B]/8"
                 />
                 <div className="p-6 lg:p-7">
                   <div className="flex items-start justify-between mb-4">
@@ -64,13 +64,6 @@ export function TeachersPageSections({ embedded = false }: Props) {
                       </span>
                     ))}
                   </div>
-                  <MediaPlaceholder
-                    type="video"
-                    label={`${t.name} — ${shared.introVideo}`}
-                    sublabel={shared.videoSoon}
-                    aspect="video"
-                    className="rounded-xl"
-                  />
                 </div>
               </div>
             ))}

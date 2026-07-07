@@ -398,6 +398,12 @@ export const uzUi = {
       "Online yoki offline formatda 30–45 daqiqalik probniy dars",
       "Natija va keyingi qadamlar bo'yicha maslahat olish",
     ],
+    videos: [
+      { title: "Dars jarayoni", desc: "Haqiqiy darsdan lavha" },
+      { title: "Online format", desc: "Zoom orqali probniy dars" },
+      { title: "Offline guruh", desc: "Markazdagi darsxona" },
+      { title: "Natija maslahati", desc: "Daraja va keyingi qadamlar" },
+    ],
   },
   gallery: {
     eyebrow: "Galereya",

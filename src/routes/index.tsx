@@ -205,9 +205,9 @@ function HomePage() {
         <TeachersPageSections embedded />
       </Suspense>
 
-      <section className="relative py-7 bg-gradient-to-r from-[#ec5058] via-[#e83848] to-[#ec5058] overflow-hidden group">
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-gradient-to-r from-[#e83848] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 z-10 bg-gradient-to-l from-[#e83848] to-transparent" />
+      <section className="relative py-7 bg-[#15233B] dark:bg-[#0d1117] overflow-hidden group site-nav-marquee">
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-gradient-to-r from-[#15233B] dark:from-[#0d1117] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 z-10 bg-gradient-to-l from-[#15233B] dark:from-[#0d1117] to-transparent" />
         <div className="flex animate-marquee [animation-duration:22s] whitespace-nowrap group-hover:[animation-play-state:paused]">
           {[...Array(2)].map((_, dup) => (
             <div key={dup} className="flex items-center shrink-0">
@@ -222,7 +222,7 @@ function HomePage() {
                         hash={p.hash}
                         className="site-marquee-link no-underline flex items-center gap-2.5 font-['Syne'] font-bold text-[15px] sm:text-base px-6 py-1 transition-colors"
                       >
-                        <Icon className="w-[18px] h-[18px] text-[#FFD666] shrink-0" strokeWidth={2} />
+                        <Icon className="w-[18px] h-[18px] text-[#e83848] shrink-0" strokeWidth={2} />
                         {p.label}
                       </Link>
                     ) : (
@@ -230,11 +230,11 @@ function HomePage() {
                         to={p.to}
                         className="site-marquee-link no-underline flex items-center gap-2.5 font-['Syne'] font-bold text-[15px] sm:text-base px-6 py-1 transition-colors"
                       >
-                        <Icon className="w-[18px] h-[18px] text-[#FFD666] shrink-0" strokeWidth={2} />
+                        <Icon className="w-[18px] h-[18px] text-[#e83848] shrink-0" strokeWidth={2} />
                         {p.label}
                       </Link>
                     )}
-                    <span className="text-[#FFD666]/50 text-xs px-1">◆</span>
+                    <span className="text-white/25 text-xs px-1">◆</span>
                   </span>
                 );
               })}

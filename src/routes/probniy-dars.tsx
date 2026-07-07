@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BadgePercent, ClipboardList, Gauge, Play, UserCheck } from "lucide-react";
+import { BadgePercent, ClipboardList, Gauge, UserCheck } from "lucide-react";
+import { MediaPlaceholder } from "../components/MediaPlaceholder";
 import { PageMeta } from "../components/PageMeta";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
 
@@ -47,15 +48,18 @@ function ProbniyDarsPage() {
             </div>
 
             <div className="relative">
-              <div className="card p-8 lg:p-10 bg-white border-2 border-[#e83848]/12 shadow-[var(--shadow-card)]">
-                <div className="aspect-video rounded-2xl bg-gradient-to-br from-[#fef3f3] via-white to-[#f9ddd8] border-2 border-dashed border-[#e83848]/20 flex flex-col items-center justify-center mb-6 overflow-hidden relative">
-                  <div className="relative z-10 text-center px-6">
-                    <div className="w-16 h-16 rounded-full bg-[#e83848] flex items-center justify-center mx-auto mb-4 shadow-[0_8px_24px_-8px_rgba(232,56,72,0.55)]">
-                      <Play className="w-7 h-7 text-white ml-0.5" fill="currentColor" strokeWidth={0} />
-                    </div>
-                    <p className="font-['Syne'] font-bold text-lg text-[#15233B]">{shared.lessonProcess}</p>
-                    <p className="text-[#546074] text-sm mt-1.5 font-medium">{shared.videoSoon}</p>
-                  </div>
+              <div className="card p-6 sm:p-8 lg:p-10 bg-white border-2 border-[#e83848]/12 shadow-[var(--shadow-card)]">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-6">
+                  {ui.videos.map((video) => (
+                    <MediaPlaceholder
+                      key={video.title}
+                      type="video"
+                      label={video.title}
+                      sublabel={video.desc}
+                      aspect="video"
+                      className="rounded-xl min-h-[7.5rem] sm:min-h-[9rem]"
+                    />
+                  ))}
                 </div>
                 <ul className="space-y-3.5">
                   {ui.steps.map((s, i) => (

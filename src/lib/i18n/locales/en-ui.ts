@@ -400,6 +400,12 @@ export const enUi = {
       "30–45 minute trial lesson online or offline",
       "Receive advice on results and next steps",
     ],
+    videos: [
+      { title: "Lesson process", desc: "Clip from a real lesson" },
+      { title: "Online format", desc: "Trial lesson via Zoom" },
+      { title: "Offline group", desc: "Classroom at the center" },
+      { title: "Results advice", desc: "Level and next steps" },
+    ],
   },
   gallery: {
     eyebrow: "Gallery",

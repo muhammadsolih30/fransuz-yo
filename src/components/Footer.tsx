@@ -21,34 +21,11 @@ export function Footer() {
 
   return (
     <footer className="relative text-white">
-      <div className="relative bg-[#2D2D2D] dark:bg-[#0a0a0a]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 lg:pt-20 pb-12 lg:pb-16 text-center">
-          <div className="relative max-w-3xl mx-auto">
-            <div className="text-5xl mb-6">🍁</div>
-            <h2 className="font-['Syne'] font-extrabold text-4xl lg:text-6xl leading-tight mb-6 text-white">
-              {t.footer.ctaTitle}
-            </h2>
-            <p className="text-white/75 text-lg lg:text-xl mb-10 leading-relaxed">{t.footer.ctaText}</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/boglanish" className="btn-gold">
-                {t.footer.ctaStart}
-              </Link>
-              <a
-                href="tel:+998947382221"
-                className="inline-flex items-center justify-center gap-2 border-2 border-white/25 hover:border-white hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-2xl text-sm transition-all no-underline backdrop-blur-sm"
-              >
-                📞 +998 94 738 22 21
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div className="text-center pt-4 pb-10 sm:pb-12 border-t border-white/10">
-          <h2 className="font-['Syne'] font-extrabold leading-none tracking-tight text-[clamp(2.6rem,10vw,7rem)] animate-float-slow">
-            France <span className="text-[#FF6600]">TCF</span>
-          </h2>
-          <p className="text-white/60 text-xs sm:text-sm mt-3 tracking-[0.35em] uppercase">{t.footer.centerLabel}</p>
-        </div>
+      <div className="text-center py-10 sm:py-12 bg-[#2D2D2D] dark:bg-[#0a0a0a] border-b border-white/10">
+        <h2 className="font-['Syne'] font-extrabold leading-none tracking-tight text-[clamp(2.6rem,10vw,7rem)] animate-float-slow text-white">
+          France <span className="text-[#FF6600]">TCF</span>
+        </h2>
+        <p className="text-white/60 text-xs sm:text-sm mt-3 tracking-[0.35em] uppercase">{t.footer.centerLabel}</p>
       </div>
 
       <div className="footer-wave-wrap" aria-hidden>

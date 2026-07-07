@@ -735,7 +735,11 @@
   }
 
   .site-marquee-link:hover {
-    color: #ffd666;
+    color: #ff9aa5;
+  }
+
+  html.dark .site-nav-marquee .site-marquee-link:hover {
+    color: #ff7b88;
   }
 
   /* Sahifa hero (bog'lanish va boshqalar) */

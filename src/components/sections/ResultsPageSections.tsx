@@ -5,7 +5,7 @@ type Props = { embedded?: boolean };
 
 export function ResultsPageSections({ embedded = false }: Props) {
   const { content } = useSitePreferences();
-  const { resultFeedbacks, resultStats, tcfLevels } = content.results;
+  const { resultStats, tcfLevels } = content.results;
   const { studentCertificates } = content.certificates;
   const ui = content.ui.results;
 
@@ -84,50 +84,6 @@ export function ResultsPageSections({ embedded = false }: Props) {
               examLabel: ui.examLabel,
             }}
           />
-        </div>
-      </section>
-
-      <section className="py-20 lg:py-28 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mb-12 reveal">
-            <p className="eyebrow text-[#e83848] mb-4">
-              <span className="w-8 h-px bg-[#e83848]" /> {ui.feedbackEyebrow}
-            </p>
-            <h3 className="font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight">{ui.feedbackTitle}</h3>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {resultFeedbacks.map((f, i) => (
-              <div
-                key={`${f.name}-${i}`}
-                className="reveal card card-hover p-7 flex flex-col"
-                data-delay={i * 90}
-              >
-                <div className="flex gap-1 mb-4">
-                  {Array.from({ length: f.rating }).map((_, j) => (
-                    <span key={j} className="text-[#E0A526] text-sm">
-                      ★
-                    </span>
-                  ))}
-                </div>
-                <p className="text-[#3E4B62] text-sm leading-relaxed italic flex-1 mb-6">"{f.text}"</p>
-                <div className="border-t border-[#15233B]/8 pt-4">
-                  <div className="font-['Syne'] font-bold text-sm">{f.name}</div>
-                  <div className="text-[#646F82] text-xs">{f.cert}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="reveal mt-8 flex flex-col items-center gap-4 rounded-2xl border border-[#15233B]/8 bg-[#FAF6EF] p-8 text-center">
-            <p className="text-[#3E4B62] text-sm max-w-md leading-relaxed">{ui.feedbackCtaBody}</p>
-            <a
-              href="https://t.me/France_TCF"
-              target="_blank"
-              rel="noreferrer"
-              className="btn-primary no-underline"
-            >
-              {ui.feedbackCta}
-            </a>
-          </div>
         </div>
       </section>
 
