@@ -3,6 +3,7 @@ import { Award, ChevronRight, Headphones, BookOpen, PenLine, Mic } from "lucide-
 import type { StudentCertificate } from "../lib/certificates-content";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
 import { CertificateReveal } from "./CertificateReveal";
+import { DeferredImage } from "./DeferredImage";
 import { MediaPlaceholder } from "./MediaPlaceholder";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 
@@ -114,7 +115,13 @@ export function CertificateStoryCard({ cert, index = 0, marquee = false, labels 
           <div className="cert-story-dialog__grid">
             {cert.image && (
               <div className="cert-story-dialog__image-col">
-                <img src={cert.image} alt={cert.name} className="cert-story-dialog__img" />
+                <DeferredImage
+                  src={cert.image}
+                  alt={cert.name}
+                  className="cert-story-dialog__img"
+                  wrapClassName="h-full min-h-[16rem]"
+                  showSpinner
+                />
               </div>
             )}
             <div className="cert-story-dialog__content-col">

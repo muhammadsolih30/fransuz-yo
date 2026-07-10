@@ -16,9 +16,19 @@ import {
 import { HeroOpeningBg } from "../components/HeroOpeningBg";
 import { PageMeta } from "../components/PageMeta";
 import { FaqAccordion } from "../components/FaqAccordion";
+import { StatCountUp } from "../components/CountUp";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
 import { useHashScroll } from "../hooks/useHashScroll";
 import { useReducedMotion } from "../hooks/useReducedMotion";
+
+const LEVEL_PCT: Record<string, number> = {
+  A1: 15,
+  A2: 30,
+  B1: 45,
+  B2: 60,
+  C1: 80,
+  C2: 100,
+};
 
 const AboutPageSections = lazy(() =>
   import("../components/sections/AboutPageSections").then((m) => ({ default: m.AboutPageSections })),
@@ -141,6 +151,7 @@ function HomePage() {
       <section className="hero-section relative min-h-[92svh] sm:min-h-screen flex items-center pt-24 pb-16 sm:pt-28 sm:pb-20 overflow-hidden">
         <HeroOpeningBg />
         <div className="absolute inset-0 hero-canvas-scrim pointer-events-none" />
+        <div className="hero-section__glow pointer-events-none" aria-hidden />
 
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center flex flex-col items-center">
           <div className="hero-chip chip mb-6 sm:mb-7 animate-slide-up-sm">
@@ -166,7 +177,7 @@ function HomePage() {
           </p>
 
           <div className="hero-cta-row grid grid-cols-2 gap-2 sm:flex sm:flex-row sm:flex-wrap sm:gap-4 justify-center mb-6 sm:mb-10 w-full max-w-lg sm:max-w-none mx-auto animate-slide-up delay-300">
-            <Link to="/boglanish" className="btn-primary hero-btn-primary hero-cta-row__primary">
+            <Link to="/boglanish" className="btn-primary hero-btn-primary hero-cta-row__primary hero-cta--pulse">
               <span className="hero-cta-row__label">{shared.freeConsultation}</span>
               <span className="hero-cta-row__arrow" aria-hidden>
                 →
@@ -188,10 +199,12 @@ function HomePage() {
             ))}
           </div>
 
-          <div className="hero-stats-panel w-full max-w-3xl grid grid-cols-4 gap-px rounded-2xl overflow-hidden animate-scale-in delay-500">
+          <div className="hero-stats-panel hero-stats-panel--glass w-full max-w-3xl grid grid-cols-4 gap-px rounded-2xl overflow-hidden animate-scale-in delay-500">
             {ui.heroStats.map((s) => (
               <div key={s.label} className="hero-stats-panel__cell px-4 py-5 text-center">
-                <div className="hero-stats-panel__num">{s.num}</div>
+                <div className="hero-stats-panel__num">
+                  <StatCountUp value={s.num} />
+                </div>
                 <div className="hero-stats-panel__label">{s.label}</div>
               </div>
             ))}
@@ -200,7 +213,7 @@ function HomePage() {
           <div className="mt-10 sm:mt-12 hidden sm:flex flex-col items-center gap-2 text-white/80 animate-float">
             <span className="text-[10px] font-semibold tracking-[0.25em] uppercase">{shared.scrollDown}</span>
             <span className="w-6 h-10 rounded-full border-2 border-white/50 flex items-start justify-center p-1.5">
-              <span className="w-1 h-2 rounded-full bg-[#e83848]" />
+              <span className="w-1 h-2 rounded-full bg-[#e83848] hero-scroll-dot" />
             </span>
           </div>
         </div>
@@ -295,18 +308,24 @@ function HomePage() {
               <h2 className="section-heading font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight mb-6">{ui.resultTitle}</h2>
               <p className="section-body text-lg leading-relaxed mb-8">{ui.resultBody}</p>
               <div className="grid grid-cols-2 gap-4 mb-8">
-                {highlightStudent.scores.map((sc) => (
-                  <div
-                    key={sc.s}
-                    className="result-score-card rounded-2xl p-5 bg-[var(--surface-soft)] border border-[#15233B]/8 hover:border-[#e83848]/25 hover:-translate-y-1 transition-all"
-                  >
-                    <div className="flex items-baseline justify-between mb-1">
-                      <span className="font-['Syne'] font-extrabold text-2xl text-[#e83848]">{sc.l}</span>
-                      <span className="text-[#646F82] text-xs font-semibold">{sc.v}</span>
+                {highlightStudent.scores.map((sc) => {
+                  const pct = LEVEL_PCT[sc.l] ?? 50;
+                  return (
+                    <div
+                      key={sc.s}
+                      className="result-score-card reveal rounded-2xl p-5 bg-[var(--surface-soft)] border border-[#15233B]/8 hover:border-[#e83848]/25 hover:-translate-y-1.5 hover:shadow-[var(--shadow-card)] transition-all duration-400"
+                    >
+                      <div className="flex items-baseline justify-between mb-2">
+                        <span className="font-['Syne'] font-extrabold text-2xl text-[#e83848]">{sc.l}</span>
+                        <span className="text-[#646F82] text-xs font-semibold">{sc.v}</span>
+                      </div>
+                      <div className="text-[#546074] text-xs font-medium uppercase tracking-wide mb-3">{sc.s}</div>
+                      <div className="score-bar" aria-hidden>
+                        <span className="score-bar__fill" style={{ ["--score-pct" as string]: `${pct}%` }} />
+                      </div>
                     </div>
-                    <div className="text-[#546074] text-xs font-medium uppercase tracking-wide">{sc.s}</div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
               <Link
                 to="/"
@@ -346,22 +365,26 @@ function HomePage() {
 
       <section className="site-section site-section--white py-20 lg:py-28 relative overflow-hidden section-ambient">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16 reveal">
+          <div className="text-center max-w-2xl mx-auto mb-14 lg:mb-16 reveal">
             <p className="eyebrow text-[#e83848] mb-4 justify-center flex">
               <span className="w-8 h-px bg-[#e83848] self-center" /> {ui.processEyebrow}
             </p>
             <h2 className="section-heading font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight">{ui.processTitle}</h2>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-5">
+          <ol className="process-timeline">
             {ui.steps.map((s, i) => (
-              <div key={s.n} className="reveal card card-hover relative feature-card-compact feature-card-compact--step" data-delay={i * 90}>
-                <div className="font-['Syne'] font-extrabold text-3xl sm:text-5xl text-[#2a5286]/20 mb-2 sm:mb-4">{s.n}</div>
-                <h3 className="feature-card-compact__title card-title sm:text-lg">{s.t}</h3>
-                <p className="feature-card-compact__desc section-body">{s.d}</p>
-              </div>
+              <li key={s.n} className="process-timeline__item reveal" data-delay={i * 90}>
+                <div className="process-timeline__node" aria-hidden>
+                  <span>{s.n}</span>
+                </div>
+                <div className="process-timeline__card card card-hover">
+                  <h3 className="font-['Syne'] font-bold text-base sm:text-lg text-[#15233B] mb-1.5">{s.t}</h3>
+                  <p className="text-[#546074] text-sm leading-relaxed">{s.d}</p>
+                </div>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 

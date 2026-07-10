@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { FaqAccordion } from "../components/FaqAccordion";
 import { PageMeta } from "../components/PageMeta";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
@@ -15,6 +15,10 @@ function FaqPage() {
   const { content } = useSitePreferences();
   const { generalFaq, immigrationFaq } = content.faq;
   const ui = content.ui.faq;
+  const faqItems = useMemo(
+    () => [...generalFaq, ...immigrationFaq],
+    [generalFaq, immigrationFaq],
+  );
 
   const tabs = [
     { id: "general" as const, label: ui.tabs.general, count: generalFaq.length },
@@ -26,7 +30,7 @@ function FaqPage() {
 
   return (
     <div className="bg-white text-[#15233B] overflow-hidden">
-      <PageMeta page="faq" path="/faq" />
+      <PageMeta page="faq" path="/faq" faqItems={faqItems} />
 
       <section className="relative pt-36 pb-16 overflow-hidden bg-[#FAF6EF]">
         <div className="absolute -top-20 right-0 w-[500px] h-[500px] rounded-full bg-[#e83848]/10 blur-[120px]" />

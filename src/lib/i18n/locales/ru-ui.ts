@@ -2,40 +2,53 @@
 export const ruUi = {
   meta: {
     home: {
-      title: "France TCF Learning Center — В Канаду через французский",
+      title: "Курсы TCF Canada Ташкент | France TCF — В Канаду через французский",
       description:
-        "В Канаду через французский и Express Entry. Профессиональная подготовка к TCF Canada, DELF, DALF с преподавателями уровня C1–C2.",
+        "Подготовка к TCF Canada, TEF, DELF/DALF в Ташкенте. Французский для Express Entry и PR в Канаде. Преподаватели C1–C2, онлайн/офлайн. Консультация: +998 94 738 22 21.",
+      keywords:
+        "TCF Canada Ташкент, курсы французского Ташкент, Express Entry, иммиграция в Канаду, TEF Canada, France TCF",
     },
     immigration: {
-      title: "Иммиграция в Канаду — PR через Express Entry",
+      title: "Иммиграция в Канаду и Express Entry | Французский +50 CRS | France TCF",
       description:
-        "Иммиграция в Канаду через французский язык. Express Entry, TCF Canada, виза PR и полная информация.",
+        "Иммиграция в Канаду через французский: Express Entry, TCF Canada, баллы CRS и путь к PR. Полная консультация в France TCF Ташкент.",
+      keywords: "иммиграция в Канаду Узбекистан, Express Entry, CRS, TCF Canada PR",
     },
     faq: {
-      title: "FAQ — Часто задаваемые вопросы | France TCF",
+      title: "TCF Canada FAQ — Частые вопросы | France TCF Ташкент",
       description:
-        "Часто задаваемые вопросы и ответы о TCF Canada, курсах и иммиграции в Канаду.",
+        "Ответы о экзамене TCF Canada, курсах, ценах и иммиграции в Канаду. France TCF Learning Center, Ташкент.",
+      keywords: "TCF Canada вопросы, FAQ французский, Express Entry FAQ",
     },
     vacancy: {
-      title: "Вакансии — France TCF Learning Center",
+      title: "Вакансии — Преподаватель французского и команда | France TCF",
       description:
-        "Открытые вакансии в France TCF: преподаватель французского, администратор, call-оператор, лицо бренда, SMM-менеджер.",
+        "Работа в France TCF: преподаватель французского, администратор, call-оператор, SMM. Ташкент, профессиональная команда.",
+      keywords: "вакансия преподаватель французского Ташкент, работа France TCF",
     },
     contact: {
-      title: "Контакты — France TCF Learning Center",
-      description: "Свяжитесь с France TCF Learning Center. Получите бесплатную консультацию.",
+      title: "Контакты — France TCF Ташкент | Бесплатная консультация",
+      description:
+        "Свяжитесь с France TCF: Чиланзар / метро Ойбек. Тел. +998 94 738 22 21, Telegram @France_TCF. Запись на курсы и консультация.",
+      keywords: "France TCF контакты, школа французского Ташкент",
     },
     gallery: {
-      title: "Галерея — France TCF Learning Center",
-      description: "Фото и видеоуроки из France TCF Learning Center.",
+      title: "Галерея — Уроки и открытие France TCF | Ташкент",
+      description:
+        "Фото France TCF: занятия, открытие центра и жизнь студентов. Атмосфера подготовки к TCF Canada в Ташкенте.",
+      keywords: "галерея France TCF, фото уроков французского",
     },
     trial: {
-      title: "Пробный урок — France TCF Learning Center",
-      description: "Бесплатный пробный урок французского. Попробуйте наши курсы TCF Canada.",
+      title: "Бесплатный пробный урок — TCF Canada | France TCF",
+      description:
+        "Бесплатный пробный урок французского. Попробуйте подготовку к TCF Canada, узнайте уровень и получите план обучения.",
+      keywords: "пробный урок французского Ташкент, TCF Canada пробный",
     },
     oferta: {
       title: "Публичная оферта — France TCF Learning Center",
-      description: "Условия публичной оферты France TCF Learning Center — полный текст.",
+      description:
+        "Условия публичной оферты France TCF Learning Center — полный текст.",
+      keywords: "оферта France TCF, договор обучения",
     },
     notFound: {
       title: "Страница не найдена — France TCF Learning Center",
@@ -65,6 +78,7 @@ export const ruUi = {
     lessonProcess: "Урок в процессе",
     freeGift: "Бесплатно 🎁",
     loading: "Отправка...",
+    certLoading: "Сертификат загружается",
     selectPlaceholder: "Выберите...",
     mediaSoon: "Скоро",
   },

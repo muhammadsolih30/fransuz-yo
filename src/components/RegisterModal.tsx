@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
+import { DeferredImage } from "./DeferredImage";
 
 const REGISTER_MODAL_BG = "/image/opening/ckanada%20va%20firansiya.png";
 
@@ -58,13 +59,12 @@ export function RegisterModal() {
         closeLabel={content.ui.a11y.close}
       >
         <div className="register-modal__hero relative overflow-hidden">
-          <img
+          <DeferredImage
             src={REGISTER_MODAL_BG}
             alt=""
             className="register-modal__hero-img"
+            wrapClassName="absolute inset-0"
             loading="eager"
-            decoding="async"
-            draggable={false}
           />
           <div className="register-modal__hero-scrim" aria-hidden />
 

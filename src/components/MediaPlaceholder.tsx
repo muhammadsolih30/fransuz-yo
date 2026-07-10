@@ -39,12 +39,12 @@ export function MediaPlaceholder({
 
   return (
     <div
-      className={`media-placeholder relative overflow-hidden rounded-2xl border-2 border-dashed border-[#15233B]/15 ${aspectClass} bg-gradient-to-br ${gradients[type]} ${className}`}
+      className={`media-placeholder relative overflow-hidden rounded-2xl border-2 border-dashed border-[#15233B]/15 ${aspectClass} bg-gradient-to-br ${gradients[type]} ${videoStyle ? "media-placeholder--video" : ""} ${className}`}
     >
       <div className="absolute inset-0 opacity-30 bg-dots" aria-hidden />
       <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
         <div
-          className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-3 ${
+          className={`media-placeholder__play w-14 h-14 rounded-2xl flex items-center justify-center mb-3 ${
             videoStyle
               ? "bg-[#e83848] text-white shadow-[0_8px_20px_-8px_rgba(232,56,72,0.5)]"
               : "bg-white border border-[#15233B]/10 shadow-sm text-[#e83848] dark:bg-[#1a2332] dark:border-white/12"

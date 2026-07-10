@@ -61,9 +61,11 @@ function lsRead(): Lead[] {
     return [];
   }
 }
-function lsWrite(leads: Lead[]) {
+function lsWrite(leads: Lead[], opts?: { silent?: boolean }) {
   localStorage.setItem(LEADS_KEY, JSON.stringify(leads));
-  window.dispatchEvent(new Event("leads-updated"));
+  if (!opts?.silent) {
+    window.dispatchEvent(new Event("leads-updated"));
+  }
 }
 
 /* ─────────────────────────────────────────────
@@ -225,11 +227,10 @@ export const leadsStore = {
     if (shouldPreferLeadsProxy()) {
       try {
         const remote = (await proxyListLeads()) as Lead[];
-        const local = lsRead();
-        const byId = new Map<string, Lead>();
-        for (const l of local) byId.set(l.id, l);
-        for (const l of remote) byId.set(l.id, l);
-        return [...byId.values()].sort((a, b) => b.createdAt - a.createdAt);
+        // Server — yagona manba: o'chirilganlar localStorage'dan qayta chiqmasin
+        const sorted = [...remote].sort((a, b) => b.createdAt - a.createdAt);
+        lsWrite(sorted, { silent: true });
+        return sorted;
       } catch (e) {
         console.error("Proxy all() xatosi, Appwrite/local zaxira:", e);
       }
@@ -242,12 +243,9 @@ export const leadsStore = {
           Query.limit(1000),
         ]);
         const remote = (res.documents as unknown as AwDoc[]).map(docToLead);
-        // Remote + local birlashtirish (zaxira arizalar yo'qolmasin)
-        const local = lsRead();
-        const byId = new Map<string, Lead>();
-        for (const l of local) byId.set(l.id, l);
-        for (const l of remote) byId.set(l.id, l);
-        return [...byId.values()].sort((a, b) => b.createdAt - a.createdAt);
+        const sorted = [...remote].sort((a, b) => b.createdAt - a.createdAt);
+        lsWrite(sorted, { silent: true });
+        return sorted;
       } catch (e) {
         console.error("Appwrite all() xatosi, localStorage zaxira:", e);
         return lsRead().sort((a, b) => b.createdAt - a.createdAt);
@@ -263,11 +261,9 @@ export const leadsStore = {
         return lsRead().sort((a, b) => b.createdAt - a.createdAt);
       }
       const remote = (data as Row[]).map(rowToLead);
-      const local = lsRead();
-      const byId = new Map<string, Lead>();
-      for (const l of local) byId.set(l.id, l);
-      for (const l of remote) byId.set(l.id, l);
-      return [...byId.values()].sort((a, b) => b.createdAt - a.createdAt);
+      const sorted = [...remote].sort((a, b) => b.createdAt - a.createdAt);
+      lsWrite(sorted, { silent: true });
+      return sorted;
     }
     return lsRead().sort((a, b) => b.createdAt - a.createdAt);
   },

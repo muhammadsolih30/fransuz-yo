@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import { useSitePreferences } from "../contexts/SitePreferencesContext";
 
 const LENS_CAROUSEL = {
   viewport: 192,
@@ -42,6 +43,7 @@ function getImageMetrics(
 ): ImageMetrics {
   const naturalW = img.naturalWidth || containerW;
   const naturalH = img.naturalHeight || containerH;
+  // object-fit: contain
   const scale = Math.min(containerW / naturalW, containerH / naturalH);
   const renderedW = naturalW * scale;
   const renderedH = naturalH * scale;
@@ -62,12 +64,15 @@ export function CertificateReveal({
   compact = false,
   animate = true,
 }: CertificateRevealProps) {
+  const { content } = useSitePreferences();
+  const loadingLabel = content.ui.shared.certLoading;
   const wrapRef = useRef<HTMLDivElement>(null);
   const hostRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const [active, setActive] = useState(!animate);
   const [done, setDone] = useState(!animate);
   const [canMagnify, setCanMagnify] = useState(false);
+  const [imgReady, setImgReady] = useState(false);
   const [magnify, setMagnify] = useState<MagnifyState>({
     show: false,
     x: 0,
@@ -77,6 +82,38 @@ export function CertificateReveal({
 
   const lens = compact ? LENS_CAROUSEL : LENS_DEFAULT;
   const half = lens.viewport / 2;
+
+  useEffect(() => {
+    setImgReady(false);
+    let cancelled = false;
+    const probe = new Image();
+    probe.decoding = "async";
+    probe.src = src;
+
+    const markReady = () => {
+      if (!cancelled) setImgReady(true);
+    };
+
+    const finish = () => {
+      if (typeof probe.decode === "function") {
+        probe.decode().then(markReady).catch(markReady);
+      } else {
+        markReady();
+      }
+    };
+
+    if (probe.complete && probe.naturalWidth > 0) finish();
+    else {
+      probe.onload = finish;
+      probe.onerror = markReady;
+    }
+
+    return () => {
+      cancelled = true;
+      probe.onload = null;
+      probe.onerror = null;
+    };
+  }, [src]);
 
   useEffect(() => {
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -162,31 +199,39 @@ export function CertificateReveal({
         <div className="cert-reveal-face cert-reveal-face--front">
           <div
             ref={hostRef}
-            className={`cert-magnifier-host ${magnifyReady ? "cert-magnifier-host--ready" : ""}`}
+            className={`cert-magnifier-host ${magnifyReady ? "cert-magnifier-host--ready" : ""} ${imgReady ? "cert-magnifier-host--loaded" : "cert-magnifier-host--loading"}`}
             onMouseMove={(e) => updateMagnify(e.clientX, e.clientY)}
             onMouseLeave={() => setMagnify((prev) => ({ ...prev, show: false }))}
           >
-            <img
-              ref={imgRef}
-              src={src}
-              alt={alt}
-              className="cert-reveal-img cert-reveal-img--contain"
-              draggable={false}
-              loading="lazy"
-              decoding="async"
-              onLoad={() => {
-                if (magnify.show && hostRef.current) {
-                  const rect = hostRef.current.getBoundingClientRect();
-                  setMagnify((prev) => ({
-                    ...prev,
-                    metrics: imgRef.current
-                      ? getImageMetrics(imgRef.current, rect.width, rect.height)
-                      : prev.metrics,
-                  }));
-                }
-              }}
-            />
-            {magnify.show && magnifyReady && m && (
+            {!imgReady && (
+              <div className="cert-reveal-loader" role="status" aria-live="polite">
+                <span className="cert-reveal-loader__spin" aria-hidden />
+                <span className="cert-reveal-loader__text">{loadingLabel}</span>
+              </div>
+            )}
+            {imgReady ? (
+              <img
+                ref={imgRef}
+                src={src}
+                alt={alt}
+                className="cert-reveal-img cert-reveal-img--contain"
+                data-ready="1"
+                draggable={false}
+                decoding="async"
+                onLoad={() => {
+                  if (magnify.show && hostRef.current) {
+                    const rect = hostRef.current.getBoundingClientRect();
+                    setMagnify((prev) => ({
+                      ...prev,
+                      metrics: imgRef.current
+                        ? getImageMetrics(imgRef.current, rect.width, rect.height)
+                        : prev.metrics,
+                    }));
+                  }
+                }}
+              />
+            ) : null}
+            {magnify.show && magnifyReady && m && imgReady && (
               <div
                 className="cert-magnifier-tool"
                 style={{

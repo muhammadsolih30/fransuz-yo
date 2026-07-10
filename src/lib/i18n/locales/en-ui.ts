@@ -2,40 +2,53 @@
 export const enUi = {
   meta: {
     home: {
-      title: "France TCF Learning Center — To Canada through French",
+      title: "TCF Canada Course Tashkent | France TCF — To Canada through French",
       description:
-        "To Canada through French and Express Entry. Professional TCF Canada, DELF, DALF preparation with C1–C2 teachers.",
+        "TCF Canada, TEF, DELF/DALF prep in Tashkent. Reach Canada via French & Express Entry with C1–C2 teachers. Online/offline. Free consult: +998 94 738 22 21.",
+      keywords:
+        "TCF Canada Tashkent, French course Uzbekistan, Express Entry, Canada immigration, TEF Canada, France TCF",
     },
     immigration: {
-      title: "Canadian immigration — PR through Express Entry",
+      title: "Canada Immigration & Express Entry | French +50 CRS | France TCF",
       description:
-        "Immigration to Canada through French. Express Entry, TCF Canada, PR visa, and complete information.",
+        "Immigrate to Canada through French: Express Entry, TCF Canada, CRS points, and PR pathway. Full guidance at France TCF Tashkent.",
+      keywords: "Canada immigration Uzbekistan, Express Entry, CRS points, TCF Canada PR",
     },
     faq: {
-      title: "FAQ — Frequently asked questions | France TCF",
+      title: "TCF Canada FAQ — Frequently asked questions | France TCF",
       description:
-        "Frequently asked questions and answers about TCF Canada, courses, and Canadian immigration.",
+        "Clear answers about the TCF Canada exam, courses, pricing, and Canadian immigration. France TCF Learning Center, Tashkent.",
+      keywords: "TCF Canada FAQ, French course questions, Express Entry FAQ",
     },
     vacancy: {
-      title: "Jobs — France TCF Learning Center",
+      title: "Jobs — French teachers & team | France TCF Tashkent",
       description:
-        "Open positions at France TCF: French teacher, administrator, call operator, brand face, SMM manager.",
+        "Join France TCF: French teacher, administrator, call operator, SMM. Professional team in Tashkent.",
+      keywords: "French teacher job Tashkent, France TCF careers",
     },
     contact: {
-      title: "Contact — France TCF Learning Center",
-      description: "Contact France TCF Learning Center. Get a free consultation.",
+      title: "Contact — France TCF Tashkent | Free consultation",
+      description:
+        "Contact France TCF near Chilonzor / Oybek metro. Phone +998 94 738 22 21, Telegram @France_TCF. Free consultation and enrollment.",
+      keywords: "France TCF contact, French school Tashkent",
     },
     gallery: {
-      title: "Gallery — France TCF Learning Center",
-      description: "Photos and video lessons from France TCF Learning Center.",
+      title: "Gallery — France TCF classes & opening | Tashkent",
+      description:
+        "Photos from France TCF: classroom life, opening day, and student moments. TCF Canada atmosphere in Tashkent.",
+      keywords: "France TCF gallery, French class photos Tashkent",
     },
     trial: {
-      title: "Trial lesson — France TCF Learning Center",
-      description: "Free French trial lesson. Try our TCF Canada courses.",
+      title: "Free trial lesson — TCF Canada | France TCF Tashkent",
+      description:
+        "Book a free French trial lesson. Try TCF Canada prep, check your level, and get a study plan.",
+      keywords: "free French trial Tashkent, TCF Canada trial lesson",
     },
     oferta: {
       title: "Public offer — France TCF Learning Center",
-      description: "France TCF Learning Center public offer terms and conditions — full text.",
+      description:
+        "France TCF Learning Center public offer terms and conditions — full text.",
+      keywords: "France TCF offer, learning contract",
     },
     notFound: {
       title: "Page not found — France TCF Learning Center",
@@ -65,6 +78,7 @@ export const enUi = {
     lessonProcess: "Lesson in progress",
     freeGift: "Free 🎁",
     loading: "Sending...",
+    certLoading: "Certificate loading",
     selectPlaceholder: "Select...",
     mediaSoon: "Coming soon",
   },

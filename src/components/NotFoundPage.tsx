@@ -10,7 +10,7 @@ export function NotFoundPage() {
 
   return (
     <div className="site-page site-page--light text-ink min-h-[60vh]">
-      <PageMeta page="notFound" path={pathname} />
+      <PageMeta page="notFound" path={pathname} noIndex />
 
       <section className="relative pt-28 sm:pt-36 pb-16 sm:pb-24 overflow-hidden">
         <div className="absolute inset-0 page-hero-mesh" aria-hidden />

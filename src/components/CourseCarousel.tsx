@@ -3,6 +3,7 @@ import { useState } from "react";
 import type { CSSProperties } from "react";
 import { Banknote, Calendar, Clock, Users } from "lucide-react";
 import { GROUP_COURSE_IMAGES, type CourseCover, type CourseItem } from "../lib/courses-content";
+import { DeferredBg } from "./DeferredBg";
 
 type Labels = {
   lessonDuration: string;
@@ -66,13 +67,16 @@ export function CourseCarousel({ courses, labels }: Props) {
 
                 <div
                   className="course-slide-card__cover"
-                  style={{
-                    backgroundImage: `url("${encodeURI(cover.image)}")`,
-                    backgroundPosition: cover.objectPosition ?? "center center",
-                  }}
                   role="img"
                   aria-label={course.type}
-                />
+                >
+                  <DeferredBg
+                    src={encodeURI(cover.image)}
+                    style={{
+                      backgroundPosition: cover.objectPosition ?? "center center",
+                    }}
+                  />
+                </div>
 
                 <div className="course-slide-card__body">
                   <h3 className="course-slide-card__title">{course.type}</h3>

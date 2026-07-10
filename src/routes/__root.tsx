@@ -5,6 +5,7 @@ import { Footer } from "../components/Footer";
 import { RegisterModal } from "../components/RegisterModal";
 import { FloatingButtons } from "../components/FloatingButtons";
 import { MobileCtaBar } from "../components/MobileCtaBar";
+import { ScrollProgress } from "../components/ScrollProgress";
 import { SkipToContent } from "../components/SkipToContent";
 import { NotFoundPage } from "../components/NotFoundPage";
 import { useReveal } from "../hooks/useReveal";
@@ -16,25 +17,39 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "France TCF O'quv Markazi — Fransuz tili orqali Kanadaga" },
+      { title: "TCF Canada kursi Toshkent | France TCF — Fransuz tili orqali Kanadaga" },
       {
         name: "description",
         content:
-          "Fransuz tili orqali Kanadaga Express Entry. TCF Canada, TEF, DELF, DALF imtihonlariga C1-C2 darajali ustozlardan professional tayyorgarlik. +50 CRS ball.",
+          "Toshkentda TCF Canada, TEF, DELF/DALF tayyorgarlik. Fransuz tili orqali Express Entry va Kanada PR. C1–C2 ustozlar, online/offline kurslar.",
       },
-      { name: "theme-color", content: "#d52b1e" },
-      { name: "robots", content: "index, follow" },
-      // Open Graph
+      {
+        name: "keywords",
+        content:
+          "TCF Canada Toshkent, fransuz tili kursi, Express Entry, Kanada immigratsiya, TEF Canada, France TCF",
+      },
+      { name: "theme-color", content: "#e83848" },
+      {
+        name: "robots",
+        content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      },
       { property: "og:type", content: "website" },
-      { property: "og:title", content: "France TCF — Fransuz tili orqali Kanadaga" },
+      { property: "og:site_name", content: "France TCF" },
+      { property: "og:title", content: "TCF Canada kursi Toshkent | France TCF" },
       {
         property: "og:description",
-        content: "Express Entry tizimida fransuz tili bilan +50 ball. TCF Canada'ga professional tayyorgarlik.",
+        content: "Fransuz tili orqali Kanadaga. TCF Canada tayyorgarlik — Toshkent.",
       },
       { property: "og:locale", content: "uz_UZ" },
+      { property: "og:url", content: "https://www.francetcf.uz/" },
+      {
+        property: "og:image",
+        content: "https://www.francetcf.uz/image/opening/ckanada%20va%20firansiya.png",
+      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "canonical", href: "https://www.francetcf.uz/" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -77,6 +92,7 @@ function RootComponent() {
   return (
     <>
       <SkipToContent />
+      <ScrollProgress />
       <ScrollRestoration />
       <Navbar />
       <main id="main-content" tabIndex={-1}>

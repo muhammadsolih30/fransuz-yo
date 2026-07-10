@@ -2,44 +2,58 @@
 export const uzUi = {
   meta: {
     home: {
-      title: "France TCF O'quv Markazi — Fransuz tili orqali Kanadaga",
+      title: "TCF Canada kursi Toshkent | France TCF — Fransuz tili orqali Kanadaga",
       description:
-        "Fransuz tili orqali Kanadaga Express Entry. TCF Canada, DELF, DALF imtihonlariga C1-C2 darajali ustozlardan professional tayyorgarlik.",
+        "Toshkentda TCF Canada, TEF, DELF/DALF tayyorgarlik. Fransuz tili orqali Express Entry va Kanada PR. C1–C2 ustozlar, online/offline kurslar. Bepul maslahat: +998 94 738 22 21.",
+      keywords:
+        "TCF Canada Toshkent, TCF Canada kursi, fransuz tili kursi Toshkent, Express Entry, Kanada immigratsiya, TEF Canada, DELF DALF, France TCF, fransuz tili Kanadaga",
     },
     immigration: {
-      title: "Kanada immigratsiyasi — Express Entry orqali PR",
+      title: "Kanada immigratsiyasi va Express Entry | Fransuz tili +50 CRS | France TCF",
       description:
-        "Fransuz tili orqali Kanadaga immigratsiya. Express Entry, TCF Canada, PR viza va to'liq ma'lumot.",
+        "Fransuz tili orqali Kanadaga immigratsiya: Express Entry, TCF Canada, CRS ballari va PR yo‘li. Toshkentdagi France TCF markazida to‘liq yo‘l-yo‘riq.",
+      keywords:
+        "Kanada immigratsiya, Express Entry O‘zbekiston, CRS ball, TCF Canada PR, fransuz tili Kanada, Canada PR",
     },
     faq: {
-      title: "FAQ — Ko'p so'raladigan savollar | France TCF",
+      title: "TCF Canada FAQ — Ko‘p so‘raladigan savollar | France TCF Toshkent",
       description:
-        "TCF Canada, kurslar va Kanada immigratsiyasi bo'yicha ko'p so'raladigan savollar va javoblar.",
+        "TCF Canada imtihoni, kurslar, narxlar va Kanada immigratsiyasi bo‘yicha eng ko‘p so‘raladigan savollarga aniq javoblar. France TCF O‘quv Markazi.",
+      keywords: "TCF Canada savollar, TCF Canada nima, fransuz tili FAQ, Express Entry FAQ",
     },
     vacancy: {
-      title: "Vakansiya — France TCF O'quv Markazi",
+      title: "Vakansiyalar — Fransuz tili o‘qituvchisi va jamoa | France TCF",
       description:
-        "France TCF o'quv markazida bo'sh ish o'rinlari: fransuz tili o'qituvchisi, administrator, call operator, brand face, SMM menejer.",
+        "France TCF O‘quv Markazida ish: fransuz tili o‘qituvchisi, administrator, call-operator, SMM. Toshkent, professional jamoa.",
+      keywords: "fransuz tili o‘qituvchi vakansiya, France TCF ish, Toshkent o‘qituvchi",
     },
     contact: {
-      title: "Bog'lanish — France TCF O'quv Markazi",
-      description: "France TCF O'quv markazi bilan bog'laning. Bepul maslahat oling.",
+      title: "Bog‘lanish — France TCF Toshkent | Bepul maslahat",
+      description:
+        "France TCF bilan bog‘laning: Chilonzor / Oybek metro. Telefon +998 94 738 22 21, Telegram @France_TCF. Bepul konsultatsiya va kursga yozilish.",
+      keywords: "France TCF telefon, fransuz tili markaz Toshkent, TCF Canada bog‘lanish",
     },
     gallery: {
-      title: "Galereya — France TCF O'quv Markazi",
-      description: "France TCF o'quv markazi rasmlari va video darslar.",
+      title: "Galereya — France TCF darslar va ochilish | Toshkent",
+      description:
+        "France TCF o‘quv markazi galereyasi: dars jarayoni, ochilish va o‘quvchilar hayotidan suratlar. TCF Canada muhiti Toshkentda.",
+      keywords: "France TCF galereya, fransuz tili dars rasmlari, TCF Canada Toshkent",
     },
     trial: {
-      title: "Probniy dars — France TCF O'quv Markazi",
-      description: "Fransuz tili bo'yicha bepul sinov darsi. TCF Canada kurslarini sinab ko'ring.",
+      title: "Bepul probniy dars — TCF Canada | France TCF Toshkent",
+      description:
+        "Fransuz tili bo‘yicha bepul sinov darsi. TCF Canada kursini bepul sinab ko‘ring — darajangizni aniqlang va reja oling.",
+      keywords: "bepul fransuz tili darsi, TCF Canada probniy, sinov darsi Toshkent",
     },
     oferta: {
-      title: "Ommaviy oferta — France TCF O'quv Markazi",
-      description: "France TCF o'quv markazi ommaviy oferta shartlari va qoidalari — to'liq matn.",
+      title: "Ommaviy oferta — France TCF O‘quv Markazi",
+      description:
+        "France TCF o‘quv markazi ommaviy oferta shartlari, to‘lov va o‘qish qoidalari — to‘liq matn.",
+      keywords: "France TCF oferta, o‘quv shartnoma",
     },
     notFound: {
-      title: "Sahifa topilmadi — France TCF O'quv Markazi",
-      description: "So'ralgan sahifa topilmadi. Bosh sahifaga qayting yoki biz bilan bog'laning.",
+      title: "Sahifa topilmadi — France TCF O‘quv Markazi",
+      description: "So‘ralgan sahifa topilmadi. Bosh sahifaga qayting yoki biz bilan bog‘laning.",
     },
   },
   shared: {
@@ -65,6 +79,7 @@ export const uzUi = {
     lessonProcess: "Dars jarayoni",
     freeGift: "Bepul 🎁",
     loading: "Yuborilmoqda...",
+    certLoading: "Sertifikat yuklanmoqda",
     selectPlaceholder: "Tanlang...",
     mediaSoon: "Tez orada qo'shiladi",
   },

@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { PageMeta } from "../components/PageMeta";
+import { DeferredImage } from "../components/DeferredImage";
+import { DeferredBg } from "../components/DeferredBg";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
 import { useReveal } from "../hooks/useReveal";
 
@@ -61,9 +63,9 @@ function GalereyaPage() {
       <PageMeta page="gallery" path="/galereya" />
 
       <section className="relative pt-36 pb-16 overflow-hidden page-hero">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-95 page-hero__image"
-          style={{ backgroundImage: "url('/image/opening/galariyaBo%27limi.png')" }}
+        <DeferredBg
+          src="/image/opening/galariyaBo%27limi.png"
+          className="page-hero__image bg-cover bg-center"
         />
         <div className="absolute inset-0 page-hero__scrim" aria-hidden />
         <div className="absolute -top-20 right-0 w-[500px] h-[400px] rounded-full bg-[#e83848]/10 blur-[120px] animate-float-slow" />
@@ -116,14 +118,12 @@ function GalereyaPage() {
                   onClick={() => setLightbox(p.src)}
                   className="bg-white aspect-square overflow-hidden cursor-pointer group relative rounded-2xl shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-card)] transition-all border-0 p-0"
                 >
-                  <img
+                  <DeferredImage
                     src={p.src}
                     alt={`${ui.classroomAlt} ${p.id}`}
                     loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.opacity = "0";
-                    }}
+                    wrapClassName="absolute inset-0"
                   />
                   <div className="absolute inset-0 bg-[#15233B]/0 group-hover:bg-[#15233B]/30 transition-all flex items-center justify-center">
                     <span className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[#e83848] text-2xl opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all">
@@ -143,14 +143,12 @@ function GalereyaPage() {
                   onClick={() => setLightbox(p.src)}
                   className="bg-white aspect-video overflow-hidden cursor-pointer group relative rounded-3xl shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-card)] transition-all border-0 p-0"
                 >
-                  <img
+                  <DeferredImage
                     src={p.src}
                     alt={`${ui.openingAlt} ${p.id}`}
                     loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.opacity = "0";
-                    }}
+                    wrapClassName="absolute inset-0"
                   />
                   <div className="absolute inset-0 bg-[#15233B]/0 group-hover:bg-[#15233B]/20 transition-all" />
                 </button>
@@ -176,10 +174,11 @@ function GalereyaPage() {
           >
             ×
           </button>
-          <img
+          <DeferredImage
             src={lightbox}
             alt={a11y.viewImage}
             className="max-w-full max-h-[90vh] object-contain rounded-2xl shadow-2xl"
+            wrapClassName="max-w-full max-h-[90vh]"
             onClick={(e) => e.stopPropagation()}
           />
         </div>

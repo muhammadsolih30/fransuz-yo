@@ -231,11 +231,15 @@ function Dashboard({
     const onEvent = () => {
       void sync("poll");
     };
+    const onVisible = () => {
+      if (document.visibilityState === "visible") void sync("poll");
+    };
     window.addEventListener("leads-updated", onEvent);
     window.addEventListener("storage", onEvent);
+    document.addEventListener("visibilitychange", onVisible);
     const poll = window.setInterval(() => {
       void sync("poll");
-    }, 8000);
+    }, 2500);
     const healthPoll = window.setInterval(() => {
       leadsStore.checkRemoteHealth().then((h) => {
         if (!cancelled) setRemoteHealth({ ok: h.ok, message: h.message });
@@ -246,6 +250,7 @@ function Dashboard({
       cancelled = true;
       window.removeEventListener("leads-updated", onEvent);
       window.removeEventListener("storage", onEvent);
+      document.removeEventListener("visibilitychange", onVisible);
       window.clearInterval(poll);
       window.clearInterval(healthPoll);
     };
@@ -658,7 +663,8 @@ function LeadCard({ lead, todayStr }: { lead: Lead; todayStr: string }) {
 
         <button
           onClick={() => {
-            if (confirm("Bu arizani o'chirasizmi?")) leadsStore.remove(lead.id);
+            if (!confirm("Bu arizani o'chirasizmi?")) return;
+            void leadsStore.remove(lead.id);
           }}
           className="text-xs font-bold text-[var(--a-text-muted)] hover:text-[#e83848] px-2 py-2 transition-colors"
         >

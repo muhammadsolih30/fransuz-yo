@@ -4,6 +4,7 @@ import PhoneInput, { isValidPhoneNumber, parsePhoneNumber } from "react-phone-nu
 import "react-phone-number-input/style.css";
 import { BarChart3, MapPin, Phone } from "lucide-react";
 import { InstagramIcon, TelegramIcon } from "../components/BrandIcons";
+import { DeferredBg } from "../components/DeferredBg";
 import { PageMeta } from "../components/PageMeta";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
 
@@ -83,9 +84,9 @@ function BoglanishPage() {
       <PageMeta page="contact" path="/boglanish" />
 
       <section className="relative pt-36 pb-16 overflow-hidden page-hero">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-95 page-hero__image"
-          style={{ backgroundImage: "url('/image/opening/ruyxatdanOtishBOLIMI.png')" }}
+        <DeferredBg
+          src="/image/opening/ruyxatdanOtishBOLIMI.png"
+          className="page-hero__image bg-cover bg-center"
         />
         <div className="absolute inset-0 page-hero__scrim" aria-hidden />
         <div className="absolute -top-20 left-1/4 w-[500px] h-[400px] rounded-full bg-[#e83848]/10 blur-[120px] animate-float-slow" />
