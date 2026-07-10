@@ -13,6 +13,15 @@ import {
   ID,
   Query,
 } from "./appwrite";
+import {
+  proxyClearLeads,
+  proxyCreateLead,
+  proxyDeleteLead,
+  proxyHealth,
+  proxyListLeads,
+  proxyPatchLead,
+  shouldPreferLeadsProxy,
+} from "./leads-proxy";
 
 export type LeadStatus =
   | "yangi"
@@ -147,17 +156,33 @@ function upsertLocal(lead: Lead): void {
 }
 
 export const leadsStore = {
-  /** Backend ulanganmi (Appwrite yoki Supabase) */
+  /** Backend ulanganmi (Appwrite/Supabase yoki production proxy) */
   get hasRemoteBackend(): boolean {
-    return isAppwriteEnabled || isSupabaseEnabled;
+    return isAppwriteEnabled || isSupabaseEnabled || shouldPreferLeadsProxy();
   },
 
   /** Serverga ulanish holati (admin banner uchun) */
   async checkRemoteHealth(): Promise<{
     ok: boolean;
-    provider: "appwrite" | "supabase" | "none";
+    provider: "appwrite" | "supabase" | "proxy" | "none";
     message: string;
   }> {
+    if (shouldPreferLeadsProxy()) {
+      const ok = await proxyHealth();
+      return ok
+        ? {
+            ok: true,
+            provider: "proxy",
+            message: "Server ulangan — arizalar barcha qurilmalarda ko‘rinadi.",
+          }
+        : {
+            ok: false,
+            provider: "proxy",
+            message:
+              "Server API ishlamayapti. Vercel deploy va Appwrite holatini tekshiring — aks holda arizalar faqat shu brauzerda qoladi.",
+          };
+    }
+
     if (isAppwriteEnabled && databases) {
       try {
         await databases.listDocuments(APPWRITE_DB!, APPWRITE_LEADS!, [Query.limit(1)]);
@@ -165,12 +190,15 @@ export const leadsStore = {
       } catch (e) {
         const raw = e instanceof Error ? e.message : String(e);
         const paused = /paused|inactivity/i.test(raw);
+        const badOrigin = /invalid origin|origin/i.test(raw);
         return {
           ok: false,
           provider: "appwrite",
           message: paused
             ? "Appwrite loyihasi pauzada (inactivity). cloud.appwrite.io → Restore qiling, aks holda arizalar faqat shu brauzerda qoladi."
-            : `Appwrite xatosi: ${raw}. Arizalar hozircha faqat shu brauzerda saqlanadi.`,
+            : badOrigin
+              ? "Appwrite CORS: domen ro‘yxatdan o‘tmagan. Console → Platforms ga fransuz-yo.uz va www.fransuz-yo.uz qo‘shing."
+              : `Appwrite xatosi: ${raw}. Arizalar hozircha faqat shu brauzerda saqlanadi.`,
         };
       }
     }
@@ -194,6 +222,19 @@ export const leadsStore = {
   },
 
   async all(): Promise<Lead[]> {
+    if (shouldPreferLeadsProxy()) {
+      try {
+        const remote = (await proxyListLeads()) as Lead[];
+        const local = lsRead();
+        const byId = new Map<string, Lead>();
+        for (const l of local) byId.set(l.id, l);
+        for (const l of remote) byId.set(l.id, l);
+        return [...byId.values()].sort((a, b) => b.createdAt - a.createdAt);
+      } catch (e) {
+        console.error("Proxy all() xatosi, Appwrite/local zaxira:", e);
+      }
+    }
+
     if (isAppwriteEnabled && databases) {
       try {
         const res = await databases.listDocuments(APPWRITE_DB!, APPWRITE_LEADS!, [
@@ -254,6 +295,25 @@ export const leadsStore = {
       checkedAt: null as number | null,
     };
 
+    if (shouldPreferLeadsProxy()) {
+      try {
+        const saved = (await proxyCreateLead({
+          ism: base.ism,
+          telefon: base.telefon,
+          telegram: base.telegram,
+          country: base.country,
+          format: base.format,
+          daraja: base.daraja,
+          xabar: base.xabar,
+        })) as Lead;
+        upsertLocal(saved);
+        return;
+      } catch (e) {
+        console.error("Proxy add() xatosi:", e);
+        // pastga — Appwrite SDK yoki local
+      }
+    }
+
     if (isAppwriteEnabled && databases) {
       try {
         const doc = await databases.createDocument(APPWRITE_DB!, APPWRITE_LEADS!, ID.unique(), {
@@ -282,6 +342,11 @@ export const leadsStore = {
         if (/paused|inactivity/i.test(raw)) {
           throw new Error(
             "Server pauzada (Appwrite). Ariza shu telefonda saqlandi, lekin admin boshqa qurilmada ko‘rmaydi. Appwrite’da Restore qiling.",
+          );
+        }
+        if (/invalid origin|origin/i.test(raw)) {
+          throw new Error(
+            "Domen Appwrite’da ro‘yxatdan o‘tmagan (fransuz-yo.uz). Platforms ga qo‘shing yoki deploy yangilang.",
           );
         }
         throw new Error(
@@ -334,6 +399,15 @@ export const leadsStore = {
   },
 
   async setStatus(id: string, status: LeadStatus): Promise<void> {
+    if (shouldPreferLeadsProxy()) {
+      try {
+        await proxyPatchLead(id, { status });
+      } catch (e) {
+        console.error("Proxy setStatus() xatosi:", e);
+      }
+      lsWrite(lsRead().map((l) => (l.id === id ? { ...l, status } : l)));
+      return;
+    }
     if (isAppwriteEnabled && databases) {
       try {
         await databases.updateDocument(APPWRITE_DB!, APPWRITE_LEADS!, id, { status });
@@ -355,6 +429,19 @@ export const leadsStore = {
   async toggleChecked(id: string, current: boolean): Promise<void> {
     const next = !current;
     const checkedAt = next ? new Date().toISOString() : null;
+    if (shouldPreferLeadsProxy()) {
+      try {
+        await proxyPatchLead(id, { checkedAt: checkedAt ?? "" });
+      } catch (e) {
+        console.error("Proxy toggleChecked() xatosi:", e);
+      }
+      lsWrite(
+        lsRead().map((l) =>
+          l.id === id ? { ...l, checked: next, checkedAt: next ? Date.now() : null } : l,
+        ),
+      );
+      return;
+    }
     if (isAppwriteEnabled && databases) {
       try {
         await databases.updateDocument(APPWRITE_DB!, APPWRITE_LEADS!, id, {
@@ -392,6 +479,15 @@ export const leadsStore = {
 
   async setScheduled(id: string, date: string | null): Promise<void> {
     const status: LeadStatus = date ? "belgilangan" : "aloqa";
+    if (shouldPreferLeadsProxy()) {
+      try {
+        await proxyPatchLead(id, { scheduledDate: date, status });
+      } catch (e) {
+        console.error("Proxy setScheduled() xatosi:", e);
+      }
+      lsWrite(lsRead().map((l) => (l.id === id ? { ...l, scheduledDate: date, status } : l)));
+      return;
+    }
     if (isAppwriteEnabled && databases) {
       try {
         await databases.updateDocument(APPWRITE_DB!, APPWRITE_LEADS!, id, {
@@ -417,6 +513,15 @@ export const leadsStore = {
   },
 
   async remove(id: string): Promise<void> {
+    if (shouldPreferLeadsProxy()) {
+      try {
+        await proxyDeleteLead(id);
+      } catch (e) {
+        console.error("Proxy remove() xatosi:", e);
+      }
+      lsWrite(lsRead().filter((l) => l.id !== id));
+      return;
+    }
     if (isAppwriteEnabled && databases) {
       try {
         await databases.deleteDocument(APPWRITE_DB!, APPWRITE_LEADS!, id);
@@ -436,6 +541,15 @@ export const leadsStore = {
   },
 
   async clearAll(): Promise<void> {
+    if (shouldPreferLeadsProxy()) {
+      try {
+        await proxyClearLeads();
+      } catch (e) {
+        console.error("Proxy clearAll() xatosi:", e);
+      }
+      lsWrite([]);
+      return;
+    }
     if (isAppwriteEnabled && databases) {
       try {
         const res = await databases.listDocuments(APPWRITE_DB!, APPWRITE_LEADS!, [
