@@ -26,6 +26,11 @@
   --shadow-ring: 0 0 0 1px rgba(21, 35, 59, 0.06);
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.22, 1.2, 0.36, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --duration-fast: 160ms;
+  --duration-ui: 320ms;
+  --duration-page: 480ms;
 
   /* Navbar pastidan sticky: pt-3 + h-16 + 5px */
   --site-header-gap: 5px;
@@ -72,6 +77,14 @@
       linear-gradient(180deg, #ffffff 0%, #f6f9fc 100%);
     --stripe-border: rgba(21, 35, 59, 0.1);
     --stripe-border-light: rgba(255, 255, 255, 0.14);
+  }
+
+  html.dark {
+    --surface-page: #0d1117;
+    --surface-soft: #1a2332;
+    --surface-muted: #243044;
+    --surface-elevated: #161b22;
+    --stripe-border: rgba(255, 255, 255, 0.12);
   }
 
   body {
@@ -123,8 +136,8 @@
   }
 
   /* ───── DARK MODE: asosiy matn va fonlar ───── */
-  html.dark main .bg-white:not(.cert-story-dialog),
-  html.dark [role="dialog"] .bg-white:not(.cert-story-dialog) {
+  html.dark main .bg-white:not(.cert-story-dialog):not(.register-modal):not(.register-modal__later),
+  html.dark [role="dialog"] .bg-white:not(.cert-story-dialog):not(.register-modal):not(.register-modal__later) {
     background-color: #121820 !important;
   }
 
@@ -867,6 +880,13 @@
     border-radius: 12px;
   }
 
+  /* Ichki input — faqat tashqi shell border/ring ko'rinsin */
+  .field-shell :focus-visible,
+  .france-phone :focus-visible {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
   .skip-link {
     position: fixed;
     top: 0.75rem;
@@ -902,18 +922,64 @@
 
   .register-modal [data-radix-dialog-close] {
     color: #fff;
-    opacity: 0.9;
-    background: rgba(255, 255, 255, 0.15);
+    opacity: 0.95;
+    background: rgba(0, 0, 0, 0.35);
     border-radius: 9999px;
     width: 2rem;
     height: 2rem;
     top: 0.75rem;
     right: 0.75rem;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 20;
   }
 
   .register-modal [data-radix-dialog-close]:hover {
-    background: rgba(255, 255, 255, 0.28);
+    background: rgba(0, 0, 0, 0.5);
     color: #fff;
+  }
+
+  .register-modal__hero {
+    min-height: 9.5rem;
+  }
+
+  .register-modal__hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+
+  .register-modal__hero-scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(10, 18, 36, 0.35) 0%, rgba(10, 18, 36, 0.55) 42%, rgba(232, 56, 72, 0.72) 100%),
+      radial-gradient(ellipse 70% 60% at 80% 0%, rgba(224, 165, 38, 0.28), transparent 55%);
+  }
+
+  .register-modal__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  @media (min-width: 640px) {
+    .register-modal__hero {
+      min-height: 11.5rem;
+    }
   }
 
   /* ───── FOOTER — qora fon, oq matn ───── */
@@ -1147,6 +1213,39 @@
   html.dark main .register-modal,
   html.dark [role="dialog"].register-modal {
     color: #15233b !important;
+    background: #ffffff !important;
+  }
+
+  html.dark .register-modal.bg-white,
+  html.dark [role="dialog"].register-modal.bg-white,
+  html.dark .register-modal__body {
+    background: #ffffff !important;
+  }
+
+  /* Keep light-theme ink on white modal body (global dark dialog text flips otherwise) */
+  html.dark .register-modal .text-\[\#15233B\],
+  html.dark .register-modal .text-\[\#15233b\],
+  html.dark [role="dialog"].register-modal .text-\[\#15233B\],
+  html.dark [role="dialog"].register-modal .text-\[\#15233b\] {
+    color: #15233b !important;
+  }
+
+  html.dark .register-modal .text-\[\#546074\],
+  html.dark .register-modal .text-\[\#646F82\],
+  html.dark [role="dialog"].register-modal .text-\[\#546074\],
+  html.dark [role="dialog"].register-modal .text-\[\#646F82\] {
+    color: #546074 !important;
+  }
+
+  html.dark .register-modal__later {
+    background: #f3f4f6 !important;
+    color: #15233b !important;
+    border-color: #d1d5db !important;
+  }
+
+  html.dark .register-modal__later:hover {
+    background: #e5e7eb !important;
+    color: #0f172a !important;
   }
 
   /* Respect users who prefer less motion */
@@ -1168,6 +1267,20 @@
       transform: none !important;
       filter: none !important;
     }
+
+    #main-content.page-enter {
+      animation: none !important;
+    }
+
+    button:active,
+    a:active,
+    summary:active,
+    [role="button"]:active,
+    .btn-primary:active,
+    .btn-outline:active,
+    .btn-gold:active {
+      transform: none !important;
+    }
   }
 
   /* Mac-kabi silliqlik: interaktiv elementlar uchun yumshoq easing */
@@ -1177,8 +1290,86 @@
   .card,
   input,
   select,
-  textarea {
-    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  textarea,
+  [role="button"],
+  [role="tab"],
+  [role="menuitem"] {
+    transition-timing-function: var(--ease-out-expo);
+  }
+
+  /* Global press / hover feel — har bir tugma va link silliq */
+  button,
+  a,
+  summary,
+  [role="button"],
+  [role="tab"],
+  [role="menuitem"],
+  .btn-primary,
+  .btn-outline,
+  .btn-gold,
+  input[type="submit"],
+  input[type="button"] {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition-property: color, background-color, border-color, box-shadow, transform, opacity, filter;
+    transition-duration: var(--duration-ui);
+    transition-timing-function: var(--ease-out-expo);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    button:not(:disabled):hover,
+    a:hover,
+    [role="button"]:hover,
+    .btn-primary:hover,
+    .btn-outline:hover,
+    .btn-gold:hover {
+      transition-duration: var(--duration-ui);
+    }
+  }
+
+  button:not(:disabled):active,
+  a:active,
+  summary:active,
+  [role="button"]:active,
+  [role="tab"]:active,
+  [role="menuitem"]:active,
+  .btn-primary:active,
+  .btn-outline:active,
+  .btn-gold:active,
+  input[type="submit"]:active,
+  input[type="button"]:active {
+    transform: scale(0.97);
+    transition-duration: var(--duration-fast);
+  }
+
+  /* Sahifa o'tishi — route almashtirilganda yumshoq kirish */
+  #main-content.page-enter {
+    animation: page-enter var(--duration-page) var(--ease-out-expo) both;
+  }
+
+  @keyframes page-enter {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Dialog / overlay — biroz yumshoqroq */
+  [data-radix-dialog-overlay],
+  [data-state="open"][data-radix-dialog-overlay] {
+    animation-duration: 280ms !important;
+    animation-timing-function: var(--ease-out-expo) !important;
+  }
+
+  [data-radix-dialog-content],
+  [role="dialog"] {
+    animation-duration: 360ms !important;
+    animation-timing-function: var(--ease-spring) !important;
   }
 
   h1,
@@ -1603,40 +1794,40 @@
     color: transparent;
   }
 
-  /* ───── REVEAL ON SCROLL — pastdan ketma-ket ───── */
+  /* ───── REVEAL ON SCROLL — pastdan ketma-ket (Mac-kabi yumshoq) ───── */
   .reveal {
     opacity: 0;
     transition:
-      opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-      filter 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+      opacity 0.65s var(--ease-out-expo),
+      transform 0.65s var(--ease-out-expo),
+      filter 0.65s var(--ease-out-expo);
     will-change: opacity, transform;
   }
 
   .reveal[data-from="bottom"],
   .reveal:not([data-from]) {
-    transform: translateY(72px);
+    transform: translateY(28px);
   }
 
   .reveal[data-from="left"] {
-    transform: translateX(-80px) rotate(-7deg);
+    transform: translateX(-36px);
   }
 
   .reveal[data-from="right"] {
-    transform: translateX(80px) rotate(7deg);
+    transform: translateX(36px);
   }
 
   .reveal[data-from="top"] {
-    transform: translateY(-64px);
+    transform: translateY(-24px);
   }
 
   .reveal[data-from="spin"] {
-    transform: translateY(48px) rotate(108deg) scale(0.62);
+    transform: translateY(20px) rotate(8deg) scale(0.94);
   }
 
   .reveal[data-from="zoom"] {
-    transform: scale(0.45);
-    filter: blur(6px);
+    transform: scale(0.94);
+    filter: blur(4px);
   }
 
   .reveal.is-visible {
@@ -1741,71 +1932,100 @@
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 text-white font-semibold px-7 py-3.5 rounded-full text-sm transition-all duration-300 no-underline;
+    @apply inline-flex items-center justify-center gap-2 text-white font-semibold px-7 py-3.5 rounded-full text-sm no-underline;
     background: #e83848;
     box-shadow: 0 4px 14px rgba(232, 56, 72, 0.35);
+    transition:
+      transform var(--duration-ui) var(--ease-out-expo),
+      background-color var(--duration-ui) var(--ease-out-expo),
+      box-shadow var(--duration-ui) var(--ease-out-expo),
+      color var(--duration-ui) var(--ease-out-expo);
   }
 
   .btn-primary:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px) scale(1.015);
     background: #e84858;
-    box-shadow: 0 6px 20px rgba(232, 56, 72, 0.42);
+    box-shadow: 0 10px 28px rgba(232, 56, 72, 0.42);
   }
 
   .btn-primary:active {
-    transform: translateY(0) scale(0.99);
+    transform: translateY(0) scale(0.97);
+    box-shadow: 0 2px 10px rgba(232, 56, 72, 0.3);
+    transition-duration: var(--duration-fast);
   }
 
   .btn-gold {
-    @apply inline-flex items-center justify-center gap-2 text-[#15233B] font-bold px-7 py-3.5 rounded-full text-sm transition-all duration-300 no-underline;
+    @apply inline-flex items-center justify-center gap-2 text-[#15233B] font-bold px-7 py-3.5 rounded-full text-sm no-underline;
     background: linear-gradient(135deg, #f0bd47 0%, #e0a526 55%, #c8901a 100%);
     box-shadow: 0 4px 14px rgba(224, 165, 38, 0.35);
+    transition:
+      transform var(--duration-ui) var(--ease-out-expo),
+      box-shadow var(--duration-ui) var(--ease-out-expo),
+      filter var(--duration-ui) var(--ease-out-expo);
   }
 
   .btn-gold:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(224, 165, 38, 0.45);
+    transform: translateY(-2px) scale(1.015);
+    box-shadow: 0 10px 28px rgba(224, 165, 38, 0.45);
   }
 
   .btn-gold:active {
-    transform: translateY(0) scale(0.99);
+    transform: translateY(0) scale(0.97);
+    transition-duration: var(--duration-fast);
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 border border-[#15233B]/15 bg-white text-[#15233B] font-semibold px-7 py-3.5 rounded-full text-sm transition-all duration-300 no-underline;
+    @apply inline-flex items-center justify-center gap-2 border border-[#15233B]/15 bg-white text-[#15233B] font-semibold px-7 py-3.5 rounded-full text-sm no-underline;
     box-shadow: 0 1px 2px rgba(21, 35, 59, 0.04);
+    transition:
+      transform var(--duration-ui) var(--ease-out-expo),
+      background-color var(--duration-ui) var(--ease-out-expo),
+      border-color var(--duration-ui) var(--ease-out-expo),
+      box-shadow var(--duration-ui) var(--ease-out-expo),
+      color var(--duration-ui) var(--ease-out-expo);
   }
 
   .btn-outline:hover {
     border-color: #15233b;
     color: #15233b;
     background: #ffffff;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(21, 35, 59, 0.08);
+    transform: translateY(-2px) scale(1.015);
+    box-shadow: 0 8px 22px rgba(21, 35, 59, 0.1);
   }
 
   .btn-outline:active {
-    transform: translateY(0) scale(0.99);
+    transform: translateY(0) scale(0.97);
+    transition-duration: var(--duration-fast);
   }
 
   /* ───── CARD (Stripe: ingichka border, yengil soya) ───── */
   .card {
     position: relative;
-    @apply bg-white rounded-2xl border border-[#15233B]/10 transition-all duration-300;
+    @apply bg-white rounded-2xl border border-[#15233B]/10;
     box-shadow: 0 1px 3px rgba(21, 35, 59, 0.04), 0 4px 20px rgba(21, 35, 59, 0.05);
+    transition:
+      transform var(--duration-ui) var(--ease-out-expo),
+      box-shadow var(--duration-ui) var(--ease-out-expo),
+      border-color var(--duration-ui) var(--ease-out-expo),
+      background-color var(--duration-ui) var(--ease-out-expo);
   }
 
   .card-hover {
     transition:
-      transform 0.4s var(--ease-out-expo),
-      box-shadow 0.4s var(--ease-out-expo),
-      border-color 0.4s var(--ease-out-expo);
+      transform 0.45s var(--ease-out-expo),
+      box-shadow 0.45s var(--ease-out-expo),
+      border-color 0.45s var(--ease-out-expo);
   }
 
   .card-hover:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(21, 35, 59, 0.1), 0 2px 8px rgba(21, 35, 59, 0.04);
-    border-color: rgba(42, 82, 134, 0.2);
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 14px 40px rgba(21, 35, 59, 0.12), 0 2px 8px rgba(21, 35, 59, 0.04);
+    border-color: rgba(42, 82, 134, 0.22);
+  }
+
+  .card-hover:active {
+    transform: translateY(-2px) scale(0.995);
+    transition-duration: var(--duration-fast);
   }
 
   /* ───── GLASS NAV ───── */
@@ -2716,8 +2936,31 @@ html.dark .cert-story-dialog__story {
 }
 
 html.dark .cert-story-dialog__score {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.12);
+  background: #1a2332 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+html.dark .result-score-card {
+  background-color: var(--surface-soft) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.result-score-card {
+  transition:
+    transform var(--duration-ui) var(--ease-out-expo),
+    box-shadow var(--duration-ui) var(--ease-out-expo),
+    border-color var(--duration-ui) var(--ease-out-expo),
+    background-color var(--duration-ui) var(--ease-out-expo);
+}
+
+.result-score-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(21, 35, 59, 0.1);
+}
+
+.result-score-card:active {
+  transform: translateY(-1px) scale(0.99);
+  transition-duration: var(--duration-fast);
 }
 
 .cert-story-dialog__score-label {
@@ -2966,6 +3209,57 @@ html.dark .section-skeleton {
 
 html.dark .faq-accordion summary:focus-visible {
   outline-color: #ff7b88;
+}
+
+.faq-accordion {
+  transition:
+    transform var(--duration-ui) var(--ease-out-expo),
+    box-shadow var(--duration-ui) var(--ease-out-expo),
+    border-color var(--duration-ui) var(--ease-out-expo);
+}
+
+.faq-accordion summary {
+  transition: background-color var(--duration-ui) var(--ease-out-expo);
+}
+
+.faq-accordion summary:hover {
+  background-color: rgba(232, 56, 72, 0.03);
+}
+
+.faq-accordion__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.42s var(--ease-out-expo);
+}
+
+.faq-accordion[open] .faq-accordion__panel {
+  grid-template-rows: 1fr;
+}
+
+.faq-accordion__inner {
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity 0.35s var(--ease-out-expo) 40ms,
+    transform 0.35s var(--ease-out-expo) 40ms;
+}
+
+.faq-accordion[open] .faq-accordion__inner {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-accordion__panel,
+  .faq-accordion__inner {
+    transition: none !important;
+  }
+
+  .faq-accordion__inner {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .course-section__eyebrow {

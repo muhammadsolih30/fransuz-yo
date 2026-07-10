@@ -10,16 +10,16 @@ import { useScrollSpy } from "../hooks/useScrollSpy";
 import { useFocusTrap } from "../hooks/useFocusTrap";
 
 const NAV_LINK_BASE =
-  "relative no-underline text-[#3E4B62] hover:text-[#e83848] text-xs lg:text-[11px] 2xl:text-[13px] font-semibold px-1.5 2xl:px-2.5 pt-2 pb-2.5 transition-colors whitespace-nowrap";
+  "relative no-underline text-[#3E4B62] hover:text-[#e83848] text-xs lg:text-[11px] 2xl:text-[13px] font-semibold px-1.5 2xl:px-2.5 pt-2 pb-2.5 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] whitespace-nowrap after:content-[''] after:absolute after:bottom-0 after:left-1.5 after:right-1.5 2xl:after:left-2 2xl:after:right-2 after:h-[2px] after:bg-[#e83848] after:rounded-full after:scale-x-0 after:origin-center after:transition-transform after:duration-300 after:ease-[cubic-bezier(0.16,1,0.3,1)] hover:after:scale-x-100";
 
 const NAV_LINK_ACTIVE =
-  "relative no-underline text-[#e83848] text-xs lg:text-[11px] 2xl:text-[13px] font-bold px-1.5 2xl:px-2.5 pt-2 pb-2.5 whitespace-nowrap after:content-[''] after:absolute after:bottom-0 after:left-1.5 after:right-1.5 2xl:after:left-2 2xl:after:right-2 after:h-[2px] after:bg-[#e83848] after:rounded-full";
+  "relative no-underline text-[#e83848] text-xs lg:text-[11px] 2xl:text-[13px] font-bold px-1.5 2xl:px-2.5 pt-2 pb-2.5 whitespace-nowrap after:content-[''] after:absolute after:bottom-0 after:left-1.5 after:right-1.5 2xl:after:left-2 2xl:after:right-2 after:h-[2px] after:bg-[#e83848] after:rounded-full after:scale-x-100 after:transition-transform after:duration-300 after:ease-[cubic-bezier(0.16,1,0.3,1)]";
 
 const NAV_MOBILE_BASE =
-  "no-underline text-[#15233B] hover:text-[#e83848] text-base font-bold py-3.5 border-b border-[#15233B]/8 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] border-l-[3px] border-l-transparent pl-4";
+  "no-underline text-[#15233B] hover:text-[#e83848] text-base font-bold py-3.5 border-b border-[#15233B]/8 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] border-l-[3px] border-l-transparent pl-4 active:scale-[0.99]";
 
 const NAV_MOBILE_ACTIVE =
-  "no-underline text-[#e83848] text-base font-bold py-3.5 border-b border-[#15233B]/8 border-l-[3px] border-l-[#e83848] pl-4";
+  "no-underline text-[#e83848] text-base font-bold py-3.5 border-b border-[#15233B]/8 border-l-[3px] border-l-[#e83848] pl-4 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);

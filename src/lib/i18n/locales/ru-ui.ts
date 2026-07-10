@@ -336,6 +336,7 @@ export const ruUi = {
     successBody:
       "Ваша заявка получена. Для более быстрого ответа напишите админу напрямую.",
     successTelegram: "💬 Telegram: @France_TCF",
+    submitError: "Заявка не сохранена. Проверьте интернет и попробуйте снова.",
     nameLabel: "Ваше имя *",
     namePlaceholder: "Имя Фамилия",
     phoneLabel: "Телефон *",

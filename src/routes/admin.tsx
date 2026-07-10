@@ -201,9 +201,12 @@ function Dashboard({
     sync();
     window.addEventListener("leads-updated", sync);
     window.addEventListener("storage", sync);
+    // Boshqa tab/sahifadan kelgan arizalarni yangilab turish
+    const poll = window.setInterval(sync, 8000);
     return () => {
       window.removeEventListener("leads-updated", sync);
       window.removeEventListener("storage", sync);
+      window.clearInterval(poll);
     };
   }, []);
 
@@ -343,6 +346,17 @@ function Dashboard({
               />
               <ThemeToggle theme={theme} toggle={toggleTheme} />
             </div>
+          </div>
+
+          <div className="px-4 sm:px-6 pt-4">
+            {!leadsStore.hasRemoteBackend && (
+              <div className="mb-3 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-amber-800 dark:text-amber-200 text-xs sm:text-sm leading-relaxed">
+                <strong>Diqqat:</strong> Hozir arizalar faqat shu brauzerning localStorageida saqlanadi.
+                Foydalanuvchi boshqa telefon/kompyuterdan yuborsa, bu yerda ko‘rinmaydi.
+                Barcha qurilmalarda ko‘rish uchun Vercel’da Appwrite (yoki Supabase){" "}
+                <code className="font-mono text-[0.7rem]">VITE_APPWRITE_*</code> sozlamalarini ulang.
+              </div>
+            )}
           </div>
 
           <div className="px-4 sm:px-6 pb-3 flex items-center gap-2 overflow-x-auto no-scrollbar">

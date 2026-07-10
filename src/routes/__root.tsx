@@ -1,4 +1,5 @@
 import { Outlet, createRootRoute, ScrollRestoration, useRouterState } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { RegisterModal } from "../components/RegisterModal";
@@ -51,6 +52,18 @@ function RootComponent() {
   const isAdmin = pathname.startsWith("/admin");
 
   useReveal([pathname, hash]);
+
+  useEffect(() => {
+    if (isAdmin) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const main = document.getElementById("main-content");
+    if (!main) return;
+
+    main.classList.remove("page-enter");
+    void main.offsetWidth;
+    main.classList.add("page-enter");
+  }, [pathname, isAdmin]);
 
   if (isAdmin) {
     return (

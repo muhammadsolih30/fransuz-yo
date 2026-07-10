@@ -333,6 +333,7 @@ export const uzUi = {
     successBody:
       "Arizangiz qabul qilindi. Tezroq bog'lanish uchun adminga to'g'ridan-to'g'ri yozing.",
     successTelegram: "💬 Telegram: @France_TCF",
+    submitError: "Ariza saqlanmadi. Internetni tekshirib, qayta urinib ko'ring.",
     nameLabel: "Ismingiz *",
     namePlaceholder: "Ism Familiya",
     phoneLabel: "Telefon *",

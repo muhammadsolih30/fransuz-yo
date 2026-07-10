@@ -297,7 +297,7 @@ function HomePage() {
                 {highlightStudent.scores.map((sc) => (
                   <div
                     key={sc.s}
-                    className="rounded-2xl p-5 bg-[var(--surface-soft)] border border-[#15233B]/8 hover:border-[#e83848]/25 hover:-translate-y-1 transition-all"
+                    className="result-score-card rounded-2xl p-5 bg-[var(--surface-soft)] border border-[#15233B]/8 hover:border-[#e83848]/25 hover:-translate-y-1 transition-all"
                   >
                     <div className="flex items-baseline justify-between mb-1">
                       <span className="font-['Syne'] font-extrabold text-2xl text-[#e83848]">{sc.l}</span>

@@ -37,6 +37,7 @@ function BoglanishPage() {
   const [form, setForm] = useState({ ism: "", telefon: "", telegram: "", format: "", daraja: "", xabar: "" });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [agreed, setAgreed] = useState(false);
   const [opened, setOpened] = useState(false);
 
@@ -46,6 +47,7 @@ function BoglanishPage() {
     event?.preventDefault();
     if (!canSubmit) return;
     setLoading(true);
+    setSubmitError("");
 
     let country = "UZ";
     try {
@@ -58,20 +60,21 @@ function BoglanishPage() {
     try {
       const { leadsStore } = await import("../lib/store");
       await leadsStore.add({
-        ism: form.ism,
+        ism: form.ism.trim(),
         telefon: form.telefon,
         telegram: form.telegram.trim(),
         country,
         format: ui.formats.find((f) => f.v === form.format)?.l ?? "—",
         daraja: ui.levels.find((d) => d.v === form.daraja)?.l ?? "—",
-        xabar: form.xabar || "—",
+        xabar: form.xabar.trim() || "—",
       });
+      setSent(true);
     } catch (e) {
       console.error(e);
+      setSubmitError(ui.submitError);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
-    setSent(true);
   };
 
   return (
@@ -154,8 +157,10 @@ function BoglanishPage() {
                     <label htmlFor="contact-telegram" className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">
                       {ui.telegramLabel}
                     </label>
-                    <div className="flex items-center bg-[#FAF6EF] border border-[#15233B]/10 focus-within:border-[#e83848] focus-within:ring-4 focus-within:ring-[#e83848]/10 rounded-xl px-4 transition-all">
-                      <span className="text-[#646F82] font-semibold">@</span>
+                    <div className="field-shell flex items-center bg-[#FAF6EF] border border-[#15233B]/10 focus-within:border-[#e83848] focus-within:ring-4 focus-within:ring-[#e83848]/10 rounded-xl px-4 transition-all">
+                      <span className="text-[#646F82] font-semibold shrink-0" aria-hidden>
+                        @
+                      </span>
                       <input
                         id="contact-telegram"
                         name="telegram"
@@ -166,7 +171,7 @@ function BoglanishPage() {
                         onChange={(e) =>
                           setForm((p) => ({ ...p, telegram: e.target.value.replace(/[@\s]/g, "") }))
                         }
-                        className="flex-1 bg-transparent py-3.5 pl-1 text-[#15233B] text-base outline-none placeholder:text-[#15233B]/35"
+                        className="flex-1 min-w-0 bg-transparent border-0 shadow-none py-3.5 pl-1 text-[#15233B] text-base outline-none ring-0 focus:outline-none focus:ring-0 focus:border-0 focus-visible:outline-none focus-visible:shadow-none focus-visible:ring-0 placeholder:text-[#15233B]/35"
                       />
                     </div>
                   </div>
@@ -264,6 +269,11 @@ function BoglanishPage() {
                   >
                     {loading ? ui.submitting : ui.submit}
                   </button>
+                  {submitError && (
+                    <p className="text-[#e83848] text-sm text-center mt-3 font-medium" role="alert">
+                      {submitError}
+                    </p>
+                  )}
                   {!agreed && (form.ism || form.telefon) && (
                     <p className="text-[#646F82] text-xs text-center mt-3">{ui.ofertaRequired}</p>
                   )}

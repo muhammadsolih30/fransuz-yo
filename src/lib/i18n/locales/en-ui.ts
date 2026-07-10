@@ -336,6 +336,7 @@ export const enUi = {
     successBody:
       "Your application has been received. For a faster response, message the admin directly.",
     successTelegram: "💬 Telegram: @France_TCF",
+    submitError: "Could not save your application. Check your connection and try again.",
     nameLabel: "Your name *",
     namePlaceholder: "First Last",
     phoneLabel: "Phone *",

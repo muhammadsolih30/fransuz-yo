@@ -26,7 +26,7 @@ export function FloatingButtons() {
                 type="button"
                 onClick={scrollTop}
                 aria-label={a11y.backToTop}
-                className={`w-11 h-11 rounded-full bg-white border border-[#15233B]/10 text-[#15233B] shadow-[0_8px_24px_-8px_rgba(21,35,59,0.4)] flex items-center justify-center hover:bg-[#15233B] hover:text-white transition-all duration-300 ${showTop ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
+                className={`w-11 h-11 rounded-full bg-white border border-[#15233B]/10 text-[#15233B] shadow-[0_8px_24px_-8px_rgba(21,35,59,0.4)] flex items-center justify-center hover:bg-[#15233B] hover:text-white hover:scale-105 active:scale-95 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${showTop ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
                     }`}
             >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -39,7 +39,7 @@ export function FloatingButtons() {
                 target="_blank"
                 rel="noreferrer noopener"
                 aria-label={shared.telegramAdminContact}
-                className="hidden lg:flex relative w-15 h-15 rounded-full bg-[#229ED9] items-center justify-center shadow-[0_10px_30px_-6px_rgba(34,158,217,0.7)] hover:scale-110 transition-transform"
+                className="hidden lg:flex relative w-15 h-15 rounded-full bg-[#229ED9] items-center justify-center shadow-[0_10px_30px_-6px_rgba(34,158,217,0.7)] hover:scale-110 active:scale-95 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
             >
                 <span className="absolute inset-0 rounded-full bg-[#229ED9]/50 animate-tg-wave" />
                 <span className="absolute inset-0 rounded-full bg-[#229ED9]/40 animate-tg-wave [animation-delay:1s]" />

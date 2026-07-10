@@ -94,10 +94,6 @@ function rowToLead(r: Row): Lead {
   };
 }
 
-function emit() {
-  window.dispatchEvent(new Event("leads-updated"));
-}
-
 /* ─────────────────────────────────────────────
    Appwrite hujjat ↔ Lead konvertatsiyasi
    ───────────────────────────────────────────── */
@@ -137,7 +133,25 @@ function docToLead(d: AwDoc): Lead {
 /* ─────────────────────────────────────────────
    Public API (async)
    ───────────────────────────────────────────── */
+
+function pushLocal(lead: Lead): void {
+  const leads = lsRead();
+  leads.push(lead);
+  lsWrite(leads);
+}
+
+function upsertLocal(lead: Lead): void {
+  const leads = lsRead().filter((l) => l.id !== lead.id);
+  leads.push(lead);
+  lsWrite(leads);
+}
+
 export const leadsStore = {
+  /** Backend ulanganmi (Appwrite yoki Supabase) */
+  get hasRemoteBackend(): boolean {
+    return isAppwriteEnabled || isSupabaseEnabled;
+  },
+
   async all(): Promise<Lead[]> {
     if (isAppwriteEnabled && databases) {
       try {
@@ -145,10 +159,16 @@ export const leadsStore = {
           Query.orderDesc("$createdAt"),
           Query.limit(1000),
         ]);
-        return (res.documents as unknown as AwDoc[]).map(docToLead);
+        const remote = (res.documents as unknown as AwDoc[]).map(docToLead);
+        // Remote + local birlashtirish (zaxira arizalar yo'qolmasin)
+        const local = lsRead();
+        const byId = new Map<string, Lead>();
+        for (const l of local) byId.set(l.id, l);
+        for (const l of remote) byId.set(l.id, l);
+        return [...byId.values()].sort((a, b) => b.createdAt - a.createdAt);
       } catch (e) {
-        console.error("Appwrite all() xatosi:", e);
-        return [];
+        console.error("Appwrite all() xatosi, localStorage zaxira:", e);
+        return lsRead().sort((a, b) => b.createdAt - a.createdAt);
       }
     }
     if (isSupabaseEnabled && supabase) {
@@ -157,10 +177,15 @@ export const leadsStore = {
         .select("*")
         .order("created_at", { ascending: false });
       if (error) {
-        console.error("Supabase all() xatosi:", error.message);
-        return [];
+        console.error("Supabase all() xatosi, localStorage zaxira:", error.message);
+        return lsRead().sort((a, b) => b.createdAt - a.createdAt);
       }
-      return (data as Row[]).map(rowToLead);
+      const remote = (data as Row[]).map(rowToLead);
+      const local = lsRead();
+      const byId = new Map<string, Lead>();
+      for (const l of local) byId.set(l.id, l);
+      for (const l of remote) byId.set(l.id, l);
+      return [...byId.values()].sort((a, b) => b.createdAt - a.createdAt);
     }
     return lsRead().sort((a, b) => b.createdAt - a.createdAt);
   },
@@ -174,43 +199,7 @@ export const leadsStore = {
     daraja: string;
     xabar: string;
   }): Promise<void> {
-    if (isAppwriteEnabled && databases) {
-      try {
-        await databases.createDocument(APPWRITE_DB!, APPWRITE_LEADS!, ID.unique(), {
-          ism: data.ism,
-          telefon: data.telefon,
-          telegram: data.telegram || "",
-          country: data.country || "UZ",
-          format: data.format,
-          daraja: data.daraja,
-          xabar: data.xabar,
-          status: "yangi",
-        });
-      } catch (e) {
-        console.error("Appwrite add() xatosi:", e);
-      }
-      emit();
-      return;
-    }
-    if (isSupabaseEnabled && supabase) {
-      const { error } = await supabase.from("leads").insert({
-        ism: data.ism,
-        telefon: data.telefon,
-        telegram: data.telegram || "",
-        country: data.country || "UZ",
-        format: data.format,
-        daraja: data.daraja,
-        xabar: data.xabar,
-        status: "yangi",
-        checked: false,
-      });
-      if (error) console.error("Supabase add() xatosi:", error.message);
-      emit();
-      return;
-    }
-
-    const lead: Lead = {
-      id: crypto.randomUUID(),
+    const base = {
       ism: data.ism,
       telefon: data.telefon,
       telegram: data.telegram || "",
@@ -218,15 +207,65 @@ export const leadsStore = {
       format: data.format,
       daraja: data.daraja,
       xabar: data.xabar,
-      status: "yangi",
+      status: "yangi" as LeadStatus,
       checked: false,
-      scheduledDate: null,
-      createdAt: Date.now(),
-      checkedAt: null,
+      scheduledDate: null as string | null,
+      checkedAt: null as number | null,
     };
-    const leads = lsRead();
-    leads.push(lead);
-    lsWrite(leads);
+
+    if (isAppwriteEnabled && databases) {
+      try {
+        const doc = await databases.createDocument(APPWRITE_DB!, APPWRITE_LEADS!, ID.unique(), {
+          ism: base.ism,
+          telefon: base.telefon,
+          telegram: base.telegram,
+          country: base.country,
+          format: base.format,
+          daraja: base.daraja,
+          xabar: base.xabar,
+          status: base.status,
+        });
+        const saved = docToLead(doc as unknown as AwDoc);
+        upsertLocal(saved);
+        return;
+      } catch (e) {
+        console.error("Appwrite add() xatosi, localStorage zaxira:", e);
+        // pastga tushib localStorage'ga yozamiz
+      }
+    }
+
+    if (isSupabaseEnabled && supabase) {
+      try {
+        const { data: row, error } = await supabase
+          .from("leads")
+          .insert({
+            ism: base.ism,
+            telefon: base.telefon,
+            telegram: base.telegram,
+            country: base.country,
+            format: base.format,
+            daraja: base.daraja,
+            xabar: base.xabar,
+            status: base.status,
+            checked: false,
+          })
+          .select("*")
+          .single();
+        if (error) throw error;
+        const saved = rowToLead(row as Row);
+        upsertLocal(saved);
+        return;
+      } catch (e) {
+        console.error("Supabase add() xatosi, localStorage zaxira:", e);
+      }
+    }
+
+    const lead: Lead = {
+      id: crypto.randomUUID(),
+      ...base,
+      createdAt: Date.now(),
+    };
+    pushLocal(lead);
   },
 
   async setStatus(id: string, status: LeadStatus): Promise<void> {
@@ -236,13 +275,13 @@ export const leadsStore = {
       } catch (e) {
         console.error("Appwrite setStatus() xatosi:", e);
       }
-      emit();
+      lsWrite(lsRead().map((l) => (l.id === id ? { ...l, status } : l)));
       return;
     }
     if (isSupabaseEnabled && supabase) {
       const { error } = await supabase.from("leads").update({ status }).eq("id", id);
       if (error) console.error("Supabase setStatus() xatosi:", error.message);
-      emit();
+      lsWrite(lsRead().map((l) => (l.id === id ? { ...l, status } : l)));
       return;
     }
     lsWrite(lsRead().map((l) => (l.id === id ? { ...l, status } : l)));
@@ -259,7 +298,11 @@ export const leadsStore = {
       } catch (e) {
         console.error("Appwrite toggleChecked() xatosi:", e);
       }
-      emit();
+      lsWrite(
+        lsRead().map((l) =>
+          l.id === id ? { ...l, checked: next, checkedAt: next ? Date.now() : null } : l,
+        ),
+      );
       return;
     }
     if (isSupabaseEnabled && supabase) {
@@ -268,7 +311,11 @@ export const leadsStore = {
         .update({ checked: next, checked_at: checkedAt })
         .eq("id", id);
       if (error) console.error("Supabase toggleChecked() xatosi:", error.message);
-      emit();
+      lsWrite(
+        lsRead().map((l) =>
+          l.id === id ? { ...l, checked: next, checkedAt: next ? Date.now() : null } : l,
+        ),
+      );
       return;
     }
     lsWrite(
@@ -289,7 +336,7 @@ export const leadsStore = {
       } catch (e) {
         console.error("Appwrite setScheduled() xatosi:", e);
       }
-      emit();
+      lsWrite(lsRead().map((l) => (l.id === id ? { ...l, scheduledDate: date, status } : l)));
       return;
     }
     if (isSupabaseEnabled && supabase) {
@@ -298,7 +345,7 @@ export const leadsStore = {
         .update({ scheduled_date: date, status })
         .eq("id", id);
       if (error) console.error("Supabase setScheduled() xatosi:", error.message);
-      emit();
+      lsWrite(lsRead().map((l) => (l.id === id ? { ...l, scheduledDate: date, status } : l)));
       return;
     }
     lsWrite(lsRead().map((l) => (l.id === id ? { ...l, scheduledDate: date, status } : l)));
@@ -311,13 +358,13 @@ export const leadsStore = {
       } catch (e) {
         console.error("Appwrite remove() xatosi:", e);
       }
-      emit();
+      lsWrite(lsRead().filter((l) => l.id !== id));
       return;
     }
     if (isSupabaseEnabled && supabase) {
       const { error } = await supabase.from("leads").delete().eq("id", id);
       if (error) console.error("Supabase remove() xatosi:", error.message);
-      emit();
+      lsWrite(lsRead().filter((l) => l.id !== id));
       return;
     }
     lsWrite(lsRead().filter((l) => l.id !== id));
@@ -337,13 +384,13 @@ export const leadsStore = {
       } catch (e) {
         console.error("Appwrite clearAll() xatosi:", e);
       }
-      emit();
+      lsWrite([]);
       return;
     }
     if (isSupabaseEnabled && supabase) {
       const { error } = await supabase.from("leads").delete().neq("id", "");
       if (error) console.error("Supabase clearAll() xatosi:", error.message);
-      emit();
+      lsWrite([]);
       return;
     }
     lsWrite([]);

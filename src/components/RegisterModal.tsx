@@ -3,6 +3,8 @@ import { Link } from "@tanstack/react-router";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 
+const REGISTER_MODAL_BG = "/image/opening/ckanada%20va%20firansiya.png";
+
 /**
  * Saytga kirgandan keyin chiqadigan "Ro'yxatdan o'tish" modali.
  * Bir marta yopilgach, sessiya davomida qayta chiqmaydi (sessionStorage).
@@ -51,37 +53,49 @@ export function RegisterModal() {
         if (!next) close();
       }}
     >
-      <DialogContent className="register-modal max-w-[19rem] sm:max-w-md border-0 p-0 gap-0 overflow-hidden rounded-2xl sm:rounded-3xl bg-white text-[#15233B]" closeLabel={content.ui.a11y.close}>
-        <div className="relative bg-gradient-to-br from-[#f46868] via-[#e83848] to-[#e84858] px-5 pt-6 pb-9 sm:px-8 sm:pt-9 sm:pb-12 text-center overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(224,165,38,0.3),transparent_55%)]" />
-          <div className="absolute -bottom-8 -left-6 w-28 h-28 rounded-full bg-white/10 blur-2xl" />
+      <DialogContent
+        className="register-modal max-w-[20rem] sm:max-w-md border-0 p-0 gap-0 overflow-hidden rounded-2xl sm:rounded-3xl bg-white text-[#15233B] shadow-[0_24px_64px_-16px_rgba(21,35,59,0.45)]"
+        closeLabel={content.ui.a11y.close}
+      >
+        <div className="register-modal__hero relative overflow-hidden">
+          <img
+            src={REGISTER_MODAL_BG}
+            alt=""
+            className="register-modal__hero-img"
+            loading="eager"
+            decoding="async"
+            draggable={false}
+          />
+          <div className="register-modal__hero-scrim" aria-hidden />
 
-          <div className="relative z-10">
-            <div className="text-3xl sm:text-5xl mb-2 sm:mb-3" aria-hidden>
-              🍁
-            </div>
-            <DialogTitle className="font-['Syne'] font-extrabold text-lg sm:text-2xl text-white leading-tight">
+          <div className="register-modal__hero-content relative z-10 px-5 pt-10 pb-8 sm:px-8 sm:pt-12 sm:pb-10 text-center">
+            <span className="register-modal__badge">🇨🇦 France TCF</span>
+            <DialogTitle className="font-['Syne'] font-extrabold text-xl sm:text-2xl text-white leading-tight mt-3 drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]">
               {registerModal.title}
             </DialogTitle>
           </div>
         </div>
 
-        <div className="px-5 pt-5 pb-5 sm:px-8 sm:pt-7 sm:pb-8 text-center -mt-4 sm:-mt-6 relative z-10">
-          <p className="text-[#3E4B62] text-xs sm:text-sm leading-relaxed mb-1">{registerModal.body1}</p>
-          <p className="text-[#546074] text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6">{registerModal.body2}</p>
+        <div className="register-modal__body px-5 pt-5 pb-5 sm:px-8 sm:pt-6 sm:pb-7 text-center">
+          <p className="text-[#15233B] text-sm sm:text-[0.9375rem] font-semibold leading-snug mb-2">
+            {registerModal.body1}
+          </p>
+          <p className="text-[#546074] text-xs sm:text-sm leading-relaxed mb-5 sm:mb-6">
+            {registerModal.body2}
+          </p>
 
-          <div className="flex flex-col gap-2 sm:gap-3">
+          <div className="flex flex-col gap-2.5">
             <Link
               to="/boglanish"
               onClick={close}
-              className="btn-primary w-full text-sm sm:text-base py-2.5 sm:py-3"
+              className="btn-primary w-full justify-center text-sm sm:text-base py-3 min-h-[2.85rem] no-underline"
             >
               {shared.registerArrow}
             </Link>
             <button
               type="button"
               onClick={close}
-              className="text-[#646F82] hover:text-[#15233B] text-xs sm:text-sm font-semibold transition-colors"
+              className="register-modal__later w-full min-h-[2.5rem] rounded-full border border-[#e83848]/25 text-[#646F82] hover:text-[#e83848] hover:border-[#e83848]/45 text-xs sm:text-sm font-semibold transition-colors bg-white"
             >
               {shared.later}
             </button>
