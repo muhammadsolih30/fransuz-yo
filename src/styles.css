@@ -698,16 +698,30 @@
   }
 
   html:not(.dark) .hero-stats-panel {
-    border: 1px solid rgba(255, 255, 255, 0.28);
-    background: rgba(255, 255, 255, 0.14);
-    backdrop-filter: saturate(180%) blur(22px);
-    -webkit-backdrop-filter: saturate(180%) blur(22px);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.22);
+    border: 1px solid rgba(21, 35, 59, 0.12);
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: saturate(180%) blur(18px);
+    -webkit-backdrop-filter: saturate(180%) blur(18px);
+    box-shadow:
+      0 1px 2px rgba(21, 35, 59, 0.06),
+      0 14px 40px rgba(21, 35, 59, 0.16);
   }
 
   html:not(.dark) .hero-stats-panel__cell {
-    background: rgba(255, 255, 255, 0.06);
-    border-right: 1px solid rgba(255, 255, 255, 0.16);
+    background: transparent;
+    border-right: 1px solid rgba(21, 35, 59, 0.1);
+  }
+
+  html:not(.dark) .hero-stats-panel__num {
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    color: #e83848;
+    -webkit-text-fill-color: #e83848;
+  }
+
+  html:not(.dark) .hero-stats-panel__label {
+    color: #546074;
   }
 
   html.dark .hero-stats-panel {
@@ -723,6 +737,18 @@
     border-right: 1px solid rgba(255, 255, 255, 0.1);
   }
 
+  html.dark .hero-stats-panel__num {
+    background: linear-gradient(135deg, #ffffff 0%, #ff8a96 50%, #e83848 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  html.dark .hero-stats-panel__label {
+    color: rgba(255, 255, 255, 0.78);
+  }
+
   .hero-stats-panel__cell {
     border-right: 1px solid rgba(255, 255, 255, 0.1);
   }
@@ -735,16 +761,11 @@
     font-family: "Syne", sans-serif;
     font-weight: 800;
     font-size: clamp(1.5rem, 4vw, 2rem);
-    background: linear-gradient(135deg, #ffffff 0%, #ff8a96 50%, #e83848 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
   }
 
   .hero-stats-panel__label {
-    color: rgba(255, 255, 255, 0.78);
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: 600;
     margin-top: 0.25rem;
   }
 
