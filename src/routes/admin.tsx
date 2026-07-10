@@ -193,27 +193,59 @@ function Dashboard({
   const [sort, setSort] = useState<SortKey>("new");
   const [query, setQuery] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [remoteHealth, setRemoteHealth] = useState<{
     ok: boolean;
     message: string;
   } | null>(null);
 
   useEffect(() => {
-    const sync = () => {
-      leadsStore.all().then(setLeads);
+    let cancelled = false;
+    let initialDone = false;
+
+    const sync = async (mode: "initial" | "poll" = "poll") => {
+      if (mode === "initial") setLoading(true);
+      else if (initialDone) setRefreshing(true);
+      try {
+        const next = await leadsStore.all();
+        if (!cancelled) setLeads(next);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        if (!cancelled) {
+          if (mode === "initial") {
+            setLoading(false);
+            initialDone = true;
+          }
+          setRefreshing(false);
+        }
+      }
     };
-    sync();
-    leadsStore.checkRemoteHealth().then((h) => setRemoteHealth({ ok: h.ok, message: h.message }));
-    window.addEventListener("leads-updated", sync);
-    window.addEventListener("storage", sync);
-    // Boshqa tab/sahifadan kelgan arizalarni yangilab turish
-    const poll = window.setInterval(sync, 8000);
+
+    sync("initial");
+    leadsStore.checkRemoteHealth().then((h) => {
+      if (!cancelled) setRemoteHealth({ ok: h.ok, message: h.message });
+    });
+
+    const onEvent = () => {
+      void sync("poll");
+    };
+    window.addEventListener("leads-updated", onEvent);
+    window.addEventListener("storage", onEvent);
+    const poll = window.setInterval(() => {
+      void sync("poll");
+    }, 8000);
     const healthPoll = window.setInterval(() => {
-      leadsStore.checkRemoteHealth().then((h) => setRemoteHealth({ ok: h.ok, message: h.message }));
+      leadsStore.checkRemoteHealth().then((h) => {
+        if (!cancelled) setRemoteHealth({ ok: h.ok, message: h.message });
+      });
     }, 60_000);
+
     return () => {
-      window.removeEventListener("leads-updated", sync);
-      window.removeEventListener("storage", sync);
+      cancelled = true;
+      window.removeEventListener("leads-updated", onEvent);
+      window.removeEventListener("storage", onEvent);
       window.clearInterval(poll);
       window.clearInterval(healthPoll);
     };
@@ -343,7 +375,24 @@ function Dashboard({
               <h1 className="font-['Syne'] font-extrabold text-lg sm:text-xl text-[var(--a-text)] truncate flex items-center gap-2">
                 <span>{activeSection.icon}</span> {activeSection.label}
               </h1>
-              <p className="text-[var(--a-text-muted)] text-xs">{list.length} ta ariza</p>
+              <p className="text-[var(--a-text-muted)] text-xs flex items-center gap-2">
+                {loading ? (
+                  <>
+                    <span className="inline-block w-3 h-3 rounded-full border-2 border-[#e83848] border-t-transparent animate-spin" />
+                    Arizalar yuklanmoqda...
+                  </>
+                ) : (
+                  <>
+                    {list.length} ta ariza
+                    {refreshing && (
+                      <span className="inline-flex items-center gap-1 text-[10px] text-[var(--a-text-muted)]">
+                        <span className="inline-block w-2.5 h-2.5 rounded-full border-2 border-[#e83848]/70 border-t-transparent animate-spin" />
+                        yangilanmoqda
+                      </span>
+                    )}
+                  </>
+                )}
+              </p>
             </div>
 
             <div className="ml-auto flex items-center gap-2">
@@ -410,7 +459,9 @@ function Dashboard({
               { label: "Muddati kelgan", value: counts.due, accent: "text-[#f25c5c]" },
             ].map((s) => (
               <div key={s.label} className="bg-[var(--a-surface)] rounded-2xl border border-[var(--a-border)] p-4 sm:p-5">
-                <div className={`font-['Syne'] font-extrabold text-2xl sm:text-3xl ${s.accent}`}>{s.value}</div>
+                <div className={`font-['Syne'] font-extrabold text-2xl sm:text-3xl ${s.accent}`}>
+                  {loading ? "—" : s.value}
+                </div>
                 <div className="text-[var(--a-text-muted)] text-xs sm:text-sm mt-1">{s.label}</div>
               </div>
             ))}
@@ -419,7 +470,26 @@ function Dashboard({
 
         {/* List */}
         <main className="px-4 sm:px-6 py-6">
-          {list.length === 0 ? (
+          {loading ? (
+            <div className="bg-[var(--a-surface)] rounded-2xl border border-[var(--a-border)] p-10 sm:p-16 text-center">
+              <div className="mx-auto mb-4 w-12 h-12 rounded-full border-[3px] border-[#e83848]/25 border-t-[#e83848] animate-spin" />
+              <p className="font-['Syne'] font-bold text-[var(--a-text)] text-base sm:text-lg mb-1">
+                Arizalar yuklanmoqda
+              </p>
+              <p className="text-[var(--a-text-muted)] text-sm max-w-sm mx-auto">
+                Serverdan ro‘yxatdan o‘tganlar olinmoqda. Iltimos, biroz kuting...
+              </p>
+              <div className="mt-8 space-y-3 max-w-2xl mx-auto">
+                {[0, 1, 2].map((i) => (
+                  <div
+                    key={i}
+                    className="h-20 rounded-xl bg-[var(--a-surface-2)] border border-[var(--a-border)] animate-pulse"
+                    style={{ animationDelay: `${i * 120}ms` }}
+                  />
+                ))}
+              </div>
+            </div>
+          ) : list.length === 0 ? (
             <div className="bg-[var(--a-surface)] rounded-2xl border border-dashed border-[var(--a-border-strong)] p-16 text-center">
               <div className="text-5xl mb-3 opacity-40">📭</div>
               <p className="text-[var(--a-text-muted)] text-sm">
