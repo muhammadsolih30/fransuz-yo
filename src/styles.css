@@ -553,39 +553,38 @@
   .hero-opening-bg__frame {
     position: absolute;
     inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
+    display: block;
+    overflow: hidden;
   }
 
   .hero-opening-bg__image {
-    width: 108%;
-    height: 108%;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     max-width: none;
     max-height: none;
     min-width: 100%;
     min-height: 100%;
-    object-fit: contain;
-    object-position: center center;
-    filter: saturate(1.08) contrast(1.04) drop-shadow(0 24px 64px rgba(0, 0, 0, 0.45));
-    opacity: 0.95;
+    object-fit: cover;
+    object-position: center 32%;
+    filter: saturate(1.06) contrast(1.03);
+    opacity: 0.92;
+    transform: scale(1.02);
   }
 
   @media (min-width: 640px) {
     .hero-opening-bg__image {
-      width: 115%;
-      height: 115%;
-      min-height: 92svh;
+      object-position: center 28%;
+      transform: scale(1.04);
     }
   }
 
   @media (min-width: 1024px) {
     .hero-opening-bg__image {
-      width: 122%;
-      height: 122%;
-      min-height: 96svh;
-      object-fit: contain;
+      object-position: center center;
+      transform: scale(1.06);
+      opacity: 0.95;
     }
   }
 
@@ -1687,6 +1686,17 @@
   }
 
   /* Sahifa hero (bog'lanish va boshqalar) */
+  .page-hero {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero__image {
+    background-size: cover;
+    background-position: center 30%;
+    background-repeat: no-repeat;
+  }
+
   .page-hero__scrim {
     background: linear-gradient(
       180deg,
@@ -3727,15 +3737,14 @@ html.dark .feature-card-compact__icon .text-\[\#15233B\] {
 }
 
 html.dark .hero-canvas-scrim {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.65) 0%,
-      rgba(0, 0, 0, 0.25) 30%,
-      rgba(0, 0, 0, 0.45) 70%,
-      #000000 100%
-    ),
-    radial-gradient(ellipse 80% 50% at 50% 35%, transparent 40%, rgba(0, 0, 0, 0.35) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.28) 30%,
+    rgba(0, 0, 0, 0.35) 55%,
+    rgba(13, 17, 23, 0.88) 82%,
+    #0d1117 100%
+  ) !important;
 }
 
 html.dark .hero-video-scrim {
@@ -3816,67 +3825,71 @@ html.dark main .hero-section a.btn-outline.hero-btn-outline:hover {
   }
 
   .hero-opening-bg__frame {
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 3rem;
-    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.55) 55%, transparent 84%);
-    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.55) 55%, transparent 84%);
+    inset: 0;
+    padding: 0;
+    mask-image: none;
+    -webkit-mask-image: none;
   }
 
   .hero-opening-bg__image {
-    width: 120%;
-    height: auto;
-    min-height: 0;
-    max-height: 48vh;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    max-height: none;
     object-fit: cover;
-    object-position: center 10%;
-    opacity: 0.8;
-    filter: saturate(1.05) contrast(1.03) drop-shadow(0 12px 32px rgba(0, 0, 0, 0.35));
+    object-position: center 26%;
+    opacity: 0.88;
+    transform: scale(1.08);
+    filter: saturate(1.04) contrast(1.02);
   }
 
   .hero-canvas-scrim {
     background: linear-gradient(
       180deg,
-      rgba(10, 22, 40, 0.55) 0%,
-      rgba(10, 22, 40, 0.28) 32%,
-      rgba(10, 22, 40, 0.5) 68%,
-      rgba(10, 22, 40, 0.94) 100%
+      rgba(10, 22, 40, 0.62) 0%,
+      rgba(10, 22, 40, 0.38) 28%,
+      rgba(10, 22, 40, 0.45) 58%,
+      rgba(10, 22, 40, 0.82) 82%,
+      rgba(246, 249, 252, 0.96) 100%
     ) !important;
   }
 
   .hero-section {
-    min-height: auto;
+    min-height: 100svh;
     padding-top: 5.75rem;
-    padding-bottom: 2.5rem;
+    padding-bottom: 2.25rem;
   }
 
   .page-hero {
     padding-top: 6.5rem !important;
     padding-bottom: 2.5rem !important;
+    min-height: 16rem;
   }
 
   .page-hero__image {
-    opacity: 0.42 !important;
-    background-position: center 18% !important;
+    opacity: 0.55 !important;
+    background-size: cover !important;
+    background-position: center 30% !important;
+    background-repeat: no-repeat !important;
   }
 
   .page-hero__scrim {
     background: linear-gradient(
       180deg,
-      rgba(10, 22, 40, 0.5) 0%,
-      rgba(10, 22, 40, 0.72) 48%,
-      rgba(10, 22, 40, 0.95) 100%
+      rgba(10, 22, 40, 0.45) 0%,
+      rgba(10, 22, 40, 0.68) 48%,
+      rgba(251, 251, 253, 0.96) 100%
     ) !important;
   }
 
   html.dark .page-hero__image {
-    opacity: 0.32 !important;
+    opacity: 0.4 !important;
   }
 
   html.dark .page-hero__scrim {
     background: linear-gradient(
       180deg,
-      rgba(0, 0, 0, 0.55) 0%,
+      rgba(0, 0, 0, 0.5) 0%,
       rgba(0, 0, 0, 0.88) 100%
     ) !important;
   }
