@@ -1,24 +1,42 @@
-import { neon } from "@neondatabase/serverless";
+import { Pool, neonConfig } from "@neondatabase/serverless";
+import ws from "ws";
 
-function normalizeDatabaseUrl(url) {
-  try {
-    const u = new URL(url.trim().replace(/^["']|["']$/g, ""));
-    // ba'zi clientlarda muammo beradi
-    u.searchParams.delete("channel_binding");
-    if (!u.searchParams.has("sslmode")) {
-      u.searchParams.set("sslmode", "require");
-    }
-    return u.toString();
-  } catch {
-    return url.trim();
-  }
+neonConfig.webSocketConstructor = ws;
+neonConfig.poolQueryViaFetch = true;
+
+function sanitizeRawUrl(raw) {
+  return String(raw || "")
+    .trim()
+    .replace(/^["']|["']$/g, "")
+    .replace(/\s+/g, "");
 }
 
 export function getDatabaseUrl() {
-  return process.env.DATABASE_URL || process.env.NEON_DATABASE_URL || "";
+  return sanitizeRawUrl(process.env.DATABASE_URL || process.env.NEON_DATABASE_URL || "");
 }
 
-export function getSql() {
+export function getDatabaseHost() {
+  const raw = getDatabaseUrl();
+  if (!raw) return null;
+  try {
+    return new URL(raw).hostname;
+  } catch {
+    return null;
+  }
+}
+
+function normalizeDatabaseUrl(url) {
+  const u = new URL(url);
+  u.searchParams.delete("channel_binding");
+  if (!u.searchParams.has("sslmode")) {
+    u.searchParams.set("sslmode", "require");
+  }
+  return u.toString();
+}
+
+let _pool = null;
+
+export function getPool() {
   const raw = getDatabaseUrl();
   if (!raw) {
     throw new Error(
@@ -30,7 +48,26 @@ export function getSql() {
       "DATABASE_URL noto‘g‘ri. Value postgresql:// bilan boshlanishi kerak (neon connection-string buyrug‘i emas).",
     );
   }
-  return neon(normalizeDatabaseUrl(raw));
+
+  let normalized;
+  try {
+    normalized = normalizeDatabaseUrl(raw);
+  } catch {
+    throw new Error(
+      "DATABASE_URL parse bo‘lmadi. Parolda maxsus belgilar (@ # %) bo‘lsa URL-encode qiling yoki Neon’dan yangi string oling.",
+    );
+  }
+
+  if (!_pool) {
+    _pool = new Pool({ connectionString: normalized, max: 1 });
+  }
+  return _pool;
+}
+
+export async function query(text, params = []) {
+  const pool = getPool();
+  const result = await pool.query(text, params);
+  return result.rows;
 }
 
 export function rowToLead(row) {
@@ -61,11 +98,14 @@ export function setCors(res) {
 
 export function explainDbError(e) {
   const msg = e instanceof Error ? e.message : String(e);
-  if (/DATABASE_URL/i.test(msg)) return msg;
-  if (/fetch failed|ECONNREFUSED|ENOTFOUND|getaddrinfo/i.test(msg)) {
+  const host = getDatabaseHost();
+  if (/DATABASE_URL|parse bo‘lmadi|noto‘g‘ri/i.test(msg)) return msg;
+  if (/fetch failed|ECONNREFUSED|ENOTFOUND|getaddrinfo|certificate|TLS|socket|WebSocket/i.test(msg)) {
     return (
-      "Neon’ga ulanib bo‘lmadi. Tekshiring: 1) Neon project active/Restore 2) Connection string to‘g‘ri (Connect → pooled) " +
-      "3) Vercel’da DATABASE_URL saqlangan va Redeploy qilingan. Tafsilot: " +
+      "Neon’ga ulanib bo‘lmadi" +
+      (host ? ` (host: ${host})` : "") +
+      ". Qiling: 1) Neon Console’da project Active 2) Connect → Connection string ni qayta nusxalang (Pooled) " +
+      "3) Vercel DATABASE_URL ni yangilang 4) Redeploy. Tafsilot: " +
       msg
     );
   }

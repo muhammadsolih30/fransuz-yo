@@ -1,4 +1,4 @@
-import { getSql, rowToLead, setCors, explainDbError } from "./_lib/db.js";
+import { query, rowToLead, setCors, explainDbError } from "./_lib/db.js";
 
 export default async function handler(req, res) {
   setCors(res);
@@ -8,15 +8,10 @@ export default async function handler(req, res) {
   }
 
   try {
-    const sql = getSql();
-
     if (req.method === "GET") {
-      const rows = await sql`
-        SELECT *
-        FROM leads
-        ORDER BY created_at DESC
-        LIMIT 1000
-      `;
+      const rows = await query(
+        `SELECT * FROM leads ORDER BY created_at DESC LIMIT 1000`,
+      );
       return res.status(200).json(rows.map(rowToLead));
     }
 
@@ -34,16 +29,17 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: "ism va telefon majburiy" });
       }
 
-      const rows = await sql`
-        INSERT INTO leads (ism, telefon, telegram, country, format, daraja, xabar, status)
-        VALUES (${ism}, ${telefon}, ${telegram}, ${country}, ${format}, ${daraja}, ${xabar}, 'yangi')
-        RETURNING *
-      `;
+      const rows = await query(
+        `INSERT INTO leads (ism, telefon, telegram, country, format, daraja, xabar, status)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, 'yangi')
+         RETURNING *`,
+        [ism, telefon, telegram, country, format, daraja, xabar],
+      );
       return res.status(201).json(rowToLead(rows[0]));
     }
 
     if (req.method === "DELETE" && String(req.query?.all || "") === "1") {
-      const rows = await sql`DELETE FROM leads RETURNING id`;
+      const rows = await query(`DELETE FROM leads RETURNING id`);
       return res.status(200).json({ ok: true, deleted: rows.length });
     }
 

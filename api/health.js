@@ -1,4 +1,10 @@
-import { getDatabaseUrl, getSql, setCors, explainDbError } from "./_lib/db.js";
+import {
+  getDatabaseUrl,
+  getDatabaseHost,
+  query,
+  setCors,
+  explainDbError,
+} from "./_lib/db.js";
 
 export default async function handler(req, res) {
   setCors(res);
@@ -8,12 +14,14 @@ export default async function handler(req, res) {
   }
 
   const hasUrl = !!getDatabaseUrl();
-  const looksPostgres = hasUrl && getDatabaseUrl().trim().startsWith("postgres");
+  const looksPostgres = hasUrl && getDatabaseUrl().startsWith("postgres");
+  const host = getDatabaseHost();
 
   if (!hasUrl) {
     return res.status(503).json({
       ok: false,
       databaseUrl: false,
+      host: null,
       error: "DATABASE_URL yo‘q. Vercel Environment Variables ga qo‘ying va Redeploy qiling.",
     });
   }
@@ -22,19 +30,21 @@ export default async function handler(req, res) {
     return res.status(503).json({
       ok: false,
       databaseUrl: true,
+      host,
       error: "DATABASE_URL postgresql:// bilan boshlanishi kerak.",
     });
   }
 
   try {
-    const sql = getSql();
-    const rows = await sql`SELECT COUNT(*)::int AS count FROM leads`;
+    const rows = await query(`SELECT COUNT(*)::int AS count FROM leads`);
     return res.status(200).json({
       ok: true,
       databaseUrl: true,
+      host,
       leadsTable: true,
       leadsCount: rows[0]?.count ?? 0,
       message: "Neon ulangan.",
+      domain: "https://www.francetcf.uz",
     });
   } catch (e) {
     const msg = explainDbError(e);
@@ -42,6 +52,7 @@ export default async function handler(req, res) {
     return res.status(500).json({
       ok: false,
       databaseUrl: true,
+      host,
       leadsTable: missingTable ? false : null,
       error: msg,
     });

@@ -1,27 +1,46 @@
-# Neon + domen sozlash
+# Neon + francetcf.uz
 
-## A) Neon (arizalar uchun)
+Domen: https://www.francetcf.uz (Vercel’ga ulangan — OK)
 
-1. [Neon Console](https://console.neon.tech) → Project ochiq/active ekanini tekshiring
-2. **SQL Editor** da `sql/leads.sql` ni Run qiling
-3. **Connect** → Connection string (URI) ni nusxalang (`postgresql://...`)
-4. Vercel → Settings → Environment Variables:
-   - Key: `DATABASE_URL`
-   - Value: to‘liq `postgresql://...` string
-   - Production + Preview
-5. **Deployments → Redeploy**
-6. Tekshiruv: `https://fransuz-yo.vercel.app/api/health`
-   - `{"ok":true,...}` bo‘lishi kerak
+## Muammo
+`/api/health` hozir `DATABASE_URL` borligini ko‘rsatadi, lekin Neon’ga ulanmayapti (`fetch failed`).
+Demak asosiy muammo — **Neon connection string / project holati**.
 
-## B) Domen (fransuz-yo.uz)
+## Qadamlar
 
-Domen sotib olingan, lekin DNS hali Vercel’ga ulanmagan bo‘lishi mumkin.
+### 1) Neon project
+1. https://console.neon.tech oching
+2. Project **Active** ekanini tekshiring (Paused bo‘lsa Restore)
 
-1. Vercel → Project → **Settings → Domains**
-2. `fransuz-yo.uz` va `www.fransuz-yo.uz` qo‘shing
-3. Vercel ko‘rsatgan DNS yozuvlarini domen sotib olgan joyga (registrar) qo‘ying, odatda:
-   - `A` → `76.76.21.21` (yoki Vercel bergan IP)
-   - yoki `CNAME` → `cname.vercel-dns.com`
-4. DNS tarqalishi 5 daqiqadan 24 soatgacha cho‘zilishi mumkin
+### 2) Jadval
+SQL Editor’da Run:
 
-Hozircha sayt shu yerda ishlaydi: https://fransuz-yo.vercel.app
+```sql
+CREATE TABLE IF NOT EXISTS leads (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  ism TEXT NOT NULL,
+  telefon TEXT NOT NULL,
+  telegram TEXT NOT NULL DEFAULT '',
+  country TEXT NOT NULL DEFAULT 'UZ',
+  format TEXT NOT NULL DEFAULT '—',
+  daraja TEXT NOT NULL DEFAULT '—',
+  xabar TEXT NOT NULL DEFAULT '—',
+  status TEXT NOT NULL DEFAULT 'yangi',
+  scheduled_date DATE NULL,
+  checked_at TIMESTAMPTZ NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+```
+
+### 3) Yangi connection string
+1. Neon → **Connect**
+2. **Pooled connection** ni tanlang
+3. To‘liq URI ni nusxalang (`postgresql://...`)
+4. Vercel → Settings → Environment Variables → `DATABASE_URL` ni **Edit** qilib yangilang
+5. Deployments → **Redeploy**
+
+### 4) Tekshiruv
+Ochib ko‘ring: https://www.francetcf.uz/api/health
+
+- `ok: true` → tayyor
+- `ok: false` → `error` matnini yuboring

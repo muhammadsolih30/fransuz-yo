@@ -1,4 +1,4 @@
-import { getSql, setCors, explainDbError } from "../_lib/db.js";
+import { query, setCors, explainDbError } from "../_lib/db.js";
 
 export default async function handler(req, res) {
   setCors(res);
@@ -13,37 +13,36 @@ export default async function handler(req, res) {
   }
 
   try {
-    const sql = getSql();
-
     if (req.method === "PATCH") {
       const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {};
 
       if (body.status !== undefined) {
-        await sql`UPDATE leads SET status = ${String(body.status)} WHERE id = ${id}::uuid`;
+        await query(`UPDATE leads SET status = $1 WHERE id = $2::uuid`, [
+          String(body.status),
+          id,
+        ]);
       }
       if (body.scheduledDate !== undefined) {
         const date = body.scheduledDate ? String(body.scheduledDate).slice(0, 10) : null;
         const status = date ? "belgilangan" : body.status || "aloqa";
-        await sql`
-          UPDATE leads
-          SET scheduled_date = ${date}, status = ${status}
-          WHERE id = ${id}::uuid
-        `;
+        await query(
+          `UPDATE leads SET scheduled_date = $1, status = $2 WHERE id = $3::uuid`,
+          [date, status, id],
+        );
       }
       if (body.checkedAt !== undefined) {
         const checkedAt = body.checkedAt ? String(body.checkedAt) : null;
-        await sql`
-          UPDATE leads
-          SET checked_at = ${checkedAt}
-          WHERE id = ${id}::uuid
-        `;
+        await query(`UPDATE leads SET checked_at = $1 WHERE id = $2::uuid`, [
+          checkedAt,
+          id,
+        ]);
       }
 
       return res.status(200).json({ ok: true });
     }
 
     if (req.method === "DELETE") {
-      await sql`DELETE FROM leads WHERE id = ${id}::uuid`;
+      await query(`DELETE FROM leads WHERE id = $1::uuid`, [id]);
       return res.status(200).json({ ok: true });
     }
 
