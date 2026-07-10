@@ -37,6 +37,10 @@ export const enUi = {
       title: "Public offer — France TCF Learning Center",
       description: "France TCF Learning Center public offer terms and conditions — full text.",
     },
+    notFound: {
+      title: "Page not found — France TCF Learning Center",
+      description: "The page you requested was not found. Return home or contact us.",
+    },
   },
   shared: {
     close: "Close",
@@ -78,6 +82,14 @@ export const enUi = {
     certificatesCarousel: "Student certificates carousel",
     coursesCarousel: "Courses carousel",
   },
+  notFound: {
+    code: "404",
+    title: "Page not found",
+    subtitle: "Sorry, the page you're looking for doesn't exist or the address was entered incorrectly.",
+    pathLabel: "Address:",
+    home: "Back to home",
+    contact: "Contact →",
+  },
   home: {
     headingSegments: ["With us, ", "your first step to ", "Canada and France"],
     centerMotto: "Your first step to Canada and France with us.",
@@ -91,7 +103,7 @@ export const enUi = {
     whyUsEyebrow: "Why us",
     whyUsTitle: "Why do they choose us?",
     resultEyebrow: "Real results",
-    resultTitle: "From B1 to C2 in 6 months",
+    resultTitle: "From 0 to C2 in 6 months",
     resultBody:
       "Our student Dilnura Saidbekova — after 6 months of study, achieved C2 on the TCF Canada exam. This is not advertising; it is a result confirmed by a real certificate.",
     resultBadge: "6-MONTH RESULT",
@@ -181,6 +193,8 @@ export const enUi = {
     tableLevel: "Level",
     tableListening: "Listening",
     tableReading: "Reading",
+    tableWriting: "Writing",
+    tableSpeaking: "Speaking",
     inProgress: "In progress",
     student: "Student",
   },
@@ -191,7 +205,7 @@ export const enUi = {
       "30+ staff, experienced teachers and native mentors. Photos and videos coming soon.",
     certsTitle: "Certificates we prepare for",
     valuesEyebrow: "Approach",
-    valuesTitle: "Why us?",
+    valuesTitle: "How our teachers teach",
   },
   faq: {
     eyebrow: "FAQ",

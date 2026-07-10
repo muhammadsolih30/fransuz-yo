@@ -5,10 +5,12 @@ import { RegisterModal } from "../components/RegisterModal";
 import { FloatingButtons } from "../components/FloatingButtons";
 import { MobileCtaBar } from "../components/MobileCtaBar";
 import { SkipToContent } from "../components/SkipToContent";
+import { NotFoundPage } from "../components/NotFoundPage";
 import { useReveal } from "../hooks/useReveal";
 import appCss from "../styles.css?url";
 
 export const Route = createRootRoute({
+  notFoundComponent: NotFoundPage,
   head: () => ({
     meta: [
       { charSet: "utf-8" },

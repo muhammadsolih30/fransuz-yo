@@ -3399,8 +3399,22 @@ html.dark .feature-card-compact__icon .text-\[\#15233B\] {
 .data-table-scroll {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
   max-width: 100%;
   overscroll-behavior-x: contain;
+}
+
+.teachers-section__title {
+  overflow-wrap: normal;
+  word-break: keep-all;
+  hyphens: none;
+}
+
+@media (max-width: 639px) {
+  .teachers-section__title {
+    font-size: clamp(1.85rem, 7.5vw, 2.4rem) !important;
+    line-height: 1.12 !important;
+  }
 }
 
 .immigration-data-table th,

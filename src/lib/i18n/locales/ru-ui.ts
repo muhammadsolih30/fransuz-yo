@@ -37,6 +37,10 @@ export const ruUi = {
       title: "Публичная оферта — France TCF Learning Center",
       description: "Условия публичной оферты France TCF Learning Center — полный текст.",
     },
+    notFound: {
+      title: "Страница не найдена — France TCF Learning Center",
+      description: "Запрошенная страница не найдена. Вернитесь на главную или свяжитесь с нами.",
+    },
   },
   shared: {
     close: "Закрыть",
@@ -78,6 +82,14 @@ export const ruUi = {
     certificatesCarousel: "Карусель сертификатов",
     coursesCarousel: "Карусель курсов",
   },
+  notFound: {
+    code: "404",
+    title: "Страница не найдена",
+    subtitle: "К сожалению, запрашиваемая страница не существует или адрес введён неверно.",
+    pathLabel: "Адрес:",
+    home: "На главную",
+    contact: "Контакты →",
+  },
   home: {
     headingSegments: ["С нами ", "ваш первый шаг в ", "Канаду и Францию"],
     centerMotto: "Ваш первый шаг в Канаду и Францию — с нами.",
@@ -91,7 +103,7 @@ export const ruUi = {
     whyUsEyebrow: "Почему мы",
     whyUsTitle: "Почему выбирают нас?",
     resultEyebrow: "Реальные результаты",
-    resultTitle: "От B1 до C2 за 6 месяцев",
+    resultTitle: "От 0 до C2 за 6 месяцев",
     resultBody:
       "Наша ученица Дилнура Саидбекова — после 6 месяцев обучения получила C2 на экзамене TCF Canada. Это не реклама; это результат, подтверждённый реальным сертификатом.",
     resultBadge: "РЕЗУЛЬТАТ ЗА 6 МЕСЯЦЕВ",
@@ -181,6 +193,8 @@ export const ruUi = {
     tableLevel: "Уровень",
     tableListening: "Listening",
     tableReading: "Reading",
+    tableWriting: "Writing",
+    tableSpeaking: "Speaking",
     inProgress: "В процессе",
     student: "Ученик",
   },
@@ -191,7 +205,7 @@ export const ruUi = {
       "30+ сотрудников, опытные преподаватели и носители языка. Фото и видео скоро.",
     certsTitle: "Сертификаты, к которым готовим",
     valuesEyebrow: "Подход",
-    valuesTitle: "Почему мы?",
+    valuesTitle: "Как преподают наши учителя",
   },
   faq: {
     eyebrow: "FAQ",

@@ -37,6 +37,10 @@ export const uzUi = {
       title: "Ommaviy oferta — France TCF O'quv Markazi",
       description: "France TCF o'quv markazi ommaviy oferta shartlari va qoidalari — to'liq matn.",
     },
+    notFound: {
+      title: "Sahifa topilmadi — France TCF O'quv Markazi",
+      description: "So'ralgan sahifa topilmadi. Bosh sahifaga qayting yoki biz bilan bog'laning.",
+    },
   },
   shared: {
     close: "Yopish",
@@ -76,6 +80,14 @@ export const uzUi = {
     certificatesCarousel: "O'quvchi sertifikatlari karuseli",
     coursesCarousel: "Kurslar karuseli",
   },
+  notFound: {
+    code: "404",
+    title: "Sahifa topilmadi",
+    subtitle: "Kechirasiz, siz qidirayotgan sahifa mavjud emas yoki manzil noto'g'ri kiritilgan.",
+    pathLabel: "Manzil:",
+    home: "Bosh sahifaga",
+    contact: "Bog'lanish →",
+  },
   home: {
     headingSegments: ["Biz bilan ", "Kanada va Fransiyaga ", "ilk qadam"],
     centerMotto: "Biz bilan Kanada va Fransiyaga ilk qadam.",
@@ -89,7 +101,7 @@ export const uzUi = {
     whyUsEyebrow: "Nega biz",
     whyUsTitle: "Nega aynan bizni tanlashadi?",
     resultEyebrow: "Haqiqiy natija",
-    resultTitle: "6 oyda B1 dan C2 gacha",
+    resultTitle: "6 oyda 0 dan C2 gacha",
     resultBody:
       "O'quvchimiz Dilnura Saidbekova — 6 oy o'qib, TCF Canada imtihonida C2 darajaga erishdi. Bu reklama emas, haqiqiy sertifikat bilan tasdiqlangan natija.",
     resultBadge: "6 OYLIK NATIJA",
@@ -179,16 +191,18 @@ export const uzUi = {
     tableLevel: "Daraja",
     tableListening: "Listening",
     tableReading: "Reading",
+    tableWriting: "Writing",
+    tableSpeaking: "Speaking",
     inProgress: "Jarayonda",
     student: "O'quvchi",
   },
   teachers: {
     eyebrow: "Ustozlar",
-    title: "C1–C2 darajali ustozlar",
+    title: "C1–C2 darajali\u00A0ustozlar",
     subtitle: "30+ xodim, tajribali ustozlar va native mentorlar. Rasm va videolar tez orada qo'shiladi.",
     certsTitle: "Biz tayyorlaydigan sertifikatlar",
     valuesEyebrow: "Qadriyatlar",
-    valuesTitle: "Ustozlarimiz qanday ishlaydi",
+    valuesTitle: "Ustozlarimizning dars o'tish uslubi",
   },
   faq: {
     eyebrow: "FAQ",

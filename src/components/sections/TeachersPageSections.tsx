@@ -20,7 +20,7 @@ export function TeachersPageSections({ embedded = false }: Props) {
           <p className="eyebrow text-[#e83848] mb-4">
             <span className="w-8 h-px bg-[#e83848]" /> {ui.eyebrow}
           </p>
-          <h2 className="font-['Syne'] font-extrabold text-[clamp(2.6rem,7vw,5rem)] leading-[0.98] mb-6">
+          <h2 className="teachers-section__title font-['Syne'] font-extrabold text-[clamp(2.15rem,6.2vw,5rem)] leading-[1.05] mb-6 text-balance">
             {ui.title}
           </h2>
           <p className="text-[#3E4B62] text-lg max-w-2xl">{ui.subtitle}</p>
