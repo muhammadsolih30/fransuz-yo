@@ -173,13 +173,13 @@ export const leadsStore = {
         ? {
             ok: true,
             provider: "proxy",
-            message: "Server ulangan — arizalar barcha qurilmalarda ko‘rinadi.",
+            message: "Server (Neon) ulangan — arizalar barcha qurilmalarda ko‘rinadi.",
           }
         : {
             ok: false,
             provider: "proxy",
             message:
-              "Server API ishlamayapti. Vercel deploy va Appwrite holatini tekshiring — aks holda arizalar faqat shu brauzerda qoladi.",
+              "Neon/API ulanmagan. Vercel’da DATABASE_URL (Neon) qo‘ying va sql/leads.sql ni ishga tushiring — aks holda arizalar faqat shu brauzerda qoladi.",
           };
     }
 
