@@ -76,7 +76,8 @@ function TypedHeading({ segments }: { segments: readonly string[] }) {
             className={isAccent ? "italic text-gradient-hero-accent" : undefined}
             style={!isAccent ? { color: colors[si], transition: "color 0.4s ease" } : undefined}
           >
-            {reducedMotion
+            {/* Accent gradient breaks on nested .char spans — keep accent as one piece */}
+            {reducedMotion || isAccent
               ? seg
               : Array.from(seg).map((ch, ci) => {
                   const delay = startDelay + charIndex * step;
