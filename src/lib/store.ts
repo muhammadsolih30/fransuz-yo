@@ -152,6 +152,47 @@ export const leadsStore = {
     return isAppwriteEnabled || isSupabaseEnabled;
   },
 
+  /** Serverga ulanish holati (admin banner uchun) */
+  async checkRemoteHealth(): Promise<{
+    ok: boolean;
+    provider: "appwrite" | "supabase" | "none";
+    message: string;
+  }> {
+    if (isAppwriteEnabled && databases) {
+      try {
+        await databases.listDocuments(APPWRITE_DB!, APPWRITE_LEADS!, [Query.limit(1)]);
+        return { ok: true, provider: "appwrite", message: "Appwrite ulangan — arizalar barcha qurilmalarda ko‘rinadi." };
+      } catch (e) {
+        const raw = e instanceof Error ? e.message : String(e);
+        const paused = /paused|inactivity/i.test(raw);
+        return {
+          ok: false,
+          provider: "appwrite",
+          message: paused
+            ? "Appwrite loyihasi pauzada (inactivity). cloud.appwrite.io → Restore qiling, aks holda arizalar faqat shu brauzerda qoladi."
+            : `Appwrite xatosi: ${raw}. Arizalar hozircha faqat shu brauzerda saqlanadi.`,
+        };
+      }
+    }
+    if (isSupabaseEnabled && supabase) {
+      const { error } = await supabase.from("leads").select("id").limit(1);
+      if (error) {
+        return {
+          ok: false,
+          provider: "supabase",
+          message: `Supabase xatosi: ${error.message}. Arizalar hozircha faqat shu brauzerda saqlanadi.`,
+        };
+      }
+      return { ok: true, provider: "supabase", message: "Supabase ulangan — arizalar barcha qurilmalarda ko‘rinadi." };
+    }
+    return {
+      ok: false,
+      provider: "none",
+      message:
+        "Remote backend yo‘q. Vercel’da VITE_APPWRITE_* sozlang yoki Appwrite loyihasini yoqing — aks holda har qurilma o‘z localStorageida saqlaydi.",
+    };
+  },
+
   async all(): Promise<Lead[]> {
     if (isAppwriteEnabled && databases) {
       try {
@@ -229,8 +270,23 @@ export const leadsStore = {
         upsertLocal(saved);
         return;
       } catch (e) {
-        console.error("Appwrite add() xatosi, localStorage zaxira:", e);
-        // pastga tushib localStorage'ga yozamiz
+        console.error("Appwrite add() xatosi:", e);
+        // Qurilmada yo'qolmasin — local zaxira, lekin muvaffaqiyat deb o'tkazilmasin
+        const lead: Lead = {
+          id: crypto.randomUUID(),
+          ...base,
+          createdAt: Date.now(),
+        };
+        pushLocal(lead);
+        const raw = e instanceof Error ? e.message : String(e);
+        if (/paused|inactivity/i.test(raw)) {
+          throw new Error(
+            "Server pauzada (Appwrite). Ariza shu telefonda saqlandi, lekin admin boshqa qurilmada ko‘rmaydi. Appwrite’da Restore qiling.",
+          );
+        }
+        throw new Error(
+          "Ariza serverga yozilmadi. Internet/Appwrite sozlamalarini tekshiring. Hozircha faqat shu qurilmada saqlandi.",
+        );
       }
     }
 
@@ -256,7 +312,16 @@ export const leadsStore = {
         upsertLocal(saved);
         return;
       } catch (e) {
-        console.error("Supabase add() xatosi, localStorage zaxira:", e);
+        console.error("Supabase add() xatosi:", e);
+        const lead: Lead = {
+          id: crypto.randomUUID(),
+          ...base,
+          createdAt: Date.now(),
+        };
+        pushLocal(lead);
+        throw new Error(
+          "Ariza serverga yozilmadi. Hozircha faqat shu qurilmada saqlandi.",
+        );
       }
     }
 

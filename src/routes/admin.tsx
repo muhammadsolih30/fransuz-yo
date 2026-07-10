@@ -193,20 +193,29 @@ function Dashboard({
   const [sort, setSort] = useState<SortKey>("new");
   const [query, setQuery] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [remoteHealth, setRemoteHealth] = useState<{
+    ok: boolean;
+    message: string;
+  } | null>(null);
 
   useEffect(() => {
     const sync = () => {
       leadsStore.all().then(setLeads);
     };
     sync();
+    leadsStore.checkRemoteHealth().then((h) => setRemoteHealth({ ok: h.ok, message: h.message }));
     window.addEventListener("leads-updated", sync);
     window.addEventListener("storage", sync);
     // Boshqa tab/sahifadan kelgan arizalarni yangilab turish
     const poll = window.setInterval(sync, 8000);
+    const healthPoll = window.setInterval(() => {
+      leadsStore.checkRemoteHealth().then((h) => setRemoteHealth({ ok: h.ok, message: h.message }));
+    }, 60_000);
     return () => {
       window.removeEventListener("leads-updated", sync);
       window.removeEventListener("storage", sync);
       window.clearInterval(poll);
+      window.clearInterval(healthPoll);
     };
   }, []);
 
@@ -349,12 +358,14 @@ function Dashboard({
           </div>
 
           <div className="px-4 sm:px-6 pt-4">
-            {!leadsStore.hasRemoteBackend && (
+            {remoteHealth && !remoteHealth.ok && (
               <div className="mb-3 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-amber-800 dark:text-amber-200 text-xs sm:text-sm leading-relaxed">
-                <strong>Diqqat:</strong> Hozir arizalar faqat shu brauzerning localStorageida saqlanadi.
-                Foydalanuvchi boshqa telefon/kompyuterdan yuborsa, bu yerda ko‘rinmaydi.
-                Barcha qurilmalarda ko‘rish uchun Vercel’da Appwrite (yoki Supabase){" "}
-                <code className="font-mono text-[0.7rem]">VITE_APPWRITE_*</code> sozlamalarini ulang.
+                <strong>Diqqat:</strong> {remoteHealth.message}
+              </div>
+            )}
+            {remoteHealth?.ok && (
+              <div className="mb-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-emerald-800 dark:text-emerald-200 text-xs sm:text-sm leading-relaxed">
+                {remoteHealth.message}
               </div>
             )}
           </div>

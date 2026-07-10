@@ -71,7 +71,8 @@ function BoglanishPage() {
       setSent(true);
     } catch (e) {
       console.error(e);
-      setSubmitError(ui.submitError);
+      const msg = e instanceof Error && e.message ? e.message : ui.submitError;
+      setSubmitError(msg);
     } finally {
       setLoading(false);
     }
