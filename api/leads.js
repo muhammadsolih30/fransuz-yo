@@ -1,4 +1,4 @@
-import { getSql, rowToLead, setCors } from "./_lib/db.js";
+import { getSql, rowToLead, setCors, explainDbError } from "./_lib/db.js";
 
 export default async function handler(req, res) {
   setCors(res);
@@ -50,8 +50,6 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   } catch (e) {
     console.error("api/leads error", e);
-    return res.status(500).json({
-      error: e instanceof Error ? e.message : "server error",
-    });
+    return res.status(500).json({ error: explainDbError(e) });
   }
 }
