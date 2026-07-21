@@ -232,7 +232,10 @@ export const leadsStore = {
         lsWrite(sorted, { silent: true });
         return sorted;
       } catch (e) {
-        console.error("Proxy all() xatosi, Appwrite/local zaxira:", e);
+        console.error("Proxy all() xatosi:", e);
+        throw e instanceof Error
+          ? e
+          : new Error("Serverdan arizalar o‘qilmadi. Internet / Neon holatini tekshiring.");
       }
     }
 
@@ -306,7 +309,11 @@ export const leadsStore = {
         return;
       } catch (e) {
         console.error("Proxy add() xatosi:", e);
-        // pastga — Appwrite SDK yoki local
+        const raw = e instanceof Error ? e.message : String(e);
+        throw new Error(
+          raw ||
+            "Ariza serverga yozilmadi. Internetni tekshiring yoki keyinroq qayta urinib ko‘ring.",
+        );
       }
     }
 
@@ -514,6 +521,7 @@ export const leadsStore = {
         await proxyDeleteLead(id);
       } catch (e) {
         console.error("Proxy remove() xatosi:", e);
+        throw e instanceof Error ? e : new Error("O‘chirish serverda muvaffaqiyatsiz.");
       }
       lsWrite(lsRead().filter((l) => l.id !== id));
       return;

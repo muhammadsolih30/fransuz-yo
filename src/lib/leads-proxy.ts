@@ -1,6 +1,6 @@
 /**
- * Vercel /api/leads proxy — brauzer CORS (Invalid Origin) muammosini chetlab o'tadi.
- * fransuz-yo.uz kabi custom domenlarda Appwrite to'g'ridan-to'g'ri bloklanadi.
+ * Vercel /api/leads proxy — Neon orqali arizalar.
+ * Localhostda ham ishlashi uchun vite.config.ts /api ni productionga proxy qiladi.
  */
 
 export type ProxyLead = {
@@ -19,10 +19,9 @@ export type ProxyLead = {
   checkedAt: number | null;
 };
 
+/** Har doim /api/leads orqali (production yoki vite proxy). */
 export function shouldPreferLeadsProxy(): boolean {
-  if (typeof window === "undefined") return false;
-  const host = window.location.hostname;
-  return host !== "localhost" && host !== "127.0.0.1";
+  return typeof window !== "undefined";
 }
 
 async function readError(res: Response): Promise<string> {
@@ -88,8 +87,12 @@ export async function proxyClearLeads(): Promise<void> {
 
 export async function proxyHealth(): Promise<boolean> {
   try {
-    const res = await fetch("/api/leads", { headers: { Accept: "application/json" } });
-    return res.ok;
+    const res = await fetch("/api/health", { headers: { Accept: "application/json" } });
+    if (!res.ok) return false;
+    const ct = res.headers.get("content-type") || "";
+    if (!ct.includes("application/json")) return false;
+    const data = (await res.json()) as { ok?: boolean };
+    return data.ok === true;
   } catch {
     return false;
   }

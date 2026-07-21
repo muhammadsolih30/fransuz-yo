@@ -11,4 +11,14 @@ export default defineConfig({
     tailwindcss(),
     tsconfigPaths(),
   ],
+  server: {
+    // Local `npm run dev` da /api serverless ishlamaydi — production Neon API ga yo'naltiramiz
+    proxy: {
+      "/api": {
+        target: "https://www.francetcf.uz",
+        changeOrigin: true,
+        secure: true,
+      },
+    },
+  },
 });
