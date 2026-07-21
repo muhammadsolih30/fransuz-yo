@@ -344,6 +344,12 @@ export const uzUi = {
     subtitle:
       "Qaysi format siz uchun mos — birgalikda aniqlaymiz. Ariza qoldiring yoki to'g'ridan-to'g'ri adminamizga yozing.",
     formTitle: "Ariza qoldiring",
+    tabInquiry: "Ma'lumot olish",
+    tabRegister: "Ro'yxatdan o'tish",
+    backupPhoneLabel: "Zaxira telefon *",
+    backupPhonePlaceholder: "90 000 00 00",
+    inquirySubmit: "Ariza qoldirish →",
+    inquiryFormat: "Ma'lumot olish",
     successTitle: "Qabul qilindi!",
     successBody:
       "Arizangiz qabul qilindi. Tezroq bog'lanish uchun adminga to'g'ridan-to'g'ri yozing.",
@@ -360,6 +366,9 @@ export const uzUi = {
     messagePlaceholder: "Savolingizni yozing...",
     submit: "Ro'yxatdan o'tish →",
     submitting: "Yuborilmoqda...",
+    levelRequired: "Fransuz tili darajasini tanlang.",
+    phoneRequired: "Telefon raqamini to'g'ri kiriting.",
+    backupPhoneRequired: "Zaxira telefon raqamini to'g'ri kiriting.",
     ofertaLink: "Ommaviy oferta",
     ofertaHint: "Bosib tanishib chiqing →",
     ofertaAgree: "Men ommaviy oferta bilan tanishib chiqdim va barcha shartlarga roziman.",

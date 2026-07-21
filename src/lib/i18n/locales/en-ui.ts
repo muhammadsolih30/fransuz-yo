@@ -346,6 +346,12 @@ export const enUi = {
     subtitle:
       "We'll find the format that suits you together. Submit an application or message our admin directly.",
     formTitle: "Submit an application",
+    tabInquiry: "Get information",
+    tabRegister: "Sign up",
+    backupPhoneLabel: "Backup phone *",
+    backupPhonePlaceholder: "90 000 00 00",
+    inquirySubmit: "Submit inquiry →",
+    inquiryFormat: "Information request",
     successTitle: "Received!",
     successBody:
       "Your application has been received. For a faster response, message the admin directly.",
@@ -362,6 +368,9 @@ export const enUi = {
     messagePlaceholder: "Write your question...",
     submit: "Sign up →",
     submitting: "Sending...",
+    levelRequired: "Please select your French level.",
+    phoneRequired: "Please enter a valid phone number.",
+    backupPhoneRequired: "Please enter a valid backup phone number.",
     ofertaLink: "Public offer",
     ofertaHint: "Click to read →",
     ofertaAgree: "I have read the public offer and agree to all terms.",

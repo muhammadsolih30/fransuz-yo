@@ -26,6 +26,8 @@ const SOCIAL_HREFS = [
 
 const SOCIAL_ICONS = [TelegramIcon, InstagramIcon, BarChart3, TelegramIcon] as const;
 
+type FormMode = "inquiry" | "register";
+
 export const Route = createFileRoute("/boglanish")({
   component: BoglanishPage,
 });
@@ -35,14 +37,38 @@ function BoglanishPage() {
   const ui = content.ui.contact;
   const shared = content.ui.shared;
 
-  const [form, setForm] = useState({ ism: "", telefon: "", telegram: "", format: "", daraja: "", xabar: "" });
+  const [mode, setMode] = useState<FormMode>("inquiry");
+  const [form, setForm] = useState({
+    ism: "",
+    telefon: "",
+    telefon2: "",
+    telegram: "",
+    format: "",
+    daraja: "",
+    xabar: "",
+  });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [agreed, setAgreed] = useState(false);
   const [opened, setOpened] = useState(false);
 
-  const canSubmit = !!form.ism && isValidPhoneNumber(form.telefon || "") && agreed && !loading;
+  const phoneOk = isValidPhoneNumber(form.telefon || "");
+  const backupOk = isValidPhoneNumber(form.telefon2 || "");
+
+  const canSubmitInquiry =
+    !!form.ism.trim() && phoneOk && backupOk && !!form.daraja && !loading;
+
+  const canSubmitRegister =
+    !!form.ism.trim() && phoneOk && agreed && !loading;
+
+  const canSubmit = mode === "inquiry" ? canSubmitInquiry : canSubmitRegister;
+
+  const switchMode = (next: FormMode) => {
+    setMode(next);
+    setSubmitError("");
+    setSent(false);
+  };
 
   const handleSubmit = async (event?: FormEvent) => {
     event?.preventDefault();
@@ -58,17 +84,32 @@ function BoglanishPage() {
       /* ignore */
     }
 
+    const levelLabel = ui.levels.find((d) => d.v === form.daraja)?.l ?? "—";
+
     try {
       const { leadsStore } = await import("../lib/store");
-      await leadsStore.add({
-        ism: form.ism.trim(),
-        telefon: form.telefon,
-        telegram: form.telegram.trim(),
-        country,
-        format: ui.formats.find((f) => f.v === form.format)?.l ?? "—",
-        daraja: ui.levels.find((d) => d.v === form.daraja)?.l ?? "—",
-        xabar: form.xabar.trim() || "—",
-      });
+
+      if (mode === "inquiry") {
+        await leadsStore.add({
+          ism: form.ism.trim(),
+          telefon: form.telefon,
+          telegram: "",
+          country,
+          format: ui.inquiryFormat,
+          daraja: levelLabel,
+          xabar: `${ui.backupPhoneLabel.replace(" *", "")}: ${form.telefon2}`,
+        });
+      } else {
+        await leadsStore.add({
+          ism: form.ism.trim(),
+          telefon: form.telefon,
+          telegram: form.telegram.trim(),
+          country,
+          format: ui.formats.find((f) => f.v === form.format)?.l ?? "—",
+          daraja: levelLabel,
+          xabar: form.xabar.trim() || "—",
+        });
+      }
       setSent(true);
     } catch (e) {
       console.error(e);
@@ -78,6 +119,10 @@ function BoglanishPage() {
       setLoading(false);
     }
   };
+
+  const fieldClass =
+    "w-full bg-[#FAF6EF] border border-[#15233B]/10 focus:border-[#e83848] focus:ring-4 focus:ring-[#e83848]/10 rounded-xl px-4 py-3.5 text-[#15233B] text-base outline-none transition-all placeholder:text-[#15233B]/35";
+  const labelClass = "block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5";
 
   return (
     <div className="bg-white text-[#15233B] overflow-hidden">
@@ -119,166 +164,276 @@ function BoglanishPage() {
                 </div>
               ) : (
                 <>
-                  <h2 className="font-['Syne'] font-extrabold text-3xl mb-8">{ui.formTitle}</h2>
+                  <h2 className="font-['Syne'] font-extrabold text-3xl mb-6">{ui.formTitle}</h2>
+
+                  <div
+                    className="contact-form-tabs grid grid-cols-2 gap-2 p-1.5 mb-8 rounded-2xl bg-[#FAF6EF] border border-[#15233B]/8"
+                    role="tablist"
+                    aria-label={ui.formTitle}
+                  >
+                    <button
+                      type="button"
+                      role="tab"
+                      aria-selected={mode === "inquiry"}
+                      onClick={() => switchMode("inquiry")}
+                      className={`rounded-xl px-3 py-3 text-sm font-bold transition-all ${
+                        mode === "inquiry"
+                          ? "bg-white text-[#e83848] shadow-[0_4px_14px_-6px_rgba(21,35,59,0.25)]"
+                          : "text-[#546074] hover:text-[#15233B]"
+                      }`}
+                    >
+                      {ui.tabInquiry}
+                    </button>
+                    <button
+                      type="button"
+                      role="tab"
+                      aria-selected={mode === "register"}
+                      onClick={() => switchMode("register")}
+                      className={`rounded-xl px-3 py-3 text-sm font-bold transition-all ${
+                        mode === "register"
+                          ? "bg-white text-[#e83848] shadow-[0_4px_14px_-6px_rgba(21,35,59,0.25)]"
+                          : "text-[#546074] hover:text-[#15233B]"
+                      }`}
+                    >
+                      {ui.tabRegister}
+                    </button>
+                  </div>
 
                   <form onSubmit={handleSubmit} noValidate>
-                  <div className="grid sm:grid-cols-2 gap-5 mb-5">
-                    <div>
-                      <label htmlFor="contact-name" className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">
-                        {ui.nameLabel}
-                      </label>
-                      <input
-                        id="contact-name"
-                        name="ism"
-                        type="text"
-                        autoComplete="name"
-                        placeholder={ui.namePlaceholder}
-                        value={form.ism}
-                        onChange={(e) => setForm((p) => ({ ...p, ism: e.target.value }))}
-                        className="w-full bg-[#FAF6EF] border border-[#15233B]/10 focus:border-[#e83848] focus:ring-4 focus:ring-[#e83848]/10 rounded-xl px-4 py-3.5 text-[#15233B] text-base outline-none transition-all placeholder:text-[#15233B]/35"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="contact-phone" className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">
-                        {ui.phoneLabel}
-                      </label>
-                      <PhoneInput
-                        id="contact-phone"
-                        international
-                        defaultCountry="UZ"
-                        countryCallingCodeEditable={false}
-                        placeholder={ui.phonePlaceholder}
-                        value={form.telefon}
-                        onChange={(value) => setForm((p) => ({ ...p, telefon: value ?? "" }))}
-                        className="france-phone"
-                      />
-                    </div>
-                  </div>
+                    <div className="grid sm:grid-cols-2 gap-5 mb-5">
+                      <div className={mode === "inquiry" ? "sm:col-span-2" : ""}>
+                        <label htmlFor="contact-name" className={labelClass}>
+                          {ui.nameLabel}
+                        </label>
+                        <input
+                          id="contact-name"
+                          name="ism"
+                          type="text"
+                          autoComplete="name"
+                          placeholder={ui.namePlaceholder}
+                          value={form.ism}
+                          onChange={(e) => setForm((p) => ({ ...p, ism: e.target.value }))}
+                          className={fieldClass}
+                        />
+                      </div>
 
-                  <div className="mb-5">
-                    <label htmlFor="contact-telegram" className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">
-                      {ui.telegramLabel}
-                    </label>
-                    <div className="field-shell flex items-center bg-[#FAF6EF] border border-[#15233B]/10 focus-within:border-[#e83848] focus-within:ring-4 focus-within:ring-[#e83848]/10 rounded-xl px-4 transition-all">
-                      <span className="text-[#646F82] font-semibold shrink-0" aria-hidden>
-                        @
-                      </span>
-                      <input
-                        id="contact-telegram"
-                        name="telegram"
-                        type="text"
-                        autoComplete="off"
-                        placeholder="username"
-                        value={form.telegram}
-                        onChange={(e) =>
-                          setForm((p) => ({ ...p, telegram: e.target.value.replace(/[@\s]/g, "") }))
-                        }
-                        className="flex-1 min-w-0 bg-transparent border-0 shadow-none py-3.5 pl-1 text-[#15233B] text-base outline-none ring-0 focus:outline-none focus:ring-0 focus:border-0 focus-visible:outline-none focus-visible:shadow-none focus-visible:ring-0 placeholder:text-[#15233B]/35"
-                      />
+                      {mode === "register" && (
+                        <div>
+                          <label htmlFor="contact-phone" className={labelClass}>
+                            {ui.phoneLabel}
+                          </label>
+                          <PhoneInput
+                            id="contact-phone"
+                            international
+                            defaultCountry="UZ"
+                            countryCallingCodeEditable={false}
+                            placeholder={ui.phonePlaceholder}
+                            value={form.telefon}
+                            onChange={(value) => setForm((p) => ({ ...p, telefon: value ?? "" }))}
+                            className="france-phone"
+                          />
+                        </div>
+                      )}
                     </div>
-                  </div>
 
-                  <fieldset className="mb-5 border-0 p-0">
-                    <legend className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">
-                      {ui.formatLabel}
-                    </legend>
-                    <div className="grid grid-cols-2 gap-3">
-                      {ui.formats.map((f) => (
-                        <button
-                          key={f.v}
-                          type="button"
-                          onClick={() => setForm((p) => ({ ...p, format: f.v }))}
-                          aria-pressed={form.format === f.v}
-                          className={`text-left px-4 py-3 text-sm rounded-xl border-2 transition-all ${
-                            form.format === f.v
-                              ? "border-[#e83848] text-[#e83848] bg-[#e83848]/5 font-semibold"
-                              : "border-[#15233B]/10 text-[#3E4B62] hover:border-[#15233B]/25"
-                          }`}
-                        >
-                          {f.l}
-                        </button>
-                      ))}
-                    </div>
-                  </fieldset>
+                    {mode === "inquiry" && (
+                      <>
+                        <div className="mb-5">
+                          <label htmlFor="contact-level" className={labelClass}>
+                            {ui.levelLabel} *
+                          </label>
+                          <select
+                            id="contact-level"
+                            name="daraja"
+                            value={form.daraja}
+                            onChange={(e) => setForm((p) => ({ ...p, daraja: e.target.value }))}
+                            className={`${fieldClass} text-sm cursor-pointer`}
+                          >
+                            <option value="">{shared.selectPlaceholder}</option>
+                            {ui.levels.map((d) => (
+                              <option key={d.v} value={d.v}>
+                                {d.l}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
 
-                  <div className="mb-5">
-                    <label htmlFor="contact-level" className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">
-                      {ui.levelLabel}
-                    </label>
-                    <select
-                      id="contact-level"
-                      name="daraja"
-                      value={form.daraja}
-                      onChange={(e) => setForm((p) => ({ ...p, daraja: e.target.value }))}
-                      className="w-full bg-[#FAF6EF] border border-[#15233B]/10 focus:border-[#e83848] focus:ring-4 focus:ring-[#e83848]/10 rounded-xl px-4 py-3.5 text-[#15233B] text-sm outline-none transition-all cursor-pointer"
+                        <div className="grid sm:grid-cols-2 gap-5 mb-8">
+                          <div>
+                            <label htmlFor="contact-phone-inquiry" className={labelClass}>
+                              {ui.phoneLabel}
+                            </label>
+                            <PhoneInput
+                              id="contact-phone-inquiry"
+                              international
+                              defaultCountry="UZ"
+                              countryCallingCodeEditable={false}
+                              placeholder={ui.phonePlaceholder}
+                              value={form.telefon}
+                              onChange={(value) => setForm((p) => ({ ...p, telefon: value ?? "" }))}
+                              className="france-phone"
+                            />
+                          </div>
+                          <div>
+                            <label htmlFor="contact-phone-backup" className={labelClass}>
+                              {ui.backupPhoneLabel}
+                            </label>
+                            <PhoneInput
+                              id="contact-phone-backup"
+                              international
+                              defaultCountry="UZ"
+                              countryCallingCodeEditable={false}
+                              placeholder={ui.backupPhonePlaceholder}
+                              value={form.telefon2}
+                              onChange={(value) => setForm((p) => ({ ...p, telefon2: value ?? "" }))}
+                              className="france-phone"
+                            />
+                          </div>
+                        </div>
+                      </>
+                    )}
+
+                    {mode === "register" && (
+                      <>
+                        <div className="mb-5">
+                          <label htmlFor="contact-telegram" className={labelClass}>
+                            {ui.telegramLabel}
+                          </label>
+                          <div className="field-shell flex items-center bg-[#FAF6EF] border border-[#15233B]/10 focus-within:border-[#e83848] focus-within:ring-4 focus-within:ring-[#e83848]/10 rounded-xl px-4 transition-all">
+                            <span className="text-[#646F82] font-semibold shrink-0" aria-hidden>
+                              @
+                            </span>
+                            <input
+                              id="contact-telegram"
+                              name="telegram"
+                              type="text"
+                              autoComplete="off"
+                              placeholder="username"
+                              value={form.telegram}
+                              onChange={(e) =>
+                                setForm((p) => ({ ...p, telegram: e.target.value.replace(/[@\s]/g, "") }))
+                              }
+                              className="flex-1 min-w-0 bg-transparent border-0 shadow-none py-3.5 pl-1 text-[#15233B] text-base outline-none ring-0 focus:outline-none focus:ring-0 focus:border-0 focus-visible:outline-none focus-visible:shadow-none focus-visible:ring-0 placeholder:text-[#15233B]/35"
+                            />
+                          </div>
+                        </div>
+
+                        <fieldset className="mb-5 border-0 p-0">
+                          <legend className={labelClass}>{ui.formatLabel}</legend>
+                          <div className="grid grid-cols-2 gap-3">
+                            {ui.formats.map((f) => (
+                              <button
+                                key={f.v}
+                                type="button"
+                                onClick={() => setForm((p) => ({ ...p, format: f.v }))}
+                                aria-pressed={form.format === f.v}
+                                className={`text-left px-4 py-3 text-sm rounded-xl border-2 transition-all ${
+                                  form.format === f.v
+                                    ? "border-[#e83848] text-[#e83848] bg-[#e83848]/5 font-semibold"
+                                    : "border-[#15233B]/10 text-[#3E4B62] hover:border-[#15233B]/25"
+                                }`}
+                              >
+                                {f.l}
+                              </button>
+                            ))}
+                          </div>
+                        </fieldset>
+
+                        <div className="mb-5">
+                          <label htmlFor="contact-level-register" className={labelClass}>
+                            {ui.levelLabel}
+                          </label>
+                          <select
+                            id="contact-level-register"
+                            name="daraja"
+                            value={form.daraja}
+                            onChange={(e) => setForm((p) => ({ ...p, daraja: e.target.value }))}
+                            className={`${fieldClass} text-sm cursor-pointer`}
+                          >
+                            <option value="">{shared.selectPlaceholder}</option>
+                            {ui.levels.map((d) => (
+                              <option key={d.v} value={d.v}>
+                                {d.l}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div className="mb-8">
+                          <label htmlFor="contact-message" className={labelClass}>
+                            {ui.messageLabel}
+                          </label>
+                          <textarea
+                            id="contact-message"
+                            name="xabar"
+                            placeholder={ui.messagePlaceholder}
+                            rows={3}
+                            value={form.xabar}
+                            onChange={(e) => setForm((p) => ({ ...p, xabar: e.target.value }))}
+                            className={`${fieldClass} text-sm resize-none`}
+                          />
+                        </div>
+
+                        <div className="mb-5 bg-[#FAF6EF] border border-[#15233B]/8 rounded-xl p-4">
+                          <Link
+                            to="/ommaviy-oferta"
+                            onClick={() => setOpened(true)}
+                            className="no-underline flex items-center gap-3 group"
+                          >
+                            <span className="w-10 h-10 rounded-xl bg-[#e83848]/10 text-[#e83848] flex items-center justify-center text-lg shrink-0">
+                              📄
+                            </span>
+                            <span className="flex-1">
+                              <span className="block text-[#15233B] text-sm font-bold group-hover:text-[#e83848] transition-colors">
+                                {ui.ofertaLink} {opened && <span className="text-green-600">✓</span>}
+                              </span>
+                              <span className="block text-[#646F82] text-xs">{ui.ofertaHint}</span>
+                            </span>
+                          </Link>
+
+                          <label className="flex items-start gap-3 mt-4 pt-4 border-t border-[#15233B]/8 cursor-pointer select-none">
+                            <input
+                              type="checkbox"
+                              checked={agreed}
+                              onChange={(e) => setAgreed(e.target.checked)}
+                              className="mt-0.5 w-5 h-5 shrink-0 accent-[#e83848] cursor-pointer"
+                            />
+                            <span className="text-[#3E4B62] text-sm leading-snug">{ui.ofertaAgree}</span>
+                          </label>
+                        </div>
+                      </>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={!canSubmit}
+                      className="w-full bg-[#e83848] hover:bg-[#e84858] disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold py-4 rounded-2xl text-sm transition-all hover:-translate-y-0.5 shadow-[0_10px_30px_-8px_rgba(232,56,72,0.5)]"
                     >
-                      <option value="">{shared.selectPlaceholder}</option>
-                      {ui.levels.map((d) => (
-                        <option key={d.v} value={d.v}>
-                          {d.l}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                      {loading
+                        ? ui.submitting
+                        : mode === "inquiry"
+                          ? ui.inquirySubmit
+                          : ui.submit}
+                    </button>
 
-                  <div className="mb-8">
-                    <label htmlFor="contact-message" className="block text-[#546074] text-xs font-bold tracking-wider uppercase mb-2.5">
-                      {ui.messageLabel}
-                    </label>
-                    <textarea
-                      id="contact-message"
-                      name="xabar"
-                      placeholder={ui.messagePlaceholder}
-                      rows={3}
-                      value={form.xabar}
-                      onChange={(e) => setForm((p) => ({ ...p, xabar: e.target.value }))}
-                      className="w-full bg-[#FAF6EF] border border-[#15233B]/10 focus:border-[#e83848] focus:ring-4 focus:ring-[#e83848]/10 rounded-xl px-4 py-3.5 text-[#15233B] text-sm outline-none transition-all placeholder:text-[#15233B]/35 resize-none"
-                    />
-                  </div>
+                    {submitError && (
+                      <p className="text-[#e83848] text-sm text-center mt-3 font-medium" role="alert">
+                        {submitError}
+                      </p>
+                    )}
 
-                  <div className="mb-5 bg-[#FAF6EF] border border-[#15233B]/8 rounded-xl p-4">
-                    <Link
-                      to="/ommaviy-oferta"
-                      onClick={() => setOpened(true)}
-                      className="no-underline flex items-center gap-3 group"
-                    >
-                      <span className="w-10 h-10 rounded-xl bg-[#e83848]/10 text-[#e83848] flex items-center justify-center text-lg shrink-0">
-                        📄
-                      </span>
-                      <span className="flex-1">
-                        <span className="block text-[#15233B] text-sm font-bold group-hover:text-[#e83848] transition-colors">
-                          {ui.ofertaLink} {opened && <span className="text-green-600">✓</span>}
-                        </span>
-                        <span className="block text-[#646F82] text-xs">{ui.ofertaHint}</span>
-                      </span>
-                    </Link>
-
-                    <label className="flex items-start gap-3 mt-4 pt-4 border-t border-[#15233B]/8 cursor-pointer select-none">
-                      <input
-                        type="checkbox"
-                        checked={agreed}
-                        onChange={(e) => setAgreed(e.target.checked)}
-                        className="mt-0.5 w-5 h-5 shrink-0 accent-[#e83848] cursor-pointer"
-                      />
-                      <span className="text-[#3E4B62] text-sm leading-snug">{ui.ofertaAgree}</span>
-                    </label>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={!canSubmit}
-                    className="w-full bg-[#e83848] hover:bg-[#e84858] disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold py-4 rounded-2xl text-sm transition-all hover:-translate-y-0.5 shadow-[0_10px_30px_-8px_rgba(232,56,72,0.5)]"
-                  >
-                    {loading ? ui.submitting : ui.submit}
-                  </button>
-                  {submitError && (
-                    <p className="text-[#e83848] text-sm text-center mt-3 font-medium" role="alert">
-                      {submitError}
-                    </p>
-                  )}
-                  {!agreed && (form.ism || form.telefon) && (
-                    <p className="text-[#646F82] text-xs text-center mt-3">{ui.ofertaRequired}</p>
-                  )}
+                    {mode === "inquiry" && form.ism && !form.daraja && (
+                      <p className="text-[#646F82] text-xs text-center mt-3">{ui.levelRequired}</p>
+                    )}
+                    {mode === "inquiry" && form.ism && form.daraja && !phoneOk && (
+                      <p className="text-[#646F82] text-xs text-center mt-3">{ui.phoneRequired}</p>
+                    )}
+                    {mode === "inquiry" && form.ism && form.daraja && phoneOk && !backupOk && (
+                      <p className="text-[#646F82] text-xs text-center mt-3">{ui.backupPhoneRequired}</p>
+                    )}
+                    {mode === "register" && !agreed && (form.ism || form.telefon) && (
+                      <p className="text-[#646F82] text-xs text-center mt-3">{ui.ofertaRequired}</p>
+                    )}
                   </form>
                 </>
               )}
@@ -315,10 +470,7 @@ function BoglanishPage() {
                 </div>
               </div>
 
-              <div
-                className="reveal card p-7 panel-soft-accent"
-                data-delay={200}
-              >
+              <div className="reveal card p-7 panel-soft-accent" data-delay={200}>
                 <h3 className="font-['Syne'] font-bold text-lg mb-5">{ui.socialTitle}</h3>
                 <div className="grid grid-cols-2 gap-3">
                   {ui.socials.map((s, i) => {

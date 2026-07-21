@@ -346,6 +346,12 @@ export const ruUi = {
     subtitle:
       "Вместе подберём подходящий формат. Оставьте заявку или напишите админу напрямую.",
     formTitle: "Оставить заявку",
+    tabInquiry: "Получить информацию",
+    tabRegister: "Записаться",
+    backupPhoneLabel: "Резервный телефон *",
+    backupPhonePlaceholder: "90 000 00 00",
+    inquirySubmit: "Оставить заявку →",
+    inquiryFormat: "Запрос информации",
     successTitle: "Получено!",
     successBody:
       "Ваша заявка получена. Для более быстрого ответа напишите админу напрямую.",
@@ -362,6 +368,9 @@ export const ruUi = {
     messagePlaceholder: "Напишите ваш вопрос...",
     submit: "Записаться →",
     submitting: "Отправка...",
+    levelRequired: "Выберите уровень французского.",
+    phoneRequired: "Введите корректный номер телефона.",
+    backupPhoneRequired: "Введите корректный резервный номер.",
     ofertaLink: "Публичная оферта",
     ofertaHint: "Нажмите, чтобы прочитать →",
     ofertaAgree: "Я ознакомился(ась) с публичной офертой и согласен(на) со всеми условиями.",

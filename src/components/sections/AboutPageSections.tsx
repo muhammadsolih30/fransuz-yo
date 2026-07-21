@@ -6,7 +6,6 @@ type Props = { embedded?: boolean };
 export function AboutPageSections({ embedded = false }: Props) {
   const { content } = useSitePreferences();
   const { centerClaim, centerStats, heroTagline, whyUs } = content.site;
-  const { milestones } = content.about;
   const ui = content.ui.about;
 
   const titleWords = ui.titleSuffix.split(" ");
@@ -53,41 +52,8 @@ export function AboutPageSections({ embedded = false }: Props) {
         </div>
       </section>
 
-      <section className="py-20 lg:py-28 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-            <div className="reveal">
-              <p className="eyebrow text-[#e83848] mb-4">
-                <span className="w-8 h-px bg-[#e83848]" /> {ui.missionEyebrow}
-              </p>
-              <h3 className="font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight mb-6">
-                {ui.missionTitle}
-              </h3>
-              <p className="text-[#3E4B62] text-base leading-relaxed mb-5">{ui.missionBody1}</p>
-              <p className="text-[#3E4B62] text-base leading-relaxed">{ui.missionBody2}</p>
-            </div>
-            <div className="reveal space-y-4" data-delay={120}>
-              {milestones.map((m) => (
-                <div
-                  key={m.year}
-                  className="card p-6 flex gap-5 hover:border-[#e83848]/20 transition-colors"
-                >
-                  <div className="font-['Syne'] font-extrabold text-2xl text-[#e83848] shrink-0 w-16">
-                    {m.year}
-                  </div>
-                  <div>
-                    <h4 className="font-['Syne'] font-bold text-lg mb-1">{m.title}</h4>
-                    <p className="text-[#3E4B62] text-sm leading-relaxed">{m.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 lg:py-28 bg-[#FAF6EF] relative">
-        <div className="absolute inset-0 bg-dots opacity-50" />
+      <section className="py-20 lg:py-28 bg-white relative">
+        <div className="absolute inset-0 bg-dots opacity-40" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-14 reveal">
             <p className="eyebrow text-[#e83848] mb-4">
