@@ -87,7 +87,7 @@ function BoglanishPage() {
     const levelLabel = ui.levels.find((d) => d.v === form.daraja)?.l ?? "—";
 
     try {
-      const { leadsStore } = await import("../lib/store");
+      const { leadsStore, INQUIRY_FORMAT } = await import("../lib/store");
 
       if (mode === "inquiry") {
         await leadsStore.add({
@@ -95,7 +95,7 @@ function BoglanishPage() {
           telefon: form.telefon,
           telegram: "",
           country,
-          format: ui.inquiryFormat,
+          format: INQUIRY_FORMAT,
           daraja: levelLabel,
           xabar: `${ui.backupPhoneLabel.replace(" *", "")}: ${form.telefon2}`,
         });

@@ -48,6 +48,26 @@ export type Lead = {
   checkedAt: number | null;
 };
 
+/** Forma "Ma'lumot olish" tabidan kelgan arizalar uchun barqaror belgi (format maydonida). */
+export const INQUIRY_FORMAT = "inquiry";
+
+const INQUIRY_FORMAT_ALIASES = new Set(
+  [
+    INQUIRY_FORMAT,
+    "Ma'lumot olish",
+    "Information request",
+    "Запрос информации",
+  ].map((s) => s.trim().toLowerCase()),
+);
+
+export function isInquiryLead(lead: Pick<Lead, "format">): boolean {
+  return INQUIRY_FORMAT_ALIASES.has(lead.format.trim().toLowerCase());
+}
+
+export function leadKindLabel(lead: Pick<Lead, "format">): string {
+  return isInquiryLead(lead) ? "Ma'lumot olish" : "Ro'yxatdan o'tish";
+}
+
 const LEADS_KEY = "france_tcf_leads";
 
 /* ─────────────────────────────────────────────

@@ -1,7 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { BrandLogo } from "../components/BrandLogo";
-import { auth, leadsStore, themeStore, type Lead, type LeadStatus } from "../lib/store";
+import {
+  auth,
+  isInquiryLead,
+  leadKindLabel,
+  leadsStore,
+  themeStore,
+  type Lead,
+  type LeadStatus,
+} from "../lib/store";
 import { flagEmoji, countryName } from "../lib/country";
 
 export const Route = createFileRoute("/admin")({
@@ -27,11 +35,13 @@ const STATUS: Record<LeadStatus, { label: string; cls: string; dot: string }> = 
 const STATUS_KEYS = Object.keys(STATUS) as LeadStatus[];
 
 /* ───── Sidebar bo'limlari ───── */
-type Section = "all" | "checked" | "unchecked" | "due" | LeadStatus;
+type Section = "all" | "register" | "inquiry" | "checked" | "unchecked" | "due" | LeadStatus;
 
 const SECTIONS: { key: Section; label: string; icon: string }[] = [
   { key: "all", label: "Barcha arizalar", icon: "📋" },
-  { key: "yangi", label: "Yangi ro'yxatdan o'tganlar", icon: "🆕" },
+  { key: "register", label: "Ro'yxatdan o'tganlar", icon: "✍️" },
+  { key: "inquiry", label: "Ma'lumot olish", icon: "💬" },
+  { key: "yangi", label: "Yangi arizalar", icon: "🆕" },
   { key: "unchecked", label: "Tekshirilmaganlar", icon: "⏳" },
   { key: "checked", label: "Tekshirilganlar", icon: "✅" },
   { key: "aloqa", label: "Telefonda gaplashilganlar", icon: "📞" },
@@ -261,6 +271,8 @@ function Dashboard({
   const counts = useMemo(() => {
     const c: Record<string, number> = {
       all: leads.length,
+      register: leads.filter((l) => !isInquiryLead(l)).length,
+      inquiry: leads.filter((l) => isInquiryLead(l)).length,
       checked: leads.filter((l) => l.checked).length,
       unchecked: leads.filter((l) => !l.checked).length,
       due: leads.filter((l) => l.scheduledDate && l.scheduledDate <= todayStr && l.status !== "yozildi" && l.status !== "rad").length,
@@ -272,6 +284,8 @@ function Dashboard({
   const list = useMemo(() => {
     let arr = leads.filter((l) => {
       if (section === "all") return true;
+      if (section === "register") return !isInquiryLead(l);
+      if (section === "inquiry") return isInquiryLead(l);
       if (section === "checked") return l.checked;
       if (section === "unchecked") return !l.checked;
       if (section === "due")
@@ -322,24 +336,37 @@ function Dashboard({
           {SECTIONS.map((s) => {
             const active = section === s.key;
             const count = counts[s.key] ?? 0;
+            const showKindDivider = s.key === "register";
+            const showStatusDivider = s.key === "yangi";
             return (
-              <button
-                key={s.key}
-                onClick={() => {
-                  setSection(s.key);
-                  setSidebarOpen(false);
-                }}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all text-left ${active ? "bg-[#e83848] text-white shadow-[0_8px_20px_-8px_rgba(232,56,72,0.7)]" : "text-white/70 hover:bg-white/8 hover:text-white"
-                  }`}
-              >
-                <span className="text-base shrink-0">{s.icon}</span>
-                <span className="flex-1 leading-tight">{s.label}</span>
-                {count > 0 && (
-                  <span className={`shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full ${active ? "bg-white/25" : "bg-white/10 text-white/70"}`}>
-                    {count}
-                  </span>
+              <div key={s.key}>
+                {showKindDivider && (
+                  <div className="px-3.5 pt-2 pb-1.5 text-[10px] font-bold uppercase tracking-wider text-white/35">
+                    Ariza turi
+                  </div>
                 )}
-              </button>
+                {showStatusDivider && (
+                  <div className="px-3.5 pt-3 pb-1.5 text-[10px] font-bold uppercase tracking-wider text-white/35">
+                    Holat
+                  </div>
+                )}
+                <button
+                  onClick={() => {
+                    setSection(s.key);
+                    setSidebarOpen(false);
+                  }}
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all text-left ${active ? "bg-[#e83848] text-white shadow-[0_8px_20px_-8px_rgba(232,56,72,0.7)]" : "text-white/70 hover:bg-white/8 hover:text-white"
+                    }`}
+                >
+                  <span className="text-base shrink-0">{s.icon}</span>
+                  <span className="flex-1 leading-tight">{s.label}</span>
+                  {count > 0 && (
+                    <span className={`shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full ${active ? "bg-white/25" : "bg-white/10 text-white/70"}`}>
+                      {count}
+                    </span>
+                  )}
+                </button>
+              </div>
             );
           })}
         </nav>
@@ -459,9 +486,9 @@ function Dashboard({
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {[
               { label: "Jami arizalar", value: counts.all, accent: "text-[var(--a-text)]" },
-              { label: "Yangi", value: counts.yangi, accent: "text-blue-500" },
+              { label: "Ro'yxatdan o'tganlar", value: counts.register, accent: "text-[#e83848]" },
+              { label: "Ma'lumot olish", value: counts.inquiry, accent: "text-violet-500" },
               { label: "Tekshirilmagan", value: counts.unchecked, accent: "text-amber-500" },
-              { label: "Muddati kelgan", value: counts.due, accent: "text-[#f25c5c]" },
             ].map((s) => (
               <div key={s.label} className="bg-[var(--a-surface)] rounded-2xl border border-[var(--a-border)] p-4 sm:p-5">
                 <div className={`font-['Syne'] font-extrabold text-2xl sm:text-3xl ${s.accent}`}>
@@ -542,6 +569,8 @@ function fmt(ts: number | null): string {
 function LeadCard({ lead, todayStr }: { lead: Lead; todayStr: string }) {
   const [menu, setMenu] = useState(false);
   const meta = STATUS[lead.status];
+  const inquiry = isInquiryLead(lead);
+  const kind = leadKindLabel(lead);
   const isDue = lead.scheduledDate && lead.scheduledDate <= todayStr && lead.status !== "yozildi" && lead.status !== "rad";
 
   return (
@@ -552,6 +581,15 @@ function LeadCard({ lead, todayStr }: { lead: Lead; todayStr: string }) {
           <div className="flex items-center gap-2.5 flex-wrap">
             <span className="text-xl" title={countryName(lead.country)}>{flagEmoji(lead.country)}</span>
             <h3 className="font-['Syne'] font-bold text-lg text-[var(--a-text)]">{lead.ism}</h3>
+            <span
+              className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${
+                inquiry
+                  ? "bg-violet-50 text-violet-700 border-violet-200"
+                  : "bg-rose-50 text-rose-700 border-rose-200"
+              }`}
+            >
+              {inquiry ? "💬" : "✍️"} {kind}
+            </span>
             <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${meta.cls}`}>
               <span className={`w-1.5 h-1.5 rounded-full ${meta.dot}`} /> {meta.label}
             </span>
@@ -585,10 +623,12 @@ function LeadCard({ lead, todayStr }: { lead: Lead; todayStr: string }) {
 
       {/* Body */}
       <div className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 mb-4 text-sm">
-        <div className="flex gap-2"><span className="text-[var(--a-text-muted)]">📚 Format:</span><span className="text-[var(--a-text)] font-medium">{lead.format}</span></div>
+        {!inquiry && (
+          <div className="flex gap-2"><span className="text-[var(--a-text-muted)]">📚 Format:</span><span className="text-[var(--a-text)] font-medium">{lead.format}</span></div>
+        )}
         <div className="flex gap-2"><span className="text-[var(--a-text-muted)]">🎯 Daraja:</span><span className="text-[var(--a-text)] font-medium">{lead.daraja}</span></div>
         {lead.xabar && lead.xabar !== "—" && (
-          <div className="flex gap-2 sm:col-span-2"><span className="text-[var(--a-text-muted)] shrink-0">💬 Xabar:</span><span className="text-[var(--a-text-soft)]">{lead.xabar}</span></div>
+          <div className="flex gap-2 sm:col-span-2"><span className="text-[var(--a-text-muted)] shrink-0">{inquiry ? "📱 Zaxira:" : "💬 Xabar:"}</span><span className="text-[var(--a-text-soft)]">{lead.xabar.replace(/^Zaxira telefon:\s*/i, "").replace(/^Backup phone:\s*/i, "").replace(/^Резервный телефон:\s*/i, "")}</span></div>
         )}
         {lead.scheduledDate && (
           <div className="flex gap-2"><span className="text-[var(--a-text-muted)]">📅 Belgilangan kun:</span><span className="text-[var(--a-text)] font-semibold">{lead.scheduledDate}</span></div>
