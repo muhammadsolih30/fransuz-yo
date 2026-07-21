@@ -14,7 +14,7 @@ export const SITE_SAME_AS = [
 ] as const;
 
 export const DEFAULT_KEYWORDS =
-  "TCF Canada, TCF Canada Toshkent, fransuz tili kursi, fransuz tili o'quv markazi, Express Entry, Kanada immigratsiya, TEF Canada, DELF, DALF, France TCF, fransuz tili Kanadaga, CRS ball, PR Kanada";
+  "TCF Canada, TCF Canada Toshkent, TCF Canada kursi, fransuz tili kursi, fransuz tili kursi Toshkent, fransuz tili o'quv markazi, fransuz tili O'zbekiston, Express Entry, Kanada immigratsiya, TEF Canada, DELF, DALF, France TCF, fransuz tili Kanadaga, CRS ball, PR Kanada, Kanada PR, French language Tashkent";
 
 export const PUBLIC_ROUTES = [
   { path: "/", priority: "1.0", changefreq: "weekly" },
@@ -65,6 +65,15 @@ export function buildOrganizationJsonLd(description: string) {
     ],
     availableLanguage: ["uz", "ru", "fr", "en"],
     sameAs: [...SITE_SAME_AS],
+    knowsAbout: [
+      "TCF Canada",
+      "TEF Canada",
+      "DELF",
+      "DALF",
+      "Express Entry",
+      "French language",
+      "Canada immigration",
+    ],
     contactPoint: [
       {
         "@type": "ContactPoint",
@@ -75,6 +84,28 @@ export function buildOrganizationJsonLd(description: string) {
       },
     ],
     priceRange: "$$",
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "France TCF kurslari",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Course",
+            name: "TCF Canada tayyorgarlik",
+            description: "Fransuz tili orqali Kanada immigratsiyasi uchun TCF Canada kursi",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Course",
+            name: "TEF Canada / DELF / DALF",
+            description: "Fransuz tili sertifikatlariga tayyorgarlik",
+          },
+        },
+      ],
+    },
   };
 }
 
@@ -87,6 +118,11 @@ export function buildWebSiteJsonLd() {
     url: SITE_URL,
     inLanguage: ["uz", "ru", "en"],
     publisher: { "@id": `${SITE_URL}/#organization` },
+    potentialAction: {
+      "@type": "CommunicateAction",
+      name: "Bepul maslahat",
+      target: absoluteUrl("/boglanish"),
+    },
   };
 }
 

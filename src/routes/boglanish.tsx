@@ -54,7 +54,8 @@ function BoglanishPage() {
   const [opened, setOpened] = useState(false);
 
   const phoneOk = isValidPhoneNumber(form.telefon || "");
-  const backupOk = isValidPhoneNumber(form.telefon2 || "");
+  const backupEmpty = !form.telefon2?.trim();
+  const backupOk = backupEmpty || isValidPhoneNumber(form.telefon2 || "");
 
   const canSubmitInquiry =
     !!form.ism.trim() && phoneOk && backupOk && !!form.daraja && !loading;
@@ -97,7 +98,9 @@ function BoglanishPage() {
           country,
           format: INQUIRY_FORMAT,
           daraja: levelLabel,
-          xabar: `${ui.backupPhoneLabel.replace(" *", "")}: ${form.telefon2}`,
+          xabar: form.telefon2?.trim()
+            ? `${ui.backupPhoneLabel.replace(/\s*\*?$/, "")}: ${form.telefon2}`
+            : "—",
         });
       } else {
         await leadsStore.add({
@@ -428,7 +431,7 @@ function BoglanishPage() {
                     {mode === "inquiry" && form.ism && form.daraja && !phoneOk && (
                       <p className="text-[#646F82] text-xs text-center mt-3">{ui.phoneRequired}</p>
                     )}
-                    {mode === "inquiry" && form.ism && form.daraja && phoneOk && !backupOk && (
+                    {mode === "inquiry" && form.ism && form.daraja && phoneOk && !backupEmpty && !backupOk && (
                       <p className="text-[#646F82] text-xs text-center mt-3">{ui.backupPhoneRequired}</p>
                     )}
                     {mode === "register" && !agreed && (form.ism || form.telefon) && (

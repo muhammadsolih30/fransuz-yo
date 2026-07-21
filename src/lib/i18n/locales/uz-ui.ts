@@ -6,7 +6,7 @@ export const uzUi = {
       description:
         "Toshkentda TCF Canada, TEF, DELF/DALF tayyorgarlik. Fransuz tili orqali Express Entry va Kanada PR. C1–C2 ustozlar, online/offline kurslar. Bepul maslahat: +998 94 738 22 21.",
       keywords:
-        "TCF Canada Toshkent, TCF Canada kursi, fransuz tili kursi Toshkent, Express Entry, Kanada immigratsiya, TEF Canada, DELF DALF, France TCF, fransuz tili Kanadaga",
+        "TCF Canada Toshkent, TCF Canada kursi, fransuz tili kursi Toshkent, fransuz tili o'quv markazi, Express Entry, Kanada immigratsiya, TEF Canada, DELF DALF, France TCF, fransuz tili Kanadaga, Kanada PR, fransuz tili O'zbekiston",
     },
     immigration: {
       title: "Kanada immigratsiyasi va Express Entry | Fransuz tili +50 CRS | France TCF",
@@ -346,7 +346,7 @@ export const uzUi = {
     formTitle: "Ariza qoldiring",
     tabInquiry: "Ma'lumot olish",
     tabRegister: "Ro'yxatdan o'tish",
-    backupPhoneLabel: "Zaxira telefon *",
+    backupPhoneLabel: "Zaxira telefon (ixtiyoriy)",
     backupPhonePlaceholder: "90 000 00 00",
     inquirySubmit: "Ariza qoldirish →",
     inquiryFormat: "Ma'lumot olish",
@@ -368,7 +368,7 @@ export const uzUi = {
     submitting: "Yuborilmoqda...",
     levelRequired: "Fransuz tili darajasini tanlang.",
     phoneRequired: "Telefon raqamini to'g'ri kiriting.",
-    backupPhoneRequired: "Zaxira telefon raqamini to'g'ri kiriting.",
+    backupPhoneRequired: "Zaxira telefonni to'g'ri kiriting yoki bo'sh qoldiring.",
     ofertaLink: "Ommaviy oferta",
     ofertaHint: "Bosib tanishib chiqing →",
     ofertaAgree: "Men ommaviy oferta bilan tanishib chiqdim va barcha shartlarga roziman.",
