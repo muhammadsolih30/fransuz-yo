@@ -2,11 +2,11 @@
 export const uzUi = {
   meta: {
     home: {
-      title: "Fransuz tili o'rganish Toshkent | Kanadaga borish — France TCF",
+      title: "Fransuz tili o'quv markazi Toshkent | France TCF — Kanadaga borish",
       description:
-        "Fransuz tili o'rganing va Kanadaga boring. Toshkentda TCF Canada, TEF, DELF/DALF kurslari. Express Entry +50 ball. Online/offline. Bepul maslahat: +998 94 738 22 21.",
+        "Fransuz tili o'quv markazi — France TCF, Toshkent. Fransuz tili o'rganish, TCF Canada, TEF, DELF/DALF. Kanadaga borish uchun Express Entry +50 ball. Bepul maslahat: +998 94 738 22 21.",
       keywords:
-        "fransuz tili, fransuz tili o'rganish, fransuz tili kursi, Kanadaga borish, Kanada immigratsiya, TCF Canada Toshkent, TCF Canada kursi, Express Entry, TEF Canada, DELF DALF, France TCF, fransuz tili Toshkent, Kanada PR",
+        "fransuz tili o'quv markazi, fransuz tili o'quv markazi Toshkent, fransuz tili, fransuz tili o'rganish, fransuz tili kursi, Kanadaga borish, TCF Canada Toshkent, Express Entry, France TCF",
     },
     immigration: {
       title: "Kanadaga borish — Express Entry va fransuz tili | France TCF",
@@ -139,9 +139,9 @@ export const uzUi = {
   },
   about: {
     eyebrow: "Biz haqimizda",
-    titleSuffix: "eng yirik fransuz tili markazi",
+    titleSuffix: "fransuz tili o'quv markazi",
     extraBody:
-      "Biz faqat til tayyorgarligi bilan shug'ullanamiz — TCF Canada, DELF, DALF va Express Entry yo'lida professional hamrohlik.",
+      "France TCF — Toshkentdagi fransuz tili o'quv markazi. Biz faqat til tayyorgarligi bilan shug'ullanamiz — TCF Canada, DELF, DALF va Express Entry yo'lida professional hamrohlik.",
     missionEyebrow: "Bizning vazifamiz",
     missionTitle: "Fransuz tilini CLB 8+ darajaga olib chiqish",
     missionBody1:

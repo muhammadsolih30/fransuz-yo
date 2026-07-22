@@ -19,7 +19,7 @@ export const centerStats = [
 ];
 
 export const heroTagline =
-  "Kanadaga ishlash yoki o'qish uchun ketishning eng oson yo'li — fransuz tili. Express Entry tizimida +50 ball va kamroq raqobat. TCF Canada'ga professional tayyorgarlik.";
+  "Fransuz tili o'quv markazi France TCF — Kanadaga ishlash yoki o'qish uchun ketishning eng oson yo'li. Express Entry tizimida +50 ball va kamroq raqobat. TCF Canada'ga professional tayyorgarlik.";
 
 export const centerMotto = "Biz bilan Kanada va Fransiyaga ilk qadam.";
 

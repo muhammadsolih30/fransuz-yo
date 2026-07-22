@@ -17,16 +17,16 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "TCF Canada kursi Toshkent | France TCF — Fransuz tili orqali Kanadaga" },
+      { title: "Fransuz tili o'quv markazi Toshkent | France TCF — Kanadaga borish" },
       {
         name: "description",
         content:
-          "Toshkentda TCF Canada, TEF, DELF/DALF tayyorgarlik. Fransuz tili orqali Express Entry va Kanada PR. C1–C2 ustozlar, online/offline kurslar.",
+          "Fransuz tili o'quv markazi — France TCF, Toshkent. Fransuz tili o'rganish, TCF Canada, TEF, DELF/DALF. Kanadaga borish uchun Express Entry +50 ball.",
       },
       {
         name: "keywords",
         content:
-          "TCF Canada Toshkent, fransuz tili kursi, Express Entry, Kanada immigratsiya, TEF Canada, France TCF",
+          "fransuz tili o'quv markazi, fransuz tili o'quv markazi Toshkent, fransuz tili, fransuz tili o'rganish, Kanadaga borish, TCF Canada, France TCF",
       },
       { name: "theme-color", content: "#e83848" },
       {
@@ -35,10 +35,10 @@ export const Route = createRootRoute({
       },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "France TCF" },
-      { property: "og:title", content: "TCF Canada kursi Toshkent | France TCF" },
+      { property: "og:title", content: "Fransuz tili o'quv markazi Toshkent | France TCF" },
       {
         property: "og:description",
-        content: "Fransuz tili orqali Kanadaga. TCF Canada tayyorgarlik — Toshkent.",
+        content: "Fransuz tili o'quv markazi — France TCF. Fransuz tili o'rganish va Kanadaga borish.",
       },
       { property: "og:locale", content: "uz_UZ" },
       { property: "og:url", content: "https://www.francetcf.uz/" },

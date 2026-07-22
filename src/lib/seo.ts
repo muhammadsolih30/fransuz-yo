@@ -14,7 +14,7 @@ export const SITE_SAME_AS = [
 ] as const;
 
 export const DEFAULT_KEYWORDS =
-  "fransuz tili, fransuz tili o'rganish, fransuz tili kursi, fransuz tili Toshkent, Kanadaga borish, Kanada immigratsiya, TCF Canada, TCF Canada Toshkent, TCF Canada kursi, Express Entry, TEF Canada, DELF, DALF, France TCF, Kanada PR, CRS ball, fransuz tili o'quv markazi";
+  "fransuz tili o'quv markazi, fransuz tili o'quv markazi Toshkent, fransuz tili, fransuz tili o'rganish, fransuz tili kursi, fransuz tili Toshkent, Kanadaga borish, Kanada immigratsiya, TCF Canada, TCF Canada Toshkent, Express Entry, TEF Canada, DELF, DALF, France TCF, Kanada PR";
 
 export const PUBLIC_ROUTES = [
   { path: "/", priority: "1.0", changefreq: "weekly" },
@@ -38,7 +38,12 @@ export function buildOrganizationJsonLd(description: string) {
     "@type": ["EducationalOrganization", "LocalBusiness"],
     "@id": `${SITE_URL}/#organization`,
     name: SITE_NAME_FULL,
-    alternateName: ["France TCF", "France TCF Learning Center"],
+    alternateName: [
+      "France TCF",
+      "Fransuz tili o'quv markazi",
+      "Fransuz tili o'quv markazi Toshkent",
+      "France TCF Learning Center",
+    ],
     url: SITE_URL,
     logo: {
       "@type": "ImageObject",
