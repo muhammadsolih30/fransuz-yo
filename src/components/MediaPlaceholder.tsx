@@ -1,4 +1,3 @@
-import { Camera, Play, ScrollText } from "lucide-react";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
 
 type MediaPlaceholderProps = {
@@ -33,25 +32,21 @@ export function MediaPlaceholder({
     certificate: "from-[#eef2f8] via-white to-[#e8eef8]",
   };
 
-  const Icon = type === "photo" ? Camera : type === "video" ? Play : ScrollText;
-
-  const videoStyle = type === "video";
-
   return (
     <div
-      className={`media-placeholder relative overflow-hidden rounded-2xl border-2 border-dashed border-[#15233B]/15 ${aspectClass} bg-gradient-to-br ${gradients[type]} ${videoStyle ? "media-placeholder--video" : ""} ${className}`}
+      className={`media-placeholder relative overflow-hidden rounded-2xl border-2 border-dashed border-[#15233B]/15 ${aspectClass} bg-gradient-to-br ${gradients[type]} ${type === "video" ? "media-placeholder--video" : ""} ${className}`}
     >
-      <div className="absolute inset-0 opacity-30 bg-dots" aria-hidden />
+      <div className="absolute inset-0 opacity-25 bg-dots" aria-hidden />
       <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-        <div
-          className={`media-placeholder__play w-14 h-14 rounded-2xl flex items-center justify-center mb-3 ${
-            videoStyle
-              ? "bg-[#e83848] text-white shadow-[0_8px_20px_-8px_rgba(232,56,72,0.5)]"
-              : "bg-white border border-[#15233B]/10 shadow-sm text-[#e83848] dark:bg-[#1a2332] dark:border-white/12"
-          }`}
-        >
-          <Icon className="w-6 h-6" strokeWidth={1.8} fill={type === "video" ? "currentColor" : "none"} />
-        </div>
+        <img
+          src="/image/logo-emblem.png"
+          alt="France TCF"
+          width={96}
+          height={96}
+          className="w-16 h-16 sm:w-20 sm:h-20 object-contain mb-3 drop-shadow-sm"
+          decoding="async"
+          draggable={false}
+        />
         <p className="card-title font-['Syne'] font-bold text-sm">{label}</p>
         <p className="section-body text-xs mt-1 font-medium">{resolvedSublabel}</p>
       </div>

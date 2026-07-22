@@ -2,17 +2,17 @@
 export const enUi = {
   meta: {
     home: {
-      title: "TCF Canada Course Tashkent | France TCF — To Canada through French",
+      title: "Learn French in Tashkent | Go to Canada — France TCF",
       description:
-        "TCF Canada, TEF, DELF/DALF prep in Tashkent. Reach Canada via French & Express Entry with C1–C2 teachers. Online/offline. Free consult: +998 94 738 22 21.",
+        "Learn French and go to Canada. TCF Canada, TEF, DELF/DALF in Tashkent. Express Entry +50 points. Online/offline. Free consult: +998 94 738 22 21.",
       keywords:
-        "TCF Canada Tashkent, French course Uzbekistan, Express Entry, Canada immigration, TEF Canada, France TCF",
+        "learn French, French course Tashkent, go to Canada, Canada immigration, TCF Canada Tashkent, Express Entry, TEF Canada, France TCF",
     },
     immigration: {
-      title: "Canada Immigration & Express Entry | French +50 CRS | France TCF",
+      title: "Go to Canada — Express Entry & French | France TCF",
       description:
-        "Immigrate to Canada through French: Express Entry, TCF Canada, CRS points, and PR pathway. Full guidance at France TCF Tashkent.",
-      keywords: "Canada immigration Uzbekistan, Express Entry, CRS points, TCF Canada PR",
+        "Path to Canada: Express Entry, TCF Canada, CRS +50 points and PR. French language immigration guidance at France TCF Tashkent.",
+      keywords: "go to Canada, Canada immigration Uzbekistan, Express Entry, CRS points, TCF Canada PR",
     },
     faq: {
       title: "TCF Canada FAQ — Frequently asked questions | France TCF",

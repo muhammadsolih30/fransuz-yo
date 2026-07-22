@@ -2,18 +2,18 @@
 export const uzUi = {
   meta: {
     home: {
-      title: "TCF Canada kursi Toshkent | France TCF — Fransuz tili orqali Kanadaga",
+      title: "Fransuz tili o'rganish Toshkent | Kanadaga borish — France TCF",
       description:
-        "Toshkentda TCF Canada, TEF, DELF/DALF tayyorgarlik. Fransuz tili orqali Express Entry va Kanada PR. C1–C2 ustozlar, online/offline kurslar. Bepul maslahat: +998 94 738 22 21.",
+        "Fransuz tili o'rganing va Kanadaga boring. Toshkentda TCF Canada, TEF, DELF/DALF kurslari. Express Entry +50 ball. Online/offline. Bepul maslahat: +998 94 738 22 21.",
       keywords:
-        "TCF Canada Toshkent, TCF Canada kursi, fransuz tili kursi Toshkent, fransuz tili o'quv markazi, Express Entry, Kanada immigratsiya, TEF Canada, DELF DALF, France TCF, fransuz tili Kanadaga, Kanada PR, fransuz tili O'zbekiston",
+        "fransuz tili, fransuz tili o'rganish, fransuz tili kursi, Kanadaga borish, Kanada immigratsiya, TCF Canada Toshkent, TCF Canada kursi, Express Entry, TEF Canada, DELF DALF, France TCF, fransuz tili Toshkent, Kanada PR",
     },
     immigration: {
-      title: "Kanada immigratsiyasi va Express Entry | Fransuz tili +50 CRS | France TCF",
+      title: "Kanadaga borish — Express Entry va fransuz tili | France TCF",
       description:
-        "Fransuz tili orqali Kanadaga immigratsiya: Express Entry, TCF Canada, CRS ballari va PR yo‘li. Toshkentdagi France TCF markazida to‘liq yo‘l-yo‘riq.",
+        "Kanadaga borish yo'li: Express Entry, TCF Canada, CRS +50 ball va PR. Fransuz tili orqali immigratsiya — Toshkentdagi France TCF markazida yo'l-yo'riq.",
       keywords:
-        "Kanada immigratsiya, Express Entry O‘zbekiston, CRS ball, TCF Canada PR, fransuz tili Kanada, Canada PR",
+        "Kanadaga borish, Kanada immigratsiya, Express Entry O‘zbekiston, CRS ball, TCF Canada PR, fransuz tili Kanada, Canada PR",
     },
     faq: {
       title: "TCF Canada FAQ — Ko‘p so‘raladigan savollar | France TCF Toshkent",

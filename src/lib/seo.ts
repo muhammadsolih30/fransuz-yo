@@ -3,7 +3,7 @@
 export const SITE_URL = "https://www.francetcf.uz";
 export const SITE_NAME = "France TCF";
 export const SITE_NAME_FULL = "France TCF O'quv Markazi";
-export const SITE_LOGO = `${SITE_URL}/image/saytlogotef.png`;
+export const SITE_LOGO = `${SITE_URL}/image/logo-favicon.png`;
 export const SITE_OG_IMAGE = `${SITE_URL}/image/opening/ckanada%20va%20firansiya.png`;
 export const SITE_PHONE = "+998947382221";
 
@@ -14,7 +14,7 @@ export const SITE_SAME_AS = [
 ] as const;
 
 export const DEFAULT_KEYWORDS =
-  "TCF Canada, TCF Canada Toshkent, TCF Canada kursi, fransuz tili kursi, fransuz tili kursi Toshkent, fransuz tili o'quv markazi, fransuz tili O'zbekiston, Express Entry, Kanada immigratsiya, TEF Canada, DELF, DALF, France TCF, fransuz tili Kanadaga, CRS ball, PR Kanada, Kanada PR, French language Tashkent";
+  "fransuz tili, fransuz tili o'rganish, fransuz tili kursi, fransuz tili Toshkent, Kanadaga borish, Kanada immigratsiya, TCF Canada, TCF Canada Toshkent, TCF Canada kursi, Express Entry, TEF Canada, DELF, DALF, France TCF, Kanada PR, CRS ball, fransuz tili o'quv markazi";
 
 export const PUBLIC_ROUTES = [
   { path: "/", priority: "1.0", changefreq: "weekly" },

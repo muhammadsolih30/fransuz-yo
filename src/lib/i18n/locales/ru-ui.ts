@@ -2,17 +2,17 @@
 export const ruUi = {
   meta: {
     home: {
-      title: "Курсы TCF Canada Ташкент | France TCF — В Канаду через французский",
+      title: "Учить французский Ташкент | В Канаду — France TCF",
       description:
-        "Подготовка к TCF Canada, TEF, DELF/DALF в Ташкенте. Французский для Express Entry и PR в Канаде. Преподаватели C1–C2, онлайн/офлайн. Консультация: +998 94 738 22 21.",
+        "Учите французский и едьте в Канаду. TCF Canada, TEF, DELF/DALF в Ташкенте. Express Entry +50 баллов. Онлайн/офлайн. Консультация: +998 94 738 22 21.",
       keywords:
-        "TCF Canada Ташкент, курсы французского Ташкент, Express Entry, иммиграция в Канаду, TEF Canada, France TCF",
+        "французский язык, учить французский, курсы французского Ташкент, в Канаду, иммиграция в Канаду, TCF Canada Ташкент, Express Entry, France TCF",
     },
     immigration: {
-      title: "Иммиграция в Канаду и Express Entry | Французский +50 CRS | France TCF",
+      title: "В Канаду — Express Entry и французский | France TCF",
       description:
-        "Иммиграция в Канаду через французский: Express Entry, TCF Canada, баллы CRS и путь к PR. Полная консультация в France TCF Ташкент.",
-      keywords: "иммиграция в Канаду Узбекистан, Express Entry, CRS, TCF Canada PR",
+        "Путь в Канаду: Express Entry, TCF Canada, CRS +50 баллов и PR. Иммиграция через французский — France TCF Ташкент.",
+      keywords: "в Канаду, иммиграция в Канаду Узбекистан, Express Entry, CRS, TCF Canada PR",
     },
     faq: {
       title: "TCF Canada FAQ — Частые вопросы | France TCF Ташкент",

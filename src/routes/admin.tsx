@@ -11,6 +11,7 @@ import {
   type LeadStatus,
 } from "../lib/store";
 import { flagEmoji, countryName } from "../lib/country";
+import { BrandEmblem } from "../components/BrandEmblem";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -322,10 +323,7 @@ function Dashboard({
           }`}
       >
         <div className="px-5 h-16 flex items-center gap-2.5 border-b border-white/10 shrink-0">
-          <div className="relative w-9 h-9 rounded-lg bg-[#e83848] flex items-center justify-center overflow-hidden">
-            <span className="text-white font-['Syne'] font-extrabold text-base">F</span>
-            <div className="absolute -right-1 -bottom-1 w-2.5 h-2.5 bg-[#E0A526] rounded-tl-md" />
-          </div>
+          <BrandEmblem className="h-9 w-9 ring-white/15" />
           <div>
             <div className="font-['Syne'] font-extrabold leading-none">France TCF</div>
             <div className="text-white/50 text-[11px]">Admin panel</div>
