@@ -3334,9 +3334,12 @@ html.dark .course-slide-card__subtitle {
 }
 
 html.dark .course-slide-card__meta-label,
-html.dark .course-slide-card__price-tier,
 html.dark .course-slide-card__price-unit {
   color: #6e7681;
+}
+
+html.dark .course-slide-card__price-tier {
+  color: #e83848;
 }
 
 html.dark .course-slide-card__meta-icon {
@@ -3567,10 +3570,9 @@ html.dark .faq-accordion summary:focus-visible {
 }
 
 .course-section__title-accent {
-  background: linear-gradient(135deg, #c62828 0%, #e83848 55%, #f25c5c 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  background: none;
+  color: #e83848;
+  -webkit-text-fill-color: #e83848;
 }
 
 @keyframes course-marquee-scroll {
@@ -3812,7 +3814,7 @@ html.dark .course-slide-card__cover {
 .course-slide-card__price-tier {
   font-size: 0.65rem;
   font-weight: 600;
-  color: #94a3b8;
+  color: #e83848;
 }
 
 .course-slide-card__price-amount {
