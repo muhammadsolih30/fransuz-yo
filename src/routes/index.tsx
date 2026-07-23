@@ -6,7 +6,6 @@ import {
   Gift,
   GraduationCap,
   HelpCircle,
-  Image as ImageIcon,
   Info,
   Phone,
   Plane,
@@ -15,7 +14,6 @@ import {
 } from "lucide-react";
 import { HeroOpeningBg } from "../components/HeroOpeningBg";
 import { PageMeta } from "../components/PageMeta";
-import { FaqAccordion } from "../components/FaqAccordion";
 import { StatCountUp } from "../components/CountUp";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
 import { useHashScroll } from "../hooks/useHashScroll";
@@ -115,7 +113,6 @@ const marqueeIcons: Record<string, typeof Info> = {
   "/probniy-dars": Gift,
   "/vakansiya": Briefcase,
   "/ommaviy-oferta": FileText,
-  "/galereya": ImageIcon,
   "/boglanish": Phone,
 };
 
@@ -123,11 +120,9 @@ function HomePage() {
   useHashScroll();
   const { content, t, navLinks } = useSitePreferences();
   const { centerClaim, heroTagline, whyUs } = content.site;
-  const { generalFaq } = content.faq;
   const ui = content.ui.home;
   const shared = content.ui.shared;
 
-  const faqs = generalFaq.slice(0, 6);
   const highlightStudent = content.results.studentResults.find((r) => r.highlight) ?? content.results.studentResults[0];
 
   const marqueePages = useMemo(
@@ -138,10 +133,9 @@ function HomePage() {
         label: link.label,
         icon: marqueeIcons[link.hash ?? link.to] ?? Info,
       })),
-      { to: "/galereya" as const, hash: undefined, label: t.nav.gallery, icon: ImageIcon },
       { to: "/boglanish" as const, hash: undefined, label: t.nav.contact, icon: Phone },
     ],
-    [navLinks, t.nav.gallery, t.nav.contact],
+    [navLinks, t.nav.contact],
   );
 
   return (
@@ -385,32 +379,6 @@ function HomePage() {
               </li>
             ))}
           </ol>
-        </div>
-      </section>
-
-      <section className="site-section site-section--cream py-20 lg:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-12 gap-12">
-            <div className="lg:col-span-4 reveal">
-              <p className="eyebrow text-[#e83848] mb-4">
-                <span className="w-8 h-px bg-[#e83848]" /> {ui.faqEyebrow}
-              </p>
-              <h2 className="section-heading font-['Syne'] font-extrabold text-4xl lg:text-5xl leading-tight mb-6">{ui.faqTitle}</h2>
-              <p className="section-body text-base leading-relaxed mb-8">{ui.faqBody}</p>
-              <div className="flex flex-wrap gap-3">
-                <Link to="/faq" className="btn-outline">
-                  {shared.allFaq}
-                </Link>
-                <Link to="/boglanish" className="btn-primary">
-                  {shared.contactArrow}
-                </Link>
-              </div>
-            </div>
-
-            <div className="lg:col-span-8">
-              <FaqAccordion items={faqs} />
-            </div>
-          </div>
         </div>
       </section>
     </div>

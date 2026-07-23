@@ -139,6 +139,7 @@ export function CourseCarousel({ courses, labels }: Props) {
 
                     <Link
                       to="/boglanish"
+                      search={{ mode: "register" }}
                       className={`course-slide-card__cta ${course.highlight ? "course-slide-card__cta--primary" : ""}`}
                     >
                       {labels.register}

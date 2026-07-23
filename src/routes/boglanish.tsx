@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import PhoneInput, { isValidPhoneNumber, parsePhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { BarChart3, MapPin, Phone } from "lucide-react";
@@ -7,6 +7,7 @@ import { InstagramIcon, TelegramIcon } from "../components/BrandIcons";
 import { DeferredBg } from "../components/DeferredBg";
 import { PageMeta } from "../components/PageMeta";
 import { useSitePreferences } from "../contexts/SitePreferencesContext";
+import type { SiteLocale } from "../lib/i18n/locales";
 
 const CONTACT_HREFS = [
   "tel:+998947382221",
@@ -28,7 +29,78 @@ const SOCIAL_ICONS = [TelegramIcon, InstagramIcon, BarChart3, TelegramIcon] as c
 
 type FormMode = "inquiry" | "register";
 
+type ContactForm = {
+  ism: string;
+  manzil: string;
+  tugilganSana: string;
+  malumot: string;
+  ishTajriba: string;
+  oilaviyHolat: string;
+  inglizDaraja: string;
+  telefon: string;
+  telegram: string;
+  maqsad: string;
+  daraja: string;
+  imtihonVaqti: string;
+  davlatMaqsad: string;
+  kunlikVaqt: string;
+  format: string;
+  qayerdanEshitdingiz: string;
+};
+
+const EMPTY_FORM: ContactForm = {
+  ism: "",
+  manzil: "",
+  tugilganSana: "",
+  malumot: "",
+  ishTajriba: "",
+  oilaviyHolat: "",
+  inglizDaraja: "",
+  telefon: "",
+  telegram: "",
+  maqsad: "",
+  daraja: "",
+  imtihonVaqti: "",
+  davlatMaqsad: "",
+  kunlikVaqt: "",
+  format: "",
+  qayerdanEshitdingiz: "",
+};
+
+function stripRequiredStar(label: string) {
+  return label.replace(/\s*\*?$/, "");
+}
+
+function buildRegisterXabar(form: ContactForm, ui: SiteLocale["ui"]["contact"]) {
+  const lines: string[] = [];
+
+  const add = (label: string, value: string) => {
+    const trimmed = value.trim();
+    if (trimmed) lines.push(`${stripRequiredStar(label)}: ${trimmed}`);
+  };
+
+  add(ui.addressLabel, form.manzil);
+  add(ui.birthDateLabel, form.tugilganSana);
+  add(ui.educationLabel, form.malumot);
+  add(ui.workLabel, form.ishTajriba);
+  add(ui.familyLabel, form.oilaviyHolat);
+  add(ui.englishLabel, form.inglizDaraja);
+  add(ui.frenchGoalLabel, form.maqsad);
+  add(ui.examWhenLabel, form.imtihonVaqti);
+  add(ui.countryGoalLabel, form.davlatMaqsad);
+
+  const dailyTime = ui.dailyTimes.find((t) => t.v === form.kunlikVaqt)?.l;
+  if (dailyTime) lines.push(`${stripRequiredStar(ui.dailyTimeLabel)}: ${dailyTime}`);
+
+  add(ui.heardFromLabel, form.qayerdanEshitdingiz);
+
+  return lines.length ? lines.join("\n") : "—";
+}
+
 export const Route = createFileRoute("/boglanish")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    mode: search.mode === "register" ? ("register" as const) : undefined,
+  }),
   component: BoglanishPage,
 });
 
@@ -36,32 +108,31 @@ function BoglanishPage() {
   const { content } = useSitePreferences();
   const ui = content.ui.contact;
   const shared = content.ui.shared;
+  const { mode: searchMode } = Route.useSearch();
 
-  const [mode, setMode] = useState<FormMode>("inquiry");
-  const [form, setForm] = useState({
-    ism: "",
-    telefon: "",
-    telefon2: "",
-    telegram: "",
-    format: "",
-    daraja: "",
-    xabar: "",
-  });
+  const [mode, setMode] = useState<FormMode>(() => searchMode ?? "inquiry");
+  const [form, setForm] = useState<ContactForm>(EMPTY_FORM);
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [agreed, setAgreed] = useState(false);
   const [opened, setOpened] = useState(false);
 
-  const phoneOk = isValidPhoneNumber(form.telefon || "");
-  const backupEmpty = !form.telefon2?.trim();
-  const backupOk = backupEmpty || isValidPhoneNumber(form.telefon2 || "");
+  useEffect(() => {
+    if (searchMode === "register") setMode("register");
+  }, [searchMode]);
 
-  const canSubmitInquiry =
-    !!form.ism.trim() && phoneOk && backupOk && !!form.daraja && !loading;
+  const phoneOk = isValidPhoneNumber(form.telefon || "");
+
+  const canSubmitInquiry = !!form.ism.trim() && phoneOk && !!form.daraja && !loading;
 
   const canSubmitRegister =
-    !!form.ism.trim() && phoneOk && agreed && !loading;
+    !!form.ism.trim() &&
+    !!form.manzil.trim() &&
+    !!form.tugilganSana.trim() &&
+    phoneOk &&
+    agreed &&
+    !loading;
 
   const canSubmit = mode === "inquiry" ? canSubmitInquiry : canSubmitRegister;
 
@@ -98,9 +169,7 @@ function BoglanishPage() {
           country,
           format: INQUIRY_FORMAT,
           daraja: levelLabel,
-          xabar: form.telefon2?.trim()
-            ? `${ui.backupPhoneLabel.replace(/\s*\*?$/, "")}: ${form.telefon2}`
-            : "—",
+          xabar: "—",
         });
       } else {
         await leadsStore.add({
@@ -110,7 +179,7 @@ function BoglanishPage() {
           country,
           format: ui.formats.find((f) => f.v === form.format)?.l ?? "—",
           daraja: levelLabel,
-          xabar: form.xabar.trim() || "—",
+          xabar: buildRegisterXabar(form, ui),
         });
       }
       setSent(true);
@@ -203,44 +272,24 @@ function BoglanishPage() {
                   </div>
 
                   <form onSubmit={handleSubmit} noValidate>
-                    <div className="grid sm:grid-cols-2 gap-5 mb-5">
-                      <div className={mode === "inquiry" ? "sm:col-span-2" : ""}>
-                        <label htmlFor="contact-name" className={labelClass}>
-                          {ui.nameLabel}
-                        </label>
-                        <input
-                          id="contact-name"
-                          name="ism"
-                          type="text"
-                          autoComplete="name"
-                          placeholder={ui.namePlaceholder}
-                          value={form.ism}
-                          onChange={(e) => setForm((p) => ({ ...p, ism: e.target.value }))}
-                          className={fieldClass}
-                        />
-                      </div>
-
-                      {mode === "register" && (
-                        <div>
-                          <label htmlFor="contact-phone" className={labelClass}>
-                            {ui.phoneLabel}
-                          </label>
-                          <PhoneInput
-                            id="contact-phone"
-                            international
-                            defaultCountry="UZ"
-                            countryCallingCodeEditable={false}
-                            placeholder={ui.phonePlaceholder}
-                            value={form.telefon}
-                            onChange={(value) => setForm((p) => ({ ...p, telefon: value ?? "" }))}
-                            className="france-phone"
-                          />
-                        </div>
-                      )}
-                    </div>
-
                     {mode === "inquiry" && (
                       <>
+                        <div className="mb-5">
+                          <label htmlFor="contact-name" className={labelClass}>
+                            {ui.nameLabel}
+                          </label>
+                          <input
+                            id="contact-name"
+                            name="ism"
+                            type="text"
+                            autoComplete="name"
+                            placeholder={ui.namePlaceholder}
+                            value={form.ism}
+                            onChange={(e) => setForm((p) => ({ ...p, ism: e.target.value }))}
+                            className={fieldClass}
+                          />
+                        </div>
+
                         <div className="mb-5">
                           <label htmlFor="contact-level" className={labelClass}>
                             {ui.levelLabel} *
@@ -261,13 +310,140 @@ function BoglanishPage() {
                           </select>
                         </div>
 
-                        <div className="grid sm:grid-cols-2 gap-5 mb-8">
+                        <div className="mb-8">
+                          <label htmlFor="contact-phone-inquiry" className={labelClass}>
+                            {ui.phoneLabel}
+                          </label>
+                          <PhoneInput
+                            id="contact-phone-inquiry"
+                            international
+                            defaultCountry="UZ"
+                            countryCallingCodeEditable={false}
+                            placeholder={ui.phonePlaceholder}
+                            value={form.telefon}
+                            onChange={(value) => setForm((p) => ({ ...p, telefon: value ?? "" }))}
+                            className="france-phone"
+                          />
+                        </div>
+                      </>
+                    )}
+
+                    {mode === "register" && (
+                      <>
+                        <div className="mb-5">
+                          <label htmlFor="contact-full-name" className={labelClass}>
+                            {ui.fullNameLabel}
+                          </label>
+                          <input
+                            id="contact-full-name"
+                            name="ism"
+                            type="text"
+                            autoComplete="name"
+                            placeholder={ui.fullNamePlaceholder}
+                            value={form.ism}
+                            onChange={(e) => setForm((p) => ({ ...p, ism: e.target.value }))}
+                            className={fieldClass}
+                          />
+                        </div>
+
+                        <div className="mb-5">
+                          <label htmlFor="contact-address" className={labelClass}>
+                            {ui.addressLabel}
+                          </label>
+                          <input
+                            id="contact-address"
+                            name="manzil"
+                            type="text"
+                            autoComplete="street-address"
+                            placeholder={ui.addressPlaceholder}
+                            value={form.manzil}
+                            onChange={(e) => setForm((p) => ({ ...p, manzil: e.target.value }))}
+                            className={fieldClass}
+                          />
+                        </div>
+
+                        <div className="mb-5">
+                          <label htmlFor="contact-birth-date" className={labelClass}>
+                            {ui.birthDateLabel}
+                          </label>
+                          <input
+                            id="contact-birth-date"
+                            name="tugilganSana"
+                            type="date"
+                            value={form.tugilganSana}
+                            onChange={(e) => setForm((p) => ({ ...p, tugilganSana: e.target.value }))}
+                            className={`${fieldClass} text-sm`}
+                          />
+                        </div>
+
+                        <div className="mb-5">
+                          <label htmlFor="contact-education" className={labelClass}>
+                            {ui.educationLabel}
+                          </label>
+                          <input
+                            id="contact-education"
+                            name="malumot"
+                            type="text"
+                            placeholder={ui.educationPlaceholder}
+                            value={form.malumot}
+                            onChange={(e) => setForm((p) => ({ ...p, malumot: e.target.value }))}
+                            className={fieldClass}
+                          />
+                        </div>
+
+                        <div className="mb-5">
+                          <label htmlFor="contact-work" className={labelClass}>
+                            {ui.workLabel}
+                          </label>
+                          <input
+                            id="contact-work"
+                            name="ishTajriba"
+                            type="text"
+                            placeholder={ui.workPlaceholder}
+                            value={form.ishTajriba}
+                            onChange={(e) => setForm((p) => ({ ...p, ishTajriba: e.target.value }))}
+                            className={fieldClass}
+                          />
+                        </div>
+
+                        <div className="mb-5">
+                          <label htmlFor="contact-family" className={labelClass}>
+                            {ui.familyLabel}
+                          </label>
+                          <input
+                            id="contact-family"
+                            name="oilaviyHolat"
+                            type="text"
+                            placeholder={ui.familyPlaceholder}
+                            value={form.oilaviyHolat}
+                            onChange={(e) => setForm((p) => ({ ...p, oilaviyHolat: e.target.value }))}
+                            className={fieldClass}
+                          />
+                        </div>
+
+                        <div className="mb-5">
+                          <label htmlFor="contact-english" className={labelClass}>
+                            {ui.englishLabel}
+                          </label>
+                          <input
+                            id="contact-english"
+                            name="inglizDaraja"
+                            type="text"
+                            placeholder={ui.englishPlaceholder}
+                            value={form.inglizDaraja}
+                            onChange={(e) => setForm((p) => ({ ...p, inglizDaraja: e.target.value }))}
+                            className={fieldClass}
+                          />
+                        </div>
+
+                        <p className={labelClass}>{ui.phoneTelegramLabel}</p>
+                        <div className="grid sm:grid-cols-2 gap-5 mb-5">
                           <div>
-                            <label htmlFor="contact-phone-inquiry" className={labelClass}>
+                            <label htmlFor="contact-phone" className="sr-only">
                               {ui.phoneLabel}
                             </label>
                             <PhoneInput
-                              id="contact-phone-inquiry"
+                              id="contact-phone"
                               international
                               defaultCountry="UZ"
                               countryCallingCodeEditable={false}
@@ -278,47 +454,115 @@ function BoglanishPage() {
                             />
                           </div>
                           <div>
-                            <label htmlFor="contact-phone-backup" className={labelClass}>
-                              {ui.backupPhoneLabel}
+                            <label htmlFor="contact-telegram" className="sr-only">
+                              {ui.telegramLabel}
                             </label>
-                            <PhoneInput
-                              id="contact-phone-backup"
-                              international
-                              defaultCountry="UZ"
-                              countryCallingCodeEditable={false}
-                              placeholder={ui.backupPhonePlaceholder}
-                              value={form.telefon2}
-                              onChange={(value) => setForm((p) => ({ ...p, telefon2: value ?? "" }))}
-                              className="france-phone"
-                            />
+                            <div className="field-shell flex items-center bg-[#FAF6EF] border border-[#15233B]/10 focus-within:border-[#e83848] focus-within:ring-4 focus-within:ring-[#e83848]/10 rounded-xl px-4 transition-all">
+                              <span className="text-[#646F82] font-semibold shrink-0" aria-hidden>
+                                @
+                              </span>
+                              <input
+                                id="contact-telegram"
+                                name="telegram"
+                                type="text"
+                                autoComplete="off"
+                                placeholder="username"
+                                value={form.telegram}
+                                onChange={(e) =>
+                                  setForm((p) => ({
+                                    ...p,
+                                    telegram: e.target.value.replace(/[@\s]/g, ""),
+                                  }))
+                                }
+                                className="flex-1 min-w-0 bg-transparent border-0 shadow-none py-3.5 pl-1 text-[#15233B] text-base outline-none ring-0 focus:outline-none focus:ring-0 focus:border-0 focus-visible:outline-none focus-visible:shadow-none focus-visible:ring-0 placeholder:text-[#15233B]/35"
+                              />
+                            </div>
                           </div>
                         </div>
-                      </>
-                    )}
 
-                    {mode === "register" && (
-                      <>
                         <div className="mb-5">
-                          <label htmlFor="contact-telegram" className={labelClass}>
-                            {ui.telegramLabel}
+                          <label htmlFor="contact-goal" className={labelClass}>
+                            {ui.frenchGoalLabel}
                           </label>
-                          <div className="field-shell flex items-center bg-[#FAF6EF] border border-[#15233B]/10 focus-within:border-[#e83848] focus-within:ring-4 focus-within:ring-[#e83848]/10 rounded-xl px-4 transition-all">
-                            <span className="text-[#646F82] font-semibold shrink-0" aria-hidden>
-                              @
-                            </span>
-                            <input
-                              id="contact-telegram"
-                              name="telegram"
-                              type="text"
-                              autoComplete="off"
-                              placeholder="username"
-                              value={form.telegram}
-                              onChange={(e) =>
-                                setForm((p) => ({ ...p, telegram: e.target.value.replace(/[@\s]/g, "") }))
-                              }
-                              className="flex-1 min-w-0 bg-transparent border-0 shadow-none py-3.5 pl-1 text-[#15233B] text-base outline-none ring-0 focus:outline-none focus:ring-0 focus:border-0 focus-visible:outline-none focus-visible:shadow-none focus-visible:ring-0 placeholder:text-[#15233B]/35"
-                            />
-                          </div>
+                          <textarea
+                            id="contact-goal"
+                            name="maqsad"
+                            placeholder={ui.frenchGoalPlaceholder}
+                            rows={3}
+                            value={form.maqsad}
+                            onChange={(e) => setForm((p) => ({ ...p, maqsad: e.target.value }))}
+                            className={`${fieldClass} text-sm resize-none`}
+                          />
+                        </div>
+
+                        <div className="mb-5">
+                          <label htmlFor="contact-level-register" className={labelClass}>
+                            {ui.levelLabel}
+                          </label>
+                          <select
+                            id="contact-level-register"
+                            name="daraja"
+                            value={form.daraja}
+                            onChange={(e) => setForm((p) => ({ ...p, daraja: e.target.value }))}
+                            className={`${fieldClass} text-sm cursor-pointer`}
+                          >
+                            <option value="">{shared.selectPlaceholder}</option>
+                            {ui.levels.map((d) => (
+                              <option key={d.v} value={d.v}>
+                                {d.l}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div className="mb-5">
+                          <label htmlFor="contact-exam-when" className={labelClass}>
+                            {ui.examWhenLabel}
+                          </label>
+                          <input
+                            id="contact-exam-when"
+                            name="imtihonVaqti"
+                            type="text"
+                            placeholder={ui.examWhenPlaceholder}
+                            value={form.imtihonVaqti}
+                            onChange={(e) => setForm((p) => ({ ...p, imtihonVaqti: e.target.value }))}
+                            className={fieldClass}
+                          />
+                        </div>
+
+                        <div className="mb-5">
+                          <label htmlFor="contact-country-goal" className={labelClass}>
+                            {ui.countryGoalLabel}
+                          </label>
+                          <input
+                            id="contact-country-goal"
+                            name="davlatMaqsad"
+                            type="text"
+                            placeholder={ui.countryGoalPlaceholder}
+                            value={form.davlatMaqsad}
+                            onChange={(e) => setForm((p) => ({ ...p, davlatMaqsad: e.target.value }))}
+                            className={fieldClass}
+                          />
+                        </div>
+
+                        <div className="mb-5">
+                          <label htmlFor="contact-daily-time" className={labelClass}>
+                            {ui.dailyTimeLabel}
+                          </label>
+                          <select
+                            id="contact-daily-time"
+                            name="kunlikVaqt"
+                            value={form.kunlikVaqt}
+                            onChange={(e) => setForm((p) => ({ ...p, kunlikVaqt: e.target.value }))}
+                            className={`${fieldClass} text-sm cursor-pointer`}
+                          >
+                            <option value="">{shared.selectPlaceholder}</option>
+                            {ui.dailyTimes.map((t) => (
+                              <option key={t.v} value={t.v}>
+                                {t.l}
+                              </option>
+                            ))}
+                          </select>
                         </div>
 
                         <fieldset className="mb-5 border-0 p-0">
@@ -342,38 +586,20 @@ function BoglanishPage() {
                           </div>
                         </fieldset>
 
-                        <div className="mb-5">
-                          <label htmlFor="contact-level-register" className={labelClass}>
-                            {ui.levelLabel}
-                          </label>
-                          <select
-                            id="contact-level-register"
-                            name="daraja"
-                            value={form.daraja}
-                            onChange={(e) => setForm((p) => ({ ...p, daraja: e.target.value }))}
-                            className={`${fieldClass} text-sm cursor-pointer`}
-                          >
-                            <option value="">{shared.selectPlaceholder}</option>
-                            {ui.levels.map((d) => (
-                              <option key={d.v} value={d.v}>
-                                {d.l}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-
                         <div className="mb-8">
-                          <label htmlFor="contact-message" className={labelClass}>
-                            {ui.messageLabel}
+                          <label htmlFor="contact-heard-from" className={labelClass}>
+                            {ui.heardFromLabel}
                           </label>
-                          <textarea
-                            id="contact-message"
-                            name="xabar"
-                            placeholder={ui.messagePlaceholder}
-                            rows={3}
-                            value={form.xabar}
-                            onChange={(e) => setForm((p) => ({ ...p, xabar: e.target.value }))}
-                            className={`${fieldClass} text-sm resize-none`}
+                          <input
+                            id="contact-heard-from"
+                            name="qayerdanEshitdingiz"
+                            type="text"
+                            placeholder={ui.heardFromPlaceholder}
+                            value={form.qayerdanEshitdingiz}
+                            onChange={(e) =>
+                              setForm((p) => ({ ...p, qayerdanEshitdingiz: e.target.value }))
+                            }
+                            className={fieldClass}
                           />
                         </div>
 
@@ -431,8 +657,14 @@ function BoglanishPage() {
                     {mode === "inquiry" && form.ism && form.daraja && !phoneOk && (
                       <p className="text-[#646F82] text-xs text-center mt-3">{ui.phoneRequired}</p>
                     )}
-                    {mode === "inquiry" && form.ism && form.daraja && phoneOk && !backupEmpty && !backupOk && (
-                      <p className="text-[#646F82] text-xs text-center mt-3">{ui.backupPhoneRequired}</p>
+                    {mode === "register" && form.ism && !form.manzil.trim() && (
+                      <p className="text-[#646F82] text-xs text-center mt-3">{ui.addressRequired}</p>
+                    )}
+                    {mode === "register" && form.ism && form.manzil.trim() && !form.tugilganSana && (
+                      <p className="text-[#646F82] text-xs text-center mt-3">{ui.birthDateRequired}</p>
+                    )}
+                    {mode === "register" && form.ism && form.manzil.trim() && form.tugilganSana && !phoneOk && (
+                      <p className="text-[#646F82] text-xs text-center mt-3">{ui.phoneRequired}</p>
                     )}
                     {mode === "register" && !agreed && (form.ism || form.telefon) && (
                       <p className="text-[#646F82] text-xs text-center mt-3">{ui.ofertaRequired}</p>

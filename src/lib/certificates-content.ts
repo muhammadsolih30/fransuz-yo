@@ -27,9 +27,9 @@ const certImg = (n: number) => `/image/sertifikatlar/${n}.png`;
 export const studentCertificates: StudentCertificate[] = [
   {
     id: "farangiz",
-    name: "Farangiz",
+    name: "Farangiz Murtazaeva",
     certType: "TCF Canada",
-    image: certImg(1),
+    image: certImg(9),
     story: preview(
       "Farangiz bizning o'quv markazimizda atigi 1 oy tayyorlandilar. Darslar davomida asosan Speaking va Writing ustida ishladik.",
     ),
@@ -40,9 +40,9 @@ Ko'pchilik yuqori natija uchun oylar kerak deb o'ylaydi. Aslida esa to'g'ri meto
   },
   {
     id: "marjona",
-    name: "Marjona",
+    name: "Marjona Abdurakhmonova",
     certType: "TCF Canada",
-    image: certImg(2),
+    image: certImg(11),
     story: preview(
       "Marjona o'quv markazimizda 6 oy davomida fransuz tilini noldan, ya'ni harflardan boshlab o'rgandilar.",
     ),
@@ -56,7 +56,7 @@ Siz ham fransuz tilini noldan boshlab qisqa muddatda natijaga erishmoqchi bo'lsa
     id: "nilufar-adxamjonova",
     name: "Nilufar Adxamjonova",
     certType: "TCF Canada",
-    image: certImg(3),
+    image: certImg(10),
     story: preview(
       "Nilufar opa yoshlari katta bo'lishiga qaramasdan, ish, oila va farzandlar tarbiyasi bilan bir qatorda fransuz tilini o'rganishga ham vaqt ajrata oldilar.",
     ),
@@ -74,7 +74,7 @@ Qisqa vaqt ichida katta natijalarga erishib, o'zlarining mehnatsevarligi va qat'
     id: "gulbibi-khasanova",
     name: "Gulbibi Khasanova",
     certType: "TCF Tout Public",
-    image: certImg(4),
+    image: certImg(14),
     story: preview(
       "Gulbibi opa o'quv markazimizda ishlash bilan bir qatorda intensiv kurslarimizda ham muntazam qatnashib, atigi 1 oy ichida TCF Tout Public imtihonini muvaffaqiyatli topshirdilar.",
     ),
@@ -92,7 +92,7 @@ Ayniqsa, TCF Tout Public imtihonining Reading (o'qib tushunish) bo'limida eng yu
     id: "laylo-normamatova",
     name: "Laylo Normamatova",
     certType: "TCF Canada",
-    image: certImg(5),
+    image: certImg(1),
     story: preview(
       "Laylo bizning France TCF o'quv markazimizda online guruh darslarida 7 oy davomida fransuz tilini mutlaqo 0 dan, harflardan boshlab o'rgandilar.",
     ),
@@ -111,7 +111,7 @@ France TCF o'quv markazida biz faqat dars o'tibgina qolmaymiz, har bir o'quvchin
     id: "gulshoda-khomidova",
     name: "Gulshoda Khomidova",
     certType: "TCF Canada",
-    image: certImg(6),
+    image: certImg(2),
     story: preview(
       "Gulshoda opa A2 daraja bilan France TCF o'quv markazimizga kelgan edilar. 1 oy davomida intensiv guruh darslarimizda muntazam qatnashdilar.",
     ),
@@ -136,7 +136,7 @@ Ayniqsa, Reading bo'limidan C1 natija qo'lga kiritganlari katta yutuq bo'ldi.`,
     id: "barno-abdullaeva",
     name: "Barno Abdullaeva",
     certType: "TCF Canada",
-    image: certImg(7),
+    image: certImg(3),
     story: preview(
       "Barno opa France TCF o'quv markazimizga kelganlarida fransuz tilidan A2 darajada edilar. Qisqa vaqt davomida o'z ustilarida jiddiy ishlab, ustozlarimiz ko'rsatmalariga amal qildilar.",
     ),
@@ -161,7 +161,7 @@ Ayniqsa, Writing bo'limidan 17 ball natija qayd etish juda katta yutuq hisoblana
     id: "umida-asrorova",
     name: "Umida Asrorova",
     certType: "TCF Canada",
-    image: certImg(8),
+    image: undefined,
     story: preview(
       "Umida bizning France TCF o'quv markazimizda 6 oy davomida online guruh darslarida fransuz tilini mutlaqo 0 dan, harflardan boshlab o'rgandilar.",
     ),
@@ -181,7 +181,7 @@ Ko'pchilik o'quvchilar qiyinchilikka duch keladigan Writing bo'limida bunday nat
     id: "shohista-sharakhimova",
     name: "Shohista Sharakhimova",
     certType: "TCF Tout Public",
-    image: certImg(9),
+    image: certImg(15),
     story: preview(
       "Shohista opa kichkina farzandlari, universitetdagi darslari va kundalik mas'uliyatlariga qaramasdan o'z maqsadlari sari tinmay harakat qildilar.",
     ),
@@ -199,7 +199,7 @@ Ularning mehnatsevarligi, motivatsiyasi va dars o'tish uslublari ko'pchilikka na
     id: "dilnura-saidbekova",
     name: "Dilnura Saidbekova",
     certType: "TCF Canada",
-    image: certImg(10),
+    image: certImg(13),
     story: preview(
       "Dilnura bizning iyun oyidagi online guruhimizda fransuz tilini mutlaqo 0 dan, harflardan boshlab o'rgandilar.",
     ),
@@ -224,7 +224,7 @@ Atigi 6 oy ichida 0 darajadan ushbu natijalarga erishish juda katta yutuq hisobl
     id: "mohinur-yoldosheva",
     name: "Mohinur Yo'ldosheva",
     certType: "Milliy sertifikat",
-    image: certImg(11),
+    image: certImg(12),
     story: preview(
       "Mohinur opa bizning o'quv markazimizga A2 daraja bilan kelgan edilar. Qisqa muddat davomida CEFR imtihonidan C1 darajani qo'lga kiritdilar.",
     ),
@@ -242,7 +242,7 @@ Qisqa vaqt oldin A2 darajada bo'lgan o'quvchining bugun C1 sertifikati orqali gr
     id: "feruza-amonova",
     name: "Feruza Amonova",
     certType: "Milliy sertifikat",
-    image: certImg(12),
+    image: certImg(4),
     story: preview("Biz Feruza opani C1 natijasi bilan samimiy tabriklaymiz va kelgusida ham yanada ulkan yutuqlarga erishishlarini tilaymiz!"),
     storyFull:
       "Biz Feruza opani C1 natijasi bilan samimiy tabriklaymiz va kelgusida ham yanada ulkan yutuqlarga erishishlarini tilaymiz!",
@@ -255,9 +255,9 @@ Qisqa vaqt oldin A2 darajada bo'lgan o'quvchining bugun C1 sertifikati orqali gr
   },
   {
     id: "ruzixon-axborova",
-    name: "Ruzixon Axborova",
+    name: "Ruzixon Axrorova",
     certType: "Milliy sertifikat",
-    image: certImg(13),
+    image: certImg(6),
     story: preview(
       "Ko'pchilik o'quvchilar eng ko'p qiynaladigan bo'limlar — Writing va Speaking sectionlaridan C1 darajani qo'lga kiritdilar.",
     ),
@@ -275,7 +275,7 @@ Bu natija shunchaki yuqori ball emas, balki katta mehnat, kuchli tayyorgarlik va
     id: "jamila-jamoliddinova",
     name: "Jamila Jamoliddinova",
     certType: "Milliy sertifikat",
-    image: certImg(14),
+    image: certImg(7),
     story: preview(
       "Jamila opaning natijalari orasida ayniqsa Speaking bo'limidagi yuqori ball alohida e'tiborga loyiq.",
     ),
@@ -293,7 +293,7 @@ Natijada aynan Speaking bo'limidan juda yuqori ballni qo'lga kiritdilar. Bu esa 
     id: "dilshoda-ergasheva",
     name: "Dilshoda Ergasheva",
     certType: "TCF Canada",
-    image: certImg(15),
+    image: certImg(8),
     story: preview(
       "Dilshoda opa 6 oy davomida bizning online guruhimizda fransuz tilini mutlaqo 0 dan, harflardan boshlab o'rgandilar.",
     ),

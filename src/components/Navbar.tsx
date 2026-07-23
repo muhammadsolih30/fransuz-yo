@@ -115,6 +115,7 @@ export function Navbar() {
             </a>
             <Link
               to="/boglanish"
+              search={{ mode: "register" }}
               className="no-underline bg-[#e83848] hover:bg-[#e84858] text-white text-xs 2xl:text-sm font-semibold min-w-[7.25rem] 2xl:min-w-[9.5rem] h-9 2xl:h-10 px-3.5 2xl:px-5 rounded-full transition-[background,transform] hover:-translate-y-0.5 shadow-[0_8px_20px_-8px_rgba(232,56,72,0.6)] whitespace-nowrap inline-flex items-center justify-center shrink-0"
             >
               {t.common.register}
@@ -221,6 +222,7 @@ export function Navbar() {
             </a>
             <Link
               to="/boglanish"
+              search={{ mode: "register" }}
               onClick={() => setOpen(false)}
               className="no-underline bg-[#e83848] hover:bg-[#e84858] text-white font-semibold py-2.5 rounded-xl text-center text-sm transition-all active:scale-[0.98] shadow-[0_8px_20px_-8px_rgba(232,56,72,0.55)]"
             >

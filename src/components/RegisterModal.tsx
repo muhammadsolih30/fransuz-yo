@@ -55,7 +55,7 @@ export function RegisterModal() {
       }}
     >
       <DialogContent
-        className="register-modal max-w-[20rem] sm:max-w-md border-0 p-0 gap-0 overflow-hidden rounded-2xl sm:rounded-3xl bg-white text-[#15233B] shadow-[0_24px_64px_-16px_rgba(21,35,59,0.45)]"
+        className="register-modal max-w-[20rem] sm:max-w-md border-0 p-0 gap-0 overflow-hidden rounded-2xl sm:rounded-3xl bg-white text-[#15233B] shadow-[0_24px_64px_-16px_rgba(232,56,72,0.55)] ring-2 ring-[#e83848]/35"
         closeLabel={content.ui.a11y.close}
       >
         <div className="register-modal__hero relative overflow-hidden">
@@ -87,6 +87,7 @@ export function RegisterModal() {
           <div className="flex flex-col gap-2.5">
             <Link
               to="/boglanish"
+              search={{ mode: "register" }}
               onClick={close}
               className="btn-primary w-full justify-center text-sm sm:text-base py-3 min-h-[2.85rem] no-underline"
             >

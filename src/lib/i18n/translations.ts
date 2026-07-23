@@ -25,5 +25,5 @@ export function getNavLinks(locale: Locale): SiteLink[] {
 
 export function getFooterLinks(locale: Locale): SiteLink[] {
   const n = getLocaleContent(locale).t.nav;
-  return [...getNavLinks(locale), { to: "/galereya", label: n.gallery }, { to: "/boglanish", label: n.contact }];
+  return [...getNavLinks(locale), { to: "/boglanish", label: n.contact }];
 }

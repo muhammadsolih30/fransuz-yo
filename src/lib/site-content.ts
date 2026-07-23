@@ -82,7 +82,6 @@ export const navLinks: SiteLink[] = [
 
 export const footerLinks = [
   ...navLinks,
-  { to: "/galereya", label: "Galereya" },
   { to: "/boglanish", label: "Bog'lanish" },
 ];
 
