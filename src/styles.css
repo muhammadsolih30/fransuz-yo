@@ -3301,12 +3301,12 @@ html.dark .course-section__title {
 }
 
 html.dark .course-section__eyebrow {
-  background: rgba(42, 82, 134, 0.22);
-  color: #93c5fd;
+  background: rgba(232, 56, 72, 0.22);
+  color: #fca5a5;
 }
 
 html.dark .course-slide-card__badge {
-  background: linear-gradient(135deg, #2a5286 0%, #3b82f6 100%);
+  background: linear-gradient(135deg, #c62828 0%, #e83848 100%);
   color: #ffffff;
 }
 
@@ -3340,8 +3340,8 @@ html.dark .course-slide-card__price-unit {
 }
 
 html.dark .course-slide-card__meta-icon {
-  background: rgba(42, 82, 134, 0.22);
-  color: #93c5fd;
+  background: rgba(232, 56, 72, 0.22);
+  color: #fca5a5;
 }
 
 html.dark .course-slide-card__price-block {
@@ -3349,7 +3349,7 @@ html.dark .course-slide-card__price-block {
 }
 
 html.dark .course-slide-card__price-amount {
-  color: #93c5fd;
+  color: #fca5a5;
 }
 
 html.dark .course-slide-card__cta {
@@ -3359,9 +3359,9 @@ html.dark .course-slide-card__cta {
 }
 
 html.dark .course-slide-card__cta:hover {
-  background: rgba(42, 82, 134, 0.18);
-  border-color: #93c5fd;
-  color: #93c5fd;
+  background: rgba(232, 56, 72, 0.18);
+  border-color: #fca5a5;
+  color: #fca5a5;
 }
 
 /* Certificate cards — dark mode */
@@ -3549,8 +3549,8 @@ html.dark .faq-accordion summary:focus-visible {
   padding: 0.4rem 1rem;
   margin-bottom: 1rem;
   border-radius: 9999px;
-  background: rgba(42, 82, 134, 0.1);
-  color: #2a5286;
+  background: rgba(232, 56, 72, 0.1);
+  color: #e83848;
   font-size: 0.68rem;
   font-weight: 800;
   text-transform: uppercase;
@@ -3628,12 +3628,12 @@ html.dark .faq-accordion summary:focus-visible {
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, #ffffff 0%, #f5f8fc 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #faf6ef 100%);
   border-radius: 1.5rem;
-  border: 1px solid rgba(42, 82, 134, 0.1);
+  border: 1px solid rgba(232, 56, 72, 0.12);
   box-shadow:
     0 4px 6px -2px rgba(21, 35, 59, 0.04),
-    0 20px 48px -16px rgba(42, 82, 134, 0.1);
+    0 20px 48px -16px rgba(232, 56, 72, 0.1);
   overflow: hidden;
   transition:
     transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
@@ -3644,15 +3644,15 @@ html.dark .faq-accordion summary:focus-visible {
   transform: translateY(-8px);
   box-shadow:
     0 8px 12px -4px rgba(21, 35, 59, 0.06),
-    0 28px 56px -12px rgba(21, 35, 59, 0.18);
+    0 28px 56px -12px rgba(232, 56, 72, 0.18);
 }
 
 .course-slide-card--featured {
-  background: linear-gradient(180deg, #ffffff 0%, #eef4ff 100%);
-  border-color: rgba(42, 82, 134, 0.28);
+  background: linear-gradient(180deg, #ffffff 0%, #fff5f5 100%);
+  border-color: rgba(232, 56, 72, 0.28);
   box-shadow:
-    0 4px 6px -2px rgba(42, 82, 134, 0.1),
-    0 24px 52px -14px rgba(42, 82, 134, 0.22);
+    0 4px 6px -2px rgba(232, 56, 72, 0.1),
+    0 24px 52px -14px rgba(232, 56, 72, 0.22);
 }
 
 .course-slide-card__badge {
@@ -3660,13 +3660,13 @@ html.dark .faq-accordion summary:focus-visible {
   top: 1.25rem;
   right: 1.25rem;
   z-index: 3;
-  background: linear-gradient(135deg, #2a5286 0%, #3b82f6 100%);
+  background: linear-gradient(135deg, #c62828 0%, #e83848 100%);
   color: #ffffff;
   font-size: 0.6rem;
   font-weight: 800;
   padding: 0.3rem 0.6rem;
   border-radius: 9999px;
-  box-shadow: 0 4px 14px rgba(42, 82, 134, 0.35);
+  box-shadow: 0 4px 14px rgba(232, 56, 72, 0.35);
   letter-spacing: 0.02em;
 }
 
@@ -3746,8 +3746,8 @@ html.dark .course-slide-card__cover {
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
-  background: rgba(42, 82, 134, 0.1);
-  color: #2a5286;
+  background: rgba(232, 56, 72, 0.1);
+  color: #e83848;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3819,7 +3819,7 @@ html.dark .course-slide-card__cover {
   font-family: "Syne", sans-serif;
   font-weight: 800;
   font-size: 1.05rem;
-  color: #2a5286;
+  color: #e83848;
   line-height: 1.2;
   text-align: right;
 }
@@ -3848,20 +3848,20 @@ html.dark .course-slide-card__cover {
 }
 
 .course-slide-card__cta:hover {
-  border-color: #2a5286;
-  color: #2a5286;
-  background: #eef4ff;
+  border-color: #e83848;
+  color: #e83848;
+  background: #fff5f5;
 }
 
 .course-slide-card__cta--primary {
-  background: linear-gradient(135deg, #2a5286 0%, #1e3f6b 100%);
+  background: linear-gradient(135deg, #e83848 0%, #c62828 100%);
   border-color: transparent;
   color: #fff;
-  box-shadow: 0 8px 24px -6px rgba(42, 82, 134, 0.45);
+  box-shadow: 0 8px 24px -6px rgba(232, 56, 72, 0.45);
 }
 
 .course-slide-card__cta--primary:hover {
-  background: linear-gradient(135deg, #1e3f6b 0%, #15233b 100%);
+  background: linear-gradient(135deg, #c62828 0%, #a81f2d 100%);
   color: #fff;
   transform: translateY(-1px);
 }
