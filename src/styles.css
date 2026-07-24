@@ -1828,11 +1828,15 @@
   }
 
   .site-marquee-link:hover {
-    color: #ff9aa5;
+    color: #e83848;
   }
 
   html.dark .site-nav-marquee .site-marquee-link:hover {
     color: #ff7b88;
+  }
+
+  .site-nav-marquee--red .site-marquee-link:hover {
+    color: #ffb3ba;
   }
 
   /* Sahifa hero (bog'lanish va boshqalar) */

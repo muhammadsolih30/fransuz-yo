@@ -219,17 +219,13 @@ function HomePage() {
       <Suspense fallback={<SectionSkeleton />}>
         <CoursesPageSections embedded />
       </Suspense>
-      <Suspense fallback={<SectionSkeleton />}>
-        <ResultsPageSections embedded />
-      </Suspense>
-      <Suspense fallback={<SectionSkeleton />}>
-        <TeachersPageSections embedded />
-      </Suspense>
 
-      <section className="relative py-7 stripe-mesh-dark overflow-hidden group site-nav-marquee border-y border-white/8">
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-gradient-to-r from-[#0a1628] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 z-10 bg-gradient-to-l from-[#0a1628] to-transparent" />
-        <div className="flex animate-marquee site-nav-marquee__track whitespace-nowrap group-hover:[animation-play-state:paused]">
+      <section className="relative py-7 site-nav-marquee site-nav-marquee--red overflow-hidden group border-y border-[#e83848]/35">
+        <div className="pointer-events-none absolute inset-0 bg-[#12080a]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_120%_at_50%_50%,rgba(232,56,72,0.28),transparent_70%)]" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-gradient-to-r from-[#12080a] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 z-10 bg-gradient-to-l from-[#12080a] to-transparent" />
+        <div className="relative z-[1] flex animate-marquee site-nav-marquee__track whitespace-nowrap group-hover:[animation-play-state:paused]">
           {[...Array(2)].map((_, dup) => (
             <div key={dup} className="flex items-center shrink-0">
               {marqueePages.map((p) => {
@@ -255,7 +251,9 @@ function HomePage() {
                         {p.label}
                       </Link>
                     )}
-                    <span className="text-white/25 text-xs px-1">◆</span>
+                    <span className="text-[#e83848]/70 text-xs px-1" aria-hidden>
+                      ◆
+                    </span>
                   </span>
                 );
               })}
@@ -263,6 +261,13 @@ function HomePage() {
           ))}
         </div>
       </section>
+
+      <Suspense fallback={<SectionSkeleton />}>
+        <ResultsPageSections embedded />
+      </Suspense>
+      <Suspense fallback={<SectionSkeleton />}>
+        <TeachersPageSections embedded />
+      </Suspense>
 
       <section className="site-section site-section--cream py-20 lg:py-28 relative section-ambient">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
